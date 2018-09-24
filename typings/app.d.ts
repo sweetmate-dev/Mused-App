@@ -23,6 +23,7 @@ type Product = {
     retailerName: string;
     brand: string;
     subCategories: string[];
+    unbrandedName: string;
 }
 
 type Author = {

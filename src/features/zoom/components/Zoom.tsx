@@ -8,10 +8,9 @@ import {
 import AutoHeightImage from 'react-native-auto-height-image';
 
 import { Header } from '../../shared';
-import { Button } from '../../shared';
+import { Button, largiImage } from '../../shared';
 import theme from "../theme";
 
-const brandDesc = 'ASOS 4505 Training Vest Top Strings';
 const likeIconUrl = require('../../../../assets/images/heart-icon.jpg');
 
 type Props = {
@@ -32,14 +31,14 @@ export default class Zoom extends Component<Props> {
         
     }
     render() {
-        const { description, image, priceLabel, brand } = this.product;
+        const { description, id, priceLabel, brand, unbrandedName } = this.product;
         return (
             <ScrollView contentContainerStyle={theme.container}>
                 <View style={theme.firstItem}>
 
                 <View style={theme.productContainer}>
                     <AutoHeightImage
-                        source={{uri: image}}
+                        source={{uri:  `${largiImage}${id}`}}
                         style={{marginTop: 10}}
                         width={224}
                     />
@@ -54,7 +53,7 @@ export default class Zoom extends Component<Props> {
                 <View style={theme.brandContainer}>
                     <View style={theme.brandLeftColumn}>
                         <Text style={theme.brand}>{brand}</Text>
-                        <Text style={theme.brandDesc}>{brandDesc}</Text>
+                        <Text style={theme.brandDesc}>{unbrandedName}</Text>
                     </View>
                     <View style={theme.brandRightColumn}>
                         <Text style={theme.price}>{priceLabel}</Text>
@@ -64,7 +63,7 @@ export default class Zoom extends Component<Props> {
 
                 <View style={theme.buttonsContainer}>
                     <Button style={{marginRight: 10}} themeType='light' text='Visit Retailer'/>
-                    <Button style={{marginLeft: 10}} themeType='dark' text='Style This'/>
+                    <Button style={{marginLeft: 10, width: 180}} themeType='dark' text='Style with' buttonWithImage={true} />
                 </View>
 
                 </View>

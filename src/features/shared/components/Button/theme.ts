@@ -5,7 +5,7 @@ import {
 
 const styles: StyleProp<any> = StyleSheet.create({
     buttonContainer: {
-        width: 140,
+        width: 120,
         height: 50,
         borderWidth: 1,
         borderTopColor: '#000',
@@ -18,7 +18,7 @@ const styles: StyleProp<any> = StyleSheet.create({
     },
     buttonText: {
         fontFamily: 'RalewayBold',
-        fontSize: 14,
+        fontSize: 13,
         lineHeight: 48,
         textAlign: 'center',
     },
@@ -28,6 +28,11 @@ const styles: StyleProp<any> = StyleSheet.create({
     buttonTextLight: {
         color: '#000',
     },
+    imageButton: {
+        height: 20,
+        width: 59,
+        marginLeft: 5 
+    }
 });
 
 export default styles;
