@@ -9,3 +9,4 @@ export { default as ContextMenu } from './components/ContextMenu/ContextMenu.hoc
 export {  default as Button } from './components/Button/Button';
 export * from './routesKeys';
 export * from './services';
+export * from './imagesUrls';

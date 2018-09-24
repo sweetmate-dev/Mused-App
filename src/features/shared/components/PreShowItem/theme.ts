@@ -52,23 +52,12 @@ import {
         height: 85
     },
     collectionItem: {
-        borderBottomColor: 'transparent',
-        borderBottomWidth: 1,
-        borderTopColor: 'transparent',
-        borderTopWidth: 1,
-        borderLeftColor: 'transparent',
-        borderLeftWidth: 1,
-        borderRightColor: 'transparent',
-        borderRightWidth: 1,
         height: 91,
         width: 74,
         flexDirection: 'row',
         alignItems: 'center'
     },
-    collectionItemWithBorder: {
-        borderBottomColor: '#d7d7d7',
-        borderTopColor: '#d7d7d7',
-        borderLeftColor: '#d7d7d7',
-        borderRightColor: '#d7d7d7',
+    collectionOpacity: {
+        opacity: 0.5
      }
   });

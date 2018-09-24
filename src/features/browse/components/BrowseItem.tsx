@@ -7,6 +7,7 @@ import {
     TouchableHighlight
 } from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
+import { thumbnailImage } from '../../shared';
 import theme from '../theme';
 
 const likeIconUrl = require('../../../../assets/images/star.png');
@@ -52,24 +53,15 @@ export default class BrowseItem extends Component<Props, State> {
         }  
     }
     render() {
-        const {index, item: { brand, description, image }} =  this.props;
-        const borderStyleRight = !(index % 2) ? {
-            borderRightWidth: 1,
-            borderRightColor: '#f9f9f9',
-           } : {};
-
-        const borderStyleTop = (index === 0 || index === 1) ? {
-            borderTopWidth: 1,
-            borderTopColor: '#f9f9f9',
-            } : {};
+        const {item: { brand, unbrandedName, id, priceLabel }} =  this.props;
         return (
-            <View style={[theme.productContainer, borderStyleRight, borderStyleTop]}>
+            <View style={[theme.productContainer]}>
                 {this._renderLikeIcon()}
                 <View style={theme.imageContainer}>
                     <TouchableWithoutFeedback onPress={this._likeIt} style={{height: 120, width: 80, backgroundColor: '#000'}}>
                         <View style={theme.imageWrapper}>
                         <AutoHeightImage
-                            source={{uri: image}}
+                            source={{uri: `${thumbnailImage}${id}`}}
                             style={{marginBottom: 10}}
                             width={105}
                         />
@@ -83,7 +75,8 @@ export default class BrowseItem extends Component<Props, State> {
                     onPress={this._navigateToProductSingle}>
                     <View style={theme.descWrapper}>
                         <Text style={theme.designerTxt}>{brand}</Text>
-                        <Text style={theme.descTxt}>{description}</Text>
+                        <Text style={[theme.descTxt, {height: 27}]}>{unbrandedName}</Text>
+                        <Text style={theme.descTxt}>{priceLabel}</Text>
                     </ View>
                     </TouchableWithoutFeedback>
                 </View>

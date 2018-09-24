@@ -38,7 +38,6 @@ export default  StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        borderRadius: 3,
         width: width/2,
         alignItems: 'center',
         justifyContent: 'center',
@@ -46,8 +45,6 @@ export default  StyleSheet.create({
         paddingBottom: 8,
         paddingLeft: ITEM_CONT_PADDING,
         paddingRight: ITEM_CONT_PADDING,
-        borderBottomColor: '#f9f9f9',
-        borderBottomWidth: 1,
         height: 242
     },
     separator: {

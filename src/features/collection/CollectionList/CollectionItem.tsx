@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import AutoHeightImage from 'react-native-auto-height-image';
+import { thumbnailImage } from '../../shared';
 import theme from '../theme';
 
 const likeIconUrl = require('../../../../assets/images/star.png');
@@ -48,7 +49,7 @@ export default class CollectionItem extends Component<Props, State> {
     }
     render() {
         const { countAlter } = this.props;
-        const { brand, category, image } = this.props.item;
+        const { brand, unbrandedName, id } = this.props.item;
         const { isLiked } = this.state;
         return (
             <View style={theme.containerItem}>
@@ -69,12 +70,11 @@ export default class CollectionItem extends Component<Props, State> {
                 <View style={theme.imageContainer}>
                     <View style={theme.clickableImageContainer}>
                         <AutoHeightImage
-                                source={{uri: image}}
-                                // style={theme.itemImage}
+                                source={{uri: `${thumbnailImage}${id}`}}
                                 width={160}
                             />
                         <Text style={theme.clickableTitle}>{brand.toUpperCase()}</Text>
-                        <Text style={theme.clickableSubTitle}>{category}</Text>
+                        <Text style={theme.clickableSubTitle}>{unbrandedName}</Text>
                     </View>
                 </View>
 

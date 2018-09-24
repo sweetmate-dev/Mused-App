@@ -40,7 +40,7 @@ export default class SlotMachineItem extends PureComponent<Props> {
         return (
            
                     <View style={theme.scrolledItemWrapper} key={makeId()}>
-                     <TouchableHighlight style={[theme.collectionItem, showBorder ? theme.collectionItemWithBorder : {} ]} onPress={() => showContextMenu()} underlayColor={'transparent'}>
+                     <TouchableHighlight style={[theme.collectionItem, showBorder ? theme.collectionOpacity : {} ]} onPress={() => showContextMenu()} underlayColor={'transparent'}>
                         <FlatList
                             data={arrayImgs}
                             renderItem={this._renderItemImage}

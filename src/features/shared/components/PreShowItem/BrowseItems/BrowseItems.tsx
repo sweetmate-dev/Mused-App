@@ -77,7 +77,7 @@ export default class BrowseItems extends Component<Props> {
             }
             return (
                 <TouchableHighlight 
-                    style={[theme.collectionItem, slotProduct.id === secondSlotNumber && contextMenuIsVisible ? theme.collectionItemWithBorder : {} ]}
+                    style={[theme.collectionItem, slotProduct.id === secondSlotNumber && contextMenuIsVisible ? theme.collectionOpacity : {} ]}
                     onPress={() => showContextMenu(slotProduct.id)}
                     underlayColor={'transparent'}
                     key={slotProduct.id} >
