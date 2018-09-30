@@ -111,7 +111,7 @@ export default class BrowseItem extends Component<Props, State> {
         if (isSlotMachine) {
             return;
         }
-        setNewImgUrl({img: {uri: item.image}, id: item.id});
+        setNewImgUrl({img: {uri: item.image}, id: item.id, category: item.category});
         hideContextMenu();
     };
 

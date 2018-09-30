@@ -16,7 +16,7 @@ function HeaderHOC(Header: any) {
     class NewComp extends Component<Props> {
         render() {
             const { navigation, showContent,  root: { ui, user, products, filters } } = this.props;
-            const { setPrevCurrentRoutes, currentRoute } = ui;
+            const { setPrevCurrentRoutes, currentRoute, prevRoute } = ui;
             const { userProfile, logout } = user;
             const { resetArrayImages, resetAlternativies } = products;
             const { filterTab, clearFilters } = filters;
@@ -34,6 +34,7 @@ function HeaderHOC(Header: any) {
                     backToFilterTabs={this._setFilterTab}
                     clearFilters={clearFilters}
                     resetAlternativies={resetAlternativies}
+                    prevRoute={prevRoute}
             />
         }
         _hideContextMenu = () => {

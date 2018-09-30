@@ -9,8 +9,8 @@ export const categoriesKeys: Category[] = [
             'flare-jeans',
             'relaxed-jeans',
             'skinny-jeans',
-            'straight-jeans',
             'stretch-jeans',
+            'straight-leg-jeans'
         ]
     },
     {
@@ -25,13 +25,9 @@ export const categoriesKeys: Category[] = [
         category: 'jackets',
         subCategories: [
             'vests',
-            'womens-outerwear',
             'casual-jackets',
             'denim-jackets',
             'leather-jackets',
-            'waistcoats',
-            'fur-and-shearling-coats',
-            'leather-and-suede-coats',
             'blazers'
         ]
     },

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import FooterButtons from './FooterButtons';
-import { COLLECTION, BROWSE, FILTER } from '../../../shared';
+import { COLLECTION, BROWSE, FILTER, VIEW } from '../../../shared';
 import { ROOT_STORE } from '../../../stores';
 type Props = {
     root?: RootStore;
@@ -15,13 +15,15 @@ function FooterButtonsHOC(FooterButtons: any) {
           const { currentRoute }  = ui;
           const { createNewOutfit } = products;
           const { newImgUrl } = slots;
-          const footerIsVisible = currentRoute === COLLECTION || currentRoute === BROWSE ||  currentRoute === FILTER;
+          const footerIsVisible = 
+            currentRoute === COLLECTION || currentRoute === BROWSE ||  currentRoute === FILTER || currentRoute === VIEW;
         return (
             footerIsVisible &&  
             <FooterButtons 
               currentRoute={currentRoute}
               navigateToFilter={this._navigateToFilter}
               navigateToBrowse={this._navigateToBrowse}
+              navigateToView={this._navigateToView}
               clearFilter={this._clearFilter}
               clearFilterAndGoToBrowse={this._clearFilterAndGoToBrowse}
               applyFilter={this._applyFilter}
@@ -34,6 +36,12 @@ function FooterButtonsHOC(FooterButtons: any) {
         const { root: { ui: { navigate } } } = this.props;
         navigate(FILTER, BROWSE);
     }
+
+    _navigateToView = () => {
+      const { root: { ui: { navigate } } } = this.props;
+      navigate(VIEW, BROWSE);
+    }
+
     _navigateToBrowse = () => {
       const { root: { ui: { navigate } } } = this.props;
       navigate(BROWSE, COLLECTION);

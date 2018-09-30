@@ -15,6 +15,9 @@ interface IProductStore {
     deleteBookmarkById: (_id: any) => void;
     getBookmarksByUserId: () => void;
     listOfBookmarks: Bookmark[];
+    getProductsByCategory: (category: string) => void;
+    resetProductsByCategory: () => void;
+    listOfProductsByCategories: Product[];
 }
 
 interface IUiStore {
@@ -49,6 +52,8 @@ interface ISlotsStore {
     setNewImgUrl: (newImgUrl: HashMap<string>) => void;
     setSlotMachineEffect: (flag: boolean) => void;
     setMoveProduct: (flag: boolean) => void;
+    getSixthSlot: HashMap<string>;
+    addOrReplaceSixthSlot: (item: HashMap<string>) => void;
 }
 
 interface IPostsStore {
