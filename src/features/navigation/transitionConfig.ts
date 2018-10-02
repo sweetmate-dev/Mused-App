@@ -1,4 +1,5 @@
 import { Easing, Animated } from "react-native";
+import { COLLECTION } from '../shared';
 
 export const transitionConfig = () => {
   return {
@@ -10,8 +11,7 @@ export const transitionConfig = () => {
     },
     screenInterpolator: (props: { layout: any, position: any, scene: any, scenes: any}) => {
       const thisSceneIndex = props.scene.index;
-      
-      if (props.scenes[thisSceneIndex - 1] && props.scenes[thisSceneIndex - 1].route.routeName === 'Collection') {
+      if (props.scenes[thisSceneIndex - 1] && props.scenes[thisSceneIndex - 1].route.routeName === COLLECTION) {
         const translateX = 0;
         const translateY = 0;
         const opacity = props.position.interpolate({

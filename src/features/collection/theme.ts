@@ -74,8 +74,8 @@ import {
         marginBottom: 9
     },
     itemImage: {
-        width: 105, 
-        height: 140,
+        width: 100, 
+        height: 100,
     },
     alterContainer: {
         flex: 0.2

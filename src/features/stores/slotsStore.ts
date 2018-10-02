@@ -8,7 +8,11 @@ export default class ObservableStore implements ISlotsStore {
     @observable newImgUrl: HashMap<string> | null = null;
     @observable isMoveProduct: boolean = false;
     @observable isSlotMachine: boolean = false;
+    @observable sixthSlot: HashMap<string> | null = null;
 
+    get getSixthSlot() {
+        return this.sixthSlot;
+    }
 
     @action
     public setSlotNumber = (slotNumber: number) => {
@@ -35,5 +39,10 @@ export default class ObservableStore implements ISlotsStore {
     @action
     public setMoveProduct = (flag: boolean) => {
         this.isMoveProduct = flag;
+    }
+
+    @action
+    addOrReplaceSixthSlot = (item: HashMap<string>) => {
+        this.sixthSlot = item;
     }
 }

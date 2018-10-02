@@ -4,12 +4,13 @@ import {
   Animated
 } from 'react-native';
 import FooterButton from '../FooterButton/FooterButton';
-import { COLLECTION, BROWSE, FILTER } from '../../routesKeys';
+import { COLLECTION, BROWSE, FILTER, VIEW as VIEW_SCREEN } from '../../routesKeys';
 import theme from './theme';
-import { footerButtons, footerDarkButtons, LOVE, CATEGORIES, APPLY, CANCEL, CLEAR } from './buttonsKeys';
+import { footerButtons, footerDarkButtons, dragAndDropButtons, LOVE, CATEGORIES, APPLY, CANCEL, CLEAR, VIEW, BACK } from './buttonsKeys';
 type Props = {
     navigateToFilter: () => void;
     navigateToBrowse: () => void;
+    navigateToView: () => void;
     clearFilterAndGoToBrowse: () => void;
     clearFilter: () => void;
     applyFilter: () => void;
@@ -31,7 +32,9 @@ export default class Footer extends Component<Props> {
         if ((currentRoute === COLLECTION && nextProps.currentRoute === BROWSE)
         || (currentRoute === BROWSE && nextProps.currentRoute === COLLECTION)
         || (currentRoute === BROWSE && nextProps.currentRoute === FILTER)
-        || (currentRoute === FILTER && nextProps.currentRoute === BROWSE)){
+        || (currentRoute === FILTER && nextProps.currentRoute === BROWSE)
+        || (currentRoute === BROWSE && nextProps.currentRoute === VIEW_SCREEN)
+        || (currentRoute === VIEW_SCREEN && nextProps.currentRoute === BROWSE)){
             this._fadeIn();
         }
     }
@@ -48,13 +51,19 @@ export default class Footer extends Component<Props> {
         if (currentRoute === BROWSE) {
             buttons = [...footerButtons]
         }
+        if (currentRoute === VIEW_SCREEN) {
+            buttons = [...dragAndDropButtons]
+        }
         return (
             <Animated.View 
                 style={[
                     theme.container,
                     currentRoute === FILTER ? {backgroundColor: '#000'} : {},
+                    currentRoute === VIEW_SCREEN ? {backgroundColor: '#dfdede'} : {},
                     {opacity: this.state.fadeIn}]}>
-                 { currentRoute === FILTER ?  this._renderDarkFooterButtons(footerDarkButtons) : this._renderWhiteFooterButtons(buttons)}
+                 { currentRoute === FILTER && this._renderDarkFooterButtons() }
+                 { (currentRoute === COLLECTION || currentRoute === BROWSE ) && this._renderWhiteFooterButtons(buttons) }
+                 { currentRoute === VIEW_SCREEN && this._renderDragAndDropButtons() }
             </Animated.View>
         )
     }
@@ -62,6 +71,7 @@ export default class Footer extends Component<Props> {
        return  buttons.map( (button: HashMap<string>) => {
            const actions: HashMap<() => void> = {
             [LOVE]: this.props.createNewOutfit,
+            [VIEW]: this.props.navigateToView,
             [CATEGORIES]:  this._navigateToFilter,
         }
             return (
@@ -76,8 +86,8 @@ export default class Footer extends Component<Props> {
        })
     }
 
-    _renderDarkFooterButtons = (buttons: HashMap<string>[]) => {
-        return  buttons.map( (button: HashMap<string>) => {
+    _renderDarkFooterButtons = () => {
+        return  footerDarkButtons.map( (button: HashMap<string>) => {
             const actions: HashMap<() => void> = {
                 [APPLY]: this.props.applyFilter,
                 [CLEAR]: this.props.clearFilter,
@@ -91,6 +101,25 @@ export default class Footer extends Component<Props> {
                          key={button.text}
                          styleForContainer={button.styleForContainer}
                          navigate={actions[button.text]}
+                         />
+             )
+        })
+     }
+
+     _renderDragAndDropButtons = () => {
+        return  dragAndDropButtons.map( (button: HashMap<string>) => {
+            const actions: HashMap<() => void> = {
+             [APPLY]: this.props.applyFilter,
+             [BACK]: this.props.navigateToBrowse,
+         }
+             return (
+                 <FooterButton
+                         text={button.text}
+                         icon={button.icon}
+                         greyTheme={true}
+                         navigate={actions[button.text]}
+                         key={button.text}
+                         newImgUrl={this.props.newImgUrl}
                          />
              )
         })

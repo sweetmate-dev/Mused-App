@@ -64,7 +64,8 @@ export default class SlotMachineItem extends PureComponent<Props> {
             <Animated.Image
                 key={props.index}
                 style={[theme.itemImage, {opacity: this.props.fadeOpacity}]}
-                source={props.item.img} />
+                source={props.item.img}
+                resizeMode={'contain'} />
         )
       }
 

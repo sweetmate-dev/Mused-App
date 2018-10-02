@@ -25,7 +25,7 @@ export default class NewsfeedList extends Component<Props> {
                 {(this.props.listOfPosts && this.props.listOfPosts.length) && <FlatList
                     data={this.props.listOfPosts}
                     renderItem={this._renderItem}
-                    keyExtractor={ (item) => `${item.postId}`}
+                    keyExtractor={ (item) => `${item._id}`}
                     ItemSeparatorComponent={this._renderSeparator}
                 />}
             </View>

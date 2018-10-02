@@ -5,12 +5,14 @@ import { Collection } from '../collection';
 import { Browse } from '../browse';
 import { Zoom } from '../zoom';
 import { Filter } from '../filter';
+import { DragAndDrop } from '../drag-and-drop';
 import { 
     COLLECTION,
     BROWSE, 
     NEWSFEED, 
     ZOOM, 
-    FILTER } from '../shared';
+    FILTER,
+    VIEW } from '../shared';
 
 import { transitionConfig } from './transitionConfig';
 
@@ -30,6 +32,9 @@ export default createStackNavigator(
         },
         [FILTER]: {
             screen:  Filter
+        },
+        [VIEW]: {
+            screen: DragAndDrop
         }
     }, {
 

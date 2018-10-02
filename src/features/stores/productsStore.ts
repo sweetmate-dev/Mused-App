@@ -1,7 +1,17 @@
 import { observable, action } from 'mobx';
 import moment from 'moment';
 
-import { getProductsByIds, getProductsByCatsSubs, createOutfit, createBookmark, getBookmarksByUserId, deleteBookmark } from '../../services';
+import { 
+    getProductsByIds,
+    getProductsByCatsSubs,
+    createOutfit, 
+    createBookmark, 
+    getBookmarksByUserId, 
+    deleteBookmark,
+    getProductsByCategory,
+} from '../../services';
+
+import { slotsOrder } from '../shared';
 
 
 export default class ObservableStore implements IProductStore {
@@ -13,6 +23,7 @@ export default class ObservableStore implements IProductStore {
     @observable alternatives: Product[] = [];
     @observable arrayImages: ProductImage[] = [];
     @observable bookmarks: Bookmark[] = [];
+    @observable productsByCategories: Product[] = [];
 
     get listOfCollection() {
         return this.collection;
@@ -24,6 +35,9 @@ export default class ObservableStore implements IProductStore {
         return this.bookmarks;
     }
 
+    get listOfProductsByCategories() {
+        return this.productsByCategories;
+    }
 
     @action
     public getAlternatives = async (ids: number[]) => {
@@ -43,12 +57,13 @@ export default class ObservableStore implements IProductStore {
     public  getCollection = async (slots: Slot[]) => {
         const ids: number[] = slots.map((slot: Slot) => slot.productId);
         await getProductsByIds(ids).then((products: Product[]) => {
-            this.collection = products
+            this.collection = slotsOrder(ids, products);
         });
-        this.arrayImages  = this.collection.map( (product: Product) => {
+        this.arrayImages = this.collection.map( (product: Product) => {
             return { 
                 img: { uri: product.image },
-                id: product.id   
+                id: product.id,
+                category: product.category
             }
         });
     }
@@ -105,14 +120,28 @@ export default class ObservableStore implements IProductStore {
         await this.getBookmarksByUserId();
     }
 
-    @action getBookmarksByUserId = async () => {
+    @action 
+    getBookmarksByUserId = async () => {
         await getBookmarksByUserId(this.root.user.userProfile.email).then((bookmarks: Bookmark[]) => {
             this.bookmarks = bookmarks
         });
     }
 
-    @action deleteBookmarkById = async (_id: any) => {
+    @action 
+    deleteBookmarkById = async (_id: any) => {
         await deleteBookmark(_id);
         await this.getBookmarksByUserId();
+    }
+
+    @action 
+    getProductsByCategory = async (category: string) => {
+        await getProductsByCategory(category).then( (products: Product[]) => {
+            this.productsByCategories = products;
+        })
+    }
+
+    @action
+    resetProductsByCategory = () => {
+        this.productsByCategories = [];
     }
 }

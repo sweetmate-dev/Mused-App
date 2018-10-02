@@ -46,6 +46,7 @@ type ProductImage = {
 }
 
 type Post = {
+    _id: any;
     postId: number;
     timeAgo: string;
     authorName: string;

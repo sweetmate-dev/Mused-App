@@ -6,11 +6,12 @@ import {
     BackHandler
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
-import { COLLECTION, BROWSE, FILTER, NEWSFEED, ZOOM } from '../../routesKeys';
+import { COLLECTION, BROWSE, FILTER, NEWSFEED, ZOOM, VIEW } from '../../routesKeys';
 type Props = {
     showContent?: boolean;
     navigation: any;
     filterTab: string;
+    prevRoute: string;
     logout: () => void;
     setPrevCurrentRoutes: (currentRoute: string, prevRoute: string) => void;
     userProfile: () => UserProfile;
@@ -47,9 +48,9 @@ export default class Header extends Component<Props> {
                     </View>}
                 </View>
                 <View style={{ alignItems: 'center', flex: 0.6, justifyContent: 'center' }}>
-                    { showContent && <Image
+                     <Image
                         style={{width: 62, height: 22 }}
-                        source={require('../../../../../assets/images/logo.png')} /> }
+                        source={require('../../../../../assets/images/logo.png')} />
                 </View>
 
                 <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', flex: 0.2}}>
@@ -75,14 +76,20 @@ export default class Header extends Component<Props> {
                 hideContextMenu, 
                 resetArrayImages, 
                 filterTab, 
-                backToFilterTabs} = this.props;
+                backToFilterTabs,
+                prevRoute } = this.props;
         const route: string = navigation.state.routeName;
 
         if (COLLECTION === route) {
             setPrevCurrentRoutes(NEWSFEED, '');
             resetArrayImages();
         }
-        if ( ZOOM === route) {   
+        if ( ZOOM === route) { 
+            prevRoute === VIEW
+             ? setPrevCurrentRoutes(VIEW, BROWSE)
+             : setPrevCurrentRoutes(BROWSE, COLLECTION)
+        }
+        if ( VIEW === route) {   
             setPrevCurrentRoutes(BROWSE, COLLECTION)
         }
         if (BROWSE === route) {

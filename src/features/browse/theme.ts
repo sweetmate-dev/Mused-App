@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 
 const ITEM_CONT_PADDING: number = 4;
-const IMAGE_WIDTH: number = 105;
+const IMAGE_WIDTH: number = 100;
 
 const { width} = Dimensions.get('window');
 

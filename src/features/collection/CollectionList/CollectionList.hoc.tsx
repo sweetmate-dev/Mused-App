@@ -38,7 +38,7 @@ function CollectionHOC(Collection: any) {
         const { navigate } = ui;
         const { setSlotNumber } = slots;
         setSlotNumber(slotNumber);
-        navigate(BROWSE, COLLECTION, {alternatives});
+        navigate(BROWSE, COLLECTION, {alternatives, transition: 'opacityTransition'});
       }
     }
     return NewComp;

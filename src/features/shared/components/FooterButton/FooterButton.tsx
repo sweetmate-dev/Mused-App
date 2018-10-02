@@ -17,12 +17,14 @@ const icons: HashMap<HashMap<string>> = {
     arrowUp: require('../../../../../assets/images/view.png'),
     filter: require('../../../../../assets/images/categories.png'),
     clear: require('../../../../../assets/images/cross-white.png'),
+    details: require('../../../../../assets/images/details.png'),
 };
 
 type Props = {
     text: string;
     icon: string;
     whiteTheme?: boolean;
+    greyTheme?: boolean;
     styleForContainer?: StyleProp<any>;
     navigate?: () => void
     newImgUrl?: ProductImage;
@@ -33,6 +35,7 @@ type State = {
 export default class FooterButton extends Component<Props, State> {
     static defaultProps = {
         whiteTheme: true,
+        greyTheme: false,
         styleForContainer: {}
     }
     state = {
@@ -44,7 +47,7 @@ export default class FooterButton extends Component<Props, State> {
         }
     }
     render() {
-        const {text, icon, whiteTheme, styleForContainer }  = this.props;
+        const {text, icon, whiteTheme, greyTheme, styleForContainer }  = this.props;
         let iconSource = 
         text === LOVE && this.state.isSavedOutfit
          ? icons['loveSelected']
@@ -55,11 +58,12 @@ export default class FooterButton extends Component<Props, State> {
         const backgroundColor = whiteTheme
             ? { backgroundColor: '#fff' }
             : { backgroundColor: 'transparent'}
+        const backgroundColorGrey = greyTheme ? { backgroundColor: '#dfdede'} : {}
         const _styleForContainer = styleForContainer;
         const underlayColor: string = whiteTheme ? '#fff' : '#000';
         return (
-            <TouchableHighlight style={[theme.footerButtonContainer, backgroundColor, _styleForContainer]} onPress={this._navigateToRoute} underlayColor={underlayColor}>
-                <View  style={[theme.footerButtonConfirmContainer, backgroundColor]}>
+            <TouchableHighlight style={[theme.footerButtonContainer, backgroundColor, backgroundColorGrey, _styleForContainer]} onPress={this._navigateToRoute} underlayColor={underlayColor}>
+                <View  style={[theme.footerButtonConfirmContainer, backgroundColor, backgroundColorGrey]}>
                     <Image style={[theme.footerCheckImage, text === VIEW ? theme.footerViewImage : {}]} source={iconSource} />
                     <Text style={[theme.footerCheckText, textStyle]}>{text}</Text>
                 </View>
