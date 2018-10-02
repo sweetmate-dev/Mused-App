@@ -6,7 +6,6 @@ import {
     TouchableWithoutFeedback,    
     TouchableHighlight
 } from 'react-native';
-import AutoHeightImage from 'react-native-auto-height-image';
 import { thumbnailImage } from '../../shared';
 import theme from '../theme';
 
@@ -60,10 +59,10 @@ export default class BrowseItem extends Component<Props, State> {
                 <View style={theme.imageContainer}>
                     <TouchableWithoutFeedback onPress={this._likeIt} style={{height: 120, width: 80, backgroundColor: '#000'}}>
                         <View style={theme.imageWrapper}>
-                        <AutoHeightImage
+                        <Image
                             source={{uri: `${thumbnailImage}${id}`}}
-                            style={{marginBottom: 10}}
-                            width={105}
+                            style={[theme.image, {marginBottom: 10}]}
+                            resizeMode={'contain'}
                         />
                         
                         </View>

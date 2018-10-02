@@ -6,7 +6,6 @@ import {
   TouchableHighlight
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
-import AutoHeightImage from 'react-native-auto-height-image';
 import { thumbnailImage } from '../../shared';
 import theme from '../theme';
 
@@ -69,9 +68,10 @@ export default class CollectionItem extends Component<Props, State> {
 
                 <View style={theme.imageContainer}>
                     <View style={theme.clickableImageContainer}>
-                        <AutoHeightImage
+                        <Image
                                 source={{uri: `${thumbnailImage}${id}`}}
-                                width={160}
+                                resizeMode={'contain'}
+                                style={theme.itemImage}
                             />
                         <Text style={theme.clickableTitle}>{brand.toUpperCase()}</Text>
                         <Text style={theme.clickableSubTitle}>{unbrandedName}</Text>

@@ -28,7 +28,7 @@ export default StyleSheet.create({
 
     },
     scrolllContainer: {
-        flex: 0.8,
+        flex: 1,
         height: height - 150,
         zIndex: 1,
         backgroundColor:'#ffffff'
@@ -72,7 +72,7 @@ export default StyleSheet.create({
     },
     imageLayout:{
         width:80,
-        height:80
+        height:60
     },
     scrollCellTextFilter:{
         marginHorizontal:0,

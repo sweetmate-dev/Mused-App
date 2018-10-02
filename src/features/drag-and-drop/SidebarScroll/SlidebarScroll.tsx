@@ -1,8 +1,9 @@
 import React from 'react';
 import { Component } from 'react';
-import { Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, TouchableOpacity, FlatList } from 'react-native';
 import { thumbnailImage } from '../../shared';
 import { firstLetterUpper } from '../helper';
+import AutoHeightImage from 'react-native-auto-height-image';
 import theme from './theme';
 
 const categoriesFilter: string[] = ['jewelry', 'belts', 'hats', 'scarves', 'gloves'];
@@ -35,7 +36,7 @@ export default class SidebarScroll extends Component<Props> {
     private _renderItem = (props: {item: Product, index: number}) => {
         return (
             <TouchableOpacity key={props.item.id} style={[theme.scrollCell,theme.scrollCellBorder]} onPress={() => this._addNewDragAndDropSlot(props.item)}>
-                <Image style={theme.imageLayout} source={{uri: `${thumbnailImage}${props.item.id}`}}></Image>
+                <AutoHeightImage  source={{uri: `${thumbnailImage}${props.item.id}`}} width={80}/>
                 {/* <View style={theme.scrollCellDivider}/> */}
                 <TouchableOpacity onPress={() => this.props.navigateToProductSingle(props.item)}>
                     <Text style={[theme.scrollCellText, {fontFamily: 'LatoBold'}]}>{props.item.brand}</Text>

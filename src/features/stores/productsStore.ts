@@ -8,8 +8,10 @@ import {
     createBookmark, 
     getBookmarksByUserId, 
     deleteBookmark,
-    getProductsByCategory
+    getProductsByCategory,
 } from '../../services';
+
+import { slotsOrder } from '../shared';
 
 
 export default class ObservableStore implements IProductStore {
@@ -55,8 +57,7 @@ export default class ObservableStore implements IProductStore {
     public  getCollection = async (slots: Slot[]) => {
         const ids: number[] = slots.map((slot: Slot) => slot.productId);
         await getProductsByIds(ids).then((products: Product[]) => {
-            console.log([...products])
-            this.collection = products
+            this.collection = slotsOrder(ids, products);
         });
         this.arrayImages = this.collection.map( (product: Product) => {
             return { 

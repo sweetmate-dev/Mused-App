@@ -6,7 +6,7 @@ import {
 
 import theme from '../theme';
 import SlotMachineItem from '../SlotMachineItem';
-import { changeOrderProductsImages, makeId } from '../../../services';
+import {  makeId } from '../../../services';
 
 type Props = {
     arrayImgs: ProductImage[];
@@ -52,9 +52,10 @@ export default class BrowseItems extends Component<Props> {
         } = this.props;
         return arrayImgs.map( (slotProduct: ProductImage, index: number)  => {
             if (slotProduct.id === slotNumber) {
-                let _arrayImgs: ProductImage[] = changeOrderProductsImages(arrayImgs, slotNumber);
+                // let _arrayImgs: ProductImage[] = changeOrderProductsImages(arrayImgs, slotNumber);
+                let _arrayImgs: ProductImage[] = [slotProduct];
                 if (newImgUrl) {
-                    _arrayImgs.splice(-1,1);
+                    _arrayImgs.length > 1 &&  _arrayImgs.splice(-1,1);
                     _arrayImgs.push({img: newImgUrl.img, id: makeId()});
                 }
                 return (
@@ -84,6 +85,7 @@ export default class BrowseItems extends Component<Props> {
                     <Animated.Image
                         style={[theme.itemImage, {opacity: this.props.fadeAnim}]}
                         source={slotProduct.img}
+                        resizeMode={'contain'}
                          />
                 </TouchableHighlight>
             )

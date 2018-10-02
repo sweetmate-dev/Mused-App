@@ -26,7 +26,8 @@ export default class CollectionItems extends Component<Props> {
                   <Image
                     style={[theme.itemImage, style, {marginHorizontal: 4}]}
                     source={imgUrl.img}
-                    key={index} />
+                    key={index} 
+                    resizeMode={'contain'}/>
             );
         }
         )}
