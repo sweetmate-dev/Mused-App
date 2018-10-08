@@ -12,7 +12,7 @@ import {
         height: 55, 
         width: width, 
         backgroundColor: '#fff',
-        borderTopWidth: 1,
+        borderTopWidth: 0,
         borderTopColor: '#eee',
         justifyContent: 'center', 
         flexDirection: 'row',

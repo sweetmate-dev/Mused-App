@@ -52,31 +52,42 @@ export default class BrowseItem extends Component<Props, State> {
         }  
     }
     render() {
-        const {item: { brand, unbrandedName, id, priceLabel }} =  this.props;
+        const {item: { brand, unbrandedName, id, /*priceLabel*/ }, index} =  this.props;
+        let borderStyle = {};
+        if(index % 2 === 0) {
+            borderStyle = {
+                borderRightWidth: 1.5,
+                borderBottomWidth: 2,
+                borderColor: '#f9f9f9'
+            }
+        } else {
+            borderStyle = {
+                borderBottomWidth: 2,
+                borderColor: '#f9f9f9'
+            }
+        }
         return (
-            <View style={[theme.productContainer]}>
+            <View style={[theme.productContainer, borderStyle]}>
                 {this._renderLikeIcon()}
                 <View style={theme.imageContainer}>
-                    <TouchableWithoutFeedback onPress={this._likeIt} style={{height: 120, width: 80, backgroundColor: '#000'}}>
+                    <TouchableWithoutFeedback onPress={this._likeIt} style={theme.image}>
                         <View style={theme.imageWrapper}>
-                        <Image
-                            source={{uri: `${thumbnailImage}${id}`}}
-                            style={[theme.image, {marginBottom: 10}]}
-                            resizeMode={'contain'}
-                        />
-                        
+                            <Image
+                                source={{uri: `${thumbnailImage}${id}`}}
+                                style={theme.image}
+                                resizeMode={'contain'}
+                            />                        
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
-                <View style={theme.imgDivider} />
+                {/* <View style={theme.imgDivider} /> */}
                 <View style={theme.descContainer}>
-                <TouchableWithoutFeedback
-                    onPress={this._navigateToProductSingle}>
-                    <View style={theme.descWrapper}>
-                        <Text style={theme.designerTxt}>{brand}</Text>
-                        <Text style={[theme.descTxt, {height: 27}]}>{unbrandedName}</Text>
-                        <Text style={theme.descTxt}>{priceLabel}</Text>
-                    </ View>
+                    <TouchableWithoutFeedback onPress={this._navigateToProductSingle}>
+                        <View style={theme.descWrapper}>
+                            <Text style={theme.designerTxt}>{brand.toUpperCase()}</Text>
+                            <Text style={[theme.descTxt, {paddingVertical: 3}]}>{unbrandedName}</Text>
+                            {/* <Text style={theme.descTxt}>{priceLabel}</Text> */}
+                        </ View>
                     </TouchableWithoutFeedback>
                 </View>
 

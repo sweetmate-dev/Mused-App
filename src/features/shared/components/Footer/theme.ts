@@ -9,9 +9,9 @@ import {
     container: {
         position: 'absolute', 
         bottom: 55, 
-        height: 130, 
+        height: 110, 
         width: width, 
-        backgroundColor: '#fff'
+        backgroundColor: '#FFF'
     },
     containerFooterButtons: {
         borderTopWidth: 1,

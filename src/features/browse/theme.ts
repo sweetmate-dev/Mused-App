@@ -3,10 +3,11 @@ import {
     StyleSheet
 } from 'react-native';
 
+const { width } = Dimensions.get('window');
 const ITEM_CONT_PADDING: number = 4;
-const IMAGE_WIDTH: number = 100;
+const IMAGE_WIDTH: number = width / 3;
+const IMAGE_HEIGHT: number = 150;
 
-const { width} = Dimensions.get('window');
 
 export default  StyleSheet.create({
     container: {
@@ -16,11 +17,13 @@ export default  StyleSheet.create({
         backgroundColor: '#fff'
     },
     listTitleContainer: {
-        flex: 0.2,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10,
         marginBottom: 10,
+    },
+    videoPlayer: {
+        width: width,
     },
     listTitle: {
         fontFamily: 'Lato',
@@ -35,17 +38,12 @@ export default  StyleSheet.create({
         marginBottom: 170
     },
     productContainer: {
-        display: 'flex',
-        flexDirection: 'column',
         overflow: 'hidden',
-        width: width/2,
+        width: width / 2,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: 3,
-        paddingBottom: 8,
         paddingLeft: ITEM_CONT_PADDING,
         paddingRight: ITEM_CONT_PADDING,
-        height: 242
     },
     separator: {
         // borderStyle: 'dotted',
@@ -73,17 +71,14 @@ export default  StyleSheet.create({
     },
     imageContainer: {
         width: IMAGE_WIDTH,
-        display: 'flex',
-        flex: 0.69,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 20,
-        marginBottom: 12,
+        paddingVertical: 10
     },
     image: {
         width: IMAGE_WIDTH,
-        height: 140,
+        height: IMAGE_HEIGHT,
     },
     imgDivider: {
         width: 20,
@@ -97,14 +92,14 @@ export default  StyleSheet.create({
         borderBottomWidth: 1
     },
     descContainer: {
-        display: 'flex',
         alignItems: 'center',
-        flex: 0.3,
-        width: 150
+        width: IMAGE_WIDTH * 1.2,
+        height: 70,
+        paddingBottom: 15,
     },
     designerTxt: {
         fontFamily: 'LatoBold',
-        fontSize: 11,
+        fontSize: 12,
         color: '#000',
         textAlign: 'center',
         lineHeight: 14,
@@ -139,17 +134,20 @@ export default  StyleSheet.create({
 
     footerComponent: {
         width: width,
-        height: 20
+        height: 10
     },
     imageWrapper: {
         flexDirection: 'column',
         justifyContent: 'center', 
         alignItems: 'center', 
-        height: 140,
+        height: IMAGE_HEIGHT,
         overflow: 'hidden'
     },
     descWrapper: {
         display: 'flex',
         alignItems: 'center'
+    },
+    backgroundVideo: {
+        width: width - 40,
     }
 });

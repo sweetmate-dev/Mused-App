@@ -18,7 +18,7 @@ import {
         marginBottom: -4
    },
     footerCheckText: {
-        fontSize: 11,
+        fontSize: 9,
         fontFamily: 'Lato'
     },
     footerButtonContainer: {

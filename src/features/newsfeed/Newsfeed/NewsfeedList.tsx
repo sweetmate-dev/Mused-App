@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
   View,
-  FlatList
+  FlatList,
+  StatusBar
 } from 'react-native';
 
 import  NewsfeedItem from './NewsfeedItem';
@@ -17,11 +18,15 @@ export default class NewsfeedList extends Component<Props> {
     componentDidMount() {  
         this.props.getPosts();
         this.props.getBookmarksByUserId();
-        }
+    }
     render() {
 
         return (
             <View style={theme.container}>
+                <StatusBar
+                    backgroundColor="white"
+                    barStyle="dark-content"
+                />
                 {(this.props.listOfPosts && this.props.listOfPosts.length) && <FlatList
                     data={this.props.listOfPosts}
                     renderItem={this._renderItem}

@@ -7,22 +7,28 @@ import {
 
  export default StyleSheet.create({
     itemImage: {
-         width: 66, 
-         height: 85,
-         marginHorizontal: 4,
-         marginVertical: 2
+         width: width / 6, 
+         height: 100,
+    },
+    itemImageContainer: {
+        width: width / 6, 
+        height: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 4,
+        marginVertical: 2
     },
     imagesContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        height: 130,
-        borderTopWidth: 1,
+        height: 110,
+        borderTopWidth: 0,
         borderTopColor: '#f1f1f1',
         width: width,
         paddingLeft: 5,
         paddingRight: 5,
-        position: 'relative'
+        position: 'relative',
     },
     buttonPlus: {
         position: 'absolute',
@@ -32,15 +38,6 @@ import {
         width: 22,
         height: 22,
         backgroundColor: '#fff',
-        borderRadius: 22 / 2,
-        borderTopColor: '#dcdcdc',
-        borderTopWidth: 1,
-        borderBottomColor: '#dcdcdc',
-        borderBottomWidth: 1,
-        borderLeftColor: '#dcdcdc',
-        borderLeftWidth: 1,
-        borderRightColor: '#dcdcdc',
-        borderRightWidth: 1,
         justifyContent: 'center',
         alignItems: 'center',
         display: 'flex'

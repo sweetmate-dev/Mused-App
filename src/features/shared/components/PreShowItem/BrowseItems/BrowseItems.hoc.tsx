@@ -18,7 +18,7 @@ function BrowseItemsHOC(BrowseItems: any) {
       render() {
           const { root: { ui, products, slots}, animate, fadeAnim } = this.props;
           const { contextMenuIsVisible }  = ui;
-          const { arrayImages } = products;
+          const { arrayImages, moveImageToLeft } = products;
           const { 
             setSlotNumber,
             slotNumber, 
@@ -39,16 +39,16 @@ function BrowseItemsHOC(BrowseItems: any) {
                     isMoveProduct={isMoveProduct}
                     contextMenuIsVisible={contextMenuIsVisible}
                     secondSlotNumber={secondSlotNumber}
+                    moveImageToLeft={moveImageToLeft}
                     moveSlotLeft={this._moveSlotLeft}
                     animate={animate}
                     fadeAnim={fadeAnim}
                     setSlotMachineEffect={setSlotMachineEffect}
                 />
       }
-      _changeArrayImages = (slotNumber: number ) => {
-        const { root: { products, slots } } = this.props;
+      _changeArrayImages = (slotNumber: number, newImgUrl: ProductImage ) => {
+        const { root: { products } } = this.props;
           const { changeArrayImages } = products;
-          const { newImgUrl } = slots;
           changeArrayImages(slotNumber, newImgUrl);
       }
 

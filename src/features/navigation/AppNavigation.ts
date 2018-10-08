@@ -2,12 +2,14 @@ import { createStackNavigator } from 'react-navigation';
 
 import { Newsfeed } from '../newsfeed'
 import { Collection } from '../collection';
+import { VideoPlayer } from '../video-player';
 import { Browse } from '../browse';
 import { Zoom } from '../zoom';
 import { Filter } from '../filter';
 import { DragAndDrop } from '../drag-and-drop';
 import { 
     COLLECTION,
+    VIDEOPLAYER,
     BROWSE, 
     NEWSFEED, 
     ZOOM, 
@@ -23,6 +25,9 @@ export default createStackNavigator(
         },
         [COLLECTION]: {
             screen: Collection
+        },
+        [VIDEOPLAYER]: {
+            screen: VideoPlayer
         },
         [BROWSE]: {
             screen:  Browse
@@ -42,7 +47,7 @@ export default createStackNavigator(
     headerMode: 'float',
     cardStyle:{
         backgroundColor: '#fff'
-      },
+    },
     transitionConfig
   },
 

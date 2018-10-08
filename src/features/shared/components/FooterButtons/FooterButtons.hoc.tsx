@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import FooterButtons from './FooterButtons';
-import { COLLECTION, BROWSE, FILTER, VIEW } from '../../../shared';
+import { COLLECTION, BROWSE, VIDEOPLAYER, FILTER, VIEW } from '../../../shared';
 import { ROOT_STORE } from '../../../stores';
 type Props = {
     root?: RootStore;
@@ -16,7 +16,7 @@ function FooterButtonsHOC(FooterButtons: any) {
           const { createNewOutfit } = products;
           const { newImgUrl } = slots;
           const footerIsVisible = 
-            currentRoute === COLLECTION || currentRoute === BROWSE ||  currentRoute === FILTER || currentRoute === VIEW;
+            currentRoute === COLLECTION || currentRoute === VIDEOPLAYER || currentRoute === BROWSE ||  currentRoute === FILTER || currentRoute === VIEW;
         return (
             footerIsVisible &&  
             <FooterButtons 

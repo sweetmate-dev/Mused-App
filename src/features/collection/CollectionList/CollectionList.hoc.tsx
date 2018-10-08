@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import CollectionList from './CollectionList';
-import { Header, BROWSE, COLLECTION } from '../../shared';
+import { Header, COLLECTION, VIDEOPLAYER } from '../../shared';
 import { ROOT_STORE } from '../../stores';
 type Props = {
     navigation: any;
@@ -26,20 +26,28 @@ function CollectionHOC(Collection: any) {
                     listOfCollection={listOfCollection} 
                     getCollection={getCollection} 
                     navigation={navigation}
-                    goToBrowse={this._goToBrowse}
+                    goToVideo={this._goToVideo}
                     listOfBookmarks={listOfBookmarks}
                     createBookmark={createBookmark}
                     deleteBookmarkById={deleteBookmarkById}
                 />
       }
 
-      _goToBrowse = (slotNumber: number, alternatives: number[]) => {
+      _goToVideo = (slotNumber: number, alternatives: number[]) => {
         const { root: { ui, slots } } = this.props;
         const { navigate } = ui;
         const { setSlotNumber } = slots;
         setSlotNumber(slotNumber);
-        navigate(BROWSE, COLLECTION, {alternatives, transition: 'opacityTransition'});
+        navigate(VIDEOPLAYER, COLLECTION, {alternatives, transition: 'opacityTransition'});
       }
+
+    //   _goToBrowse = (slotNumber: number, alternatives: number[]) => {
+    //     const { root: { ui, slots } } = this.props;
+    //     const { navigate } = ui;
+    //     const { setSlotNumber } = slots;
+    //     setSlotNumber(slotNumber);
+    //     navigate(BROWSE, COLLECTION, {alternatives, transition: 'opacityTransition'});
+    //   }
     }
     return NewComp;
   }

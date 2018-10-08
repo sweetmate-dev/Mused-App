@@ -35,14 +35,14 @@ export default class Header extends Component<Props> {
         return (
             <View
                 style={{
-                    marginTop: 20,
+                    marginTop: -15,
                     backgroundColor: '#fff',
                     height: 70, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 10 }}>
                 <View style={{ flex: 0.2 }}>
                     {navigation.state.routeName !== NEWSFEED && <View  style={{width: 20}}>
                         <Ripple rippleContainerBorderRadius={15 / 2} rippleSize={20} rippleCentered={true} onPress={this._goBack}>
                         <Image
-                            style={{width: 15, height: 15}}
+                            style={{width: 10, height: 10}}
                             source={require('../../../../../assets/images/arrow-icon.png')} />
                         </ Ripple>
                     </View>}
@@ -53,15 +53,15 @@ export default class Header extends Component<Props> {
                         source={require('../../../../../assets/images/logo.png')} />
                 </View>
 
-                <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', flex: 0.2}}>
+                <View style={{ alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row', flex: 0.2}}>
                     { showContent &&  <TouchableWithoutFeedback
                         onPress={logout}>
                         <Image
-                            style={{width: 20, height: 20}}
+                            style={{width: 15, height: 15, marginRight: 10}}
                             source={require('../../../../../assets/images/profile-icon.png')} />
                     </TouchableWithoutFeedback> }
                     { showContent &&  <Image
-                        style={{width: 20, height: 20, paddingRight: 10, marginRight: 10}}
+                        style={{width: 15, height: 15, marginRight: 10}}
                         source={require('../../../../../assets/images/filter-icon.png')} /> }
                 </View>
 

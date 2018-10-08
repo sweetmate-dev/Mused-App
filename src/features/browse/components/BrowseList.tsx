@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    FlatList
+    FlatList,
 } from 'react-native';
 
 import BrowseItem from './BrowseItem';
 import theme from '../theme';
-
 
 type State = {
     likedItemIndex: null | number;
@@ -32,10 +31,27 @@ export default class Browser extends Component<Props, State> {
         const {getAlternatives, navigation} = this.props;
         const productIds: number[] = navigation.getParam('alternatives', []);
         getAlternatives(productIds);
-      }
+    }
     render() {
         const headerComponent = (
             <View style={theme.listTitleContainer}>
+                {/* <View style={theme.videoPlayer}>
+                    <VideoPlayer
+                        videoProps={{
+                            shouldPlay: true,
+                            resizeMode: Video.RESIZE_MODE_CONTAIN,
+                            source: {
+                                uri: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
+                            },
+                            isLooping: true,
+                            style: {
+                                margin: 20
+                            }
+                        }}                    
+                        isPortrait={true}
+                        playFromPositionMillis={0}
+                    />
+                </View>                 */}
                 <Text style={theme.listTitle}>{`${this.props.listOfAlternatives.length } items found`.toUpperCase()}</Text>
             </View>);
         const _listOfAlternatives = [...this.props.listOfAlternatives];
@@ -51,7 +67,7 @@ export default class Browser extends Component<Props, State> {
                         renderItem={this._renderItem}
                         keyExtractor={ item => `${item.id}`}
                         numColumns={2}
-                        onScroll={this.props.hideContextMenu}
+                        scrollEventThrottle={300}
                     />}
                 </View>
             </View>

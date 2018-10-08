@@ -14,7 +14,9 @@ declare module 'expo' {
   export const Facebook: any;
   // tslint:disable-next-line
   export const Constants: any;
-  }
+  // tslint:disable-next-line
+  export const Video: any;
+}
 
 declare module '@expo/vector-icons' {
     // tslint:disable-next-line
@@ -25,9 +27,13 @@ declare module '@expo/vector-icons' {
   export const Ionicons: any;
   // tslint:disable-next-line
   export const Entypo: any;
-  }
+}
 
-  
+declare module '@expo/videoplayer' {
+  // tslint:disable-next-line
+  const VideoPlayer: any;
+  export default VideoPlayer;
+}
 
 declare module 'react-native-material-ripple' {
      // tslint:disable-next-line

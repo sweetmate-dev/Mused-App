@@ -15,7 +15,8 @@ const notLikeIconUrl = require('../../../../assets/images/star2.png');
 type Props = {
     item: Product;
     countAlter: string;
-    goToBrowse: (slotNumber: number, alternatives: number[]) => void;
+    goToVideo: (slotNumber: number, alternatives: number[]) => void;
+    onLoadImage: () => void;
     alternatives: number[];
     index: number;
     listOfBookmarks: Bookmark[];
@@ -69,10 +70,11 @@ export default class CollectionItem extends Component<Props, State> {
                 <View style={theme.imageContainer}>
                     <View style={theme.clickableImageContainer}>
                         <Image
-                                source={{uri: `${thumbnailImage}${id}`}}
-                                resizeMode={'contain'}
-                                style={theme.itemImage}
-                            />
+                            source={{uri: `${thumbnailImage}${id}`}}
+                            resizeMode={'contain'}
+                            style={theme.itemImage}
+                            onLoadEnd={this.props.onLoadImage}
+                        />
                         <Text style={theme.clickableTitle}>{brand.toUpperCase()}</Text>
                         <Text style={theme.clickableSubTitle}>{unbrandedName}</Text>
                     </View>
@@ -95,8 +97,8 @@ export default class CollectionItem extends Component<Props, State> {
     }
 
     _goToBrowse = () => {
-        const { goToBrowse, item, alternatives } = this.props;
-        goToBrowse(item.id, alternatives);
+        const { goToVideo, item, alternatives } = this.props;
+        goToVideo(item.id, alternatives);
     }
 
     _createBookmark = () => {

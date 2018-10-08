@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   View,
-  FlatList
+  FlatList,
 } from 'react-native';
 
 import  CollectionItem from './CollectionItem.hoc';
@@ -28,14 +28,22 @@ type Props = {
     listOfCollection: Product[];
     listOfBookmarks: Bookmark[];
     authorItem: Author;
-    goToBrowse: (slotNumber: number, alternatives: number[]) => void;
+    goToVideo: (slotNumber: number, alternatives: number[]) => void;
     createBookmark: (productId: number) => void;
     deleteBookmarkById: (_id: any) => void;
 }
 
-export default class CollectionList extends Component<Props> {
+type State = {
+    showFooter: boolean;
+}
+
+export default class CollectionList extends Component<Props, State> {
 
     slots: Slot[];
+
+    state: State = {
+        showFooter: false
+    }
     
     componentDidMount() {
         const { navigation, getCollection } = this.props;
@@ -44,7 +52,7 @@ export default class CollectionList extends Component<Props> {
     }
 
     render() {
-        const {  listOfCollection } = this.props;
+        const {  listOfCollection } = this.props;        
         return (
             <View style={theme.container}>
                 <View style={theme.collectionListContainer}>
@@ -53,7 +61,7 @@ export default class CollectionList extends Component<Props> {
                         renderItem={this._renderItem}
                         keyExtractor={ (item) => `${item.id}`}
                         ListHeaderComponent={this._renderHeader}
-                        ListFooterComponent={this._renderFooter}
+                        ListFooterComponent={this._renderFooter.bind(this)}
                     /> }
                 </View>
             </View>
@@ -65,8 +73,9 @@ export default class CollectionList extends Component<Props> {
             item={props.item} 
             countAlter={`${this.slots[props.index].alternatives.length}`}
             index={props.index}
-            goToBrowse={this.props.goToBrowse}
+            goToVideo={this.props.goToVideo}
             alternatives={this.slots[props.index].alternatives}
+            onLoadImage={this._onLoadImage}
         />;
 
     _renderHeader = () =>
@@ -75,8 +84,10 @@ export default class CollectionList extends Component<Props> {
     _renderFooter = () => {
         const authorItem: Author = this.props.navigation.getParam('authorItem');
         return (
-            <CollectionFooter item={authorItem} title={testDataFooter.title} onCollection={true} />
+            <CollectionFooter item={authorItem} visible={this.state.showFooter} title={testDataFooter.title} onCollection={true} />
         )
     }
-       
+    _onLoadImage = () => {
+        this.setState({showFooter: true})
+    }
  }

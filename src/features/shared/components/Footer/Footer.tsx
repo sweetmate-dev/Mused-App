@@ -4,7 +4,7 @@ import {
   View
 } from 'react-native';
 import PreShowItems from '../PreShowItem/PreShowItems.hoc';
-import { COLLECTION, BROWSE, FILTER } from '../../../shared';
+import { COLLECTION, BROWSE, FILTER, VIDEOPLAYER } from '../../../shared';
 import theme from './theme';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 export default class Footer extends Component<Props> {
     render() {
         const { currentRoute  } = this.props;
-        const footerIsVisible = currentRoute === COLLECTION || currentRoute === BROWSE || currentRoute === FILTER;
+        const footerIsVisible = currentRoute === COLLECTION || currentRoute === VIDEOPLAYER || currentRoute === BROWSE || currentRoute === FILTER;
         return (
             footerIsVisible ? this._renderFooter() : null
         )

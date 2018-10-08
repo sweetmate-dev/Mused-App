@@ -11,6 +11,7 @@ type Props = {
     item: any;
     title: string;
     onCollection?: boolean;
+    visible: boolean;
 }
 export default class CollectionFooter extends Component<Props> {
     static defaultProps = {
@@ -25,6 +26,7 @@ export default class CollectionFooter extends Component<Props> {
             authorProfilePhoto,
             authorName 
             } } = this.props;
+        if(!this.props.visible) return null        
         return (
             <View style={theme.containerFooter}>
                 <View style={theme.containerFooterWithBorder}>

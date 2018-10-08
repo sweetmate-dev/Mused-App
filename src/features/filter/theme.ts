@@ -2,9 +2,9 @@ import {
     Dimensions,
     StyleSheet
 } from 'react-native';
-
+const { width } = Dimensions.get('window');
+const IMAGE_WIDTH: number = width / 3;
 const ITEM_CONT_PADDING: number = 4;
-const IMAGE_WIDTH: number = 84;
 
 const deviceWidth: number = Dimensions.get('window').width;
 export default StyleSheet.create({

@@ -37,6 +37,7 @@ export default class FilterItem extends Component<Props> {
                             <Image
                                 source={imgUrl}
                                 style={[theme.image]}
+                                resizeMode={'contain'}
                             />
                         </View>
                     </TouchableWithoutFeedback>

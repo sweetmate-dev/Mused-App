@@ -40,7 +40,6 @@ import {
         justifyContent: 'space-between', 
         backgroundColor: '#fff',
         flexDirection: 'row',
-        marginBottom: 20,
         marginTop: 10
     },
     containerHeader: {
@@ -74,8 +73,8 @@ import {
         marginBottom: 9
     },
     itemImage: {
-        width: 100, 
-        height: 100,
+        width: width / 3, 
+        height: 180,
     },
     alterContainer: {
         flex: 0.2
@@ -119,7 +118,7 @@ import {
         alignItems: 'center',
         backgroundColor: '#fff',
         flexDirection: 'column',
-        height: 140,
+        paddingVertical: 20,
         overflow: 'hidden'
     },
     clickableTitle: {

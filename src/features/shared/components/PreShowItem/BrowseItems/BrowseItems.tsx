@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {
   Animated,
-  TouchableHighlight
+  TouchableHighlight,
+  Easing
 } from 'react-native';
 
 import theme from '../theme';
-import SlotMachineItem from '../SlotMachineItem';
-import {  makeId } from '../../../services';
+import { thumbnailImage } from '../../../imagesUrls';
 
 type Props = {
     arrayImgs: ProductImage[];
@@ -16,15 +16,23 @@ type Props = {
     newImgUrl: ProductImage | null;
     isMoveProduct: boolean;
     setNewImgUrl: (newImgUrl: ProductImage) => void;
-    changeArrayImages: (slotNumber: number) => void;
+    changeArrayImages: (slotNumber: number, newSlot: ProductImage) => void;
     showContextMenu: (slotNumber: number | string) => void;
     setSlotNumber: (slotNumber: number | string) => void;
+    moveImageToLeft: (slotNumber: number | string) => void;
     moveSlotLeft: () => void;
-    animate: () => void;
     fadeAnim: Animated.AnimatedValue;
     setSlotMachineEffect: (flag: boolean) => void;
 }
-export default class BrowseItems extends Component<Props> {
+
+type State = {
+    marginTop: any;
+}
+
+export default class BrowseItems extends Component<Props, State> {
+    state: State = {
+        marginTop: new Animated.Value(0),
+    };
 
     componentWillReceiveProps(nextProps: Props) {
         if (nextProps.isMoveProduct) {
@@ -41,61 +49,61 @@ export default class BrowseItems extends Component<Props> {
         const { 
             arrayImgs, 
             slotNumber, 
-            newImgUrl, 
-            setNewImgUrl, 
-            changeArrayImages, 
+            newImgUrl,  
             showContextMenu, 
-            contextMenuIsVisible, 
-            setSlotNumber, 
-            secondSlotNumber,
-            setSlotMachineEffect
         } = this.props;
+        const _this = this;
         return arrayImgs.map( (slotProduct: ProductImage, index: number)  => {
-            if (slotProduct.id === slotNumber) {
-                // let _arrayImgs: ProductImage[] = changeOrderProductsImages(arrayImgs, slotNumber);
-                let _arrayImgs: ProductImage[] = [slotProduct];
-                if (newImgUrl) {
-                    _arrayImgs.length > 1 &&  _arrayImgs.splice(-1,1);
-                    _arrayImgs.push({img: newImgUrl.img, id: makeId()});
-                }
+            if (slotProduct.id === slotNumber && newImgUrl) { 
+                this.startAnimation(newImgUrl)       
                 return (
-                    <SlotMachineItem 
-                        arrayImgs={_arrayImgs}
-                        key={index}
-                        slotNumber={slotNumber}
-                        newImgUrl={newImgUrl}
-                        setNewImgUrl={setNewImgUrl}
-                        animate={this._animate}
-                        changeArrayImages={changeArrayImages}
-                        fadeOpacity={this.props.fadeAnim}
-                        showBorder={slotProduct.id === secondSlotNumber && contextMenuIsVisible}
-                        setSlotNumber={setSlotNumber}
-                        showContextMenu={() => showContextMenu(slotProduct.id)}
-                        setSlotMachineEffect={setSlotMachineEffect}
-                        isBrowseSlotMachine={true}
-                     />
+                    <TouchableHighlight 
+                        style={[theme.itemImageContainer ]}
+                        onPress={() => showContextMenu(slotProduct.id)}
+                        underlayColor={'transparent'}
+                        key={index} >
+                        <Animated.Image
+                            style={[theme.itemImage, {marginTop: _this.state.marginTop}]}
+                            source={{uri: `${thumbnailImage}${slotProduct.id}`}}
+                            resizeMode={'contain'}
+                        />
+                    </TouchableHighlight>
                 )
             }
             return (
                 <TouchableHighlight 
-                    style={[theme.collectionItem, slotProduct.id === secondSlotNumber && contextMenuIsVisible ? theme.collectionOpacity : {} ]}
+                    style={[theme.itemImageContainer ]}
                     onPress={() => showContextMenu(slotProduct.id)}
                     underlayColor={'transparent'}
                     key={slotProduct.id} >
                     <Animated.Image
-                        style={[theme.itemImage, {opacity: this.props.fadeAnim}]}
-                        source={slotProduct.img}
+                        style={[theme.itemImage]}
+                        source={{uri: `${thumbnailImage}${slotProduct.id}`}}
                         resizeMode={'contain'}
-                         />
+                    />
                 </TouchableHighlight>
             )
         }
            
-        )};
+    )};
 
-
-    _animate = () => {
-       this.props.animate();
+    startAnimation = (newImgUrl: any) => {
+        const { slotNumber, changeArrayImages, setSlotNumber, setNewImgUrl, setSlotMachineEffect } = this.props;
+        this.state.marginTop.setValue(0);
+        Animated.timing(                 
+            this.state.marginTop,
+            {
+                toValue: 300,
+                duration: 200,
+                easing: Easing.cubic
+            }
+        ).start(async () => {
+            this.state.marginTop.setValue(0);
+            await changeArrayImages(slotNumber, newImgUrl);
+            await setSlotNumber(newImgUrl.id);
+            await setNewImgUrl(null);
+            setSlotMachineEffect(false);
+        })
     }
 
     _moveSlotLeft =  () =>
