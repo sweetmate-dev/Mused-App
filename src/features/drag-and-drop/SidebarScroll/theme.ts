@@ -47,12 +47,15 @@ export default StyleSheet.create({
         height: 40
 
     },
-    scrollCellBorder:{
-        borderColor: 'transparent',
-        borderWidth: 0.5,
-        borderTopWidth:0,
-        borderBottomWidth:0,
-        paddingBottom: 40
+    scrollCellBorder:{        
+        paddingBottom: 20,
+        alignItems: 'center'
+    },
+    divLine: {
+        width: 35,
+        height: 1,
+        backgroundColor: '#000000',
+        marginTop: 20
     },
     scrollCellText:{
         textAlign:'center',

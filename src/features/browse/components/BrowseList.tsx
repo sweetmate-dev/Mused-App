@@ -3,6 +3,7 @@ import {
     View,
     Text,
     FlatList,
+    Animated
 } from 'react-native';
 
 import BrowseItem from './BrowseItem';
@@ -10,6 +11,7 @@ import theme from '../theme';
 
 type State = {
     likedItemIndex: null | number;
+    fadeIn: any
 };
 type Props = {
     navigation: any;
@@ -25,38 +27,23 @@ type Props = {
 };
 export default class Browser extends Component<Props, State> {
     state: State = {
-        likedItemIndex: null
+        likedItemIndex: null,
+        fadeIn: new Animated.Value(0)
     }
     componentDidMount() {
         const {getAlternatives, navigation} = this.props;
         const productIds: number[] = navigation.getParam('alternatives', []);
         getAlternatives(productIds);
+        this._fadeIn()
     }
     render() {
         const headerComponent = (
             <View style={theme.listTitleContainer}>
-                {/* <View style={theme.videoPlayer}>
-                    <VideoPlayer
-                        videoProps={{
-                            shouldPlay: true,
-                            resizeMode: Video.RESIZE_MODE_CONTAIN,
-                            source: {
-                                uri: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
-                            },
-                            isLooping: true,
-                            style: {
-                                margin: 20
-                            }
-                        }}                    
-                        isPortrait={true}
-                        playFromPositionMillis={0}
-                    />
-                </View>                 */}
                 <Text style={theme.listTitle}>{`${this.props.listOfAlternatives.length } items found`.toUpperCase()}</Text>
             </View>);
         const _listOfAlternatives = [...this.props.listOfAlternatives];
         return (
-            <View style={theme.container}>
+            <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
                 <View style={theme.productListContainer}>
                     {
                     _listOfAlternatives.length > 0 && 
@@ -70,7 +57,7 @@ export default class Browser extends Component<Props, State> {
                         scrollEventThrottle={300}
                     />}
                 </View>
-            </View>
+            </Animated.View>
         )
     }
 
@@ -88,5 +75,17 @@ export default class Browser extends Component<Props, State> {
         />
     _likeItem = (index: number) =>
         this.setState({likedItemIndex: index});
+
+    _fadeIn = () => {
+        this.state.fadeIn.setValue(0)
+        Animated.timing(                 
+            this.state.fadeIn,            
+            {
+                toValue: 1,                   
+                duration: 800, 
+                useNativeDriver: true             
+            }
+        ).start();                        
+    }
 
 }

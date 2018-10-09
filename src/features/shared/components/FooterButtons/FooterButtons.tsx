@@ -45,10 +45,10 @@ export default class Footer extends Component<Props> {
     _renderFooter = () => {
         const { currentRoute  } = this.props;
         let buttons: HashMap<string>[] = [];
-        if (currentRoute === COLLECTION) {
+        if (currentRoute === COLLECTION || currentRoute === VIDEOPLAYER) {
             buttons = [...footerButtons.filter((button: HashMap<string>) => button.text === LOVE)]
         }
-        if (currentRoute === BROWSE || currentRoute === VIDEOPLAYER) {
+        if (currentRoute === BROWSE) {
             buttons = [...footerButtons]
         }
         if (currentRoute === VIEW_SCREEN) {
@@ -59,7 +59,7 @@ export default class Footer extends Component<Props> {
                 style={[
                     theme.container,
                     currentRoute === FILTER ? {backgroundColor: '#000'} : {},
-                    currentRoute === VIEW_SCREEN ? {backgroundColor: '#dfdede'} : {},
+                    currentRoute === VIEW_SCREEN ? {backgroundColor: '#FFF'} : {},
                     {opacity: this.state.fadeIn}]}>
                  { currentRoute === FILTER && this._renderDarkFooterButtons() }
                  { (currentRoute === COLLECTION || currentRoute === BROWSE || currentRoute === VIDEOPLAYER ) && this._renderWhiteFooterButtons(buttons) }
@@ -116,7 +116,7 @@ export default class Footer extends Component<Props> {
                  <FooterButton
                          text={button.text}
                          icon={button.icon}
-                         greyTheme={true}
+                         whiteTheme={true}
                          navigate={actions[button.text]}
                          key={button.text}
                          newImgUrl={this.props.newImgUrl}

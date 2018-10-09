@@ -4,7 +4,7 @@ import {
     View,
     Image,
     TouchableWithoutFeedback,    
-    TouchableHighlight
+    TouchableHighlight,
 } from 'react-native';
 import { thumbnailImage } from '../../shared';
 import theme from '../theme';
@@ -27,12 +27,12 @@ type Props = {
 }
 type State = {
     isLiked: boolean;
-    bookmark: Bookmark | null;
+    bookmark: Bookmark | null;    
 }
 export default class BrowseItem extends Component<Props, State> {
     state: State = {
         isLiked: false,
-        bookmark: null
+        bookmark: null,
     };
 
 
@@ -135,5 +135,5 @@ export default class BrowseItem extends Component<Props, State> {
             return;
         }
         createBookmark(id);
-    }
+    }    
 }

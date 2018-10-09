@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     Dimensions,
-    Image
+    Animated
 } from 'react-native';
 import { Video } from 'expo';
 // import VideoPlayer from '@expo/videoplayer';
 import theme from '../theme';
 import { VIDEOPLAYER } from '../../shared';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const VideoCover = require('../../../../assets/images/video_cover.jpg');
 
 type State = {
     likedItemIndex: null | number,
     isLoaded: boolean,
-    shouldPlay: boolean
+    shouldPlay: boolean,
+    fadeIn: any
 };
 type Props = {
     navigation: any;
@@ -26,15 +26,18 @@ export default class VideoPlayerScreen extends Component<Props, State> {
     state: State = {
         likedItemIndex: null,
         isLoaded: false,
-        shouldPlay: true
+        shouldPlay: false,
+        fadeIn: new Animated.Value(0)
     }
+    
     componentDidMount() {
         const { goToBrowse } = this.props;
+        this._fadeIn()
         setTimeout(() => {
             this.setState({shouldPlay: false}, () => {
                 goToBrowse()
             })            
-        }, 5000)
+        }, 2000)
     }
 
     componentWillReceiveProps(nextProps: Props) {
@@ -44,11 +47,11 @@ export default class VideoPlayerScreen extends Component<Props, State> {
         }
     }
     render() {
-        const { isLoaded, shouldPlay } = this.state
+        const { shouldPlay, fadeIn } = this.state
         return(
             <View style={theme.container}>
-                <Text style={theme.videoText}>Fetching alternatives to try...</Text>
-                <View style={theme.videoContainer}>
+                {/* <Text style={theme.videoText}>Fetching alternatives to try...</Text> */}
+                <Animated.View style={[theme.videoContainer, {opacity: fadeIn}]}>
                     <View style={theme.videoPlayer}>
                         {
                             this.props.navigation.state.routeName === VIDEOPLAYER &&
@@ -58,18 +61,19 @@ export default class VideoPlayerScreen extends Component<Props, State> {
                                 source={{uri: 'https://s3.eu-west-2.amazonaws.com/fash-video/ezgif.com-gif-to-mp4.mp4'}}
                                 isLooping
                                 style={{
-                                    flex: 1,
+                                    height: width,
                                     backgroundColor: '#ffffff',
-                                    width: width - 60,
-                                    paddingTop: 50,
+                                    width: width,
                                 }}
-                                width={width - 60}
+                                width={width}
                                 useNativeControls={false}
                                 onLoad={this.onLoadVideo}
+                                usePoster={false}
+                                posterSource={VideoCover}
                             />
                         }
                         
-                        {
+                        {/* {
                             !isLoaded &&
                             <Image
                                 style={{
@@ -84,9 +88,9 @@ export default class VideoPlayerScreen extends Component<Props, State> {
                                 resizeMode='contain'
                                 source={VideoCover}
                             />
-                        }
+                        } */}
                     </View>
-                </View>                
+                </Animated.View>                
             </View>
         )
     }
@@ -95,5 +99,19 @@ export default class VideoPlayerScreen extends Component<Props, State> {
         console.log(status)
         this.setState({isLoaded: true})
     }
+
+    _fadeIn = () => {
+        this.state.fadeIn.setValue(0)
+        Animated.timing(                  
+           this.state.fadeIn,            
+           {
+             toValue: 1,                   
+             duration: 800, 
+             useNativeDriver: true             
+           }
+        ).start(() => {
+            this.setState({shouldPlay: true})
+        });                        
+      }
 
 }

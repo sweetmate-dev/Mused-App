@@ -3,25 +3,21 @@ import {
     Dimensions
 } from 'react-native';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default  StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
     },
     videoContainer: {
-        height: height / 2,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 30
+        flex: 1,
     },
     videoPlayer: {
-        height: height / 2,
-        width: width - 60,
+        flex: 1,
+        width: width,
         backgroundColor: '#ffffff',
-        justifyContent: 'center',
-        position: 'relative'
+        position: 'relative',
     },
     videoText: {
         fontSize: 12,

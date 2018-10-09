@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, TouchableWithoutFeedback, Text, Image } from 'react-native';
+import { View, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { Entypo } from '@expo/vector-icons';
+
 import Draggable from '../Draggable';
 import SidebarScroll from '../SidebarScroll/SlidebarScroll';
 import { transThumbnailImage } from '../../shared'
@@ -7,7 +9,7 @@ import theme from '../theme';
 
 const imageSize: number = 110;
 const imageSmallSize: number  = 80;
-const downArrowImage = require('../../../../assets/images/down-placeholder.png');
+// const downArrowImage = require('../../../../assets/images/down-placeholder.png');
 
 type Props = {
     dragrabbleItems: ProductImage[];
@@ -79,17 +81,13 @@ export default class DragAndDropAreaView extends React.Component<Props, State> {
         return (
             <>
                 <View style={theme.topLineContainer}>
-                    <View style={theme.topLineLeft}>
-                        <Text style={theme.topLineLeftBoldTitle}>YOUR OUTFIT</Text>
-                        <Text style={theme.topLineLeftText}>This is some text inside of a div block</Text>
-                    </View>
-                    <View style={{flex: 0.3}}>
-                        <TouchableWithoutFeedback onPress={this._closeSlider}>
-                            <View style={theme.categoryButton}>
-                            <Text style={theme.topLineLeftText}>ACCESSORIES</Text>
-                            <Image  source={downArrowImage} style={{width: 11, height: 8, marginLeft: 9}}/>
-                            </View>
-                        </TouchableWithoutFeedback>
+                    <View style={{flex: 0.64}} />
+                    <View style={{flex: 0.36}}>
+                        <View style={theme.buttonPlus}>
+                            <TouchableOpacity onPress={this._closeSlider}>
+                                <Entypo name="plus" size={16} color="#000000" />
+                            </TouchableOpacity>
+                        </View>                        
                     </View>
                 </View>
                 <View style={theme.container}>

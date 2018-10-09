@@ -76,5 +76,18 @@ export default  StyleSheet.create({
     categoryButton: {
         flexDirection: 'row',
         alignItems: 'center'
+    },
+    buttonPlus: {
+        left: 0,
+        top: 0,
+        width: 24,
+        height: 24,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: 'flex',
+        borderWidth: 1,
+        borderColor: '#000000',
+        borderRadius: 12
     }
 });

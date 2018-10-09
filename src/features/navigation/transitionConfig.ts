@@ -11,6 +11,7 @@ export const transitionConfig = () => {
     },
     screenInterpolator: (props: { layout: any, position: any, scene: any, scenes: any}) => {
       const thisSceneIndex = props.scene.index;
+      if(props.scenes[thisSceneIndex - 1]) console.log(props.scenes[thisSceneIndex - 1].route.routeName)
       if (props.scenes[thisSceneIndex - 1] && props.scenes[thisSceneIndex - 1].route.routeName === COLLECTION) {
         const translateX = 0;
         const translateY = 0;
