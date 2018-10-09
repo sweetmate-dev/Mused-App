@@ -108,12 +108,14 @@ export default class Draggable extends Component<Props, State> {
                 /**
                  * check if the item is not being dragged outside of its parent boundaries, if so
                  * we put it inside the parent component again
+                 * height: renderSize
+                 * width: renderSize * 0.6
                  */
                 if(this.state.pan.x._value+this.props.x<0){
                     this.state.pan.x.setValue(-this.props.x);
                 }
-                if(this.state.pan.x._value+this.props.x+this.props.renderSize>this.props.dimensions.width){
-                    this.state.pan.x.setValue(this.props.dimensions.width-this.props.renderSize-this.props.x);
+                if(this.state.pan.x._value+this.props.x+this.props.renderSize * 0.6>this.props.dimensions.width){
+                    this.state.pan.x.setValue(this.props.dimensions.width-this.props.renderSize * 0.6-this.props.x);
                 }
                 if(this.state.pan.y._value+this.props.y<0){
                     this.state.pan.y.setValue(-this.props.y);
@@ -170,7 +172,7 @@ export default class Draggable extends Component<Props, State> {
             };
         }else if(renderShape == 'image') {
             return{
-                width: renderSize,
+                width: renderSize * 0.6,
                 height: renderSize,
                 zIndex: 999,
             };

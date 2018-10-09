@@ -4,7 +4,6 @@ import {
   TouchableHighlight,
   Easing
 } from 'react-native';
-
 import theme from '../theme';
 import { thumbnailImage } from '../../../imagesUrls';
 

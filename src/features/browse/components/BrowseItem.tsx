@@ -6,6 +6,8 @@ import {
     TouchableWithoutFeedback,    
     TouchableHighlight,
 } from 'react-native';
+import Ripple from 'react-native-material-ripple';
+
 import { thumbnailImage } from '../../shared';
 import theme from '../theme';
 
@@ -82,13 +84,17 @@ export default class BrowseItem extends Component<Props, State> {
                 </View>
                 {/* <View style={theme.imgDivider} /> */}
                 <View style={theme.descContainer}>
-                    <TouchableWithoutFeedback onPress={this._navigateToProductSingle}>
+                    <Ripple
+                        onPress={this._navigateToProductSingle}
+                        rippleSize={40}
+                        rippleDuration={300} 
+                        rippleContainerBorderRadius={40}>
                         <View style={theme.descWrapper}>
                             <Text style={theme.designerTxt}>{brand.toUpperCase()}</Text>
                             <Text style={[theme.descTxt, {paddingVertical: 3}]}>{unbrandedName}</Text>
                             {/* <Text style={theme.descTxt}>{priceLabel}</Text> */}
                         </ View>
-                    </TouchableWithoutFeedback>
+                    </Ripple>
                 </View>
 
             </View>

@@ -3,7 +3,8 @@ import {
   Text,
   View,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableOpacity
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import { thumbnailImage } from '../../shared';
@@ -22,6 +23,7 @@ type Props = {
     listOfBookmarks: Bookmark[];
     createBookmark: (productId: number) => void;
     deleteBookmarkById: (_id: any) => void;
+    navigateToProductSingle: (product: Product) => void;
 }
 
 type State = {
@@ -48,7 +50,7 @@ export default class CollectionItem extends Component<Props, State> {
         }  
     }
     render() {
-        const { countAlter } = this.props;
+        const { countAlter, item } = this.props;
         const { brand, unbrandedName, id } = this.props.item;
         const { isLiked } = this.state;
         return (
@@ -68,7 +70,9 @@ export default class CollectionItem extends Component<Props, State> {
                 </View>
 
                 <View style={theme.imageContainer}>
-                    <View style={theme.clickableImageContainer}>
+                    <TouchableOpacity 
+                        onPress={() => this.props.navigateToProductSingle(item)}
+                        style={theme.clickableImageContainer}>
                         <Image
                             source={{uri: `${thumbnailImage}${id}`}}
                             resizeMode={'contain'}
@@ -77,7 +81,7 @@ export default class CollectionItem extends Component<Props, State> {
                         />
                         <Text style={theme.clickableTitle}>{brand.toUpperCase()}</Text>
                         <Text style={theme.clickableSubTitle}>{unbrandedName}</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={theme.likeContainer}>
@@ -98,8 +102,10 @@ export default class CollectionItem extends Component<Props, State> {
 
     _goToBrowse = () => {
         const { goToVideo, item, alternatives } = this.props;
-        goToVideo(item.id, alternatives);
-    }
+        setTimeout(() => {
+            goToVideo(item.id, alternatives);
+        }, 250)        
+    }    
 
     _createBookmark = () => {
         const { createBookmark, deleteBookmarkById, item: { id } } = this.props;

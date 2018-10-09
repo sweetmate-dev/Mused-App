@@ -7,7 +7,7 @@ import SidebarScroll from '../SidebarScroll/SlidebarScroll';
 import { transThumbnailImage } from '../../shared'
 import theme from '../theme';
 
-const imageSize: number = 110;
+const imageSize: number = 140;
 const imageSmallSize: number  = 80;
 // const downArrowImage = require('../../../../assets/images/down-placeholder.png');
 

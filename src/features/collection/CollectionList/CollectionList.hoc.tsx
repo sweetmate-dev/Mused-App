@@ -39,7 +39,7 @@ function CollectionHOC(Collection: any) {
         const { setSlotNumber } = slots;
         setSlotNumber(slotNumber);
         navigate(VIDEOPLAYER, COLLECTION, {alternatives, transition: 'opacityTransition'});
-      }
+      }      
 
     //   _goToBrowse = (slotNumber: number, alternatives: number[]) => {
     //     const { root: { ui, slots } } = this.props;

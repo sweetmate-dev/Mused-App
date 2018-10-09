@@ -3,9 +3,9 @@ import {
   Text,
   View,
   Image,
-  TouchableHighlight,
   StyleProp
 } from 'react-native';
+import Ripple from 'react-native-material-ripple';
 
 import { VIEW, LOVE } from '../FooterButtons/buttonsKeys';
 import theme from './theme';
@@ -60,14 +60,19 @@ export default class FooterButton extends Component<Props, State> {
             : { backgroundColor: 'transparent'}
         const backgroundColorGrey = greyTheme ? { backgroundColor: '#dfdede'} : {}
         const _styleForContainer = styleForContainer;
-        const underlayColor: string = whiteTheme ? '#fff' : '#000';
+        // const underlayColor: string = whiteTheme ? '#fff' : '#000';
         return (
-            <TouchableHighlight style={[theme.footerButtonContainer, backgroundColor, backgroundColorGrey, _styleForContainer]} onPress={this._navigateToRoute} underlayColor={underlayColor}>
+            <Ripple
+                style={[theme.footerButtonContainer, backgroundColor, backgroundColorGrey, _styleForContainer]}
+                onPress={this._navigateToRoute}
+                rippleSize={40}
+                rippleDuration={300} 
+                rippleContainerBorderRadius={40}>
                 <View  style={[theme.footerButtonConfirmContainer, backgroundColor, backgroundColorGrey]}>
                     <Image style={[theme.footerCheckImage, text === VIEW ? theme.footerViewImage : {}]} source={iconSource} />
                     <Text style={[theme.footerCheckText, textStyle]}>{text}</Text>
                 </View>
-            </TouchableHighlight>
+            </Ripple>
         )
     }
     _navigateToRoute = () => {

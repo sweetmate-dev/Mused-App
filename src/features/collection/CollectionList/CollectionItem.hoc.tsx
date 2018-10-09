@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import CollectionItem from './CollectionItem';
+import { COLLECTION, ZOOM } from '../../shared';
 import { ROOT_STORE } from '../../stores';
 type Props = {
     navigation?: any;
@@ -30,7 +31,14 @@ function CollectionItemHOC(CollectionItem: any) {
                     goToVideo={goToVideo}
                     alternatives={alternatives}
                     index={index}
+                    navigateToProductSingle={this._navigateToProductSingle}
                 />
+      }
+
+      _navigateToProductSingle = (product: Product) => {
+        const { root: { ui } } = this.props;
+        const {  navigate } = ui;
+        navigate(ZOOM, COLLECTION, {product});
       }
     }
     return NewComp;

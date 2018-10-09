@@ -3,7 +3,7 @@ import {
     StyleSheet,
     Dimensions
   } from 'react-native';
-  const { height} = Dimensions.get('window');
+  const { width, height } = Dimensions.get('window');
 export default StyleSheet.create({
     main:{
         flex: 1,
@@ -51,6 +51,11 @@ export default StyleSheet.create({
         paddingBottom: 20,
         alignItems: 'center'
     },
+    image: {
+        width: width / 4,
+        height: width / 3,
+        resizeMode: 'contain'
+    },
     divLine: {
         width: 35,
         height: 1,
@@ -59,10 +64,9 @@ export default StyleSheet.create({
     },
     scrollCellText:{
         textAlign:'center',
-        fontSize:8.5,
+        fontSize:12,
         marginHorizontal:20,
-        marginTop:6
-
+        marginTop:20
     },
     scrollCellDivider:{
         backgroundColor:'black',

@@ -1,12 +1,11 @@
 import React from 'react';
 import { Component } from 'react';
-import { Text, View, TouchableOpacity, FlatList, Dimensions } from 'react-native';
+import { Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
 import { thumbnailImage } from '../../shared';
 import { firstLetterUpper } from '../helper';
-import AutoHeightImage from 'react-native-auto-height-image';
+// import AutoHeightImage from 'react-native-auto-height-image';
 import theme from './theme';
 
-const { width } = Dimensions.get('window');
 const categoriesFilter: string[] = ['jewelry', 'belts', 'hats', 'scarves', 'gloves'];
 type Props = {
     listOfProductsByCategories: Product[];
@@ -30,18 +29,17 @@ export default class SidebarScroll extends Component<Props> {
                         keyExtractor={ item => `${item.id}`}
                 /> }
             </View>
-
         );
     }
 
     private _renderItem = (props: {item: Product, index: number}) => {
         return (
             <TouchableOpacity key={props.item.id} style={[theme.scrollCell,theme.scrollCellBorder]} onPress={() => this._addNewDragAndDropSlot(props.item)}>
-                <AutoHeightImage  source={{uri: `${thumbnailImage}${props.item.id}`}} style={{paddingVertical: 15}} width={width / 4}/>
-                {/* <View style={theme.scrollCellDivider}/> */}
+                <Image  source={{uri: `${thumbnailImage}${props.item.id}`}} style={theme.image} />
+                {/* <View style={theme.scrollCellDivider} /> */}
                 <TouchableOpacity onPress={() => this.props.navigateToProductSingle(props.item)}>
                     <Text style={[theme.scrollCellText, {fontFamily: 'LatoBold'}]}>{props.item.brand}</Text>
-                    <Text style={[theme.scrollCellText, {marginTop: 3}]}>{props.item.unbrandedName}</Text>
+                    <Text style={[theme.scrollCellText, {marginTop: 3, fontSize: 11}]}>{props.item.unbrandedName}</Text>
                 </TouchableOpacity>
                 <View style={theme.divLine} />
             </TouchableOpacity>

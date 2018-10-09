@@ -56,7 +56,6 @@ export default  StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        paddingTop: 30
     },
     topLineLeft: {
         flex: 0.7, 
