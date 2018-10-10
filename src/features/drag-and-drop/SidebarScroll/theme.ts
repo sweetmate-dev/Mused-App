@@ -3,7 +3,7 @@ import {
     StyleSheet,
     Dimensions
   } from 'react-native';
-  const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 export default StyleSheet.create({
     main:{
         flex: 1,
@@ -28,7 +28,7 @@ export default StyleSheet.create({
 
     },
     scrolllContainer: {
-        flex: 1,
+        width: width / 4 + 40,
         height: height - 150,
         zIndex: 1,
         backgroundColor:'#ffffff'
@@ -39,7 +39,7 @@ export default StyleSheet.create({
     },
     scrollCell:{
         alignItems:'center',
-        flex:1,
+        width: width / 4 + 40
 
     },
     scrollCellZero:{

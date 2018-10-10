@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { View, TouchableWithoutFeedback, Dimensions, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
 import Draggable from '../Draggable';
@@ -7,6 +7,7 @@ import SidebarScroll from '../SidebarScroll/SlidebarScroll';
 import { transThumbnailImage } from '../../shared'
 import theme from '../theme';
 
+const { width } = Dimensions.get('window');
 const imageSize: number = 140;
 const imageSmallSize: number  = 80;
 // const downArrowImage = require('../../../../assets/images/down-placeholder.png');
@@ -69,7 +70,7 @@ export default class DragAndDropAreaView extends React.Component<Props, State> {
 
     /* helper function to calculate the initial items positions and avoid that they overlap */
     calcPosX(index: number){
-        return (index%2)*imageSize
+        return (index%2)*imageSize + (index + 1) % 2 * 20
     }
 
     /* helper function to calculate the initial items positions and avoid that they overlap */
@@ -81,11 +82,11 @@ export default class DragAndDropAreaView extends React.Component<Props, State> {
         return (
             <>
                 <View style={theme.topLineContainer}>
-                    <View style={{flex: 0.64}} />
-                    <View style={{flex: 0.36}}>
+                    <View style={{flex: 1}} />
+                    <View style={{width: width / 4 + 40}}>
                         <View style={theme.buttonPlus}>
                             <TouchableOpacity onPress={this._closeSlider}>
-                                <Entypo name="plus" size={16} color="#000000" />
+                                <Entypo name="plus" size={15} color="#000000" />
                             </TouchableOpacity>
                         </View>                        
                     </View>
@@ -105,7 +106,7 @@ export default class DragAndDropAreaView extends React.Component<Props, State> {
                         isOpenSlider={this.state.isOpenSlider}
                         toggleSlider={this._toggleSlider}
                         getProductsByCategory={this.props.getProductsByCategory}
-                        />
+                    />
                 </View>
         </>
         );

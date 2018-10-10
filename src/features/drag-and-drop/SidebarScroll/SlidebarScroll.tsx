@@ -1,11 +1,11 @@
 import React from 'react';
 import { Component } from 'react';
-import { Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, TouchableOpacity, Dimensions, FlatList } from 'react-native';
 import { thumbnailImage } from '../../shared';
 import { firstLetterUpper } from '../helper';
-// import AutoHeightImage from 'react-native-auto-height-image';
+import AutoHeightImage from 'react-native-auto-height-image';
 import theme from './theme';
-
+const { width } = Dimensions.get('window');
 const categoriesFilter: string[] = ['jewelry', 'belts', 'hats', 'scarves', 'gloves'];
 type Props = {
     listOfProductsByCategories: Product[];
@@ -17,6 +17,10 @@ type Props = {
     isOpenSlider: boolean;
 }
 export default class SidebarScroll extends Component<Props> {
+
+    componentDidMount() {
+        this._onPressCategory('jewelry')
+    }
 
     render() {
         const { listOfProductsByCategories, isOpenSlider } = this.props;
@@ -35,10 +39,10 @@ export default class SidebarScroll extends Component<Props> {
     private _renderItem = (props: {item: Product, index: number}) => {
         return (
             <TouchableOpacity key={props.item.id} style={[theme.scrollCell,theme.scrollCellBorder]} onPress={() => this._addNewDragAndDropSlot(props.item)}>
-                <Image  source={{uri: `${thumbnailImage}${props.item.id}`}} style={theme.image} />
+                <AutoHeightImage  source={{uri: `${thumbnailImage}${props.item.id}`}} width={width / 4} />
                 {/* <View style={theme.scrollCellDivider} /> */}
                 <TouchableOpacity onPress={() => this.props.navigateToProductSingle(props.item)}>
-                    <Text style={[theme.scrollCellText, {fontFamily: 'LatoBold'}]}>{props.item.brand}</Text>
+                    <Text style={[theme.scrollCellText, {fontFamily: 'LatoBold'}]}>{props.item.brand.toUpperCase()}</Text>
                     <Text style={[theme.scrollCellText, {marginTop: 3, fontSize: 11}]}>{props.item.unbrandedName}</Text>
                 </TouchableOpacity>
                 <View style={theme.divLine} />

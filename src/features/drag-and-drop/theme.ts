@@ -25,7 +25,7 @@ export default  StyleSheet.create({
     },
     dragContainer: {
         //backgroundColor: 'green',
-        flex: 1.8,
+        flex: 1,
         height: height - 200,
 
     },
@@ -79,8 +79,8 @@ export default  StyleSheet.create({
     buttonPlus: {
         left: 0,
         top: 0,
-        width: 24,
-        height: 24,
+        width: 20,
+        height: 20,
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
