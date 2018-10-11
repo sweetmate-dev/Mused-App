@@ -16,7 +16,7 @@ type State = {
     likedItemIndex: null | number,
     isLoaded: boolean,
     shouldPlay: boolean,
-    fadeIn: any
+    fadeIn: any,
 };
 type Props = {
     navigation: any;
@@ -27,17 +27,23 @@ export default class VideoPlayerScreen extends Component<Props, State> {
         likedItemIndex: null,
         isLoaded: false,
         shouldPlay: false,
-        fadeIn: new Animated.Value(0)
+        fadeIn: new Animated.Value(0.3),
     }
+
+    timeout: any;
     
     componentDidMount() {
         const { goToBrowse } = this.props;
         this._fadeIn()
-        setTimeout(() => {
+        this.timeout = setTimeout(() => {
             this.setState({shouldPlay: false}, () => {
                 goToBrowse()
             })            
-        }, 2000)
+        }, 3000)
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout)
     }
 
     componentWillReceiveProps(nextProps: Props) {
@@ -101,7 +107,7 @@ export default class VideoPlayerScreen extends Component<Props, State> {
     }
 
     _fadeIn = () => {
-        this.state.fadeIn.setValue(0)
+        this.state.fadeIn.setValue(0.3)
         Animated.timing(                  
            this.state.fadeIn,            
            {
@@ -111,7 +117,7 @@ export default class VideoPlayerScreen extends Component<Props, State> {
            }
         ).start(() => {
             this.setState({shouldPlay: true})
-        });                        
+        });                   
       }
 
 }

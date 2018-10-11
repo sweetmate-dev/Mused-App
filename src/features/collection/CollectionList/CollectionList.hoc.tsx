@@ -20,12 +20,14 @@ function CollectionHOC(Collection: any) {
         };
 
       render() {
-          const { root: { products }, navigation } = this.props;
+          const { root: { ui, products }, navigation } = this.props;
+          const { currentRoute }  = ui;
           const { listOfCollection, getCollection, listOfBookmarks, createBookmark, deleteBookmarkById} = products;
         return <Collection 
                     listOfCollection={listOfCollection} 
                     getCollection={getCollection} 
                     navigation={navigation}
+                    currentRoute={currentRoute}
                     goToVideo={this._goToVideo}
                     listOfBookmarks={listOfBookmarks}
                     createBookmark={createBookmark}
@@ -38,7 +40,7 @@ function CollectionHOC(Collection: any) {
         const { navigate } = ui;
         const { setSlotNumber } = slots;
         setSlotNumber(slotNumber);
-        navigate(VIDEOPLAYER, COLLECTION, {alternatives, transition: 'opacityTransition'});
+        navigate(VIDEOPLAYER, COLLECTION, {alternatives});
       }      
 
     //   _goToBrowse = (slotNumber: number, alternatives: number[]) => {

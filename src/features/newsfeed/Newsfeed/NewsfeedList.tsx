@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import {
   View,
   FlatList,
-  StatusBar
+  StatusBar,
+  Animated
 } from 'react-native';
 
 import  NewsfeedItem from './NewsfeedItem';
 import theme from '../theme';
+
+type State = {
+    fadeIn: any
+};
 
 type Props = {
     listOfPosts: Post[];
@@ -14,7 +19,12 @@ type Props = {
     getPosts: () => void;
     getBookmarksByUserId: () => void;
 }
-export default class NewsfeedList extends Component<Props> {
+export default class NewsfeedList extends Component<Props, State> {
+
+    state: State = {
+        fadeIn: new Animated.Value(1)
+    }
+
     componentDidMount() {  
         this.props.getPosts();
         this.props.getBookmarksByUserId();
@@ -22,7 +32,7 @@ export default class NewsfeedList extends Component<Props> {
     render() {
 
         return (
-            <View style={theme.container}>
+            <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
                 <StatusBar
                     backgroundColor="white"
                     barStyle="dark-content"
@@ -33,15 +43,33 @@ export default class NewsfeedList extends Component<Props> {
                     keyExtractor={ (item) => `${item._id}`}
                     ItemSeparatorComponent={this._renderSeparator}
                 />}
-            </View>
+            </Animated.View>
         )
     }
 
     _renderItem = (props: {item: Post}) => 
         <NewsfeedItem  
             item={props.item}
-            goToCollection={this.props.goToCollection}
-            />
+            goToCollection={this._goToCollection}
+        />
+
+    _goToCollection = (param: any) => {
+        const { goToCollection } = this.props;
+        this.state.fadeIn.setValue(1)
+        Animated.timing(                  
+           this.state.fadeIn,            
+           {
+             toValue: 0,                   
+             duration: 500, 
+             useNativeDriver: true             
+           }
+        ).start(() => {            
+            goToCollection(param)
+            setTimeout(() => {
+                this.state.fadeIn.setValue(1)
+            }, 300)            
+        });  
+    }
 
     _renderSeparator = () =>
         <View style={theme.separator}></View>

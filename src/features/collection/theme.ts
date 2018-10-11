@@ -6,10 +6,14 @@ import {
  const { width, height } = Dimensions.get('window');
 
  export default StyleSheet.create({
+    wrapper: {
+        flex: 1, 
+        backgroundColor: '#ffffff',
+    },
     container: { 
         flex: 1, 
         justifyContent: 'space-between', 
-        backgroundColor: '#fff',
+        backgroundColor: '#ffffff',
         flexDirection: 'column',
         width: width,
         height: height

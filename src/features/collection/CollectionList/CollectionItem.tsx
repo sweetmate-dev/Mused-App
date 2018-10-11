@@ -55,20 +55,20 @@ export default class CollectionItem extends Component<Props, State> {
         const { isLiked } = this.state;
         return (
             <View style={theme.containerItem}>
-                <View style={theme.alterContainer}>
 
                     <Ripple
+                        style={theme.alterContainer}
                         onPress={this._goToBrowse}
-                        rippleSize={40}
+                        rippleSize={60}
                         rippleDuration={300} 
+                        rippleCenter={true}
                         rippleContainerBorderRadius={40}>
                         <View style={theme.alterItem}>
                             <Text style={theme.countText}>{countAlter}</Text>
                         </View>
+                        <Text style={[theme.countText, {marginTop: 3, marginLeft: 12}]}>alternatives</Text>
                     </Ripple>
-                    <Text style={[theme.countText, {marginTop: 3, marginLeft: 12}]}>alternatives</Text>
-                </View>
-
+                    
                 <View style={theme.imageContainer}>
                     <TouchableOpacity 
                         onPress={() => this.props.navigateToProductSingle(item)}

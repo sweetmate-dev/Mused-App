@@ -30,12 +30,20 @@ export default class Browser extends Component<Props, State> {
         likedItemIndex: null,
         fadeIn: new Animated.Value(0)
     }
+    blackTimeOut: any
     componentDidMount() {
         const {getAlternatives, navigation} = this.props;
         const productIds: number[] = navigation.getParam('alternatives', []);
         getAlternatives(productIds);
-        this._fadeIn()
+        this.blackTimeOut = setTimeout(() => {
+            this._fadeIn()
+        }, 500)        
     }
+
+    componentWillUnmount() {
+        clearTimeout(this.blackTimeOut)
+    }
+
     render() {
         const headerComponent = (
             <View style={theme.listTitleContainer}>
@@ -82,7 +90,7 @@ export default class Browser extends Component<Props, State> {
             this.state.fadeIn,            
             {
                 toValue: 1,                   
-                duration: 800, 
+                duration: 1200, 
                 useNativeDriver: true             
             }
         ).start();                        

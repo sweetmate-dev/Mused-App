@@ -46,3 +46,7 @@ declare module 'react-native-auto-height-image' {
   export default AutoHeightImage;
 }
 
+declare module 'react-native-indicators' {
+  const DotIndicator: any;
+  export default DotIndicator;
+}
