@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 
-import { VIEW, LOVE } from '../FooterButtons/buttonsKeys';
+import { LOVE } from '../FooterButtons/buttonsKeys';
 import theme from './theme';
 
 const icons: HashMap<HashMap<string>> = {
@@ -18,6 +18,9 @@ const icons: HashMap<HashMap<string>> = {
     filter: require('../../../../../assets/images/categories.png'),
     clear: require('../../../../../assets/images/cross-white.png'),
     details: require('../../../../../assets/images/details.png'),
+    back: require('../../../../../assets/images/back_icon.png'),
+    view: require('../../../../../assets/images/view_icon.png'),
+    category: require('../../../../../assets/images/category_icon.png'),
 };
 
 type Props = {
@@ -69,7 +72,7 @@ export default class FooterButton extends Component<Props, State> {
                 rippleDuration={300} 
                 rippleContainerBorderRadius={40}>
                 <View  style={[theme.footerButtonConfirmContainer, backgroundColor, backgroundColorGrey]}>
-                    <Image style={[theme.footerCheckImage, text === VIEW ? theme.footerViewImage : {}]} source={iconSource} />
+                    <Image style={[theme.footerCheckImage]} source={iconSource} />
                     <Text style={[theme.footerCheckText, textStyle]}>{text}</Text>
                 </View>
             </Ripple>

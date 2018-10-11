@@ -6,7 +6,7 @@ import {
     BackHandler
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
-import { COLLECTION, BROWSE, FILTER, NEWSFEED, ZOOM, VIEW } from '../../routesKeys';
+import { COLLECTION, BROWSE, FILTER, NEWSFEED, ZOOM, VIEW, VIDEOPLAYER } from '../../routesKeys';
 type Props = {
     showContent?: boolean;
     navigation: any;
@@ -87,17 +87,19 @@ export default class Header extends Component<Props> {
         if ( ZOOM === route) { 
             prevRoute === VIEW
              ? setPrevCurrentRoutes(VIEW, BROWSE)
-             : setPrevCurrentRoutes(BROWSE, COLLECTION)
+             : setPrevCurrentRoutes(BROWSE, VIDEOPLAYER)
         }
         if ( VIEW === route) {   
-            setPrevCurrentRoutes(BROWSE, COLLECTION)
+            setPrevCurrentRoutes(BROWSE, VIDEOPLAYER)
         }
         if (BROWSE === route) {
-            setPrevCurrentRoutes(COLLECTION, NEWSFEED);
+            setPrevCurrentRoutes(VIDEOPLAYER, COLLECTION);
             hideContextMenu();
             clearFilters();
             resetAlternativies();
-
+        }
+        if (VIDEOPLAYER === route) {
+            setPrevCurrentRoutes(COLLECTION, NEWSFEED)
         }
         if (FILTER === route) {
             if (filterTab) {
@@ -105,7 +107,7 @@ export default class Header extends Component<Props> {
                 return true;
             }
 
-            setPrevCurrentRoutes(BROWSE, COLLECTION)
+            setPrevCurrentRoutes(BROWSE, VIDEOPLAYER)
         }
         navigation.goBack();
         return true;

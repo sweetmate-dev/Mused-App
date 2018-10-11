@@ -5,7 +5,6 @@ import {
   Animated
 } from 'react-native';
 import DotIndicator from '../../shared/components/Indicators/dot-indicator'
-import { COLLECTION, VIDEOPLAYER } from '../../shared';
 import  CollectionItem from './CollectionItem.hoc';
 import CollectionHeader from './CollectionHeader';
 import CollectionFooter from './CollectionFooter';
@@ -50,16 +49,10 @@ export default class CollectionList extends Component<Props, State> {
         fadeIn: new Animated.Value(1)
     }
     
-    componentDidMount() {
-        const { navigation, getCollection } = this.props;
-       this.slots = navigation.getParam('productIds', []);
-       getCollection(this.slots);
-    }
-
-    componentWillReceiveProps(nextProps: Props) {
-        const { currentRoute } = this.props; 
-        console.log(currentRoute + ', ' + nextProps.currentRoute)
-        if (currentRoute === VIDEOPLAYER && nextProps.currentRoute === COLLECTION) this.state.fadeIn.setValue(1);
+    componentWillMount() {
+        const { navigation } = this.props;
+        this.slots = navigation.getParam('productIds', []);
+        // getCollection(this.slots);
     }
 
     render() {
@@ -122,7 +115,7 @@ export default class CollectionList extends Component<Props, State> {
                 setTimeout(() => {
                     this.state.fadeIn.setValue(1)
                 }, 300)   
-            }, 500)            
+            }, 300)            
         });         
     }
 

@@ -81,13 +81,14 @@ import {
         height: 180,
     },
     alterContainer: {
-        flex: 0.2
+        flex: 0.3,
+        paddingTop: 25
     },
     imageContainer: {
-        flex: 0.6,
+        flex: 0.4,
     },
     likeContainer: {
-        flex: 0.2
+        flex: 0.3
     },
     likeImage: {
         width: 17,
@@ -95,20 +96,15 @@ import {
         marginTop: 2
     },
     alterItem: {
-        borderLeftWidth: 1,
-        borderLeftColor: '#000',
-        borderRightWidth: 1,
-        borderRightColor: '#000',
-        borderBottomWidth: 1,
-        borderBottomColor: '#000',
-        borderTopWidth: 1,
-        borderTopColor: '#000',
+        borderWidth: 1,
+        borderColor: '#000',
         width: 30,
         height: 20,
-        marginLeft: 28,
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'row'
+    },
+    alterButtonContainer: {
+        marginHorizontal: 5
     },
     countText: {
         textAlign: 'center',
@@ -141,7 +137,8 @@ import {
         flex: 0.2, 
         justifyContent: 'flex-end',
         flexDirection: 'row',
-        marginRight: 25
+        marginRight: 25,
+        marginTop: 25
     },
     headerTitle: {
         fontSize: 18,

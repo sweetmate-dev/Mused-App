@@ -50,7 +50,7 @@ export default StyleSheet.create({
     scrollCellBorder:{        
         paddingBottom: 20,
         alignItems: 'center'
-    },
+    },    
     image: {
         width: width / 4,
         height: width / 3,
@@ -65,7 +65,7 @@ export default StyleSheet.create({
     scrollCellText:{
         textAlign:'center',
         fontSize:12,
-        marginHorizontal:20,
+        marginHorizontal:5,
         marginTop:20
     },
     scrollCellDivider:{

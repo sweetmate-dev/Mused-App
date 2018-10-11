@@ -3,7 +3,6 @@ import {
     Text,
     View,
     Image,
-    TouchableWithoutFeedback,    
     TouchableHighlight,
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
@@ -72,7 +71,12 @@ export default class BrowseItem extends Component<Props, State> {
             <View style={[theme.productContainer, borderStyle]}>
                 {this._renderLikeIcon()}
                 <View style={theme.imageContainer}>
-                    <TouchableWithoutFeedback onPress={this._likeIt} style={theme.image}>
+                    <Ripple
+                        onPress={this._likeIt} style={theme.image}
+                        rippleSize={120}
+                        rippleDuration={300} 
+                        rippleCentered={true}
+                        rippleContainerBorderRadius={40}>
                         <View style={theme.imageWrapper}>
                             <Image
                                 source={{uri: `${thumbnailImage}${id}`}}
@@ -80,7 +84,7 @@ export default class BrowseItem extends Component<Props, State> {
                                 resizeMode={'contain'}
                             />                        
                         </View>
-                    </TouchableWithoutFeedback>
+                    </Ripple>
                 </View>
                 {/* <View style={theme.imgDivider} /> */}
                 <View style={theme.descContainer}>

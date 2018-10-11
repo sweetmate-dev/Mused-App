@@ -4,14 +4,13 @@ import { COLLECTION, NEWSFEED, VIDEOPLAYER } from '../shared';
 export const transitionConfig = () => {
   return {
     transitionSpec: {
-      duration: 800,
+      duration: 100,
       easing: Easing.out(Easing.poly(10)),
       timing: Animated.timing,
       useNativeDriver: true
     },
     screenInterpolator: (props: { layout: any, position: any, scene: any, scenes: any}) => {
       const thisSceneIndex = props.scene.index;
-      if(props.scenes[thisSceneIndex - 1]) console.log(props.scenes[thisSceneIndex - 1].route.routeName)
       if (props.scenes[thisSceneIndex - 1] && 
         ( props.scenes[thisSceneIndex - 1].route.routeName === COLLECTION ||
           props.scenes[thisSceneIndex - 1].route.routeName === VIDEOPLAYER ||
@@ -21,7 +20,7 @@ export const transitionConfig = () => {
         const translateY = 0;
         const opacity = props.position.interpolate({
           inputRange: [thisSceneIndex - 0.7, thisSceneIndex, thisSceneIndex + 0.7],
-          outputRange: [0.3, 1, 0.3]
+          outputRange: [0, 1, 0]
         });
         return { opacity, transform: [{translateX}, {translateY}]};
       } else {

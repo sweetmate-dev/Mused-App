@@ -4,7 +4,7 @@ import {
   View,
   Image,
   TouchableHighlight,
-  TouchableOpacity
+  Animated,
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import { thumbnailImage } from '../../shared';
@@ -29,11 +29,13 @@ type Props = {
 type State = {
     isLiked: boolean;
     bookmark: Bookmark | null;
+    fadeIn: any
 }
 export default class CollectionItem extends Component<Props, State> {
     state: State = {
         isLiked: false,
-        bookmark: null
+        bookmark: null,
+        fadeIn: new Animated.Value(1)
     }
     componentDidMount() {
         const { listOfBookmarks } = this.props;
@@ -56,23 +58,28 @@ export default class CollectionItem extends Component<Props, State> {
         return (
             <View style={theme.containerItem}>
 
-                    <Ripple
-                        style={theme.alterContainer}
-                        onPress={this._goToBrowse}
-                        rippleSize={60}
-                        rippleDuration={300} 
-                        rippleCenter={true}
-                        rippleContainerBorderRadius={40}>
+                <Ripple 
+                    onPress={this._goToBrowse} 
+                    style={theme.alterContainer}
+                    rippleSize={80}
+                    rippleDuration={300} 
+                    rippleContainerBorderRadius={40}>
+                    <View style={{alignItems: 'center'}}>
                         <View style={theme.alterItem}>
                             <Text style={theme.countText}>{countAlter}</Text>
                         </View>
-                        <Text style={[theme.countText, {marginTop: 3, marginLeft: 12}]}>alternatives</Text>
-                    </Ripple>
+                        <Text style={[theme.countText, {marginTop: 3}]}>alternatives</Text>
+                    </View>                        
+                </Ripple>                    
                     
                 <View style={theme.imageContainer}>
-                    <TouchableOpacity 
+                    <Ripple 
                         onPress={() => this.props.navigateToProductSingle(item)}
-                        style={theme.clickableImageContainer}>
+                        style={[theme.clickableImageContainer, {opacity: this.state.fadeIn}]}
+                        rippleSize={150}
+                        rippleDuration={300} 
+                        rippleCentered={true}
+                        rippleContainerBorderRadius={40}>
                         <Image
                             source={{uri: `${thumbnailImage}${id}`}}
                             resizeMode={'contain'}
@@ -81,7 +88,7 @@ export default class CollectionItem extends Component<Props, State> {
                         />
                         <Text style={theme.clickableTitle}>{brand.toUpperCase()}</Text>
                         <Text style={theme.clickableSubTitle}>{unbrandedName}</Text>
-                    </TouchableOpacity>
+                    </Ripple>
                 </View>
 
                 <View style={theme.likeContainer}>
@@ -102,9 +109,27 @@ export default class CollectionItem extends Component<Props, State> {
 
     _goToBrowse = () => {
         const { goToVideo, item, alternatives } = this.props;
-        setTimeout(() => {
-            goToVideo(item.id, alternatives);
-        }, 250)        
+        // Animated.sequence(
+        //     [ Animated.timing(                 
+        //     this.state.fadeIn,
+        //     {
+        //       toValue: 0.3,
+        //       duration: 250,
+        //       easing: Easing.cubic
+        //     }
+        //   ),
+        //   Animated.timing(                  
+        //     this.state.fadeIn,            
+        //     {
+        //       toValue: 1,                   
+        //       duration: 250,
+        //       easing: Easing.cubic           
+        //     }
+        //   ),
+        // ]).start(() => {
+        //     goToVideo(item.id, alternatives);
+        // });      
+        goToVideo(item.id, alternatives);
     }    
 
     _createBookmark = () => {

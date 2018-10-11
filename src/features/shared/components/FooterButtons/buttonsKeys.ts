@@ -13,11 +13,11 @@ export const footerButtons: HashMap<string>[] = [
     },
     {
         text: VIEW,
-        icon: 'arrowUp'
+        icon: 'view'
      },
      {
         text: CATEGORIES,
-        icon: 'filter'
+        icon: 'category'
      }
     ];
 
@@ -44,6 +44,6 @@ export const dragAndDropButtons: HashMap<string | number | any>[] = [
     },
     {
         text: BACK,
-        icon: 'filter'
+        icon: 'back'
     }
 ]

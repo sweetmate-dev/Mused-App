@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, TouchableWithoutFeedback, Dimensions, TouchableOpacity } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { View, Image, TouchableWithoutFeedback, Dimensions, TouchableOpacity } from 'react-native';
+// import { Entypo } from '@expo/vector-icons';
 
 import Draggable from '../Draggable';
 import SidebarScroll from '../SidebarScroll/SlidebarScroll';
@@ -10,6 +10,7 @@ import theme from '../theme';
 const { width } = Dimensions.get('window');
 const imageSize: number = 140;
 const imageSmallSize: number  = 80;
+const addIcon = require('../../../../assets/images/sidebar_top.png');
 // const downArrowImage = require('../../../../assets/images/down-placeholder.png');
 
 type Props = {
@@ -86,7 +87,8 @@ export default class DragAndDropAreaView extends React.Component<Props, State> {
                     <View style={{width: width / 4 + 40}}>
                         <View style={theme.buttonPlus}>
                             <TouchableOpacity onPress={this._closeSlider}>
-                                <Entypo name="plus" size={15} color="#000000" />
+                                {/* <Entypo name="plus" size={15} color="#000000" /> */}
+                                <Image source={addIcon} style={theme.addCategory} />
                             </TouchableOpacity>
                         </View>                        
                     </View>

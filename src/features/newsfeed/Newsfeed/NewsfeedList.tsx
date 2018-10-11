@@ -18,6 +18,7 @@ type Props = {
     goToCollection: (params: any) => void;
     getPosts: () => void;
     getBookmarksByUserId: () => void;
+    getCollection: (slots: Slot[]) => void;
 }
 export default class NewsfeedList extends Component<Props, State> {
 
@@ -54,21 +55,25 @@ export default class NewsfeedList extends Component<Props, State> {
         />
 
     _goToCollection = (param: any) => {
-        const { goToCollection } = this.props;
+        const { goToCollection, getCollection } = this.props;
         this.state.fadeIn.setValue(1)
-        Animated.timing(                  
-           this.state.fadeIn,            
-           {
-             toValue: 0,                   
-             duration: 500, 
-             useNativeDriver: true             
-           }
-        ).start(() => {            
-            goToCollection(param)
-            setTimeout(() => {
-                this.state.fadeIn.setValue(1)
-            }, 300)            
-        });  
+        getCollection(param.productIds)
+        setTimeout(() => {
+            Animated.timing(           
+                this.state.fadeIn,            
+                {
+                  toValue: 0,                   
+                  duration: 500, 
+                  useNativeDriver: true             
+                }
+             ).start(() => {            
+                goToCollection(param)
+                setTimeout(() => {
+                    this.state.fadeIn.setValue(1)
+                }, 300)            
+            });  
+        }, 300)
+        
     }
 
     _renderSeparator = () =>

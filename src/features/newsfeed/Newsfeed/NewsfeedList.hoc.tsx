@@ -23,10 +23,11 @@ function NewsfeedHOC(Newsfeed: any) {
       render() {
           const { root: { posts, products } } = this.props;
           const { listOfPosts, getPosts } = posts;
-          const { getBookmarksByUserId } = products;
+          const { getBookmarksByUserId, getCollection } = products;
         return <Newsfeed 
                     goToCollection={this._goToCollection}
                     getPosts={getPosts}
+                    getCollection={getCollection}
                     listOfPosts={listOfPosts}
                     getBookmarksByUserId={getBookmarksByUserId}
                 />

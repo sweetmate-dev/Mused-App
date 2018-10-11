@@ -85,8 +85,10 @@ export default  StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         display: 'flex',
-        borderWidth: 1,
-        borderColor: '#000000',
-        borderRadius: 12
-    }
+    },
+    addCategory: {
+        width: 20,
+        height: 20,
+        resizeMode: 'contain'
+    },
 });

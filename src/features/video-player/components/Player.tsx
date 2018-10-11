@@ -11,6 +11,8 @@ import { VIDEOPLAYER } from '../../shared';
 
 const { width } = Dimensions.get('window');
 const VideoCover = require('../../../../assets/images/video_cover.jpg');
+// const video1 = 'https://s3.eu-west-2.amazonaws.com/fash-video/ezgif.com-gif-to-mp4.mp4';
+// const video2 = 'https://s3.eu-west-2.amazonaws.com/fash-video/ezgif.com-video-cutter2.mp4';
 
 type State = {
     likedItemIndex: null | number,
@@ -37,21 +39,28 @@ export default class VideoPlayerScreen extends Component<Props, State> {
         this._fadeIn()
         this.timeout = setTimeout(() => {
             this.setState({shouldPlay: false}, () => {
-                goToBrowse()
+                Animated.timing(                  
+                    this.state.fadeIn,            
+                    {
+                      toValue: 0,                   
+                      duration: 1000, 
+                      useNativeDriver: true             
+                    }
+                 ).start(() => {
+                    goToBrowse()
+                    setTimeout(() => {
+                        this.state.fadeIn.setValue(1)
+                    }, 200)
+                 });    
+                
             })            
-        }, 3000)
+        }, 4000)
     }
 
     componentWillUnmount() {
         clearTimeout(this.timeout)
     }
-
-    componentWillReceiveProps(nextProps: Props) {
-        console.log(nextProps.navigation.state.routeName)
-        if(nextProps.navigation.state.routeName === VIDEOPLAYER) {
-            this.setState({shouldPlay: true});
-        }
-    }
+    
     render() {
         const { shouldPlay, fadeIn } = this.state
         return(
@@ -64,7 +73,7 @@ export default class VideoPlayerScreen extends Component<Props, State> {
                             <Video
                                 shouldPlay={shouldPlay}
                                 resizeMode={Video.RESIZE_MODE_CONTAIN}
-                                source={{uri: 'https://s3.eu-west-2.amazonaws.com/fash-video/ezgif.com-gif-to-mp4.mp4'}}
+                                source={{uri: 'https://s3.eu-west-2.amazonaws.com/fash-video/ezgif.com-video-cutter2.mp4'}}
                                 isLooping
                                 style={{
                                     height: width,
@@ -102,17 +111,17 @@ export default class VideoPlayerScreen extends Component<Props, State> {
     }
 
     onLoadVideo = (status: any) => {
-        console.log(status)
         this.setState({isLoaded: true})
+        return status;
     }
 
     _fadeIn = () => {
-        this.state.fadeIn.setValue(0.3)
+        this.state.fadeIn.setValue(0)
         Animated.timing(                  
            this.state.fadeIn,            
            {
              toValue: 1,                   
-             duration: 800, 
+             duration: 1000, 
              useNativeDriver: true             
            }
         ).start(() => {
