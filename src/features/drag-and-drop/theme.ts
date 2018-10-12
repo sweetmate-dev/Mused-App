@@ -87,8 +87,8 @@ export default  StyleSheet.create({
         display: 'flex',
     },
     addCategory: {
-        width: 20,
-        height: 20,
+        width: 18,
+        height: 18,
         resizeMode: 'contain'
     },
 });

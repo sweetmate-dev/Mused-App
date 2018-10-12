@@ -16,7 +16,7 @@ const notLikeIconUrl = require('../../../../assets/images/star2.png');
 type Props = {
     item: Product;
     countAlter: string;
-    goToVideo: (slotNumber: number, alternatives: number[]) => void;
+    goToNext: (slotNumber: number, alternatives: number[]) => void;
     onLoadImage: () => void;
     alternatives: number[];
     index: number;
@@ -59,7 +59,7 @@ export default class CollectionItem extends Component<Props, State> {
             <View style={theme.containerItem}>
 
                 <Ripple 
-                    onPress={this._goToBrowse} 
+                    onPress={this._goToNext} 
                     style={theme.alterContainer}
                     rippleSize={80}
                     rippleDuration={300} 
@@ -107,8 +107,8 @@ export default class CollectionItem extends Component<Props, State> {
         )
     }
 
-    _goToBrowse = () => {
-        const { goToVideo, item, alternatives } = this.props;
+    _goToNext = () => {
+        const { goToNext, item, alternatives } = this.props;
         // Animated.sequence(
         //     [ Animated.timing(                 
         //     this.state.fadeIn,
@@ -129,7 +129,7 @@ export default class CollectionItem extends Component<Props, State> {
         // ]).start(() => {
         //     goToVideo(item.id, alternatives);
         // });      
-        goToVideo(item.id, alternatives);
+        goToNext(item.id, alternatives);
     }    
 
     _createBookmark = () => {

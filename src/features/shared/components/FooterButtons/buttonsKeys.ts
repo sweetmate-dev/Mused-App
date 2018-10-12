@@ -40,7 +40,7 @@ export const footerDarkButtons: HashMap<string | number | any>[] = [
 export const dragAndDropButtons: HashMap<string | number | any>[] = [
     {
         text: LOVE,
-        icon: 'filter'
+        icon: 'verificationMarkBlack'
     },
     {
         text: BACK,

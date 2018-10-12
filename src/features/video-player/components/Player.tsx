@@ -28,7 +28,7 @@ export default class VideoPlayerScreen extends Component<Props, State> {
     state: State = {
         likedItemIndex: null,
         isLoaded: false,
-        shouldPlay: false,
+        shouldPlay: true,
         fadeIn: new Animated.Value(0.3),
     }
 
@@ -54,7 +54,7 @@ export default class VideoPlayerScreen extends Component<Props, State> {
                  });    
                 
             })            
-        }, 4000)
+        }, 10000)
     }
 
     componentWillUnmount() {
@@ -124,9 +124,7 @@ export default class VideoPlayerScreen extends Component<Props, State> {
              duration: 1000, 
              useNativeDriver: true             
            }
-        ).start(() => {
-            this.setState({shouldPlay: true})
-        });                   
+        ).start();                   
       }
 
 }

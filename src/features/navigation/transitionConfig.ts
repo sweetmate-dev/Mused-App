@@ -4,7 +4,7 @@ import { COLLECTION, NEWSFEED, VIDEOPLAYER } from '../shared';
 export const transitionConfig = () => {
   return {
     transitionSpec: {
-      duration: 100,
+      duration: 30,
       easing: Easing.out(Easing.poly(10)),
       timing: Animated.timing,
       useNativeDriver: true

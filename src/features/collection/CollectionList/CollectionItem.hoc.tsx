@@ -9,7 +9,7 @@ type Props = {
     root?: RootStore;
     item: Product;
     countAlter: string;
-    goToVideo: (slotNumber: number, alternatives: number[]) => void;
+    goToNext: (slotNumber: number, alternatives: number[]) => void;
     onLoadImage: () => void;
     alternatives: number[];
     index: number;
@@ -19,7 +19,7 @@ function CollectionItemHOC(CollectionItem: any) {
     @observer
     class NewComp extends Component<Props> {
       render() {
-          const { root: { products }, item, countAlter, goToVideo, onLoadImage, alternatives, index } = this.props;
+          const { root: { products }, item, countAlter, goToNext, onLoadImage, alternatives, index } = this.props;
           const { listOfBookmarks, createBookmark, deleteBookmarkById} = products;
         return <CollectionItem
                     listOfBookmarks={listOfBookmarks}
@@ -28,7 +28,7 @@ function CollectionItemHOC(CollectionItem: any) {
                     item={item}
                     countAlter={countAlter}
                     onLoadImage={onLoadImage}
-                    goToVideo={goToVideo}
+                    goToNext={goToNext}
                     alternatives={alternatives}
                     index={index}
                     navigateToProductSingle={this._navigateToProductSingle}

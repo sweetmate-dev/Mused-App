@@ -39,7 +39,7 @@ export default class SidebarScroll extends Component<Props> {
     private _renderItem = (props: {item: Product, index: number}) => {
         return (
             <TouchableOpacity key={props.item.id} style={[theme.scrollCell,theme.scrollCellBorder]} onPress={() => this._addNewDragAndDropSlot(props.item)}>
-                <AutoHeightImage  source={{uri: `${thumbnailImage}${props.item.id}`}} width={width / 4} />
+                <AutoHeightImage  source={{uri: `${thumbnailImage}${props.item.id}`}} width={width / 4 + 20} />
                 {/* <View style={theme.scrollCellDivider} /> */}
                 <TouchableOpacity onPress={() => this.props.navigateToProductSingle(props.item)}>
                     <Text style={[theme.scrollCellText, {fontFamily: 'LatoBold'}]}>{props.item.brand.toUpperCase()}</Text>

@@ -51,8 +51,8 @@ export default class Browser extends Component<Props, State> {
             </View>);
         const _listOfAlternatives = [...this.props.listOfAlternatives];
         return (
-            <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
-                <View style={theme.productListContainer}>
+            <View style={[theme.container]}>
+                <Animated.View style={[theme.productListContainer, {opacity: this.state.fadeIn}]}>
                     {
                     _listOfAlternatives.length > 0 && 
                     <FlatList
@@ -64,8 +64,8 @@ export default class Browser extends Component<Props, State> {
                         numColumns={2}
                         scrollEventThrottle={300}
                     />}
-                </View>
-            </Animated.View>
+                </Animated.View>
+            </View>
         )
     }
 

@@ -35,7 +35,8 @@ export default class Header extends Component<Props> {
         return (
             <View
                 style={{
-                    marginTop: -15,
+                    paddingTop: 10,
+                    marginTop: -10,
                     backgroundColor: '#fff',
                     height: 70, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 10 }}>
                 <View style={{ flex: 0.2 }}>
@@ -85,9 +86,9 @@ export default class Header extends Component<Props> {
             resetArrayImages();
         }
         if ( ZOOM === route) { 
-            prevRoute === VIEW
-             ? setPrevCurrentRoutes(VIEW, BROWSE)
-             : setPrevCurrentRoutes(BROWSE, VIDEOPLAYER)
+            if(prevRoute === BROWSE) setPrevCurrentRoutes(BROWSE, COLLECTION)
+            else if(prevRoute === VIEW) setPrevCurrentRoutes(VIEW, BROWSE)
+            else if(prevRoute === COLLECTION) setPrevCurrentRoutes(COLLECTION, NEWSFEED)
         }
         if ( VIEW === route) {   
             setPrevCurrentRoutes(BROWSE, VIDEOPLAYER)

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import CollectionList from './CollectionList';
-import { Header, COLLECTION, VIDEOPLAYER } from '../../shared';
+import { Header, COLLECTION, BROWSE } from '../../shared';
 import { ROOT_STORE } from '../../stores';
 type Props = {
     navigation: any;
@@ -28,19 +28,19 @@ function CollectionHOC(Collection: any) {
                     getCollection={getCollection} 
                     navigation={navigation}
                     currentRoute={currentRoute}
-                    goToVideo={this._goToVideo}
+                    goToNext={this._goToNext}
                     listOfBookmarks={listOfBookmarks}
                     createBookmark={createBookmark}
                     deleteBookmarkById={deleteBookmarkById}
                 />
       }
 
-      _goToVideo = (slotNumber: number, alternatives: number[]) => {
+      _goToNext = (slotNumber: number, alternatives: number[]) => {
         const { root: { ui, slots } } = this.props;
         const { navigate } = ui;
         const { setSlotNumber } = slots;
         setSlotNumber(slotNumber);
-        navigate(VIDEOPLAYER, COLLECTION, {alternatives});
+        navigate(BROWSE, COLLECTION, {alternatives});
       }      
 
     //   _goToBrowse = (slotNumber: number, alternatives: number[]) => {

@@ -29,7 +29,7 @@ type Props = {
     listOfCollection: Product[];
     listOfBookmarks: Bookmark[];
     authorItem: Author;
-    goToVideo: (slotNumber: number, alternatives: number[]) => void;
+    goToNext: (slotNumber: number, alternatives: number[]) => void;
     createBookmark: (productId: number) => void;
     deleteBookmarkById: (_id: any) => void;
     currentRoute: string
@@ -81,7 +81,7 @@ export default class CollectionList extends Component<Props, State> {
             item={props.item} 
             countAlter={`${this.slots[props.index].alternatives.length}`}
             index={props.index}
-            goToVideo={this._goToVideo}
+            goToNext={this._goToNext}
             alternatives={this.slots[props.index].alternatives}
             onLoadImage={this._onLoadImage}
         />;
@@ -99,8 +99,8 @@ export default class CollectionList extends Component<Props, State> {
         )
     }
 
-    _goToVideo = (slotNumber: number, alternatives: number[]) => {
-        const { goToVideo } = this.props;
+    _goToNext = (slotNumber: number, alternatives: number[]) => {
+        const { goToNext } = this.props;
         this.state.fadeIn.setValue(1)
         Animated.timing(                  
            this.state.fadeIn,            
@@ -111,7 +111,7 @@ export default class CollectionList extends Component<Props, State> {
            }
         ).start(() => {
             setTimeout(() => {
-                goToVideo(slotNumber, alternatives);
+                goToNext(slotNumber, alternatives);
                 setTimeout(() => {
                     this.state.fadeIn.setValue(1)
                 }, 300)   
