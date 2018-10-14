@@ -8,8 +8,8 @@ import {
 
 import theme from './theme';
 import { Entypo } from '@expo/vector-icons';
-import { BROWSE, COLLECTION, FILTER, VIDEOPLAYER } from '../../../shared';
-import CollectionItems from './CollectionItems/CollectionItems.hoc';
+import { BROWSE, COLLECTION, FILTER } from '../../../shared';
+// import CollectionItems from './CollectionItems/CollectionItems.hoc';
 import BrowseItems from './BrowseItems/BrowseItems.hoc'
 // import FilterItems from './FilterItems/FilterItems.hoc';
 
@@ -26,13 +26,12 @@ export default class PreShowItems extends Component<Props> {
         
         const { currentRoute } = this.props;
         const onCollectionScreen: boolean = currentRoute === COLLECTION;
-        const onBrowseScreen: boolean = currentRoute === BROWSE || currentRoute === VIDEOPLAYER;
+        const onBrowseScreen: boolean = currentRoute === BROWSE;
         const onFilterScreen: boolean = currentRoute === FILTER;
 
         return (
                  <View style={theme.imagesContainer}>
-                        { (onCollectionScreen || onFilterScreen) && <CollectionItems />}
-                        { onBrowseScreen && <BrowseItems  animate={this._animate} fadeAnim={this.state.fadeAnim} />}
+                        { (onCollectionScreen || onFilterScreen || onBrowseScreen) && <BrowseItems  animate={this._animate} fadeAnim={this.state.fadeAnim} />}
                         <TouchableOpacity onPress={this.onAddPreItem} style={theme.buttonPlus} >
                             <Entypo name="plus" size={16} color="#000000" />
                         </TouchableOpacity>

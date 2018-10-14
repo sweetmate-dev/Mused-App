@@ -24,7 +24,7 @@ type Props = {
     createBookmark: (productId: number) => void;
     deleteBookmarkById: (_id: any) => void;
     listOfBookmarks: Bookmark[];
-    
+    contextMenuIsVisible: boolean
 }
 type State = {
     isLiked: boolean;
@@ -127,12 +127,15 @@ export default class BrowseItem extends Component<Props, State> {
     }
 
     _likeIt = () => {
-        const {  isSlotMachine, item, setNewImgUrl, hideContextMenu } = this.props;
+        const {  isSlotMachine, item, setNewImgUrl, hideContextMenu, contextMenuIsVisible } = this.props;
         if (isSlotMachine) {
             return;
         }
-        setNewImgUrl({img: {uri: item.image}, id: item.id, category: item.category});
-        hideContextMenu();
+        if(contextMenuIsVisible) {
+            hideContextMenu();
+        } else {
+            setNewImgUrl({img: {uri: item.image}, id: item.id, category: item.category});
+        }
     };
 
     _createBookmark = () => {

@@ -6,6 +6,7 @@ import {
     Animated
 } from 'react-native';
 
+import DotIndicator from '../../shared/components/Indicators/dot-indicator'
 import BrowseItem from './BrowseItem';
 import theme from '../theme';
 
@@ -24,6 +25,7 @@ type Props = {
     createBookmark: (productId: number) => void;
     deleteBookmarkById: (_id: any) => void;
     listOfBookmarks: Bookmark[];
+    contextMenuIsVisible: boolean;
 };
 export default class Browser extends Component<Props, State> {
     state: State = {
@@ -53,21 +55,25 @@ export default class Browser extends Component<Props, State> {
         return (
             <View style={[theme.container]}>
                 <Animated.View style={[theme.productListContainer, {opacity: this.state.fadeIn}]}>
-                    {
-                    _listOfAlternatives.length > 0 && 
                     <FlatList
                         data={_listOfAlternatives}
                         ListHeaderComponent={headerComponent}
                         ListFooterComponent={() => <View style={theme.footerComponent} />}
+                        ListEmptyComponent={this._renderEmptyView}
                         renderItem={this._renderItem}
                         keyExtractor={ item => `${item.id}`}
                         numColumns={2}
                         scrollEventThrottle={300}
-                    />}
+                        onScroll={this.props.hideContextMenu}
+                        initialNumToRender={10}
+                    />
                 </Animated.View>
             </View>
         )
     }
+
+    _renderEmptyView = () =>
+        <DotIndicator size={6} count={3} style={{paddingTop: 80}}/>
 
     _renderItem = (props: {item: Product, index: number}) =>
         <BrowseItem item={props.item} index={props.index}
@@ -80,6 +86,7 @@ export default class Browser extends Component<Props, State> {
             createBookmark={this.props.createBookmark}
             listOfBookmarks={this.props.listOfBookmarks}
             deleteBookmarkById={this.props.deleteBookmarkById}
+            contextMenuIsVisible={this.props.contextMenuIsVisible}
         />
     _likeItem = (index: number) =>
         this.setState({likedItemIndex: index});

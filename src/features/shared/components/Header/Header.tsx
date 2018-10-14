@@ -35,10 +35,10 @@ export default class Header extends Component<Props> {
         return (
             <View
                 style={{
-                    paddingTop: 10,
+                    paddingTop: 20,
                     marginTop: -10,
                     backgroundColor: '#fff',
-                    height: 70, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 10 }}>
+                    height: 60, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 10 }}>
                 <View style={{ flex: 0.2 }}>
                     {navigation.state.routeName !== NEWSFEED && <View  style={{width: 20}}>
                         <Ripple rippleContainerBorderRadius={15 / 2} rippleSize={20} rippleCentered={true} onPress={this._goBack}>
@@ -91,10 +91,10 @@ export default class Header extends Component<Props> {
             else if(prevRoute === COLLECTION) setPrevCurrentRoutes(COLLECTION, NEWSFEED)
         }
         if ( VIEW === route) {   
-            setPrevCurrentRoutes(BROWSE, VIDEOPLAYER)
+            setPrevCurrentRoutes(BROWSE, COLLECTION)
         }
         if (BROWSE === route) {
-            setPrevCurrentRoutes(VIDEOPLAYER, COLLECTION);
+            setPrevCurrentRoutes(COLLECTION, NEWSFEED);
             hideContextMenu();
             clearFilters();
             resetAlternativies();
@@ -108,7 +108,7 @@ export default class Header extends Component<Props> {
                 return true;
             }
 
-            setPrevCurrentRoutes(BROWSE, VIDEOPLAYER)
+            setPrevCurrentRoutes(BROWSE, COLLECTION)
         }
         navigation.goBack();
         return true;

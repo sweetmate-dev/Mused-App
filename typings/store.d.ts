@@ -18,6 +18,7 @@ interface IProductStore {
     getProductsByCategory: (category: string) => void;
     resetProductsByCategory: () => void;
     listOfProductsByCategories: Product[];
+    categoryInDrag: string;
 }
 
 interface IUiStore {

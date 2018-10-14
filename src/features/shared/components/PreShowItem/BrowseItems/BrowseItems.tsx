@@ -17,6 +17,7 @@ type Props = {
     setNewImgUrl: (newImgUrl: ProductImage) => void;
     changeArrayImages: (slotNumber: number, newSlot: ProductImage) => void;
     showContextMenu: (slotNumber: number | string) => void;
+    hideContextMenu: () => void;
     setSlotNumber: (slotNumber: number | string) => void;
     moveImageToLeft: (slotNumber: number | string) => void;
     moveSlotLeft: () => void;
@@ -26,11 +27,13 @@ type Props = {
 
 type State = {
     marginTop: any;
+    selectedID: number
 }
 
 export default class BrowseItems extends Component<Props, State> {
     state: State = {
         marginTop: new Animated.Value(0),
+        selectedID: 999
     };
 
     componentWillReceiveProps(nextProps: Props) {
@@ -48,17 +51,20 @@ export default class BrowseItems extends Component<Props, State> {
         const { 
             arrayImgs, 
             slotNumber, 
-            newImgUrl,  
-            showContextMenu, 
+            newImgUrl,
+            contextMenuIsVisible
         } = this.props;
         const _this = this;
         return arrayImgs.map( (slotProduct: ProductImage, index: number)  => {
+            const opacity = (contextMenuIsVisible && this.state.selectedID === slotProduct.id) ? 0.5 : 1;
+            
             if (slotProduct.id === slotNumber && newImgUrl) { 
+                console.log(slotProduct.id + ', ' + slotNumber + ', ' + newImgUrl.id)
                 this.startAnimation(newImgUrl)       
                 return (
                     <TouchableHighlight 
-                        style={[theme.itemImageContainer ]}
-                        onPress={() => showContextMenu(slotProduct.id)}
+                        style={[theme.itemImageContainer, {opacity}]}
+                        onPress={() => this.showContextMenu(slotProduct.id)}
                         underlayColor={'transparent'}
                         key={index} >
                         <Animated.Image
@@ -69,10 +75,11 @@ export default class BrowseItems extends Component<Props, State> {
                     </TouchableHighlight>
                 )
             }
+            console.log(slotProduct.id + ', ' + slotNumber)
             return (
                 <TouchableHighlight 
-                    style={[theme.itemImageContainer ]}
-                    onPress={() => showContextMenu(slotProduct.id)}
+                    style={[theme.itemImageContainer, {opacity} ]}
+                    onPress={() => this.showContextMenu(slotProduct.id)}
                     underlayColor={'transparent'}
                     key={slotProduct.id} >
                     <Animated.Image
@@ -86,6 +93,18 @@ export default class BrowseItems extends Component<Props, State> {
            
     )};
 
+    showContextMenu = (productID: any) => {
+        const { showContextMenu, hideContextMenu, contextMenuIsVisible } = this.props;
+        if(contextMenuIsVisible){
+            this.setState({selectedID: productID})
+            hideContextMenu()
+        } else {
+            this.setState({selectedID: productID})
+            showContextMenu(productID)
+        }
+        
+    }
+
     startAnimation = (newImgUrl: any) => {
         const { slotNumber, changeArrayImages, setSlotNumber, setNewImgUrl, setSlotMachineEffect } = this.props;
         this.state.marginTop.setValue(0);
@@ -93,16 +112,17 @@ export default class BrowseItems extends Component<Props, State> {
             this.state.marginTop,
             {
                 toValue: 300,
-                duration: 200,
+                duration: 300,
                 easing: Easing.cubic
             }
-        ).start(async () => {
+        ).start()
+        setTimeout(async () => {
             this.state.marginTop.setValue(0);
             await changeArrayImages(slotNumber, newImgUrl);
             await setSlotNumber(newImgUrl.id);
             await setNewImgUrl(null);
             setSlotMachineEffect(false);
-        })
+        }, 300)
     }
 
     _moveSlotLeft =  () =>

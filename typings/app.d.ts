@@ -41,7 +41,7 @@ type UserProfile = {
 }
 
 type ProductImage = {
-    img: ImageSourcePropType
+    img: ImageSourcePropType;
     id: number | string;
 }
 

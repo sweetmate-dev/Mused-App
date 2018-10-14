@@ -77,14 +77,10 @@ export default  StyleSheet.create({
         alignItems: 'center'
     },
     buttonPlus: {
-        left: 0,
-        top: 0,
-        width: 20,
-        height: 20,
+        paddingTop: 20,
         backgroundColor: '#fff',
         justifyContent: 'center',
-        alignItems: 'center',
-        display: 'flex',
+        alignItems: 'flex-start',
     },
     addCategory: {
         width: 18,

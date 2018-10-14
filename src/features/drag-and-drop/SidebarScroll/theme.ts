@@ -30,6 +30,7 @@ export default StyleSheet.create({
     scrolllContainer: {
         width: width / 4 + 40,
         height: height - 150,
+        paddingRight: 20,
         zIndex: 1,
         backgroundColor:'#ffffff'
     },
@@ -39,7 +40,7 @@ export default StyleSheet.create({
     },
     scrollCell:{
         alignItems:'center',
-        width: width / 4 + 40
+        width: width / 4 + 20
 
     },
     scrollCellZero:{
@@ -57,14 +58,14 @@ export default StyleSheet.create({
         resizeMode: 'contain'
     },
     divLine: {
-        width: 35,
-        height: 1,
-        backgroundColor: '#000000',
+        width: width / 4 + 20,
+        height: 2,
+        backgroundColor: '#f9f9f9',
         marginTop: 20
     },
     scrollCellText:{
         textAlign:'center',
-        fontSize:12,
+        fontSize:10,
         marginHorizontal:5,
         marginTop:20
     },

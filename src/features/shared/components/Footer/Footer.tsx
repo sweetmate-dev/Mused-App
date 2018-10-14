@@ -22,7 +22,7 @@ export default class Footer extends Component<Props> {
     _renderFooter = () => {
         return (
             <View style={theme.container}>
-                    <PreShowItems />
+                <PreShowItems />
             </View>
         )
     }

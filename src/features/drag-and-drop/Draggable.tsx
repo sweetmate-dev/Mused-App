@@ -35,6 +35,8 @@ type Props = {
     x: number;
     y: number;
     selected: boolean;
+    categoryInDrag: string;
+    item: any
 }
 type State = {
     pan: any;
@@ -156,6 +158,8 @@ export default class Draggable extends Component<Props, State> {
 
     /* resolves the style for text items while the item is being dragged */
     _dragItemCss = (renderSize: number, renderColor: string | null, renderShape: string) => {
+        const { item } = this.props;
+        const isBelts: boolean = item.category === 'belts'
         if(renderShape == 'circle') {
             return{
                 backgroundColor: renderColor,
@@ -172,7 +176,7 @@ export default class Draggable extends Component<Props, State> {
             };
         }else if(renderShape == 'image') {
             return{
-                width: renderSize * 0.6,
+                width: isBelts ? renderSize * 1.2 : renderSize * 0.6,
                 height: renderSize,
                 zIndex: 999,
             };
@@ -217,7 +221,7 @@ export default class Draggable extends Component<Props, State> {
 
     render() {
         const touchableContent = this._getTextOrImage();
-        const { pressDrag, longPressDrag, pressInDrag, pressOutDrag , renderSize, renderShape,  offsetX, x, y, offsetY } = this.props;
+        const { pressDrag, longPressDrag, pressInDrag, pressOutDrag , renderSize, item, renderShape,  offsetX, x, y, offsetY } = this.props;
         const  fadeVal = this.props.selected? 0.5 : this.state.fadeAnim;
         let Window = Dimensions.get('window');
 
@@ -231,7 +235,13 @@ export default class Draggable extends Component<Props, State> {
             }}>
                 <Animated.View
                     {...this.panResponder.panHandlers}
-                    style={[this.state.pan.getLayout(),{opacity: fadeVal,width:this.props.renderSize}]}>
+                    style={[
+                        this.state.pan.getLayout(),
+                        {
+                            opacity: fadeVal,
+                            width: item.category === 'belts' ? 150 : this.props.renderSize
+                        }
+                    ]}>
                     <TouchableWithoutFeedback
                         style={this._dragItemCss(renderSize, null, renderShape)}
                         onPress={pressDrag}

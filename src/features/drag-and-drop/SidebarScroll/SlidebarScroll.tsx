@@ -1,11 +1,11 @@
 import React from 'react';
 import { Component } from 'react';
-import { Text, View, TouchableOpacity, Dimensions, FlatList } from 'react-native';
+import { Text, View, TouchableOpacity, FlatList } from 'react-native';
 import { thumbnailImage } from '../../shared';
 import { firstLetterUpper } from '../helper';
-import AutoHeightImage from 'react-native-auto-height-image';
+import AutoSizeImage from '../../shared/components/AutoSizeImge'
 import theme from './theme';
-const { width } = Dimensions.get('window');
+
 const categoriesFilter: string[] = ['jewelry', 'belts', 'hats', 'scarves', 'gloves'];
 type Props = {
     listOfProductsByCategories: Product[];
@@ -15,6 +15,7 @@ type Props = {
     pressOutDrag: () => void;
     toggleSlider: (flag: boolean) => void;
     isOpenSlider: boolean;
+    categoryInDrag: string;
 }
 export default class SidebarScroll extends Component<Props> {
 
@@ -39,11 +40,11 @@ export default class SidebarScroll extends Component<Props> {
     private _renderItem = (props: {item: Product, index: number}) => {
         return (
             <TouchableOpacity key={props.item.id} style={[theme.scrollCell,theme.scrollCellBorder]} onPress={() => this._addNewDragAndDropSlot(props.item)}>
-                <AutoHeightImage  source={{uri: `${thumbnailImage}${props.item.id}`}} width={width / 4 + 20} />
+                <AutoSizeImage uri={`${thumbnailImage}${props.item.id}`} />
                 {/* <View style={theme.scrollCellDivider} /> */}
                 <TouchableOpacity onPress={() => this.props.navigateToProductSingle(props.item)}>
                     <Text style={[theme.scrollCellText, {fontFamily: 'LatoBold'}]}>{props.item.brand.toUpperCase()}</Text>
-                    <Text style={[theme.scrollCellText, {marginTop: 3, fontSize: 11}]}>{props.item.unbrandedName}</Text>
+                    <Text style={[theme.scrollCellText, {marginTop: 3, fontSize: 9}]}>{props.item.unbrandedName}</Text>
                 </TouchableOpacity>
                 <View style={theme.divLine} />
             </TouchableOpacity>
@@ -53,15 +54,16 @@ export default class SidebarScroll extends Component<Props> {
     private _renderCategoryItem = (item: string, index: number) => {
         return (
             <TouchableOpacity onPress={() => this._onPressCategory(item)} key={index} style={theme.categoriesFilterWrapper}>
-                    <Text style={[theme.categoriesFilterText, {fontFamily: 'Lato'}]}>{firstLetterUpper(item)}</Text>
+                <Text style={[theme.categoriesFilterText, {fontFamily: 'Lato'}]}>{firstLetterUpper(item)}</Text>
             </TouchableOpacity>
         )
     }
 
     private _addNewDragAndDropSlot = (item: Product) => {
-        const { addOrReplaceSixthSlot, pressOutDrag } = this.props;
+        const { addOrReplaceSixthSlot, pressOutDrag, categoryInDrag } = this.props;
         pressOutDrag();
-        const newProductSlot: ProductImage = {
+        const newProductSlot: any = {
+            category: categoryInDrag,
             id: item.id,
             img: {uri: item.image}
         };

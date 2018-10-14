@@ -36,6 +36,7 @@ function BrowseItemsHOC(BrowseItems: any) {
                     setNewImgUrl={setNewImgUrl}
                     changeArrayImages={this._changeArrayImages}
                     showContextMenu={this._showContextMenu}
+                    hideContextMenu={this._hideContextMenu}
                     isMoveProduct={isMoveProduct}
                     contextMenuIsVisible={contextMenuIsVisible}
                     secondSlotNumber={secondSlotNumber}
@@ -56,6 +57,12 @@ function BrowseItemsHOC(BrowseItems: any) {
         const { root: { slots: { setSecondSlotNumber }, ui: { toggleContextMenu } } } = this.props;
           toggleContextMenu(true);
           setSecondSlotNumber(index);
+      }
+
+      _hideContextMenu = () => {
+        const { root: { slots: { setSecondSlotNumber }, ui: { toggleContextMenu } } } = this.props;
+          toggleContextMenu(false);
+          setSecondSlotNumber(null);
       }
 
       _moveImage =  () => {

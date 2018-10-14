@@ -24,6 +24,7 @@ export default class ObservableStore implements IProductStore {
     @observable arrayImages: ProductImage[] = [];
     @observable bookmarks: Bookmark[] = [];
     @observable productsByCategories: Product[] = [];
+    @observable categoryInDrag: string = '';
 
     get listOfCollection() {
         return this.collection;
@@ -48,6 +49,7 @@ export default class ObservableStore implements IProductStore {
 
     @action
     public getAlternativesByFilter = async () => {
+        this.alternatives = []
         await getProductsByCatsSubs(this.root.filters.listOfCategory).then((products: Product[]) => {
             this.alternatives = [...products]
         });
@@ -137,6 +139,7 @@ export default class ObservableStore implements IProductStore {
     getProductsByCategory = async (category: string) => {
         await getProductsByCategory(category).then( (products: Product[]) => {
             this.productsByCategories = products;
+            this.categoryInDrag = category;
         })
     }
 

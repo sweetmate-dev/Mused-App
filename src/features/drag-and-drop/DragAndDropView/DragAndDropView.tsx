@@ -22,7 +22,7 @@ type Props = {
     navigateToProductSingle: (product: Product) => void;
     addOrReplaceSixthSlot: (item: HashMap<string>) => void;
     resetProductsByCategory: () => void;
-
+    categoryInDrag: string;
 };
 type State = {
     dimensions: {
@@ -108,6 +108,7 @@ export default class DragAndDropAreaView extends React.Component<Props, State> {
                         isOpenSlider={this.state.isOpenSlider}
                         toggleSlider={this._toggleSlider}
                         getProductsByCategory={this.props.getProductsByCategory}
+                        categoryInDrag={this.props.categoryInDrag}
                     />
                 </View>
         </>
@@ -149,6 +150,8 @@ export default class DragAndDropAreaView extends React.Component<Props, State> {
                                 offsetX={0} offsetY={0}
                                 renderSize={isLastItem ? imageSmallSize : imageSize} 
                                 pressInDrag={() => this._pressInDrag(index)}
+                                categoryInDrag={this.props.categoryInDrag}
+                                item={item}
                                />)
         })
     }
