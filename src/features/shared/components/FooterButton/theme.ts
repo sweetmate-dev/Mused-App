@@ -10,15 +10,10 @@ import {
     footerCheckImage: {
          width: 16, 
          height: 14,
-         marginBottom: 5
+         marginBottom: 3
     },
-    footerViewImage: {
-        width: 16, 
-        height: 23,
-        marginBottom: -4
-   },
     footerCheckText: {
-        fontSize: 9,
+        fontSize: 8,
         fontFamily: 'Lato'
     },
     footerButtonContainer: {

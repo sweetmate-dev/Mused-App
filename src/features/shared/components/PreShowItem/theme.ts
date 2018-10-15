@@ -16,7 +16,8 @@ import {
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 4,
-        marginVertical: 2
+        marginVertical: 2,
+        backgroundColor: '#FFFFFF'
     },
     imagesContainer: {
         alignItems: 'center',
@@ -37,7 +38,7 @@ import {
         right: 10,
         width: 22,
         height: 22,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
         justifyContent: 'center',
         alignItems: 'center',
         display: 'flex'

@@ -99,6 +99,6 @@ export default StyleSheet.create({
         paddingTop: 15,
         borderTopWidth: 1,
         borderTopColor: '#303030',
-        marginRight: 20
+        // marginRight: 20
     }
 });

@@ -211,11 +211,12 @@ export default StyleSheet.create({
         flex: 1,
         padding: 20,
         justifyContent: 'center',
-        backgroundColor: '#DADADA',
+        backgroundColor: '#E2E2E2',
     },
     categoryText: {
-        fontSize: 20,
-        fontFamily: 'RalewayBold'
+        fontSize: 16,
+        fontFamily: 'RalewayBold',
+        paddingBottom: 8
     },
     filterImage: {
         position: 'absolute',

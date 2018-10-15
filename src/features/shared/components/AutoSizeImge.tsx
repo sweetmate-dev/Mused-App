@@ -15,24 +15,29 @@ type State = {
 
 export default class AutoSizeImage extends Component<Props, State> {
 
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            width: width / 4
-        }
+    _isMounted = false;
+
+    state: State = {
+        width: width / 4
     }
 
     componentDidMount() {
+        this._isMounted = true;
         Image.getSize(this.props.uri, (width, height) => {
             const exHeight = maxWidth * height / width;
             if(exHeight > maxWidth * 2) {
                 // decrease width
-                this.setState({width: maxWidth * maxWidth * 2 / exHeight})
+                console.log(this._isMounted)
+                this._isMounted && this.setState({width: maxWidth * maxWidth * 2 / exHeight})
             }
         },
         (error) => {
             console.log(error)
         });
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
     }
 
     render() {

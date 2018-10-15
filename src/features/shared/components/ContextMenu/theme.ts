@@ -9,10 +9,10 @@ import {
     container: {
         position: 'absolute', 
         bottom: 0, 
-        height: 55,
+        height: 45,
         zIndex: 2,
         width: width, 
-        backgroundColor: '#000',
+        backgroundColor: '#E2E2E2',
         borderTopWidth: 1,
         borderTopColor: '#eee',
         justifyContent: 'center', 
@@ -20,14 +20,14 @@ import {
         alignItems: 'center'
     },
     buttonText: {
-        color: '#fff',
-        fontSize: 11,
+        color: '#000000',
+        fontSize: 9,
         marginTop: 2,
         fontFamily: 'Lato'
     },
     mockImage: {
-        width: 17,
-        height: 17,
+        width: 15,
+        height: 15,
         marginBottom: 4
     },
     menuItem: {

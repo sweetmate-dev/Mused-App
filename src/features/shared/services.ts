@@ -33,7 +33,7 @@ export const slotsOrder = (ids: number[], products: Product[]) => {
   const newOrderProducts: Product[] = [];
   ids.forEach( (id: number) => {
     const product: Product = products.find((_product: Product) => _product.id === id);
-    newOrderProducts.push(product);
+    if(product) newOrderProducts.push(product);
   })
   return newOrderProducts;
 }
