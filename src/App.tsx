@@ -72,7 +72,7 @@ export default class App extends React.Component<Props, State> {
         require('../assets/images/switch.png'),
         require('../assets/images/details.png'),
         require('../assets/images/star.png'),
-        require('../assets/images/star2.png'),
+        require('../assets/images/star_like.png'),
         require('../assets/images/love-selected.png'),
         require('../assets/images/filter-icon.png'),
         require('../assets/images/logo-white.png'),

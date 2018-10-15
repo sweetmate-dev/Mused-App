@@ -1,71 +1,84 @@
 import React, { Component } from 'react';
 import {
-    Text,
     View,
     Image,
-    ScrollView
+    ScrollView,
+    Text
 } from 'react-native';
-import AutoHeightImage from 'react-native-auto-height-image';
-
-import { Header } from '../../shared';
-import { Button, largiImage } from '../../shared';
+// import AutoHeightImage from 'react-native-auto-height-image';
+import Swiper from 'react-native-swiper';
+import Ripple from 'react-native-material-ripple';
+// import { Header } from '../../shared';
+import { Button } from '../../shared';
 import theme from "../theme";
+import { COLLECTION, BROWSE, NEWSFEED, VIEW } from '../../shared/routesKeys';
 
-const likeIconUrl = require('../../../../assets/images/heart-icon.jpg');
+
+const arrowIcon = require('../../../../assets/images/arrow-icon.png');
+const startIcon = require('../../../../assets/images/star.png');
+// const startLikeIcon = require('../../../../assets/images/star.png');
+const ZOOM1 = require('../../../../assets/images/zoom_1.jpg');
+const ZOOM2 = require('../../../../assets/images/zoom_2.jpg');
+
 
 type Props = {
-    navigation: any; 
+    navigation: any;
+    prevRoute: string;
+    setPrevCurrentRoutes: (currentRoute: string, prevRoute: string) => void;
 }
 export default class Zoom extends Component<Props> {
     product: Product;
 
-    static navigationOptions: ([string]: any) => HashMap<Object> = ({ navigation }) => {
+    static navigationOptions: ([string]: any) => HashMap<Object> = ({}) => {
         return {
-            header: <Header navigation={navigation} showContent={false} />
+            header: null
         }
     };
 
     componentWillMount() {
         const { navigation } = this.props;
         this.product = navigation.getParam('product', {});
-        
     }
     render() {
-        const { description, id, priceLabel, brand, unbrandedName } = this.product;
+        const { /*id*/description, priceLabel, brand, unbrandedName } = this.product;
         return (
             <ScrollView contentContainerStyle={theme.container}>
-                <View style={theme.firstItem}>
-
-                <View style={theme.productContainer}>
-                    <AutoHeightImage
-                        source={{uri:  `${largiImage}${id}`}}
-                        style={{marginTop: 10}}
-                        width={224}
-                    />
-                    <View style={theme.likeContainer}>
+                <Swiper style={theme.wrapper} paginationStyle={{ paddingBottom: 40 }}>
+                    <View style={theme.wrapper}>
+                        <Image source={ZOOM1} style={theme.image} />
+                    </View>
+                    <View style={theme.wrapper}>
+                        <Image source={ZOOM2} style={theme.image} />
+                    </View>
+                </Swiper>
+                <View style={theme.headerView}>
+                    <Ripple 
+                        rippleContainerBorderRadius={15 / 2} 
+                        rippleSize={20} 
+                        rippleCentered={true} 
+                        onPress={this._goBack}>
                         <Image
-                            source={likeIconUrl}
-                            style={theme.likeIcon}
-                        />
-                    </View>
+                            style={{width: 20, height: 20}}
+                            source={arrowIcon} />
+                    </ Ripple>
+                    <Image
+                        source={startIcon}
+                        style={theme.likeIcon}
+                    />
                 </View>
-
-                <View style={theme.brandContainer}>
-                    <View style={theme.brandLeftColumn}>
-                        <Text style={theme.brand}>{brand}</Text>
-                        <Text style={theme.brandDesc}>{unbrandedName}</Text>
+                <View style={theme.infoView}>
+                    <View style={theme.brandView}>
+                        <Text style={theme.brandText}>{brand}</Text>
+                        <Text style={theme.unbrandText}>{unbrandedName}</Text>
                     </View>
-                    <View style={theme.brandRightColumn}>
-                        <Text style={theme.price}>{priceLabel}</Text>
-                        <Text style={theme.priceDesc}>at Net-a-Porter</Text>
+                    <View style={theme.priceView}>
+                        <Text style={theme.priceText}>{priceLabel}</Text>
                     </View>
                 </View>
 
                 <View style={theme.buttonsContainer}>
-                    <Button style={{marginRight: 10}} themeType='light' text='Visit Retailer'/>
-                    <Button style={{marginLeft: 10, width: 180}} themeType='dark' text='Style with' buttonWithImage={true} />
-                </View>
-
+                    <Button style={{marginRight: 10, width: 180}} themeType='dark' text='-  MATCH IT  -' />
+                    <Button style={{marginLeft: 10}} themeType='light' text='ADD TO CART'/>
                 </View>
 
                 <View style={theme.descContainer}>
@@ -75,5 +88,19 @@ export default class Zoom extends Component<Props> {
 
             </ScrollView>
         )
+    }
+
+    _goBack = () => {
+        const { 
+            setPrevCurrentRoutes, 
+            prevRoute,
+            navigation
+        } = this.props;
+
+        if(prevRoute === BROWSE) setPrevCurrentRoutes(BROWSE, COLLECTION)
+        else if(prevRoute === VIEW) setPrevCurrentRoutes(VIEW, BROWSE)
+        else if(prevRoute === COLLECTION) setPrevCurrentRoutes(COLLECTION, NEWSFEED)
+        navigation.goBack();
+        return true;
     }
 }

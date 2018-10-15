@@ -10,8 +10,8 @@ import Ripple from 'react-native-material-ripple';
 import { thumbnailImage } from '../../shared';
 import theme from '../theme';
 
-const likeIconUrl = require('../../../../assets/images/star.png');
-const notLikeIconUrl = require('../../../../assets/images/star2.png');
+const likeIconUrl = require('../../../../assets/images/star_like.png');
+const notLikeIconUrl = require('../../../../assets/images/star.png');
 
 type Props = {
     item: Product;

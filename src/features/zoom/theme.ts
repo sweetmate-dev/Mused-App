@@ -3,62 +3,61 @@ import {
     StyleSheet
 } from 'react-native';
 
-const {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 export default StyleSheet.create({
     container: {
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#fff',        
+        padding: 0,
+        paddingBottom: 50,
+    },
+    wrapper: {
         width: width,
-        backgroundColor: '#fff',
-        paddingBottom: 50
+        height: width * 1.2,
     },
-    productContainer: {
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginTop: 15,
-        flex: 0.6,
+    image: {
         width: width,
-        justifyContent: 'center',
-        backgroundColor: '#fff'
+        height: width * 1.2,
+        resizeMode: 'contain'
     },
-    productImage: {
-        height: 300,
-        width: 224,
-        marginTop: 10,
-    },
-    brandContainer: {
+    headerView: {
+        position: 'absolute',
+        top: -20,
+        left: 0,
+        right: 0,
+        height: 70,
+        paddingHorizontal: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: width,
-        paddingRight: 20,
-        paddingLeft: 30,
-        flex: 0.15,
-        paddingTop: 40
+        alignItems: 'center'
     },
-    brand: {
-        fontFamily: 'RalewayBold',
-        fontSize: 16,
+    likeIcon: {
+        width: 20,
+        height: 20,
+        resizeMode: 'stretch'
     },
-    brandDesc: {
-        fontFamily: 'Lato',
-        fontSize: 11,
-        marginTop: 5,
-        marginBottom: 5,
-        lineHeight: 20
+    infoView: {
+        padding: 30,
+        flexDirection: 'row'
     },
-    price: {
-        fontFamily: 'Lato',
-        fontSize: 14,
-        lineHeight: 20,
-        textAlign: 'center'
+    brandView: {
+        flex: 4,
     },
-    priceDesc: {
-        fontFamily: 'Lato',
-        fontSize: 10,
-        lineHeight: 20,
-        textAlign: 'center'
+    priceView: {
+        flex: 1,
+    },
+    brandText: {
+        color: 'gray',
+        fontSize: 20,
+    },
+    unbrandText: {
+        color: 'darkgray',
+        fontSize: 16
+    },
+    priceText: {
+        color: 'darkgray',
+        fontSize: 20
     },
     buttonsContainer: {
         flex: 0.2,
@@ -67,40 +66,16 @@ export default StyleSheet.create({
         alignItems: 'center'
     },
     descContainer: {
-        width: width - 60,
-        flex: 0.2,
-        marginBottom: 50
+        padding: 30
     },
     descTitle: {
         fontFamily: 'RalewayBold',
         fontSize: 14,
+        marginBottom: 10
     },
     descText: {
         fontFamily: 'Lato',
         fontSize: 13,
-        marginTop: 5,
         lineHeight: 22,
     },
-    brandLeftColumn: {
-        flex: 0.7
-    },
-    brandRightColumn: {
-        flex: 0.3
-    },
-    likeContainer: {
-        position: 'absolute',
-        top: 0,
-        right: 40,
-        width: 20,
-        height: 20
-    },
-    likeIcon: {
-        width: 20,
-        height: 18,
-    },
-    firstItem: {
-        height: height - 90,
-        flex: 1,
-        flexDirection: 'column'
-    }
 });

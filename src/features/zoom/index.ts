@@ -1,1 +1,1 @@
-export { default as Zoom } from './components/Zoom';
+export { default as Zoom } from './components/Zoom.hoc';
