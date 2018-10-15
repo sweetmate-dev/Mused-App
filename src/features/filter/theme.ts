@@ -10,8 +10,6 @@ const deviceWidth: number = Dimensions.get('window').width;
 export default StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-between',
         backgroundColor: '#fff',
         height: Dimensions.get('window').height,
         marginBottom: 170
@@ -93,7 +91,10 @@ export default StyleSheet.create({
         alignItems: 'center',
         width: deviceWidth,
         flexDirection: 'column',
-        paddingTop: 25
+        borderTopColor: '#E5E5E5',
+        borderTopWidth: 1,
+        marginTop: 25,
+        paddingBottom: 80
     },
     textTabNavigation: {
         fontSize: 15,
@@ -144,10 +145,16 @@ export default StyleSheet.create({
     textFieldStyle: {
         fontSize: 14,
          color: '#000'
-        },
+    },
+    diviLine: {
+        backgroundColor: '#E5E5E5',
+        height: 1
+    },
     tabItem: {
-        width: deviceWidth - 140,
+        width: deviceWidth,
         minHeight: 50,
+        borderBottomColor: '#E5E5E5',
+        borderBottomWidth: 1,
         justifyContent: 'center'
     },
     subCategoryText: {
@@ -172,16 +179,51 @@ export default StyleSheet.create({
         height: 50, 
         alignItems: 'center',
         flexDirection: 'row', 
-        width: 120
+        paddingLeft: 50,
+    },
+    plusIcon: {
+        width: 30,
+        fontSize: 20,
+        lineHeight: 20
     },
     subCategoriesList: {
-        paddingLeft: 14, 
-        paddingBottom: 15
+        paddingLeft: 75, 
+        paddingVertical: 10
     },
     selectionText: {
         paddingRight: 10, 
         fontSize: 11, 
         lineHeight: 11, 
         fontFamily: 'Lato'
+    },
+    counterContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        padding: 20
+    },
+    counterItemContainer: {
+      height: 90,
+      paddingRight: 60,
+      marginBottom: 20,
+      position: 'relative',
+    },
+    leftView: {
+        flex: 1,
+        padding: 20,
+        justifyContent: 'center',
+        backgroundColor: '#DADADA',
+    },
+    categoryText: {
+        fontSize: 20,
+        fontFamily: 'RalewayBold'
+    },
+    filterImage: {
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        top: 0,
+        width: 60,
+        height: 90,
+        resizeMode: 'stretch'
     }
 });

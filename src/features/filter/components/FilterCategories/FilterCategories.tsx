@@ -38,9 +38,9 @@ export default class FilterCategories extends Component<Props> {
     _renderCategories = () => {
         return (
            <ScrollView contentContainerStyle={theme.categoryWrapper}>
-                <View style={theme.tabItem}>
+                {/* <View style={theme.tabItem}>
                     <Text style={theme.textTabHeader}>SELECT PRODUCTS</Text>
-                </View>
+                </View> */}
                {categoriesKeys.map(this._renderCategory)}
            </ScrollView>
         );
@@ -49,12 +49,20 @@ export default class FilterCategories extends Component<Props> {
         const { categoryOpened } = this.state;
         return (
             <View key={index} style={theme.tabItem}>
-                <TouchableHighlight style={theme.categoryTouchable} onPress={() => this._changeCategory(_category.category)} underlayColor={'transparent'}>
-                    <Text style={theme.textTabNavigation}>
-                    {`+ ${_category.category}`}
-                    </Text>
+                <TouchableHighlight onPress={() => this._changeCategory(_category.category)} underlayColor={'transparent'}>
+                    <View style={theme.categoryTouchable}>
+                        <Text style={theme.plusIcon}>
+                        {'+'}
+                        </Text>
+                        <Text style={theme.textTabNavigation}>
+                        {_category.category}
+                        </Text>
+                    </View>                    
                 </TouchableHighlight>
-            
+                { 
+                    _category.category === categoryOpened &&
+                    <View style={theme.diviLine} />
+                }
                 { 
                     _category.category === categoryOpened &&
                     <View style={theme.subCategoriesList}>

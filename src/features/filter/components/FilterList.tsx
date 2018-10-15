@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    TouchableHighlight
+    Image,
+    Animated
 } from 'react-native';
 
-
+import Ripple from 'react-native-material-ripple';
 // import FilterHeader from './FilterHeader';
 // import FilterSearch from './FilterSearch';
 import { selectionCount } from '../../shared';
@@ -14,6 +15,9 @@ import FilterCategories from './FilterCategories/FilterCategories.hoc'
 // import testDataDesigners from '../testDesigners';
 import theme from '../theme';
 
+const newIn = require('../../../../assets/images/filter1.jpg');
+const clothing = require('../../../../assets/images/filter2.jpg');
+const colour = require('../../../../assets/images/filter3.jpg');
 
 type Props = {
     listOfCategory: Category[];
@@ -21,66 +25,113 @@ type Props = {
     setFilterTab: (tab: string) => void;
 }
 export default class FilterList extends Component<Props> {
-    render() {
-        const { filterTab } = this.props;
-        return (
-            <View style={theme.container}>
-                { !Boolean(filterTab) && this._renderTabs()}
-                { filterTab === 'categories' && <FilterCategories />}
-            </View>
-        )
+    state = { 
+        fadeIn: new Animated.Value(1) 
     }
 
+    render() {
+        const { filterTab } = this.props;
+        if(filterTab === 'applied') {
+            this.startFadeOut()
+        } 
+        return (
+            <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
+                { !Boolean(filterTab) && this._renderTabs()}
+                { filterTab === 'categories' && <FilterCategories />}
+            </Animated.View>
+        )
+    }
 
     _changeTab = (type: string) =>
         this.props.setFilterTab(type)
 
-
+    startFadeOut = () => {
+        this.state.fadeIn.setValue(1)
+        Animated.timing(                  
+           this.state.fadeIn,            
+           {
+             toValue: 0,                   
+             duration: 500, 
+             useNativeDriver: true             
+           }
+        ).start(() => this.props.setFilterTab(''));
+    }
 
     _renderDesignerItem = (props: {item: {text: string, id?: string}, index: number}) =>
         <DesignerItem index={props.index} item={props.item} />
 
     _renderTabs = () => {
         return (
-            <View style={theme.tabNavigationWrapper}>
-                    <View style={theme.tabItem}>
-                        <Text style={theme.textTabHeader}>SELECT PRODUCTS</Text>
+            <View style={[theme.counterContainer]}>
+                <Ripple
+                    onPress={() => this.onClick('newIn')}
+                    style={theme.counterItemContainer}
+                    rippleSize={120}
+                    rippleDuration={300} 
+                    rippleCentered={true}
+                    rippleContainerBorderRadius={40}>
+                    <View style={theme.leftView}>
+                        <Text style={theme.categoryText}>NEW IN</Text>
+                        <Text>Lorem Ipsum Extra text</Text>
                     </View>
-                    <View style={theme.tabItem}>
-                        <TouchableHighlight>
-                            <Text style={theme.textTabNavigation}>
-                                New in
-                            </Text>
-                        </TouchableHighlight>
+                    <Image source={newIn} style={theme.filterImage} />
+                </Ripple>
+                <Ripple
+                    onPress={() => this.onClick('clothe')}
+                    style={theme.counterItemContainer}
+                    rippleSize={120}
+                    rippleDuration={300} 
+                    rippleCentered={true}
+                    rippleContainerBorderRadius={40}>
+                    <View style={theme.leftView}>
+                        <Text style={theme.categoryText}>CLOTHING</Text>
+                        <Text>Lorem Ipsum Extra text</Text>
                     </View>
-                    <View style={theme.tabItem}>
-                        <TouchableHighlight style={[theme.tabFilterCategories, {marginLeft: -10}]} underlayColor={'transparent'} onPress={() => this._changeTab('categories')}>
-                            <>
-                            <Text style={theme.textTabNavigation}>
-                                + Categories
-                            </Text>
-                            {this._renderSelectionCount()}
-                            </>
-                        </TouchableHighlight>
+                    <Image source={clothing} style={theme.filterImage} />
+                </Ripple>
+                <Ripple
+                    onPress={() => this.onClick('colour')} style={theme.counterItemContainer}
+                    rippleSize={120}
+                    rippleDuration={300} 
+                    rippleCentered={true}
+                    rippleContainerBorderRadius={40}>
+                    <View style={theme.leftView}>
+                        <Text style={theme.categoryText}>COLOUR</Text>
+                        <Text>Lorem Ipsum Extra text</Text>
                     </View>
-
-                    <View style={theme.tabItem}>
-                        <TouchableHighlight>
-                            <Text style={theme.textTabNavigation}>
-                                Colourse
-                            </Text>
-                        </TouchableHighlight>
-                    </View>
-
-                    <View style={theme.tabItem}>
-                        <TouchableHighlight>
-                            <Text style={theme.textTabNavigation}>
-                                Designers
-                            </Text>
-                        </TouchableHighlight>
-                    </View>
-                </View>
+                    <Image source={colour} style={theme.filterImage} />
+                </Ripple>
+            </View>   
         )
+    }
+
+    onClick = (category: string) => {
+        this.state.fadeIn.setValue(1)
+        Animated.timing(                  
+           this.state.fadeIn,            
+           {
+             toValue: 0,                   
+             duration: 400, 
+             useNativeDriver: true             
+           }
+        ).start(() => {
+            if(category === 'newIn') this.onClickNewIn();
+            else if(category === 'clothe') this.onClickClothe();
+            else this.onClickColour()
+            this.state.fadeIn.setValue(1)
+        });
+    }
+
+    onClickNewIn = () => {
+        alert('coming soon')
+    }
+
+    onClickClothe = () => {
+        this._changeTab('categories')
+    }
+
+    onClickColour = () => {
+        alert('comming soon')
     }
 
     _renderSelectionCount = () => {

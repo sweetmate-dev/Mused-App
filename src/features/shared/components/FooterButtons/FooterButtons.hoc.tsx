@@ -58,9 +58,13 @@ function FooterButtonsHOC(FooterButtons: any) {
     }
 
     _applyFilter = () => {
-      const { root: { products: { getAlternativesByFilter }  } } = this.props;
+      const { root: { products: { getAlternativesByFilter }, filters  } } = this.props;
+      const { setFilterTab } = filters;
       getAlternativesByFilter();
-      this._navigateToBrowse();
+      setFilterTab('applied');
+      setTimeout(() => {
+        this._navigateToBrowse();
+      }, 500)      
     }
     }
     return NewComp;

@@ -142,5 +142,5 @@ export default class Footer extends Component<Props> {
              useNativeDriver: true             
            }
         ).start();                        
-      }
+    }
  }
