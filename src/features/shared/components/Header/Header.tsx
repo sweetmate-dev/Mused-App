@@ -37,7 +37,6 @@ export default class Header extends Component<Props> {
                 style={{
                     paddingTop: 20,
                     marginTop: -10,
-                    backgroundColor: '#fff',
                     height: 60, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 10 }}>
                 <View style={{ flex: 0.2 }}>
                     {navigation.state.routeName !== NEWSFEED && <View  style={{width: 20}}>
@@ -80,7 +79,6 @@ export default class Header extends Component<Props> {
                 backToFilterTabs,
                 prevRoute } = this.props;
         const route: string = navigation.state.routeName;
-
         if (COLLECTION === route) {
             setPrevCurrentRoutes(NEWSFEED, '');
             resetArrayImages();

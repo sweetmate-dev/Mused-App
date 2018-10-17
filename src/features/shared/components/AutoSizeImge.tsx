@@ -27,7 +27,6 @@ export default class AutoSizeImage extends Component<Props, State> {
             const exHeight = maxWidth * height / width;
             if(exHeight > maxWidth * 2) {
                 // decrease width
-                console.log(this._isMounted)
                 this._isMounted && this.setState({width: maxWidth * maxWidth * 2 / exHeight})
             }
         },

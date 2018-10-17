@@ -14,11 +14,7 @@ function ZoomHOC(Header: any) {
 
     @observer
     class NewComp extends Component<Props> {
-        static navigationOptions: ([string]: any) => HashMap<Object> = ({}) => {
-          return {
-              header: null
-          }
-        };
+      
         render() {
             const { root: { ui }, navigation } = this.props;
             const { setPrevCurrentRoutes, prevRoute } = ui;

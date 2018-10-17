@@ -33,7 +33,10 @@ export default createStackNavigator(
             screen:  Browse
         },
         [ZOOM]: {
-            screen:  Zoom
+            screen:  Zoom,
+            navigationOptions: {
+                header: null
+            }
         },
         [FILTER]: {
             screen:  Filter
@@ -44,7 +47,7 @@ export default createStackNavigator(
     }, {
 
     initialRouteName: NEWSFEED,
-    headerMode: 'float',
+    // headerMode: 'float',
     cardStyle:{
         backgroundColor: '#fff'
     },

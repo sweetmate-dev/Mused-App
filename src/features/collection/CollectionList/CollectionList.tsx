@@ -57,7 +57,6 @@ export default class CollectionList extends Component<Props, State> {
 
     render() {
         const {  listOfCollection } = this.props;   
-        console.log(listOfCollection)     
         return (
             <View style={theme.wrapper}>
                 <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>

@@ -59,7 +59,6 @@ export default class BrowseItems extends Component<Props, State> {
             const opacity = (contextMenuIsVisible && this.state.selectedID === slotProduct.id) ? 0.5 : 1;
             
             if (slotProduct.id === slotNumber && newImgUrl) { 
-                console.log(slotProduct.id + ', ' + slotNumber + ', ' + newImgUrl.id)
                 this.startAnimation(newImgUrl)       
                 return (
                     <TouchableHighlight 
@@ -75,7 +74,6 @@ export default class BrowseItems extends Component<Props, State> {
                     </TouchableHighlight>
                 )
             }
-            console.log(slotProduct.id + ', ' + slotNumber)
             return (
                 <TouchableHighlight 
                     style={[theme.itemImageContainer, {opacity} ]}

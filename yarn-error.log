@@ -54,6 +54,7 @@ npm manifest:
       "react-native-swiper": "^1.5.13",
       "react-native-video": "^3.2.1",
       "react-navigation": "2.3.1",
+      "react-navigation-transitions": "^1.0.5",
       "whatwg-fetch": "^2.0.4"
     },
     "devDependencies": {

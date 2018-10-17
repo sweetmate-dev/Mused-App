@@ -7,29 +7,29 @@ const {width} = Dimensions.get('window');
 
 export default StyleSheet.create({
     container: {
-        flexDirection: 'column',
         backgroundColor: '#fff',        
-        padding: 0,
+        paddingTop: 5,
         paddingBottom: 50,
+        margin: 0
     },
     wrapper: {
+        marginTop: 5,
         width: width,
-        height: width * 1.2,
+        height: width * 900 / 675,
+        paddingHorizontal: 5,
     },
     image: {
-        width: width,
-        height: width * 1.2,
+        width: width - 10,
+        height: (width - 10) * 900 / 675,
         resizeMode: 'contain'
     },
-    headerView: {
+    backButtonView: {
         position: 'absolute',
-        top: -20,
+        top: 10,
         left: 0,
-        right: 0,
-        height: 70,
-        paddingHorizontal: 20,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        width: 30,
+        height: 40,
+        justifyContent: 'center',
         alignItems: 'center'
     },
     likeIcon: {
@@ -38,7 +38,9 @@ export default StyleSheet.create({
         resizeMode: 'stretch'
     },
     infoView: {
-        padding: 30,
+        paddingHorizontal: 30,
+        paddingTop: 5,
+        paddingBottom: 30,
         flexDirection: 'row'
     },
     brandView: {
@@ -48,22 +50,25 @@ export default StyleSheet.create({
         flex: 1,
     },
     brandText: {
-        color: 'gray',
-        fontSize: 20,
+        fontSize: 18,
+        fontFamily: 'RalewayBold',
+        color: '#333',
     },
     unbrandText: {
-        color: 'darkgray',
-        fontSize: 16
+        fontSize: 11,
+        fontFamily: 'Lato',
+        color: '#000'
     },
     priceText: {
-        color: 'darkgray',
-        fontSize: 20
+        color: '#000',
+        fontSize: 18,
+        fontFamily: 'Lato',
     },
     buttonsContainer: {
-        flex: 0.2,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingHorizontal: 15
     },
     descContainer: {
         padding: 30
@@ -78,4 +83,11 @@ export default StyleSheet.create({
         fontSize: 13,
         lineHeight: 22,
     },
+    leftButton: {
+        width: width * 0.55,
+        marginRight: 10
+    },
+    rightButton: {
+        flex: 1
+    }
 });
