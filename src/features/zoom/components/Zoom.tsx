@@ -13,12 +13,13 @@ import { Button } from '../../shared';
 import theme from "../theme";
 import { COLLECTION, BROWSE, NEWSFEED, VIEW } from '../../shared/routesKeys';
 import styles from '../../shared/components/FooterButton/theme';
+import { zoomFaceImage, zoomLargeImage } from '../../shared';
 
 const arrowIcon = require('../../../../assets/images/arrow-icon.png');
-// const startIcon = require('../../../../assets/images/star.png');
-// const startLikeIcon = require('../../../../assets/images/star.png');
-const ZOOM1 = require('../../../../assets/images/zoom_1.jpg');
-const ZOOM2 = require('../../../../assets/images/zoom_2.jpg');
+const startIcon = require('../../../../assets/images/star_grey.png');
+const dottedLine = require('../../../../assets/images/dotted-line.png');
+// const ZOOM1 = require('../../../../assets/images/zoom_1.jpg');
+// const ZOOM2 = require('../../../../assets/images/zoom_2.jpg');
 
 
 type Props = {
@@ -40,7 +41,7 @@ export default class Zoom extends Component<Props> {
         BackHandler.removeEventListener('hardwareBackPress', this._goBack);
     }
     render() {
-        const { /*id*/description, priceLabel, brand, unbrandedName } = this.product;
+        const { id, description, priceLabel, brand, unbrandedName } = this.product;
         return (
             <ScrollView contentContainerStyle={styles.container}>
                 <Swiper 
@@ -48,13 +49,13 @@ export default class Zoom extends Component<Props> {
                     dotStyle={{width: 8, height: 8}}
                     activeDotStyle={{width: 8, height: 8}}
                     dotColor='gray'
-                    paginationStyle={{paddingBottom: 0}}
+                    paginationStyle={{marginBottom: -10}}
                     activeDotColor='black'>
                     <View style={theme.wrapper}>
-                        <Image source={ZOOM1} style={theme.image} />
+                        <Image source={{uri: `${zoomFaceImage}${id}.jpg`}} style={theme.firstImage} />                        
                     </View>
                     <View style={theme.wrapper}>
-                        <Image source={ZOOM2} style={theme.image} />
+                        <Image source={{uri: `${zoomLargeImage}${id}.jpg`}} style={theme.secondImage} />
                     </View>
                 </Swiper>
                 <Ripple 
@@ -68,6 +69,17 @@ export default class Zoom extends Component<Props> {
                         source={arrowIcon}
                     />
                 </ Ripple>
+                <Ripple 
+                    style={theme.likeButtonView}
+                    rippleContainerBorderRadius={15 / 2} 
+                    rippleSize={20} 
+                    rippleCentered={true} 
+                    onPress={this._goBack}>
+                    <Image
+                        style={{width: 20, height: 20}}
+                        source={startIcon}
+                    />
+                </ Ripple>
                 <View style={theme.infoView}>
                     <View style={theme.brandView}>
                         <Text style={theme.brandText}>{brand}</Text>
@@ -77,10 +89,10 @@ export default class Zoom extends Component<Props> {
                         <Text style={theme.priceText}>{priceLabel}</Text>
                     </View>
                 </View>
-
+                <Image source={dottedLine} style={theme.dottedLine} />
                 <View style={theme.buttonsContainer}>
                     <Button style={theme.leftButton} themeType='dark' text='-  MATCH IT  -' />
-                    <Button style={theme.rightButton} themeType='light' text='ADD TO CART'/>
+                    {/* <Button style={theme.rightButton} themeType='light' text='ADD TO CART'/> */}
                 </View>
 
                 <View style={theme.descContainer}>

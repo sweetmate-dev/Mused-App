@@ -18,15 +18,29 @@ export default StyleSheet.create({
         height: width * 900 / 675,
         paddingHorizontal: 5,
     },
-    image: {
+    firstImage: {
         width: width - 10,
         height: (width - 10) * 900 / 675,
+        resizeMode: 'contain'
+    },
+    secondImage: {
+        width: width - 10,
+        height: width * 1.1,
         resizeMode: 'contain'
     },
     backButtonView: {
         position: 'absolute',
         top: 10,
         left: 0,
+        width: 30,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    likeButtonView: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
         width: 30,
         height: 40,
         justifyContent: 'center',
@@ -40,7 +54,6 @@ export default StyleSheet.create({
     infoView: {
         paddingHorizontal: 30,
         paddingTop: 5,
-        paddingBottom: 30,
         flexDirection: 'row'
     },
     brandView: {
@@ -55,20 +68,22 @@ export default StyleSheet.create({
         color: '#333',
     },
     unbrandText: {
-        fontSize: 11,
+        fontSize: 13,
         fontFamily: 'Lato',
-        color: '#000'
+        color: '#000',
+        marginTop: 5
     },
     priceText: {
         color: '#000',
-        fontSize: 18,
-        fontFamily: 'Lato',
+        fontSize: 16,
+        fontFamily: 'LatoBold',
     },
     buttonsContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        paddingBottom: 15
     },
     descContainer: {
         padding: 30
@@ -84,10 +99,14 @@ export default StyleSheet.create({
         lineHeight: 22,
     },
     leftButton: {
-        width: width * 0.55,
-        marginRight: 10
+        flex: 1
     },
     rightButton: {
         flex: 1
+    },
+    dottedLine: {
+        height: 30,
+        width: width,
+        resizeMode: 'contain'
     }
 });

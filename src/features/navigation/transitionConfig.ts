@@ -36,7 +36,7 @@ export const transitionConfig = () => {
         const translateY = 0;
         const opacity = props.position.interpolate({
           inputRange: [thisSceneIndex - 0.7, thisSceneIndex, thisSceneIndex + 0.7],
-          outputRange: [1, 1, 1]
+          outputRange: [0, 1, 0]
         });
         return { opacity, transform: [{translateX}, {translateY}]};
       }      
