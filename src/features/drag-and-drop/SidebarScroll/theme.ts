@@ -92,13 +92,14 @@ export default StyleSheet.create({
     },
     categoriesFilterText: {
         fontSize: 11,
-        fontFamily: 'RalewayBold'
+        fontFamily: 'RalewayBold',
+        textAlign: 'center'
     },
     categoriesFilterWrapper: {
         paddingBottom: 15,
         paddingTop: 15,
         borderTopWidth: 1,
-        borderTopColor: '#303030',
-        // marginRight: 20
+        borderTopColor: '#f9f9f9',
+        //marginRight: -20
     }
 });

@@ -17,7 +17,7 @@ import { zoomFaceImage, zoomLargeImage } from '../../shared';
 
 const arrowIcon = require('../../../../assets/images/arrow-icon.png');
 const startIcon = require('../../../../assets/images/star_grey.png');
-const dottedLine = require('../../../../assets/images/dotted-line.png');
+const dottedLine = require('../../../../assets/images/dotted_line.png');
 // const ZOOM1 = require('../../../../assets/images/zoom_1.jpg');
 // const ZOOM2 = require('../../../../assets/images/zoom_2.jpg');
 
@@ -46,8 +46,8 @@ export default class Zoom extends Component<Props> {
             <ScrollView contentContainerStyle={styles.container}>
                 <Swiper 
                     style={theme.wrapper} 
-                    dotStyle={{width: 8, height: 8}}
-                    activeDotStyle={{width: 8, height: 8}}
+                    dotStyle={{width: 6, height: 6}}
+                    activeDotStyle={{width: 6, height: 6}}
                     dotColor='gray'
                     paginationStyle={{marginBottom: -10}}
                     activeDotColor='black'>
@@ -68,8 +68,8 @@ export default class Zoom extends Component<Props> {
                         style={{width: 10, height: 10}}
                         source={arrowIcon}
                     />
-                </ Ripple>
-                <Ripple 
+                </Ripple>
+                <Ripple
                     style={theme.likeButtonView}
                     rippleContainerBorderRadius={15 / 2} 
                     rippleSize={20} 
@@ -91,7 +91,7 @@ export default class Zoom extends Component<Props> {
                 </View>
                 <Image source={dottedLine} style={theme.dottedLine} />
                 <View style={theme.buttonsContainer}>
-                    <Button style={theme.leftButton} themeType='dark' text='-  MATCH IT  -' />
+                    <Button style={theme.leftButton} themeType='dark' text='Style with Mused' />
                     {/* <Button style={theme.rightButton} themeType='light' text='ADD TO CART'/> */}
                 </View>
 

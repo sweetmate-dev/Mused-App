@@ -18,15 +18,15 @@ import theme from './theme';
 const buttons: {text: string, icon: ImageSourcePropType}[] = [
  {
      text: SWITCH,
-     icon: require('../../../../../assets/images/switch_black.png')
+     icon: require('../../../../../assets/images/switch.png')
  },
  {
     text: DETAILS,
-    icon: require('../../../../../assets/images/details_black.png')
+    icon: require('../../../../../assets/images/details.png')
 },
 {
     text: MOVE,
-    icon: require('../../../../../assets/images/move_black.png')
+    icon: require('../../../../../assets/images/move.png')
 }
 ];
 

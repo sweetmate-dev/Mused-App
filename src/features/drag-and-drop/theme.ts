@@ -53,9 +53,7 @@ export default  StyleSheet.create({
         width: 80
     },
     topLineContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
+        height: 40
     },
     topLineLeft: {
         flex: 0.7, 

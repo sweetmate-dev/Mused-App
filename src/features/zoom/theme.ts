@@ -13,10 +13,10 @@ export default StyleSheet.create({
         margin: 0
     },
     wrapper: {
-        marginTop: 5,
         width: width,
         height: width * 900 / 675,
         paddingHorizontal: 5,
+        justifyContent: 'center'
     },
     firstImage: {
         width: width - 10,
@@ -25,7 +25,7 @@ export default StyleSheet.create({
     },
     secondImage: {
         width: width - 10,
-        height: width * 1.1,
+        height: width * 0.85,
         resizeMode: 'contain'
     },
     backButtonView: {
@@ -61,6 +61,7 @@ export default StyleSheet.create({
     },
     priceView: {
         flex: 1,
+        alignItems: 'flex-end'
     },
     brandText: {
         fontSize: 18,
@@ -99,7 +100,7 @@ export default StyleSheet.create({
         lineHeight: 22,
     },
     leftButton: {
-        flex: 1
+        flex: 1,        
     },
     rightButton: {
         flex: 1
@@ -108,5 +109,5 @@ export default StyleSheet.create({
         height: 30,
         width: width,
         resizeMode: 'contain'
-    }
+    },
 });

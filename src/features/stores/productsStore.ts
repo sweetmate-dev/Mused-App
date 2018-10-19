@@ -9,6 +9,7 @@ import {
     getBookmarksByUserId, 
     deleteBookmark,
     getProductsByCategory,
+    getProductsByCategoryInitial,
 } from '../../services';
 
 import { slotsOrder } from '../shared';
@@ -25,6 +26,7 @@ export default class ObservableStore implements IProductStore {
     @observable bookmarks: Bookmark[] = [];
     @observable productsByCategories: Product[] = [];
     @observable categoryInDrag: string = '';
+    @observable toggleViewCategory: boolean = false;
 
     get listOfCollection() {
         return this.collection;
@@ -38,6 +40,16 @@ export default class ObservableStore implements IProductStore {
 
     get listOfProductsByCategories() {
         return this.productsByCategories;
+    }
+    
+    get getSliderToggleState() {
+        return this.toggleViewCategory;
+    }
+
+    @action
+    public openProductCategory = () => {
+        this.toggleViewCategory = true;
+        this.resetProductsByCategory()
     }
 
     @action
@@ -137,9 +149,14 @@ export default class ObservableStore implements IProductStore {
 
     @action 
     getProductsByCategory = async (category: string) => {
+        this.toggleViewCategory = false;
+        await getProductsByCategoryInitial(category).then( (products: Product[]) => {
+            this.productsByCategories = products;
+            this.categoryInDrag = category;           
+        })
         await getProductsByCategory(category).then( (products: Product[]) => {
             this.productsByCategories = products;
-            this.categoryInDrag = category;
+            this.categoryInDrag = category;           
         })
     }
 

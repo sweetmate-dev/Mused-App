@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, TouchableWithoutFeedback, Dimensions, TouchableOpacity } from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 // import { Entypo } from '@expo/vector-icons';
 
 import Draggable from '../Draggable';
@@ -7,10 +7,8 @@ import SidebarScroll from '../SidebarScroll/SlidebarScroll';
 import { transThumbnailImage } from '../../shared'
 import theme from '../theme';
 
-const { width } = Dimensions.get('window');
 const imageSize: number = 140;
 const imageSmallSize: number  = 80;
-const addIcon = require('../../../../assets/images/sidebar_top.png');
 // const downArrowImage = require('../../../../assets/images/down-placeholder.png');
 
 type Props = {
@@ -23,6 +21,7 @@ type Props = {
     addOrReplaceSixthSlot: (item: HashMap<string>) => void;
     resetProductsByCategory: () => void;
     categoryInDrag: string;
+    toggleViewCategory: boolean
 };
 type State = {
     dimensions: {
@@ -82,17 +81,6 @@ export default class DragAndDropAreaView extends React.Component<Props, State> {
     render() {
         return (
             <>
-                <View style={theme.topLineContainer}>
-                    <View style={{flex: 1}} />
-                    <View style={{width: width / 4 + 40}}>
-                        <View style={theme.buttonPlus}>
-                            <TouchableOpacity onPress={this._closeSlider}>
-                                {/* <Entypo name="plus" size={15} color="#000000" /> */}
-                                <Image source={addIcon} style={theme.addCategory} />
-                            </TouchableOpacity>
-                        </View>                        
-                    </View>
-                </View>
                 <View style={theme.container}>
                     <TouchableWithoutFeedback onPress={() => { this.setState(this.cloneStateResetingSelected) }}
                                               onLayout={(event) => this.measureView(event)}  style={theme.dragContainer}>
@@ -105,7 +93,7 @@ export default class DragAndDropAreaView extends React.Component<Props, State> {
                         navigateToProductSingle={this.props.navigateToProductSingle}
                         addOrReplaceSixthSlot={this.props.addOrReplaceSixthSlot}
                         pressOutDrag={this._pressOutDrag}
-                        isOpenSlider={this.state.isOpenSlider}
+                        isOpenCategory={this.props.toggleViewCategory}
                         toggleSlider={this._toggleSlider}
                         getProductsByCategory={this.props.getProductsByCategory}
                         categoryInDrag={this.props.categoryInDrag}
@@ -131,10 +119,10 @@ export default class DragAndDropAreaView extends React.Component<Props, State> {
         this.setState({isOpenSlider: flag});
     }
 
-    private _closeSlider = () => {
-        this._toggleSlider(false);
-        this.props.resetProductsByCategory();
-    }
+    // private _closeSlider = () => {
+    //     this._toggleSlider(false);
+    //     this.props.resetProductsByCategory();
+    // }
 
     private _renderDraggables = () => {
         return this.props.dragrabbleItems.map((item : ProductImage, index: number) => {

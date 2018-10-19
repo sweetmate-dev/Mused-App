@@ -13,7 +13,7 @@ function FooterButtonsHOC(FooterButtons: any) {
       render() {
           const { root: { ui, products, slots } } = this.props;
           const { currentRoute }  = ui;
-          const { createNewOutfit } = products;
+          const { createNewOutfit, openProductCategory } = products;
           const { newImgUrl } = slots;
           const footerIsVisible = 
             currentRoute === COLLECTION || currentRoute === VIDEOPLAYER || currentRoute === BROWSE ||  currentRoute === FILTER || currentRoute === VIEW;
@@ -28,6 +28,7 @@ function FooterButtonsHOC(FooterButtons: any) {
               clearFilterAndGoToBrowse={this._clearFilterAndGoToBrowse}
               applyFilter={this._applyFilter}
               createNewOutfit={createNewOutfit}
+              openProductCategory={openProductCategory}
               newImgUrl={newImgUrl}
             />
               )

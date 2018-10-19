@@ -214,9 +214,12 @@ export default StyleSheet.create({
         backgroundColor: '#E2E2E2',
     },
     categoryText: {
-        fontSize: 16,
+        fontSize: 18,
         fontFamily: 'RalewayBold',
-        paddingBottom: 8
+        paddingBottom: 5
+    },
+    subText: {
+        fontSize: 13,
     },
     filterImage: {
         position: 'absolute',

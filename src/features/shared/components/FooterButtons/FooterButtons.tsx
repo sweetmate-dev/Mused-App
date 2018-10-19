@@ -6,7 +6,7 @@ import {
 import FooterButton from '../FooterButton/FooterButton';
 import { COLLECTION, BROWSE, FILTER, VIDEOPLAYER, VIEW as VIEW_SCREEN } from '../../routesKeys';
 import theme from './theme';
-import { footerButtons, footerDarkButtons, dragAndDropButtons, LOVE, CATEGORIES, APPLY, CANCEL, CLEAR, VIEW, BACK } from './buttonsKeys';
+import { footerButtons, footerDarkButtons, LOVE, CATEGORIES, APPLY, CANCEL, VIEW } from './buttonsKeys';
 type Props = {
     navigateToFilter: () => void;
     navigateToBrowse: () => void;
@@ -15,6 +15,7 @@ type Props = {
     clearFilter: () => void;
     applyFilter: () => void;
     createNewOutfit: () => void;
+    openProductCategory: () => void;
     currentRoute: string;
     newImgUrl: ProductImage;
 }
@@ -52,13 +53,13 @@ export default class Footer extends Component<Props> {
             buttons = [...footerButtons]
         }
         if (currentRoute === VIEW_SCREEN) {
-            buttons = [...dragAndDropButtons]
+            buttons = [...footerButtons]
         }
         return (
             <Animated.View 
                 style={[
                     theme.container,
-                    currentRoute === FILTER ? {backgroundColor: '#000'} : {},
+                    currentRoute === FILTER ? {backgroundColor: '#E2E2E2', height: 45} : {},
                     currentRoute === VIEW_SCREEN ? {backgroundColor: '#FFF'} : {},
                     {opacity: this.state.fadeIn}]}>
                  { currentRoute === FILTER && this._renderDarkFooterButtons() }
@@ -68,49 +69,50 @@ export default class Footer extends Component<Props> {
         )
     }
     _renderWhiteFooterButtons = (buttons: HashMap<string>[]) => {
-       return  buttons.map( (button: HashMap<string>) => {
-           const actions: HashMap<() => void> = {
-            [LOVE]: this.props.createNewOutfit,
-            [VIEW]: this.props.navigateToView,
-            [CATEGORIES]:  this._navigateToFilter,
-        }
-            return (
-                <FooterButton
-                        text={button.text}
-                        icon={button.icon}
-                        navigate={actions[button.text]}
-                        key={button.text}
-                        newImgUrl={this.props.newImgUrl}
-                        />
-            )
-       })
+        return  buttons.map( (button: HashMap<string>) => {
+            const actions: HashMap<() => void> = {
+             [LOVE]: this.props.createNewOutfit,
+             [VIEW]: this.props.navigateToView,
+             [CATEGORIES]:  this._navigateToFilter,
+         }
+             return (
+                 <FooterButton
+                         text={button.text}
+                         icon={button.icon}
+                         navigate={actions[button.text]}
+                         key={button.text}
+                         newImgUrl={this.props.newImgUrl}
+                         />
+             )
+        })     
     }
 
     _renderDarkFooterButtons = () => {
         return  footerDarkButtons.map( (button: HashMap<string>) => {
             const actions: HashMap<() => void> = {
                 [APPLY]: this.props.applyFilter,
-                [CLEAR]: this.props.clearFilter,
+                // [CLEAR]: this.props.clearFilter,
                 [CANCEL]: this.props.clearFilterAndGoToBrowse
             }
              return (
                  <FooterButton
-                         text={button.text}
-                         icon={button.icon}
-                         whiteTheme={false}
-                         key={button.text}
-                         styleForContainer={button.styleForContainer}
-                         navigate={actions[button.text]}
-                         />
+                        text={button.text}
+                        icon={button.icon}
+                        whiteTheme={false}
+                        key={button.text}
+                        styleForContainer={button.styleForContainer}
+                        navigate={actions[button.text]}
+                />
              )
         })
      }
 
      _renderDragAndDropButtons = () => {
-        return  dragAndDropButtons.map( (button: HashMap<string>) => {
+        return  footerButtons.map( (button: HashMap<string>) => {
             const actions: HashMap<() => void> = {
-             [APPLY]: this.props.applyFilter,
-             [BACK]: this.props.navigateToBrowse,
+                [LOVE]: this.props.createNewOutfit,
+                [VIEW]: this.props.navigateToBrowse,
+                [CATEGORIES]:  this.props.openProductCategory,
          }
              return (
                  <FooterButton

@@ -17,8 +17,8 @@ const styles: StyleProp<any> = StyleSheet.create({
         backgroundColor: '#fff',
     },
     buttonText: {
-        fontFamily: 'RalewayBold',
-        fontSize: 13,
+        fontFamily: 'Lato',
+        fontSize: 16,
         lineHeight: 48,
         textAlign: 'center',
     },

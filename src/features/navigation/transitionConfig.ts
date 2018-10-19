@@ -12,10 +12,10 @@ export const transitionConfig = () => {
     screenInterpolator: (props: { layout: any, position: any, scene: any, scenes: any}) => {
       const thisSceneIndex = props.scene.index;
       if(props.scenes[thisSceneIndex].route.routeName === ZOOM){
-        console.log(
-          props.scenes[thisSceneIndex - 1].route.routeName + ', ' +
-          props.scenes[thisSceneIndex].route.routeName + ', '
-        )
+        // console.log(
+        //   props.scenes[thisSceneIndex - 1].route.routeName + ', ' +
+        //   props.scenes[thisSceneIndex].route.routeName + ', '
+        // )
         const { index } = props.scene;
         const { initWidth } = props.layout;
   

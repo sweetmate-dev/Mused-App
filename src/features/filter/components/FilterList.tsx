@@ -72,7 +72,7 @@ export default class FilterList extends Component<Props> {
                     rippleContainerBorderRadius={40}>
                     <View style={theme.leftView}>
                         <Text style={theme.categoryText}>NEW IN</Text>
-                        <Text>Lorem Ipsum Extra text</Text>
+                        <Text style={theme.subText}>Lorem Ipsum Extra text</Text>
                     </View>
                     <Image source={newIn} style={theme.filterImage} />
                 </Ripple>
@@ -85,7 +85,7 @@ export default class FilterList extends Component<Props> {
                     rippleContainerBorderRadius={40}>
                     <View style={theme.leftView}>
                         <Text style={theme.categoryText}>CLOTHING</Text>
-                        <Text>Lorem Ipsum Extra text</Text>
+                        <Text style={theme.subText}>Lorem Ipsum Extra text</Text>
                     </View>
                     <Image source={clothing} style={theme.filterImage} />
                 </Ripple>
@@ -97,7 +97,7 @@ export default class FilterList extends Component<Props> {
                     rippleContainerBorderRadius={40}>
                     <View style={theme.leftView}>
                         <Text style={theme.categoryText}>COLOUR</Text>
-                        <Text>Lorem Ipsum Extra text</Text>
+                        <Text style={theme.subText}>Lorem Ipsum Extra text</Text>
                     </View>
                     <Image source={colour} style={theme.filterImage} />
                 </Ripple>

@@ -14,7 +14,7 @@ type Props = {
     getProductsByCategory: (category: string) => void;
     pressOutDrag: () => void;
     toggleSlider: (flag: boolean) => void;
-    isOpenSlider: boolean;
+    isOpenCategory: boolean;
     categoryInDrag: string;
 }
 export default class SidebarScroll extends Component<Props> {
@@ -24,11 +24,17 @@ export default class SidebarScroll extends Component<Props> {
     }
 
     render() {
-        const { listOfProductsByCategories, isOpenSlider } = this.props;
+        const { listOfProductsByCategories, isOpenCategory } = this.props;
+        console.log(isOpenCategory)
         return (
             <View style={ theme.scrolllContainer}>
-                { !isOpenSlider && categoriesFilter.map(this._renderCategoryItem)}
-                { isOpenSlider && <FlatList
+                { isOpenCategory && 
+                    <View style={{paddingTop: 40}}>
+                        {categoriesFilter.map(this._renderCategoryItem)}
+                    </View>
+                }                    
+                { !isOpenCategory && <FlatList
+                        showsVerticalScrollIndicator={false}
                         data={listOfProductsByCategories}
                         renderItem={this._renderItem}
                         keyExtractor={ item => `${item.id}`}
@@ -71,9 +77,8 @@ export default class SidebarScroll extends Component<Props> {
     }
 
     private _onPressCategory = (category: string) => {
-        const { toggleSlider, getProductsByCategory } = this.props;
+        const { getProductsByCategory } = this.props;
         getProductsByCategory(category);
-        toggleSlider(true);
     }
 
 }

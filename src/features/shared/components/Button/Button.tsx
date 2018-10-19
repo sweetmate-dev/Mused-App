@@ -27,13 +27,13 @@ export default class Button extends Component<Props> {
         return  buttonWithImage
                     ? (
                         <View style={[theme.buttonContainer, theme[themeStyle], style, {flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}]}>
-                            <Text style={[theme.buttonText, theme[textStyle]]}>{text.toUpperCase()}</Text>
+                            <Text style={[theme.buttonText, theme[textStyle]]}>{text}</Text>
                             <Image source={whiteLogo} style={theme.imageButton}/>
                         </View>
                     )
                     : (
                         <View style={[theme.buttonContainer, theme[themeStyle], style]}>
-                            <Text style={[theme.buttonText, theme[textStyle]]}>{text.toUpperCase()}</Text>
+                            <Text style={[theme.buttonText, theme[textStyle]]}>{text}</Text>
                         </View>
                     )
     }

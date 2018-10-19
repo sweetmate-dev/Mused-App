@@ -9,7 +9,7 @@ export const BACK: string = 'Back';
 export const footerButtons: HashMap<string>[] = [
     {
         text: LOVE,
-        icon: 'verificationMarkBlack'
+        icon: 'love'
     },
     {
         text: VIEW,
@@ -24,15 +24,15 @@ export const footerButtons: HashMap<string>[] = [
 export const footerDarkButtons: HashMap<string | number | any>[] = [
     {
         text: APPLY,
-        icon: 'verificationMarkWhite'
+        icon: 'apply'
     },
-    {
-        text: CLEAR,
-        icon: 'verificationMarkWhite'
-    },
+    // {
+    //     text: CLEAR,
+    //     icon: 'verificationMarkWhite'
+    // },
     {
         text: CANCEL,
-        icon: 'verificationMarkWhite'
+        icon: 'cancel'
     }
     
 ];
@@ -40,7 +40,7 @@ export const footerDarkButtons: HashMap<string | number | any>[] = [
 export const dragAndDropButtons: HashMap<string | number | any>[] = [
     {
         text: LOVE,
-        icon: 'verificationMarkBlack'
+        icon: 'love'
     },
     {
         text: BACK,

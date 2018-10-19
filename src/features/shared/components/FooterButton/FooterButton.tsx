@@ -11,7 +11,8 @@ import { LOVE } from '../FooterButtons/buttonsKeys';
 import theme from './theme';
 
 const icons: HashMap<HashMap<string>> = {
-    verificationMarkBlack: require('../../../../../assets/images/love.png'),
+    verificationMarkBlack: require('../../../../../assets/images/verification-mark.png'),
+    love: require('../../../../../assets/images/love.png'),
     loveSelected: require('../../../../../assets/images/love-selected.png'),
     verificationMarkWhite: require('../../../../../assets/images/verification-mark-white.png'),
     arrowUp: require('../../../../../assets/images/view.png'),
@@ -21,6 +22,8 @@ const icons: HashMap<HashMap<string>> = {
     back: require('../../../../../assets/images/back_icon.png'),
     view: require('../../../../../assets/images/view_icon.png'),
     category: require('../../../../../assets/images/category_icon.png'),
+    apply: require('../../../../../assets/images/apply.png'),
+    cancel: require('../../../../../assets/images/cancel.png'),
 };
 
 type Props = {
@@ -57,7 +60,7 @@ export default class FooterButton extends Component<Props, State> {
          : icons[icon];
         const textStyle = whiteTheme 
             ? { color: '#333' }
-            : { color: '#fff', fontFamily: 'Lato'}
+            : { color: '#000', fontFamily: 'Lato'}
         const backgroundColor = whiteTheme
             ? { backgroundColor: '#fff' }
             : { backgroundColor: 'transparent'}

@@ -21,14 +21,14 @@ import {
     },
     buttonText: {
         color: '#000000',
-        fontSize: 9,
-        marginTop: 2,
+        fontSize: 8,
         fontFamily: 'Lato'
     },
     mockImage: {
-        width: 15,
-        height: 15,
-        marginBottom: 4
+        width: 16,
+        height: 14,
+        resizeMode: 'contain',
+        marginBottom: 3
     },
     menuItem: {
         justifyContent: 'center',

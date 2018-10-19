@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
+    // Text,
     FlatList,
     Animated
 } from 'react-native';
@@ -47,17 +47,17 @@ export default class Browser extends Component<Props, State> {
     }
 
     render() {
-        const headerComponent = (
-            <View style={theme.listTitleContainer}>
-                <Text style={theme.listTitle}>{`${this.props.listOfAlternatives.length } items found`.toUpperCase()}</Text>
-            </View>);
+        // const headerComponent = (
+        //     <View style={theme.listTitleContainer}>
+        //         <Text style={theme.listTitle}>{`${this.props.listOfAlternatives.length } items found`.toUpperCase()}</Text>
+        //     </View>);
         const _listOfAlternatives = [...this.props.listOfAlternatives];
         return (
             <View style={[theme.container]}>
                 <Animated.View style={[theme.productListContainer, {opacity: this.state.fadeIn}]}>
                     <FlatList
                         data={_listOfAlternatives}
-                        ListHeaderComponent={headerComponent}
+                        // ListHeaderComponent={headerComponent}
                         ListFooterComponent={() => <View style={theme.footerComponent} />}
                         ListEmptyComponent={this._renderEmptyView}
                         renderItem={this._renderItem}

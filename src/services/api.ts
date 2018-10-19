@@ -95,6 +95,11 @@ export const deleteBookmark = (_id: any) => {
     return client.callFunction("deleteBookmark", [_id]);
 }
 
+export const getProductsByCategoryInitial = (category: string) => {
+    const client = getClient();
+    return client.callFunction("searchByCategoryInitial", [category]);
+}
+
 export const getProductsByCategory = (category: string) => {
     const client = getClient();
     return client.callFunction("searchByCategory", [category]);

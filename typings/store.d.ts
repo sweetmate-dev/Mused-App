@@ -5,7 +5,10 @@ interface IProductStore {
     listOfCollection: Product[];
     alternatives: Product[];
     arrayImages: ProductImage[];
-    listOfAlternatives: Product[];   
+    listOfAlternatives: Product[];
+    toggleViewCategory: boolean;
+    getSliderToggleState: boolean;
+    openProductCategory: () => void;
     changeArrayImages: (slotNumber: number, newImg: ImageSourcePropType) => void;
     moveImageToLeft: (slotNumber: number) => void;
     resetArrayImages: () => void;
