@@ -14,7 +14,17 @@ function PreShowItemsHOC(PreShowItems: any) {
           const { root: { ui} } = this.props;
           const { currentRoute }  = ui;
   
-        return <PreShowItems currentRoute={currentRoute} />
+        return <PreShowItems 
+          currentRoute={currentRoute}
+          onAddPreItem={this.onAddPreItem}
+        />
+      }
+      onAddPreItem = () => {
+        const { root: { products, slots } } = this.props;
+        const { addNewSlot } = products;
+        const { setSlotNumber } = slots;
+        addNewSlot()
+        setSlotNumber(-1)
       }
     }
     return NewComp;

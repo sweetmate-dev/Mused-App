@@ -18,12 +18,20 @@ function ZoomHOC(Header: any) {
         render() {
             const { root: { ui }, navigation } = this.props;
             const { setPrevCurrentRoutes, prevRoute } = ui;
-
             return <Header
                     setPrevCurrentRoutes={setPrevCurrentRoutes}
                     prevRoute={prevRoute}
                     navigation={navigation}
+                    createNewStyle={this.createStyleWithMused}
                   />
+        }
+
+        createStyleWithMused = (product: ProductImage) => {
+            const { root: { products, slots } } = this.props;
+            const { createStyleWithMused } = products;
+            const { setSlotNumber } = slots;
+            createStyleWithMused(product);
+            setSlotNumber(-1);
         }
     }
     return NewComp;

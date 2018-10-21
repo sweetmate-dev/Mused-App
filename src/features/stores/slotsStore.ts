@@ -27,8 +27,8 @@ export default class ObservableStore implements ISlotsStore {
 
     @action
     public setNewImgUrl = (newImgUrl: HashMap<string>) => {
-        this.newImgUrl = newImgUrl;
         this.setSlotMachineEffect(true);
+        this.newImgUrl = newImgUrl;        
     }
 
     @action

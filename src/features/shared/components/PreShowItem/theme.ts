@@ -57,5 +57,10 @@ import {
     },
     collectionOpacity: {
         opacity: 0.5
+     },
+     plusIcon: {
+         width: 15,
+         height: 15,
+         resizeMode: 'contain'
      }
   });

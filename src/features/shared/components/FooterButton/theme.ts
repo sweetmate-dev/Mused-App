@@ -10,6 +10,7 @@ import {
     footerCheckImage: {
          width: 16, 
          height: 14,
+         resizeMode: 'contain',
          marginBottom: 3
     },
     footerCheckText: {

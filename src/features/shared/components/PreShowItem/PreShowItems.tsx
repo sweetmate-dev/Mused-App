@@ -3,19 +3,21 @@ import {
   View,
   Animated, 
   // Easing,
+  Image,
   TouchableOpacity
 } from 'react-native';
 
 import theme from './theme';
-import { Entypo } from '@expo/vector-icons';
+// import { Entypo } from '@expo/vector-icons';
 import { BROWSE, COLLECTION, FILTER } from '../../../shared';
 // import CollectionItems from './CollectionItems/CollectionItems.hoc';
 import BrowseItems from './BrowseItems/BrowseItems.hoc'
 // import FilterItems from './FilterItems/FilterItems.hoc';
 
-
+const plusIcon = require('../../../../../assets/images/cross.png')
 type Props = {
     currentRoute: string;
+    onAddPreItem: () => void;
 }
 export default class PreShowItems extends Component<Props> {
     state = {
@@ -32,15 +34,11 @@ export default class PreShowItems extends Component<Props> {
         return (
                  <View style={theme.imagesContainer}>
                         { (onCollectionScreen || onFilterScreen || onBrowseScreen) && <BrowseItems  animate={this._animate} fadeAnim={this.state.fadeAnim} />}
-                        <TouchableOpacity onPress={this.onAddPreItem} style={theme.buttonPlus} >
-                            <Entypo name="plus" size={16} color="#000000" />
+                        <TouchableOpacity onPress={this.props.onAddPreItem} style={theme.buttonPlus} >
+                            <Image source={plusIcon} style={theme.plusIcon} />
                         </TouchableOpacity>
                  </View>
         )
-    }
-
-    onAddPreItem = () => {
-      alert('comming soon')
     }
 
     _animate = () => {

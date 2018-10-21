@@ -27,6 +27,7 @@ export default class ObservableStore implements IProductStore {
     @observable productsByCategories: Product[] = [];
     @observable categoryInDrag: string = '';
     @observable toggleViewCategory: boolean = false;
+    @observable slots: Slot[] = [];
 
     get listOfCollection() {
         return this.collection;
@@ -70,6 +71,7 @@ export default class ObservableStore implements IProductStore {
     @action
     public  getCollection = async (slots: Slot[]) => {
         const ids: number[] = slots.map((slot: Slot) => slot.productId);
+        this.slots = slots;
         await getProductsByIds(ids).then((products: Product[]) => {
             this.collection = slotsOrder(ids, products);
         });
@@ -91,6 +93,29 @@ export default class ObservableStore implements IProductStore {
     }
 
     @action
+    public addNewSlot = () => {
+        const newArray = [...this.arrayImages];
+        if(newArray.length > 4) alert('You can not add item anymore.')
+        const newImg: ProductImage = {
+            img: undefined,
+            id: -1
+        }
+        newArray.push(newImg);
+        this.arrayImages = newArray;
+    }
+
+    @action
+    public createStyleWithMused = (product: ProductImage) => {
+        const newArray = [product];
+        const newImg: ProductImage = {
+            img: undefined,
+            id: -1
+        }
+        newArray.push(newImg);
+        this.arrayImages = newArray;
+    }
+
+    @action
     public resetArrayImages = () => {
         this.arrayImages = [];
         this.collection = [];
@@ -101,15 +126,15 @@ export default class ObservableStore implements IProductStore {
     }
 
     @action
-    public moveImageToLeft = (slotNumber: number) => {
+    public moveImageToLeft = (slotIndex: number) => {
         const newArrayImgs = [...this.arrayImages];
         const product: ProductImage = newArrayImgs.find((item: ProductImage, index: number) => {
-            return item && index === slotNumber;
+            return item && index === slotIndex;
         });
-        newArrayImgs.splice(slotNumber, 1);
-        (slotNumber - 1 ) < 0
+        newArrayImgs.splice(slotIndex, 1);
+        (slotIndex - 1 ) < 0
             ? newArrayImgs.push(product)
-            : newArrayImgs.splice(slotNumber - 1, 0, product);
+            : newArrayImgs.splice(slotIndex - 1, 0, product);
         this.arrayImages = newArrayImgs;
     }
 

@@ -7,6 +7,8 @@ import {
 import theme from '../theme';
 import { thumbnailImage } from '../../../imagesUrls';
 
+const blankImage = require('../../../../../../assets/images/blank-image.jpg')
+
 type Props = {
     arrayImgs: ProductImage[];
     slotNumber: number;
@@ -27,14 +29,16 @@ type Props = {
 
 type State = {
     marginTop: any;
-    selectedID: number
+    selectedID: number;
 }
 
 export default class BrowseItems extends Component<Props, State> {
     state: State = {
         marginTop: new Animated.Value(0),
-        selectedID: 999
+        selectedID: 999,
     };
+
+    isOnAnimate: boolean = false;
 
     componentWillReceiveProps(nextProps: Props) {
         if (nextProps.isMoveProduct) {
@@ -55,10 +59,28 @@ export default class BrowseItems extends Component<Props, State> {
             contextMenuIsVisible
         } = this.props;
         const _this = this;
+        console.log(arrayImgs)
         return arrayImgs.map( (slotProduct: ProductImage, index: number)  => {
             const opacity = (contextMenuIsVisible && this.state.selectedID === slotProduct.id) ? 0.5 : 1;
-            
+            // if(slotProduct.id === -1 && newImgUrl) {
+            //     if(this.isOnAnimate) return false;
+            //     this.startAnimation(newImgUrl)       
+            //     return (
+            //         <TouchableHighlight
+            //             style={[theme.itemImageContainer, {opacity}]}
+            //             onPress={() => this.showContextMenu(slotProduct.id)}
+            //             underlayColor={'transparent'}
+            //             key={index} >
+            //             <Animated.Image
+            //                 style={[theme.itemImage, {marginTop: _this.state.marginTop}]}
+            //                 source={blankImage}
+            //                 resizeMode={'contain'}
+            //             />
+            //         </TouchableHighlight>
+            //     )
+            // }
             if (slotProduct.id === slotNumber && newImgUrl) { 
+                if(this.isOnAnimate) return false;
                 this.startAnimation(newImgUrl)       
                 return (
                     <TouchableHighlight 
@@ -82,7 +104,7 @@ export default class BrowseItems extends Component<Props, State> {
                     key={slotProduct.id} >
                     <Animated.Image
                         style={[theme.itemImage]}
-                        source={{uri: `${thumbnailImage}${slotProduct.id}`}}
+                        source={slotProduct.id === -1 ? blankImage : {uri: `${thumbnailImage}${slotProduct.id}`}}
                         resizeMode={'contain'}
                     />
                 </TouchableHighlight>
@@ -106,6 +128,7 @@ export default class BrowseItems extends Component<Props, State> {
     startAnimation = (newImgUrl: any) => {
         const { slotNumber, changeArrayImages, setSlotNumber, setNewImgUrl, setSlotMachineEffect } = this.props;
         this.state.marginTop.setValue(0);
+        this.isOnAnimate = true;
         Animated.timing(                 
             this.state.marginTop,
             {
@@ -120,6 +143,7 @@ export default class BrowseItems extends Component<Props, State> {
             await setSlotNumber(newImgUrl.id);
             await setNewImgUrl(null);
             setSlotMachineEffect(false);
+            this.isOnAnimate = false;
         }, 300)
     }
 

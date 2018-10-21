@@ -101,7 +101,8 @@ export default class CollectionList extends Component<Props, State> {
 
     _goToNext = (slotNumber: number, alternatives: number[]) => {
         const { goToNext } = this.props;
-        this.state.fadeIn.setValue(1)
+        this.state.fadeIn.setValue(1);
+        this.props.getCollection(this.slots);
         Animated.timing(                  
            this.state.fadeIn,            
            {

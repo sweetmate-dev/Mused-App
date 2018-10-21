@@ -10,6 +10,8 @@ interface IProductStore {
     getSliderToggleState: boolean;
     openProductCategory: () => void;
     changeArrayImages: (slotNumber: number, newImg: ImageSourcePropType) => void;
+    addNewSlot: () => void;
+    createStyleWithMused: (product: ProductImage) => void;
     moveImageToLeft: (slotNumber: number) => void;
     resetArrayImages: () => void;
     resetAlternativies: () => void;

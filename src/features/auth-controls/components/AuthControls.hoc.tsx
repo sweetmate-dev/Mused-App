@@ -44,7 +44,7 @@ function AuthControlsHOC(AuthControls: any) {
                     <NavigatorStack />
                     <Footer />
                     <FooterButtons />
-                    <ContextMenu />
+                    <ContextMenu />                    
                 </>
             )
       }

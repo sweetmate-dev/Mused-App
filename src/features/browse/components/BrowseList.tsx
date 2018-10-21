@@ -3,9 +3,9 @@ import {
     View,
     // Text,
     FlatList,
-    Animated
+    Animated,
+    ToastAndroid
 } from 'react-native';
-
 import DotIndicator from '../../shared/components/Indicators/dot-indicator'
 import BrowseItem from './BrowseItem';
 import theme from '../theme';
@@ -26,6 +26,7 @@ type Props = {
     deleteBookmarkById: (_id: any) => void;
     listOfBookmarks: Bookmark[];
     contextMenuIsVisible: boolean;
+    arrayImages: ProductImage[];
 };
 export default class Browser extends Component<Props, State> {
     state: State = {
@@ -72,6 +73,10 @@ export default class Browser extends Component<Props, State> {
         )
     }
 
+    onDuplicated = () => {
+        ToastAndroid.show("You can't select double items.", ToastAndroid.SHORT);
+    }
+
     _renderEmptyView = () =>
         <DotIndicator size={6} count={3} style={{paddingTop: 80}}/>
 
@@ -87,7 +92,10 @@ export default class Browser extends Component<Props, State> {
             listOfBookmarks={this.props.listOfBookmarks}
             deleteBookmarkById={this.props.deleteBookmarkById}
             contextMenuIsVisible={this.props.contextMenuIsVisible}
+            onDuplicated={this.onDuplicated}
+            arrayImages={this.props.arrayImages}
         />
+
     _likeItem = (index: number) =>
         this.setState({likedItemIndex: index});
 

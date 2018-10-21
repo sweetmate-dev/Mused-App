@@ -5,6 +5,7 @@ import {
     ScrollView,
     Text,
     BackHandler,
+    TouchableOpacity,
 } from 'react-native';
 // import AutoHeightImage from 'react-native-auto-height-image';
 import Swiper from 'react-native-swiper';
@@ -26,6 +27,7 @@ type Props = {
     navigation: any;
     prevRoute: string;
     setPrevCurrentRoutes: (currentRoute: string, prevRoute: string) => void;
+    createNewStyle: (id: ProductImage) => void;
 }
 export default class Zoom extends Component<Props> {
     product: Product;
@@ -91,7 +93,9 @@ export default class Zoom extends Component<Props> {
                 </View>
                 <Image source={dottedLine} style={theme.dottedLine} />
                 <View style={theme.buttonsContainer}>
-                    <Button style={theme.leftButton} themeType='dark' text='Style with Mused' />
+                    <TouchableOpacity style={[theme.buttonsContainer, {paddingHorizontal: 0, paddingBottom: 0}]} onPress={() => this.createNewStyle(this.product)}>
+                        <Button style={theme.leftButton} themeType='dark' text='Style with Mused'  />
+                    </TouchableOpacity> 
                     {/* <Button style={theme.rightButton} themeType='light' text='ADD TO CART'/> */}
                 </View>
 
@@ -101,6 +105,15 @@ export default class Zoom extends Component<Props> {
                 </View>
             </ScrollView>   
         )
+    }
+
+    createNewStyle = (product: Product) => {
+        const newProduct: ProductImage = {
+            id: product.id,
+            img: {uri: product.image}
+        }
+        this.props.createNewStyle(newProduct);
+        this._goBack()
     }
 
     _goBack = () => {

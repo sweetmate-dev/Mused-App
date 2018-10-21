@@ -59,7 +59,7 @@ export default class Footer extends Component<Props> {
             <Animated.View 
                 style={[
                     theme.container,
-                    currentRoute === FILTER ? {backgroundColor: '#E2E2E2', height: 45} : {},
+                    currentRoute === FILTER ? {backgroundColor: '#E2E2E2'} : {},
                     currentRoute === VIEW_SCREEN ? {backgroundColor: '#FFF'} : {},
                     {opacity: this.state.fadeIn}]}>
                  { currentRoute === FILTER && this._renderDarkFooterButtons() }

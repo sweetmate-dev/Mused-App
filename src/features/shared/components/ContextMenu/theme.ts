@@ -9,7 +9,7 @@ import {
     container: {
         position: 'absolute', 
         bottom: 0, 
-        height: 45,
+        height: 55,
         zIndex: 2,
         width: width, 
         backgroundColor: '#E2E2E2',

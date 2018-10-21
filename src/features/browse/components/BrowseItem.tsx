@@ -24,7 +24,9 @@ type Props = {
     createBookmark: (productId: number) => void;
     deleteBookmarkById: (_id: any) => void;
     listOfBookmarks: Bookmark[];
-    contextMenuIsVisible: boolean
+    contextMenuIsVisible: boolean;
+    onDuplicated: () => void;
+    arrayImages: ProductImage[];
 }
 type State = {
     isLiked: boolean;
@@ -127,7 +129,16 @@ export default class BrowseItem extends Component<Props, State> {
     }
 
     _likeIt = () => {
-        const {  isSlotMachine, item, setNewImgUrl, hideContextMenu, contextMenuIsVisible } = this.props;
+        const {  isSlotMachine, arrayImages, onDuplicated, item, setNewImgUrl, hideContextMenu, contextMenuIsVisible } = this.props;
+
+        // check duplicated item
+        for (let i = 0; i < arrayImages.length; i++ ){
+            if(arrayImages[i].id === item.id) {
+                onDuplicated();
+                return;
+            }
+        }
+
         if (isSlotMachine) {
             return;
         }
