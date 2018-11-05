@@ -87,19 +87,21 @@ export default StyleSheet.create({
         flexDirection: 'column',
         height: 300
     },
+    scrollView: {
+        marginVertical: 30
+    },
     categoryWrapper: {
         alignItems: 'center',
         width: deviceWidth,
         flexDirection: 'column',
-        borderTopColor: '#E5E5E5',
-        borderTopWidth: 1,
-        marginTop: 25,
-        paddingBottom: 80
+        paddingBottom: 20
     },
     textTabNavigation: {
-        fontSize: 15,
-        fontFamily: 'Raleway',
-        lineHeight: 15
+        flex: 1,
+        fontSize: 14,
+        fontFamily: 'RalewayBold',
+        lineHeight: 15,
+        textAlign: 'center'
     },
     textTabHeader: {
         fontSize: 16,
@@ -152,9 +154,6 @@ export default StyleSheet.create({
     },
     tabItem: {
         width: deviceWidth,
-        minHeight: 50,
-        borderBottomColor: '#E5E5E5',
-        borderBottomWidth: 1,
         justifyContent: 'center'
     },
     subCategoryText: {
@@ -162,7 +161,8 @@ export default StyleSheet.create({
         fontSize: 11,
         paddingLeft: 5,
         paddingTop: 3,
-        paddingBottom: 3
+        paddingBottom: 3,
+        textAlign: 'center'
     },
     subCategoryItem: {
         marginBottom: 10,
@@ -176,10 +176,11 @@ export default StyleSheet.create({
 
     },
     categoryTouchable: {
-        height: 50, 
+        flex: 1,
+        height: 35, 
         alignItems: 'center',
         flexDirection: 'row', 
-        paddingLeft: 50,
+        paddingHorizontal: 20,
     },
     plusIcon: {
         width: 30,
@@ -187,8 +188,8 @@ export default StyleSheet.create({
         lineHeight: 20
     },
     subCategoriesList: {
-        paddingLeft: 75, 
-        paddingVertical: 10
+        paddingVertical: 10,
+        alignItems: 'center'
     },
     selectionText: {
         paddingRight: 10, 
@@ -198,14 +199,20 @@ export default StyleSheet.create({
     },
     counterContainer: {
         flex: 1,
+        justifyContent: 'center',
         flexDirection: 'column',
         padding: 20
     },
     counterItemContainer: {
-      height: 90,
-      paddingRight: 60,
-      marginBottom: 20,
-      position: 'relative',
+        height: 70,
+        marginVertical: 10,
+        flexDirection: 'row',
+    },
+    lineView: {
+        height: 1,
+        backgroundColor: 'black',
+        width: width * 0.2,
+        marginTop: 10
     },
     leftView: {
         flex: 1,
@@ -214,12 +221,14 @@ export default StyleSheet.create({
         backgroundColor: '#E2E2E2',
     },
     categoryText: {
-        fontSize: 18,
+        fontSize: 14,
         fontFamily: 'RalewayBold',
-        paddingBottom: 5
+        paddingBottom: 5,
+        textAlign: 'center'
     },
     subText: {
-        fontSize: 13,
+        fontSize: 11,
+        textAlign: 'center'
     },
     filterImage: {
         position: 'absolute',
@@ -228,6 +237,7 @@ export default StyleSheet.create({
         top: 0,
         width: 60,
         height: 90,
-        resizeMode: 'stretch'
+        resizeMode: 'stretch',
+        backgroundColor: '#E2E2E2'
     }
 });

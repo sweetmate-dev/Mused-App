@@ -10,7 +10,7 @@ export default class ObservableStore implements IUiStore {
     @observable navigation: any = null;
     @observable currentRoute: string = NEWSFEED;
     @observable prevRoute: string = '';
-
+    @observable routeArray: string[] = ['Newsfeed'];
     
 
     @action
@@ -33,15 +33,38 @@ export default class ObservableStore implements IUiStore {
     
     @action
     navigate = (currentRoute: string, prevRoute: string, params: any = {}) => {
+        console.log(prevRoute);
+        let temp = []
+        for(let i = 0; i < this.routeArray.length; i++){            
+            if(currentRoute === this.routeArray[i]) break;
+            temp.push(this.routeArray[i])
+        }
+        this.routeArray = temp;
+        if(this.routeArray.length > 0) this.prevRoute = this.routeArray[this.routeArray.length - 1];
+        else this.prevRoute = '';
         this.currentRoute = currentRoute;
-        this.prevRoute =  prevRoute;
+        this.routeArray.push(currentRoute);        
         this.navigation.navigate(currentRoute, params)
     }
 
     @action
+    goBack = () => {
+        console.log('CURRENT SCREENS: ' + JSON.stringify(this.routeArray))
+        if(this.routeArray.length === 1) return;
+        this.routeArray.splice(-1,1);
+        this.currentRoute = this.routeArray[this.routeArray.length - 1];
+        if(this.routeArray.length > 1) {
+            this.prevRoute = this.routeArray[this.routeArray.length - 2];            
+        } else {
+            this.prevRoute = '';
+        }
+        console.log('CURRENT SCREENS: ' + this.prevRoute + ', ' + this.currentRoute);
+        // this.navigation.goBack();
+    }
+
+    @action
     setPrevCurrentRoutes = (currentRoute: string, prevRoute: string) => {
-        this.currentRoute = currentRoute;
-        this.prevRoute =  prevRoute;
+        console.log(currentRoute + ', ' + prevRoute);
     }
 
 

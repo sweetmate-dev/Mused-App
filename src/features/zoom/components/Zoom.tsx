@@ -5,20 +5,21 @@ import {
     ScrollView,
     Text,
     BackHandler,
-    TouchableOpacity,
+    // TouchableOpacity,
 } from 'react-native';
 // import AutoHeightImage from 'react-native-auto-height-image';
 import Swiper from 'react-native-swiper';
 import Ripple from 'react-native-material-ripple';
-import { Button } from '../../shared';
+// import { Button } from '../../shared';
 import theme from "../theme";
-import { COLLECTION, BROWSE, NEWSFEED, VIEW } from '../../shared/routesKeys';
-import styles from '../../shared/components/FooterButton/theme';
+// import { COLLECTION, BROWSE, NEWSFEED, VIEW } from '../../shared/routesKeys';
 import { zoomFaceImage, zoomLargeImage } from '../../shared';
 
 const arrowIcon = require('../../../../assets/images/arrow-icon.png');
 const startIcon = require('../../../../assets/images/star_grey.png');
-const dottedLine = require('../../../../assets/images/dotted_line.png');
+// const dottedLine = require('../../../../assets/images/dotted_line.png');
+const buttonLogo = require('../../../../assets/images/button-logo.png');
+
 // const ZOOM1 = require('../../../../assets/images/zoom_1.jpg');
 // const ZOOM2 = require('../../../../assets/images/zoom_2.jpg');
 
@@ -28,6 +29,7 @@ type Props = {
     prevRoute: string;
     setPrevCurrentRoutes: (currentRoute: string, prevRoute: string) => void;
     createNewStyle: (id: ProductImage) => void;
+    goBack: () => void;
 }
 export default class Zoom extends Component<Props> {
     product: Product;
@@ -45,18 +47,18 @@ export default class Zoom extends Component<Props> {
     render() {
         const { id, description, priceLabel, brand, unbrandedName } = this.product;
         return (
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView>
                 <Swiper 
                     style={theme.wrapper} 
                     dotStyle={{width: 6, height: 6}}
                     activeDotStyle={{width: 6, height: 6}}
                     dotColor='gray'
-                    paginationStyle={{marginBottom: -10}}
+                    paginationStyle={{marginBottom: -15}}
                     activeDotColor='black'>
                     <View style={theme.wrapper}>
                         <Image source={{uri: `${zoomFaceImage}${id}.jpg`}} style={theme.firstImage} />                        
                     </View>
-                    <View style={theme.wrapper}>
+                    <View style={[theme.wrapper, {justifyContent: 'center'}]}>
                         <Image source={{uri: `${zoomLargeImage}${id}.jpg`}} style={theme.secondImage} />
                     </View>
                 </Swiper>
@@ -67,7 +69,7 @@ export default class Zoom extends Component<Props> {
                     rippleCentered={true} 
                     onPress={this._goBack}>
                     <Image
-                        style={{width: 10, height: 10}}
+                        style={{width: 13, height: 13, marginLeft: 22}}
                         source={arrowIcon}
                     />
                 </Ripple>
@@ -84,18 +86,30 @@ export default class Zoom extends Component<Props> {
                 </ Ripple>
                 <View style={theme.infoView}>
                     <View style={theme.brandView}>
-                        <Text style={theme.brandText}>{brand}</Text>
+                        <Text style={theme.brandText}>{brand.toUpperCase()}</Text>
                         <Text style={theme.unbrandText}>{unbrandedName}</Text>
                     </View>
                     <View style={theme.priceView}>
                         <Text style={theme.priceText}>{priceLabel}</Text>
                     </View>
                 </View>
-                <Image source={dottedLine} style={theme.dottedLine} />
+                {/* <Image source={dottedLine} style={theme.dottedLine} /> */}
                 <View style={theme.buttonsContainer}>
-                    <TouchableOpacity style={[theme.buttonsContainer, {paddingHorizontal: 0, paddingBottom: 0}]} onPress={() => this.createNewStyle(this.product)}>
-                        <Button style={theme.leftButton} themeType='dark' text='Style with Mused'  />
-                    </TouchableOpacity> 
+                    <Ripple
+                        rippleSize={240} 
+                        rippleColor='#FFFFFF'
+                        rippleCentered={true} 
+                        rippleDuration={1000}
+                        onPress={() => this.createNewStyle(this.product)}
+                    >
+                        <View style={theme.buttonView}>
+                            <View style={theme.backButton} />
+                            <View style={theme.frontButton}>
+                                <Image source={buttonLogo} style={theme.buttonLogo} />
+                                <Text style={theme.buttonText}>Style with Mused</Text>
+                            </View>
+                        </View>
+                    </Ripple> 
                     {/* <Button style={theme.rightButton} themeType='light' text='ADD TO CART'/> */}
                 </View>
 
@@ -113,19 +127,15 @@ export default class Zoom extends Component<Props> {
             img: {uri: product.image}
         }
         this.props.createNewStyle(newProduct);
-        this._goBack()
     }
 
     _goBack = () => {
         const { 
-            setPrevCurrentRoutes, 
-            prevRoute,
-            navigation
+            navigation,
+            goBack
         } = this.props;
 
-        if(prevRoute === BROWSE) setPrevCurrentRoutes(BROWSE, COLLECTION)
-        else if(prevRoute === VIEW) setPrevCurrentRoutes(VIEW, BROWSE)
-        else if(prevRoute === COLLECTION) setPrevCurrentRoutes(COLLECTION, NEWSFEED)
+        goBack()
         navigation.goBack();
         return true;
     }

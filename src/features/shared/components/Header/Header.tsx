@@ -6,12 +6,13 @@ import {
     BackHandler
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
-import { COLLECTION, BROWSE, FILTER, NEWSFEED, ZOOM, VIEW, VIDEOPLAYER } from '../../routesKeys';
+import { COLLECTION, BROWSE, FILTER, NEWSFEED, VIDEOPLAYER, BROWSE_ONLY } from '../../routesKeys';
 type Props = {
     showContent?: boolean;
     navigation: any;
     filterTab: string;
     prevRoute: string;
+    currentRoute: string;
     logout: () => void;
     setPrevCurrentRoutes: (currentRoute: string, prevRoute: string) => void;
     userProfile: () => UserProfile;
@@ -20,6 +21,10 @@ type Props = {
     backToFilterTabs: () => void;
     clearFilters: () => void;
     resetAlternativies: () => void;
+    onPressLogo: () => void;
+    goBack: () => void;
+    navigate: (currentRoute: string, prevRoute: string, params?: any) => void;
+    resetCollection: () => void;
 }
 export default class Header extends Component<Props> {
 
@@ -37,20 +42,23 @@ export default class Header extends Component<Props> {
                 style={{
                     paddingTop: 20,
                     marginTop: -10,
-                    height: 60, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 10 }}>
+                    height: 60, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 15 }}>
                 <View style={{ flex: 0.2 }}>
-                    {navigation.state.routeName !== NEWSFEED && <View  style={{width: 20}}>
+                    {navigation.state.routeName !== NEWSFEED && <View>
                         <Ripple rippleContainerBorderRadius={15 / 2} rippleSize={20} rippleCentered={true} onPress={this._goBack}>
                         <Image
-                            style={{width: 10, height: 10}}
+                            style={{width: 13, height: 13, marginLeft: 7}}
                             source={require('../../../../../assets/images/arrow-icon.png')} />
                         </ Ripple>
                     </View>}
                 </View>
                 <View style={{ alignItems: 'center', flex: 0.6, justifyContent: 'center' }}>
-                     <Image
-                        style={{width: 62, height: 22 }}
-                        source={require('../../../../../assets/images/logo.png')} />
+                     <TouchableWithoutFeedback onPress={this.onPressLogo}>
+                        <Image
+                            style={{width: 62, height: 22 }}
+                            source={require('../../../../../assets/images/logo.png')} 
+                        />
+                    </TouchableWithoutFeedback>
                 </View>
 
                 <View style={{ alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row', flex: 0.2}}>
@@ -68,47 +76,66 @@ export default class Header extends Component<Props> {
             </View>
         )
     }
+    onPressLogo = () => {
+        const { 
+            onPressLogo, 
+            resetArrayImages, 
+        } = this.props;
+        resetArrayImages();
+        onPressLogo()
+    }
     _goBack = () => {
         const { resetAlternativies,
                 clearFilters, 
-                setPrevCurrentRoutes, 
+                // setPrevCurrentRoutes, 
                 navigation, 
                 hideContextMenu, 
                 resetArrayImages, 
                 filterTab, 
                 backToFilterTabs,
-                prevRoute } = this.props;
-        const route: string = navigation.state.routeName;
+                prevRoute,
+                currentRoute,
+                goBack,
+                navigate,
+                resetCollection
+             } = this.props;
+        const route: string = currentRoute;
+        console.log(route + ', ' + prevRoute);
+        // if (NEWSFEED === route) return true;
         if (COLLECTION === route) {
-            setPrevCurrentRoutes(NEWSFEED, '');
             resetArrayImages();
         }
-        if ( ZOOM === route) { 
-            if(prevRoute === BROWSE) setPrevCurrentRoutes(BROWSE, COLLECTION)
-            else if(prevRoute === VIEW) setPrevCurrentRoutes(VIEW, BROWSE)
-            else if(prevRoute === COLLECTION) setPrevCurrentRoutes(COLLECTION, NEWSFEED)
-        }
-        if ( VIEW === route) {   
-            setPrevCurrentRoutes(BROWSE, COLLECTION)
-        }
         if (BROWSE === route) {
-            setPrevCurrentRoutes(COLLECTION, NEWSFEED);
+            if(navigation.state.params.from === 'collection'){
+                navigation.state.params.onBack()
+            } else if(FILTER === prevRoute){
+                resetCollection()
+                navigate(COLLECTION, NEWSFEED, {})
+                return true;
+            }
+            hideContextMenu();
+            clearFilters();
+            resetAlternativies();
+        }
+        if (BROWSE_ONLY === route) {
             hideContextMenu();
             clearFilters();
             resetAlternativies();
         }
         if (VIDEOPLAYER === route) {
-            setPrevCurrentRoutes(COLLECTION, NEWSFEED)
+
         }
         if (FILTER === route) {
             if (filterTab) {
                 backToFilterTabs();
                 return true;
             }
-
-            setPrevCurrentRoutes(BROWSE, COLLECTION)
         }
-        navigation.goBack();
+        goBack();
+        this.props.navigation.goBack();
+        if (COLLECTION === route) {
+            return false
+        }
         return true;
     }
 

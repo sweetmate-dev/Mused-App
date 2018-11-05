@@ -1,5 +1,6 @@
 interface IProductStore {
     getCollection: (slots: Slot[]) => void;
+    resetCollection: () => void;
     getAlternatives: (ids: number[]) => void;
     getAlternativesByFilter: () => void;
     listOfCollection: Product[];
@@ -7,11 +8,14 @@ interface IProductStore {
     arrayImages: ProductImage[];
     listOfAlternatives: Product[];
     toggleViewCategory: boolean;
+    allProducts: any;
     getSliderToggleState: boolean;
     openProductCategory: () => void;
     changeArrayImages: (slotNumber: number, newImg: ImageSourcePropType) => void;
     addNewSlot: () => void;
+    cancelNewSlot: () => void;
     createStyleWithMused: (product: ProductImage) => void;
+    getNewProducts: () => void;
     moveImageToLeft: (slotNumber: number) => void;
     resetArrayImages: () => void;
     resetAlternativies: () => void;
@@ -24,6 +28,7 @@ interface IProductStore {
     resetProductsByCategory: () => void;
     listOfProductsByCategories: Product[];
     categoryInDrag: string;
+    noResult: boolean;
 }
 
 interface IUiStore {
@@ -37,12 +42,14 @@ interface IUiStore {
     setNavigation: (navigation: any) => void;
     toggleContextMenu: (flag: boolean) => void;
     navigate: (currentRoute: string, prevRoute: string, params?: any) => void;
+    goBack: () => void;
     setPrevCurrentRoutes: (currentRoute: string, prevRoute: string) => void;
 }
 
 interface IUserStore {
     userId: string;
     userProfile: UserProfile;
+    loading: boolean;
     logout: () => void;
     setUserDetails: (userId: string, userProfile: UserProfile, cb?: (userId: string) => void) => void;
 }
@@ -50,10 +57,12 @@ interface IUserStore {
 interface ISlotsStore {
     isSlotMachine: boolean;
     slotNumber: number | null | string;
+    preSlotNumber: number | null | string;
     secondSlotNumber: number | null | string;
     newImgUrl: HashMap<string> | null;
     isMoveProduct: boolean;
     setSlotNumber: (slotNumber: number | string) => void;
+    setPrevSlotNumber: (products: ProductImage[]) => void;
     setSecondSlotNumber: (slotNumber: number | string) => void;
     setNewImgUrl: (newImgUrl: HashMap<string>) => void;
     setSlotMachineEffect: (flag: boolean) => void;

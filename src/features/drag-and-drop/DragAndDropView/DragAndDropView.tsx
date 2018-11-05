@@ -21,7 +21,8 @@ type Props = {
     addOrReplaceSixthSlot: (item: HashMap<string>) => void;
     resetProductsByCategory: () => void;
     categoryInDrag: string;
-    toggleViewCategory: boolean
+    toggleViewCategory: boolean;
+    allProducts: any;
 };
 type State = {
     dimensions: {
@@ -97,6 +98,7 @@ export default class DragAndDropAreaView extends React.Component<Props, State> {
                         toggleSlider={this._toggleSlider}
                         getProductsByCategory={this.props.getProductsByCategory}
                         categoryInDrag={this.props.categoryInDrag}
+                        allProducts={this.props.allProducts}
                     />
                 </View>
         </>

@@ -13,17 +13,22 @@ function CollectionHOC(Collection: any) {
     @observer
     class NewComp extends Component<Props> {
 
-    static navigationOptions: ([string]: any) => HashMap<Object> = ({ navigation }) => {
-        return {
-            header: <Header navigation={navigation} />
-        }
+        static navigationOptions: ([string]: any) => HashMap<Object> = ({ navigation }) => {
+            return {
+                header: <Header navigation={navigation} />
+            }
         };
 
-      render() {
-          const { root: { ui, products }, navigation } = this.props;
-          const { currentRoute }  = ui;
-          const { listOfCollection, getCollection, listOfBookmarks, createBookmark, deleteBookmarkById} = products;
-        return <Collection 
+        componentDidMount() {
+            
+        }
+
+        render() {
+            const { root: { ui, products }, navigation } = this.props;
+            const { currentRoute }  = ui;
+            const { listOfCollection, getCollection, listOfBookmarks, createBookmark, deleteBookmarkById} = products;
+            return (
+                <Collection 
                     listOfCollection={listOfCollection} 
                     getCollection={getCollection} 
                     navigation={navigation}
@@ -33,15 +38,21 @@ function CollectionHOC(Collection: any) {
                     createBookmark={createBookmark}
                     deleteBookmarkById={deleteBookmarkById}
                 />
-      }
+            ) 
+        }
 
-      _goToNext = (slotNumber: number, alternatives: number[]) => {
-        const { root: { ui, slots } } = this.props;
-        const { navigate } = ui;
-        const { setSlotNumber } = slots;
-        setSlotNumber(slotNumber);
-        navigate(BROWSE, COLLECTION, {alternatives});
-      }      
+        _goToNext = (slotNumber: number, alternatives: number[], originSlots: Slot[]) => {
+            const { root: { ui, slots } } = this.props;
+            const { navigate } = ui;
+            const { setSlotNumber } = slots;
+            setSlotNumber(slotNumber);
+            navigate(BROWSE, COLLECTION, {from: 'collection', alternatives, onBack: () => this.onBack(originSlots)});
+        }      
+
+        onBack = (slots: Slot[]) => {
+            const { root: { products: { getCollection } } } = this.props;
+            getCollection(slots)
+        }
 
     //   _goToBrowse = (slotNumber: number, alternatives: number[]) => {
     //     const { root: { ui, slots } } = this.props;

@@ -9,10 +9,10 @@ import {
     container: {
         position: 'absolute', 
         bottom: 0, 
-        height: 55,
+        height: 45,
         zIndex: 2,
         width: width, 
-        backgroundColor: '#E2E2E2',
+        backgroundColor: '#F1F1F1',
         borderTopWidth: 1,
         borderTopColor: '#eee',
         justifyContent: 'center', 

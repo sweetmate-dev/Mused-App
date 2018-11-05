@@ -12,7 +12,6 @@ type Props = {
     navigateToBrowse: () => void;
     navigateToView: () => void;
     clearFilterAndGoToBrowse: () => void;
-    clearFilter: () => void;
     applyFilter: () => void;
     createNewOutfit: () => void;
     openProductCategory: () => void;
@@ -59,7 +58,7 @@ export default class Footer extends Component<Props> {
             <Animated.View 
                 style={[
                     theme.container,
-                    currentRoute === FILTER ? {backgroundColor: '#E2E2E2'} : {},
+                    currentRoute === FILTER ? {backgroundColor: '#F1F1F1'} : {},
                     currentRoute === VIEW_SCREEN ? {backgroundColor: '#FFF'} : {},
                     {opacity: this.state.fadeIn}]}>
                  { currentRoute === FILTER && this._renderDarkFooterButtons() }
@@ -91,7 +90,6 @@ export default class Footer extends Component<Props> {
         return  footerDarkButtons.map( (button: HashMap<string>) => {
             const actions: HashMap<() => void> = {
                 [APPLY]: this.props.applyFilter,
-                // [CLEAR]: this.props.clearFilter,
                 [CANCEL]: this.props.clearFilterAndGoToBrowse
             }
              return (

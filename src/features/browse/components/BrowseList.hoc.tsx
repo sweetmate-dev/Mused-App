@@ -20,7 +20,7 @@ function BrowseHOC(Browse: any) {
           const { root: { slots, products, ui }, navigation } = this.props;
           const { contextMenuIsVisible } = ui;
           const { setNewImgUrl, isSlotMachine } = slots;
-          const { listOfAlternatives, getAlternatives, createBookmark, listOfBookmarks, deleteBookmarkById, arrayImages } = products;
+          const { listOfAlternatives, getAlternatives, createBookmark, listOfBookmarks, deleteBookmarkById, arrayImages, noResult } = products;
         return <Browse
                     navigation={navigation}
                     setNewImgUrl={setNewImgUrl}
@@ -34,6 +34,7 @@ function BrowseHOC(Browse: any) {
                     deleteBookmarkById={deleteBookmarkById}
                     contextMenuIsVisible={contextMenuIsVisible}
                     arrayImages={arrayImages}
+                    noResult={noResult}
                 />
       }
 

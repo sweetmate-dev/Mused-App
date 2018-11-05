@@ -16,6 +16,32 @@ export default  StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#fff'
     },
+    containerHeader: {
+        flex: 1, 
+        justifyContent: 'center', 
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginBottom: 10,
+        marginTop: 20
+    },
+    headerTitle: {
+        fontSize: 18,
+        fontFamily: 'RalewayBold',
+        color: '#333',
+        marginBottom: 2
+    },
+    headerSubTitle: {
+        fontSize: 11,
+        fontFamily: 'Lato',
+        color: '#000'
+    },
+    underlineTitle: { 
+        backgroundColor: '#303030', 
+        width: 45, 
+        height: 1,
+        marginTop: 10,
+        marginBottom: 9
+    },
     listTitleContainer: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -36,6 +62,12 @@ export default  StyleSheet.create({
         backgroundColor: '#fff',
         flexDirection: 'row',
         marginBottom: 170
+    },
+    browseOnlyView: {
+        flex: 1,
+        justifyContent: 'space-between',
+        backgroundColor: '#fff',
+        flexDirection: 'row',
     },
     productContainer: {
         overflow: 'hidden',
@@ -149,5 +181,11 @@ export default  StyleSheet.create({
     },
     backgroundVideo: {
         width: width - 40,
+    },
+    emptyText: {
+        paddingTop: 50,
+        textAlign: 'center',
+        fontSize: 14,
+        color: '#555'
     }
 });

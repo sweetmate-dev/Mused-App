@@ -239,7 +239,7 @@ export default class Draggable extends Component<Props, State> {
                         this.state.pan.getLayout(),
                         {
                             opacity: fadeVal,
-                            width: item.category === 'belts' ? 150 : this.props.renderSize
+                            width: item.category === 'belts' ? this.props.renderSize * 1.2 : this.props.renderSize * 0.6
                         }
                     ]}>
                     <TouchableWithoutFeedback

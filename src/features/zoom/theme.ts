@@ -15,12 +15,12 @@ export default StyleSheet.create({
     wrapper: {
         width: width,
         height: width * 900 / 675,
-        paddingHorizontal: 5,
-        justifyContent: 'center'
+        paddingHorizontal: 10,
+        // justifyContent: 'center'
     },
     firstImage: {
-        width: width - 10,
-        height: (width - 10) * 900 / 675,
+        width: width - 20,
+        height: (width - 20) * 900 / 675,
         resizeMode: 'contain'
     },
     secondImage: {
@@ -53,7 +53,7 @@ export default StyleSheet.create({
     },
     infoView: {
         paddingHorizontal: 30,
-        paddingTop: 5,
+        // paddingTop: 5,
         flexDirection: 'row'
     },
     brandView: {
@@ -76,15 +76,14 @@ export default StyleSheet.create({
     },
     priceText: {
         color: '#000',
-        fontSize: 16,
+        fontSize: 13,
         fontFamily: 'LatoBold',
     },
     buttonsContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 15,
-        paddingBottom: 15
+        padding: 15,
     },
     descContainer: {
         padding: 30
@@ -110,4 +109,43 @@ export default StyleSheet.create({
         width: width,
         resizeMode: 'contain'
     },
+    buttonView: {
+        position: 'relative',
+        width: width - 30,
+        height: 60,
+    },
+    backButton: {
+        backgroundColor: 'black',
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        left: 7,
+        bottom: 7
+    },
+    frontButton: {
+        backgroundColor: 'black',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 3,
+        top: 3,
+        borderColor: 'white',
+        borderWidth: 2,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    buttonLogo: {
+        width: 32,
+        height: 32,
+        resizeMode: 'contain'
+    },
+    buttonText: {
+        fontFamily: 'Lato',
+        fontSize: 16,
+        lineHeight: 48,
+        textAlign: 'center',
+        color: 'white',
+        paddingLeft: 10
+    }
 });

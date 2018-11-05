@@ -4,6 +4,7 @@ export default class ObservableStore implements ISlotsStore {
     constructor(public root: RootStore) { }
 
     @observable slotNumber: number | null | string = null;
+    @observable preSlotNumber: number | null | string = null;
     @observable secondSlotNumber: number  | null | string =  null;
     @observable newImgUrl: HashMap<string> | null = null;
     @observable isMoveProduct: boolean = false;
@@ -16,7 +17,15 @@ export default class ObservableStore implements ISlotsStore {
 
     @action
     public setSlotNumber = (slotNumber: number) => {
+        this.preSlotNumber = this.slotNumber;
         this.slotNumber = slotNumber;
+    }
+
+    @action
+    public setPrevSlotNumber = (products: ProductImage[]) => {
+        products.map((product: ProductImage) => {
+            if(product.id === -1) this.slotNumber = this.preSlotNumber;
+        })
     }
 
     @action

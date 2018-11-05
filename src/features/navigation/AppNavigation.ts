@@ -3,14 +3,16 @@ import { createStackNavigator } from 'react-navigation';
 import { Newsfeed } from '../newsfeed'
 import { Collection } from '../collection';
 import { VideoPlayer } from '../video-player';
-import { Browse } from '../browse';
+import { Browse, BrowseOnly } from '../browse';
 import { Zoom } from '../zoom';
 import { Filter } from '../filter';
 import { DragAndDrop } from '../drag-and-drop';
+
 import { 
     COLLECTION,
     VIDEOPLAYER,
     BROWSE, 
+    BROWSE_ONLY,
     NEWSFEED, 
     ZOOM, 
     FILTER,
@@ -31,6 +33,9 @@ export default createStackNavigator(
         },
         [BROWSE]: {
             screen:  Browse
+        },
+        [BROWSE_ONLY]: {
+            screen: BrowseOnly
         },
         [ZOOM]: {
             screen:  Zoom,

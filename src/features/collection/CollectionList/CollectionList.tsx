@@ -11,8 +11,8 @@ import CollectionFooter from './CollectionFooter';
 import theme from '../theme';
  
 const testDataHeader = {
-    title: 'Product Matches',
-    subTitle: 'This is some text inside of a div block.'
+    title: 'The Look',
+    subTitle: 'Product style matches'
 }
 
 const testDataFooter = {
@@ -29,7 +29,7 @@ type Props = {
     listOfCollection: Product[];
     listOfBookmarks: Bookmark[];
     authorItem: Author;
-    goToNext: (slotNumber: number, alternatives: number[]) => void;
+    goToNext: (slotNumber: number, alternatives: number[], slots: Slot[]) => void;
     createBookmark: (productId: number) => void;
     deleteBookmarkById: (_id: any) => void;
     currentRoute: string
@@ -112,7 +112,7 @@ export default class CollectionList extends Component<Props, State> {
            }
         ).start(() => {
             setTimeout(() => {
-                goToNext(slotNumber, alternatives);
+                goToNext(slotNumber, alternatives, this.slots);
                 setTimeout(() => {
                     this.state.fadeIn.setValue(1)
                 }, 300)   

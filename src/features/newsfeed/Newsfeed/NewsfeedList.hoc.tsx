@@ -35,8 +35,7 @@ function NewsfeedHOC(Newsfeed: any) {
       _goToCollection = (params: any) => {
         const { root: { ui} } = this.props;
           const { navigate } = ui;
-          navigate(COLLECTION, NEWSFEED, params);
-          
+          navigate(COLLECTION, NEWSFEED, params);          
       }
     }
     return NewComp;

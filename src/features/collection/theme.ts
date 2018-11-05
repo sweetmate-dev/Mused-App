@@ -126,12 +126,14 @@ import {
         fontSize: 11,
         color: '#000',
         marginTop: 10,
-        marginBottom: 2
+        marginBottom: 2,
+        textAlign: 'center'
     },
     clickableSubTitle: {
         fontFamily: 'Lato',
         fontSize: 11,
-        color: '#000'
+        color: '#000',
+        textAlign: 'center'
     },
     likeImageContainer: {
         flex: 0.2, 

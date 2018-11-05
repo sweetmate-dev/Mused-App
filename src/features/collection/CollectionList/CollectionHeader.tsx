@@ -16,7 +16,7 @@ export default class CollectionHeader extends Component<Props> {
             <View style={theme.containerHeader}>
                <Text style={theme.headerTitle}>{title.toUpperCase()}</Text>
                <Text style={theme.headerSubTitle}>{subTitle}</Text>
-               <View style={theme.underlineTitle}></View>
+               {/* <View style={theme.underlineTitle}></View> */}
             </View>
         )
     }

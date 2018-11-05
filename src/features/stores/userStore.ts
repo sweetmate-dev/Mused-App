@@ -9,6 +9,7 @@ export default class ObservableStore implements IUserStore {
     @observable id: string = null;
     @observable profile: UserProfile = null;
     @observable userDetails: any = null;
+    @observable loading: boolean = true;
 
     @action
     public logout = () => {
@@ -31,8 +32,9 @@ export default class ObservableStore implements IUserStore {
     public setUserDetails = async (userId: string, userProfile: UserProfile) => {
         const { email } = userProfile;
         const userData = await getUserDetails(email);
-
+        console.log('JOHN: ', userData)
         await this.setUser({ userId, userData });
+        this.loading = false;
     };
 
     private setUser = (user: any) => {

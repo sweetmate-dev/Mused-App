@@ -27,6 +27,7 @@ type Props = {
     contextMenuIsVisible: boolean;
     onDuplicated: () => void;
     arrayImages: ProductImage[];
+    browseOnly: boolean;
 }
 type State = {
     isLiked: boolean;
@@ -46,14 +47,14 @@ export default class BrowseItem extends Component<Props, State> {
         Boolean(bookmark) && this.setState({isLiked: true, bookmark })
 
     }
-    componentWillReceiveProps(newProps: Props) {
-        const { listOfBookmarks } = this.props;
-        const {  id } = this.props.item;
-        if (newProps.listOfBookmarks.length !== listOfBookmarks.length ) {
-            const bookmark: Bookmark = newProps.listOfBookmarks.find(( bookmark: Bookmark) => bookmark.productId === id);
-            Boolean(bookmark) && this.setState({isLiked: true, bookmark })
-        }  
-    }
+    // componentWillReceiveProps(newProps: Props) {
+    //     const { listOfBookmarks } = this.props;
+    //     const {  id } = this.props.item;
+    //     if (newProps.listOfBookmarks.length !== listOfBookmarks.length ) {
+    //         const bookmark: Bookmark = newProps.listOfBookmarks.find(( bookmark: Bookmark) => bookmark.productId === id);
+    //         Boolean(bookmark) && this.setState({isLiked: true, bookmark })
+    //     }  
+    // }
     render() {
         const {item: { brand, unbrandedName, id, /*priceLabel*/ }, index} =  this.props;
         let borderStyle = {};
@@ -130,7 +131,10 @@ export default class BrowseItem extends Component<Props, State> {
 
     _likeIt = () => {
         const {  isSlotMachine, arrayImages, onDuplicated, item, setNewImgUrl, hideContextMenu, contextMenuIsVisible } = this.props;
-
+        if(this.props.browseOnly) {
+            this._navigateToProductSingle();
+            return;
+        }
         // check duplicated item
         for (let i = 0; i < arrayImages.length; i++ ){
             if(arrayImages[i].id === item.id) {
@@ -151,13 +155,13 @@ export default class BrowseItem extends Component<Props, State> {
 
     _createBookmark = () => {
         const { createBookmark, deleteBookmarkById, item: { id } } = this.props;
-        const { isLiked, bookmark } = this.state;
+        const { isLiked } = this.state;
         
-        if ( isLiked) {
-            deleteBookmarkById(bookmark._id);
-            this.setState({isLiked: false, bookmark: null});
-            return;
+        if (isLiked) {
+            deleteBookmarkById(id);
+        } else {
+            createBookmark(id);
         }
-        createBookmark(id);
+        this.setState({isLiked: !isLiked});        
     }    
 }

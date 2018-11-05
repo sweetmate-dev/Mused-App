@@ -10,6 +10,7 @@ import {
     deleteBookmark,
     getProductsByCategory,
     getProductsByCategoryInitial,
+    getNewProducts,
 } from '../../services';
 
 import { slotsOrder } from '../shared';
@@ -28,11 +29,14 @@ export default class ObservableStore implements IProductStore {
     @observable categoryInDrag: string = '';
     @observable toggleViewCategory: boolean = false;
     @observable slots: Slot[] = [];
+    @observable noResult: boolean = false;
+    @observable allProducts: any = {};
 
     get listOfCollection() {
         return this.collection;
     }
     get listOfAlternatives() {
+        console.log(this.alternatives.length)
         return this.alternatives;
     }
     get listOfBookmarks() {
@@ -55,25 +59,37 @@ export default class ObservableStore implements IProductStore {
 
     @action
     public getAlternatives = async (ids: number[]) => {
+        this.noResult = false;
         await getProductsByIds(ids).then((products: Product[]) => {
             this.alternatives = [...products]
+            if(this.alternatives.length === 0) this.noResult = true;
         });
     }
 
     @action
     public getAlternativesByFilter = async () => {
-        this.alternatives = []
-        await getProductsByCatsSubs(this.root.filters.listOfCategory).then((products: Product[]) => {
+        // this.alternatives = []
+        this.noResult = false;
+        await getProductsByCatsSubs(this.root.filters.listOfCategory).then((products: Product[]) => {            
             this.alternatives = [...products]
+            if(this.alternatives.length === 0) this.noResult = true;
         });
+    }
+
+    @action
+    public resetCollection = () => {
+        // this.alternatives = []
+        this.getCollection(this.slots);
     }
 
     @action
     public  getCollection = async (slots: Slot[]) => {
         const ids: number[] = slots.map((slot: Slot) => slot.productId);
         this.slots = slots;
+        this.noResult = false;
         await getProductsByIds(ids).then((products: Product[]) => {
             this.collection = slotsOrder(ids, products);
+            if(this.collection.length === 0) this.noResult = true;
         });
         this.arrayImages = this.collection.map( (product: Product) => {
             return { 
@@ -95,12 +111,20 @@ export default class ObservableStore implements IProductStore {
     @action
     public addNewSlot = () => {
         const newArray = [...this.arrayImages];
-        if(newArray.length > 4) alert('You can not add item anymore.')
         const newImg: ProductImage = {
             img: undefined,
             id: -1
         }
         newArray.push(newImg);
+        this.arrayImages = newArray;
+    }
+
+    @action
+    public cancelNewSlot = () => {
+        let newArray: ProductImage[] = [];
+        this.arrayImages.map((product: ProductImage) => {
+            if(product.id !== -1) newArray.push(product)
+        })
         this.arrayImages = newArray;
     }
 
@@ -175,14 +199,30 @@ export default class ObservableStore implements IProductStore {
     @action 
     getProductsByCategory = async (category: string) => {
         this.toggleViewCategory = false;
+        this.noResult = false;
+        if(this.allProducts[category] !== undefined) {
+            this.productsByCategories = this.allProducts[category];
+        }
         await getProductsByCategoryInitial(category).then( (products: Product[]) => {
-            this.productsByCategories = products;
-            this.categoryInDrag = category;           
+            if(this.allProducts[category] === undefined) this.productsByCategories = products;
+            this.categoryInDrag = category;
+            if(this.productsByCategories.length === 0) this.noResult = true;
         })
         await getProductsByCategory(category).then( (products: Product[]) => {
             this.productsByCategories = products;
-            this.categoryInDrag = category;           
+            this.allProducts[category] = products;
+            this.categoryInDrag = category;         
         })
+    }
+
+    @action
+    getNewProducts = async () => {
+        this.alternatives = []
+        this.noResult = false;
+        await getNewProducts().then((products: Product[]) => {            
+            this.alternatives = [...products]
+            if(this.alternatives.length === 0) this.noResult = true;
+        });
     }
 
     @action

@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import Header from './Header';
 
 import { ROOT_STORE } from '../../../stores';
+import { NEWSFEED } from '../../routesKeys';
 
 type Props = {
     navigation: any;
@@ -16,9 +17,9 @@ function HeaderHOC(Header: any) {
     class NewComp extends Component<Props> {
         render() {
             const { navigation, showContent,  root: { ui, user, products, filters } } = this.props;
-            const { setPrevCurrentRoutes, currentRoute, prevRoute } = ui;
+            const { setPrevCurrentRoutes, currentRoute, prevRoute, navigate, goBack } = ui;
             const { userProfile, logout } = user;
-            const { resetArrayImages, resetAlternativies } = products;
+            const { resetArrayImages, resetAlternativies, resetCollection } = products;
             const { filterTab, clearFilters } = filters;
 
             return <Header
@@ -35,8 +36,18 @@ function HeaderHOC(Header: any) {
                     clearFilters={clearFilters}
                     resetAlternativies={resetAlternativies}
                     prevRoute={prevRoute}
+                    onPressLogo={this.onPressLogo}
+                    goBack={goBack}
+                    navigate={navigate}
+                    resetCollection={resetCollection}
             />
         }
+
+        onPressLogo = () => {
+            const {   root: { ui: { navigate } } } = this.props;
+            navigate(NEWSFEED, '', {});
+        }
+
         _hideContextMenu = () => {
             const {   root: { ui: { toggleContextMenu } } } = this.props;
             toggleContextMenu(false);

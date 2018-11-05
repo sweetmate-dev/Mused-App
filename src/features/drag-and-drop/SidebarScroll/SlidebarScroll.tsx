@@ -16,8 +16,18 @@ type Props = {
     toggleSlider: (flag: boolean) => void;
     isOpenCategory: boolean;
     categoryInDrag: string;
+    allProducts: any;
 }
-export default class SidebarScroll extends Component<Props> {
+type State = {
+    transparent: boolean
+}
+export default class SidebarScroll extends Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            transparent: false
+        }
+    }
 
     componentDidMount() {
         this._onPressCategory('jewelry')
@@ -25,9 +35,8 @@ export default class SidebarScroll extends Component<Props> {
 
     render() {
         const { listOfProductsByCategories, isOpenCategory } = this.props;
-        console.log(isOpenCategory)
         return (
-            <View style={ theme.scrolllContainer}>
+            <View style={ [theme.scrolllContainer, {opacity: this.state.transparent ? 0 : 1}]}>
                 { isOpenCategory && 
                     <View style={{paddingTop: 40}}>
                         {categoriesFilter.map(this._renderCategoryItem)}
@@ -79,6 +88,15 @@ export default class SidebarScroll extends Component<Props> {
     private _onPressCategory = (category: string) => {
         const { getProductsByCategory } = this.props;
         getProductsByCategory(category);
+        if(this.props.allProducts[category] === undefined) this.setTimeOutToShow(3000)
+        else this.setTimeOutToShow(1000)
+    }
+
+    setTimeOutToShow = (duration: number) => {
+        this.setState({transparent: true})
+        setTimeout(() => {
+            this.setState({transparent: false})
+        }, duration)
     }
 
 }

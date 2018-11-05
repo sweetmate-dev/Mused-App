@@ -19,7 +19,7 @@ function DragAndDropViewHOC(DragAndDropView: any) {
       };
       render() {
           const { root: { products, slots } } = this.props;
-          const { getProductsByCategory, categoryInDrag, listOfProductsByCategories, arrayImages, resetProductsByCategory, toggleViewCategory } = products;
+          const { getProductsByCategory, allProducts, categoryInDrag, listOfProductsByCategories, arrayImages, resetProductsByCategory, toggleViewCategory } = products;
           const { getSixthSlot, addOrReplaceSixthSlot } = slots;
           const _dragrabbleItems = 
             Boolean(getSixthSlot)
@@ -36,6 +36,7 @@ function DragAndDropViewHOC(DragAndDropView: any) {
                     hasSixthSlot={Boolean(getSixthSlot)}
                     categoryInDrag={categoryInDrag}
                     toggleViewCategory={toggleViewCategory}
+                    allProducts={allProducts}
                 />
       }
       _navigateToProductSingle = (product: Product) => {

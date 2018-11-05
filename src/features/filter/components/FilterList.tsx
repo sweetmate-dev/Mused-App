@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    Image,
     Animated
 } from 'react-native';
 
@@ -15,9 +14,9 @@ import FilterCategories from './FilterCategories/FilterCategories.hoc'
 // import testDataDesigners from '../testDesigners';
 import theme from '../theme';
 
-const newIn = require('../../../../assets/images/filter1.jpg');
-const clothing = require('../../../../assets/images/filter2.jpg');
-const colour = require('../../../../assets/images/filter3.jpg');
+// const newIn = require('../../../../assets/images/filter-logo1.jpg');
+// const clothing = require('../../../../assets/images/filter-logo2.jpg');
+// const colour = require('../../../../assets/images/filter-logo3.jpg');
 
 type Props = {
     listOfCategory: Category[];
@@ -63,6 +62,7 @@ export default class FilterList extends Component<Props> {
     _renderTabs = () => {
         return (
             <View style={[theme.counterContainer]}>
+                
                 <Ripple
                     onPress={() => this.onClick('newIn')}
                     style={theme.counterItemContainer}
@@ -70,12 +70,12 @@ export default class FilterList extends Component<Props> {
                     rippleDuration={300} 
                     rippleCentered={true}
                     rippleContainerBorderRadius={40}>
-                    <View style={theme.leftView}>
+                    <View style={{flex: 1}}>
                         <Text style={theme.categoryText}>NEW IN</Text>
-                        <Text style={theme.subText}>Lorem Ipsum Extra text</Text>
-                    </View>
-                    <Image source={newIn} style={theme.filterImage} />
+                        <Text style={theme.subText}>Supporting text goes here</Text>
+                    </View>                        
                 </Ripple>
+                
                 <Ripple
                     onPress={() => this.onClick('clothe')}
                     style={theme.counterItemContainer}
@@ -83,23 +83,22 @@ export default class FilterList extends Component<Props> {
                     rippleDuration={300} 
                     rippleCentered={true}
                     rippleContainerBorderRadius={40}>
-                    <View style={theme.leftView}>
-                        <Text style={theme.categoryText}>CLOTHING</Text>
-                        <Text style={theme.subText}>Lorem Ipsum Extra text</Text>
-                    </View>
-                    <Image source={clothing} style={theme.filterImage} />
+                    <View style={{flex: 1}}>
+                        <Text style={theme.categoryText}>CATEGORIES</Text>
+                        <Text style={theme.subText}>Supporting text goes here</Text>
+                    </View>                        
                 </Ripple>
                 <Ripple
-                    onPress={() => this.onClick('colour')} style={theme.counterItemContainer}
+                    onPress={() => this.onClick('colour')}
+                    style={theme.counterItemContainer}
                     rippleSize={120}
                     rippleDuration={300} 
                     rippleCentered={true}
                     rippleContainerBorderRadius={40}>
-                    <View style={theme.leftView}>
+                    <View style={{flex: 1}}>
                         <Text style={theme.categoryText}>COLOUR</Text>
-                        <Text style={theme.subText}>Lorem Ipsum Extra text</Text>
-                    </View>
-                    <Image source={colour} style={theme.filterImage} />
+                        <Text style={theme.subText}>Supporting text goes here</Text>
+                    </View>                        
                 </Ripple>
             </View>   
         )

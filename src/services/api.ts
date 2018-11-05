@@ -104,3 +104,8 @@ export const getProductsByCategory = (category: string) => {
     const client = getClient();
     return client.callFunction("searchByCategory", [category]);
 }
+
+export const getNewProducts = () => {
+    const client = getClient();
+    return client.callFunction("getNewProducts", []);
+}

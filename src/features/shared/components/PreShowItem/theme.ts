@@ -3,7 +3,7 @@ import {
     StyleSheet
   } from 'react-native';
 
- const { width, height } = Dimensions.get('window');
+ const { width } = Dimensions.get('window');
 
  export default StyleSheet.create({
     itemImage: {
@@ -34,7 +34,7 @@ import {
     buttonPlus: {
         position: 'absolute',
         zIndex: 9999,
-        top:   ((height * 0.17) / 12),
+        top:   3,
         right: 10,
         width: 22,
         height: 22,
@@ -59,8 +59,8 @@ import {
         opacity: 0.5
      },
      plusIcon: {
-         width: 15,
-         height: 15,
+         width: 10,
+         height: 10,
          resizeMode: 'contain'
      }
   });

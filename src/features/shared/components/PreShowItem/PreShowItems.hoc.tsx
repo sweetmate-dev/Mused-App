@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import PreShowItems from './PreShowItems';
-
+import { FILTER } from '../../index';
 import { ROOT_STORE } from '../../../stores';
+
 type Props = {
     root?: RootStore;
 };
@@ -11,12 +12,13 @@ function PreShowItemsHOC(PreShowItems: any) {
     @observer
     class NewComp extends Component<Props> {
       render() {
-          const { root: { ui} } = this.props;
+          const { root: { ui, products} } = this.props;
           const { currentRoute }  = ui;
-  
+          const { arrayImages } = products;
         return <PreShowItems 
           currentRoute={currentRoute}
           onAddPreItem={this.onAddPreItem}
+          arrayImages={arrayImages}
         />
       }
       onAddPreItem = () => {
@@ -25,6 +27,12 @@ function PreShowItemsHOC(PreShowItems: any) {
         const { setSlotNumber } = slots;
         addNewSlot()
         setSlotNumber(-1)
+        const { root: { ui } } = this.props;
+        const {  navigate, currentRoute } = ui;
+        navigate(FILTER, currentRoute, {goBack: () => this.onBack()});
+      }
+      onBack = () => {
+        
       }
     }
     return NewComp;

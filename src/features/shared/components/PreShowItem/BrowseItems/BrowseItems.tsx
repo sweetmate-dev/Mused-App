@@ -7,7 +7,7 @@ import {
 import theme from '../theme';
 import { thumbnailImage } from '../../../imagesUrls';
 
-const blankImage = require('../../../../../../assets/images/blank-image.jpg')
+const blankImage = require('../../../../../../assets/images/empty.jpg')
 
 type Props = {
     arrayImgs: ProductImage[];
@@ -59,7 +59,6 @@ export default class BrowseItems extends Component<Props, State> {
             contextMenuIsVisible
         } = this.props;
         const _this = this;
-        console.log(arrayImgs)
         return arrayImgs.map( (slotProduct: ProductImage, index: number)  => {
             const opacity = (contextMenuIsVisible && this.state.selectedID === slotProduct.id) ? 0.5 : 1;
             // if(slotProduct.id === -1 && newImgUrl) {

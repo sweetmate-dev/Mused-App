@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import FooterButtons from './FooterButtons';
 import { COLLECTION, BROWSE, VIDEOPLAYER, FILTER, VIEW } from '../../../shared';
 import { ROOT_STORE } from '../../../stores';
+import { NEWSFEED } from '../../routesKeys';
 type Props = {
     root?: RootStore;
 };
@@ -24,7 +25,6 @@ function FooterButtonsHOC(FooterButtons: any) {
               navigateToFilter={this._navigateToFilter}
               navigateToBrowse={this._navigateToBrowse}
               navigateToView={this._navigateToView}
-              clearFilter={this._clearFilter}
               clearFilterAndGoToBrowse={this._clearFilterAndGoToBrowse}
               applyFilter={this._applyFilter}
               createNewOutfit={createNewOutfit}
@@ -47,15 +47,20 @@ function FooterButtonsHOC(FooterButtons: any) {
       const { root: { ui: { navigate } } } = this.props;
       navigate(BROWSE, COLLECTION);
     }
-    
-    _clearFilter = () => {
-      const { root: { filters: { clearFilters }  } } = this.props;
-      clearFilters();
-    }
 
     _clearFilterAndGoToBrowse = () => {
-      this._navigateToBrowse();
-      this._clearFilter();
+      const { root: { filters, products, slots, ui } } = this.props;
+      const { clearFilters, setFilterTab } = filters;
+      const { cancelNewSlot, arrayImages } = products;
+      const { setPrevSlotNumber } = slots;
+      const { prevRoute, navigate } = ui;
+
+      if(prevRoute === COLLECTION) navigate(COLLECTION, NEWSFEED);
+      else this._navigateToBrowse();      
+      clearFilters();
+      setPrevSlotNumber(arrayImages);
+      cancelNewSlot();
+      setFilterTab('applied')
     }
 
     _applyFilter = () => {
