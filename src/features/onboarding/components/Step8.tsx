@@ -13,8 +13,8 @@ import TypeWriterText from './Typewriter'
 
 const welcomeImage = require('../../../../assets/images/welcome-video-bg.jpg');
 const videoSource = require('../../../../assets/videos/wink-optimised.mp4');
-const headerText = '...so welcome to Mused!';
 const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -25,13 +25,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     justifyContent: 'center',
     alignItems: 'flex-end'
-  },
-  videoView: {
-    marginVertical: 30,
-    flex: 1,
-    backgroundColor: 'gray',
-    justifyContent: 'center',
-    alignItems: 'center'
   },
   welcomeImage: {
     height: height - 340,
@@ -74,17 +67,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   skipButton: {
-    borderWidth: 1,
-    borderColor: 'black',
     width: width * 0.8,
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'black'
   },
   skipButtonText: {
     fontSize: 16,
-    color: 'black'
+    color: 'white'
   }
 })
 
@@ -93,20 +84,9 @@ type Props = {
   onFacebookSignUp: () => void;
   onSkipSignUp: () => void
 }
-type State = {
-  textLength: number,
-};
 
-export default class Step8 extends Component<Props, State> {
+export default class Step8 extends Component<Props> {
   
-    state: State = {
-      textLength: 0
-    }
-
-    componentDidMount() {
-
-    }
-
     onClickFacebook = () => {
       this.props.onFacebookSignUp();
     }
@@ -118,7 +98,7 @@ export default class Step8 extends Component<Props, State> {
     render() {
       return (
         <View style={styles.container}>
-          <TypeWriterText text={headerText} />
+          <TypeWriterText text={['...so welcome to Mused!', '']} />
           <View style={styles.content}>
             <Image source={welcomeImage} style={styles.welcomeImage} />
             <View style={styles.videoContainer}>            

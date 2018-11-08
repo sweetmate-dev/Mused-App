@@ -23,10 +23,8 @@ const browseImage3 = require('../../../../assets/images/browse/browse4.png');
 const browseImage4 = require('../../../../assets/images/browse/browse5.jpeg');
 const arrow2GIF = require('../../../../assets/images/arrow2.gif');
 const arrow3GIF = require('../../../../assets/images/arrow3.gif');
-const headerText1 = '...then pick something to switch';
-const headerText2 = 'Now tap the photos to create new looks!'
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   content: {
     flex: 1,
@@ -74,16 +72,14 @@ const styles = StyleSheet.create({
     height: 180,
   },
   preItemView: {
-    height: 120,
+    height: 110,
     flexDirection: 'row',
     padding: 5,
-    overflow: 'hidden'
   },
   preItemImage: {
     width: width / 6, 
     height: 100,
-    padding: 5,
-    marginHorizontal: 5
+    marginHorizontal: 4
   },
   clickableTitle: {
     fontFamily: 'LatoBold',
@@ -101,22 +97,19 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-  },
-  collectionLine: {
-    flex: 1,
-    flexDirection: 'row',
+    marginTop: -30
   },
   gifIcon: {
-    width: 25,
-    height: 30,
+    width: 50,
+    height: 60,
     resizeMode: 'contain'
   },
   arrow3: {
     position: 'absolute',
-    top: -10,
-    left: width / 8,
-    width: 25,
-    height: 30,
+    top: 0,
+    left: 0,
+    width: 50,
+    height: 60,
     resizeMode: 'contain'
   }
 })
@@ -124,12 +117,11 @@ const styles = StyleSheet.create({
 type Props = {
   continue: () => void;  
 }
+
 type State = {
-  textLength: number,
   fadeIn: any,
   itemMarginTop: any,
   selectedImage: any,
-  GifMarginTop: any,
   step: number,
   slideCount: number
 };
@@ -137,25 +129,11 @@ type State = {
 export default class Step2 extends Component<Props, State> {
   
     state: State = {
-      textLength: 0,
       fadeIn: new Animated.Value(1),
       itemMarginTop: new Animated.Value(0),
-      GifMarginTop: new Animated.Value(0),
       step: 1,
       selectedImage: shirtImage,
       slideCount: 0
-    }
-    
-    timer: any;
-    gifTimer: any;
-
-    componentDidMount() {
-      
-    }
-
-    componentWillUnmount() {
-      clearTimeout(this.timer);
-      clearTimeout(this.gifTimer);
     }
 
     onPressClick = () => {
@@ -164,7 +142,7 @@ export default class Step2 extends Component<Props, State> {
           this.state.fadeIn,            
           {
               toValue: 0,                   
-              duration: 1000, 
+              duration: 500, 
           }
         ).start();
         setTimeout(() => {
@@ -176,14 +154,13 @@ export default class Step2 extends Component<Props, State> {
                 duration: 500, 
             }
           ).start();
-        }, 1000)
+        }, 500)
       } else {
         this.props.continue()
       }
     }
 
-    onClickImage = (image: any) => {
-      
+    onClickImage = (image: any) => {      
       this.state.itemMarginTop.setValue(0)
       Animated.timing(                 
         this.state.itemMarginTop,            
@@ -239,7 +216,7 @@ export default class Step2 extends Component<Props, State> {
     renderStep1View = () => {
       return (
         <Animated.View style={[styles.content, {opacity: this.state.fadeIn}]}>
-          <TypeWriterText text={headerText1} />
+          <TypeWriterText text={['...then pick something', 'to switch']} />
           <View style={styles.containerItem}>
             <TouchableWithoutFeedback onPress={() => this.onPressClick()}>
               <View style={[styles.alterContainer, {alignItems: 'center'}]}>
@@ -247,7 +224,7 @@ export default class Step2 extends Component<Props, State> {
                     <Text style={styles.countText}>10</Text>
                 </View>
                 <Text style={[styles.countText, {marginTop: 3}]}>alternatives</Text>
-                <Animated.Image source={arrow2GIF} style={[styles.gifIcon, {marginTop: this.state.GifMarginTop}]} />
+                <Animated.Image source={arrow2GIF} style={styles.gifIcon} />
               </View>   
             </TouchableWithoutFeedback>
             <View style={styles.clickableImageContainer}>
@@ -268,7 +245,7 @@ export default class Step2 extends Component<Props, State> {
     renderStep2View = () => {
       return (
         <Animated.View style={[styles.content, {opacity: this.state.fadeIn}]}>
-          <TypeWriterText text={headerText2} />
+          <TypeWriterText text={['now create new looks!', '']} />
           <ScrollView style={styles.scrollView}>
             <View style={{flexDirection: 'row'}}>
               <Ripple

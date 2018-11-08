@@ -91,6 +91,7 @@ export default class App extends React.Component<Props, State> {
         'RalewayBold': require('../assets/fonts/Raleway-Bold.ttf'),
         'Lato': require('../assets/fonts/Lato-Regular.ttf'),
         'LatoBold': require('../assets/fonts/Lato-Bold.ttf'),
+        'GreatVibes': require('../assets/fonts/GreatVibes-Regular.ttf')
       }),
       initClient(),
     ]);

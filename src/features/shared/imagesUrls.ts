@@ -4,3 +4,4 @@ export const largiImage: string = 'https://res.cloudinary.com/dtgbbrxs0/image/up
 
 export const zoomFaceImage : string = 'https://res.cloudinary.com/dtgbbrxs0/image/upload/fl_progressive/products/standard/face/';
 export const zoomLargeImage : string = 'https://res.cloudinary.com/dtgbbrxs0/image/upload/fl_progressive/products/standard/large/';
+export const zoomAdditionalImage : string = 'https://res.cloudinary.com/dtgbbrxs0/image/upload/fl_progressive/products/standard/additional/';

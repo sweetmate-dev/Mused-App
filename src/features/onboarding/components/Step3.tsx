@@ -10,9 +10,8 @@ import { Video } from 'expo';
 import theme from '../theme';
 import TypeWriterText from './Typewriter'
 
-const videoSource = require('../../../../assets/videos/optimised.mp4');
-const headerText = 'moving pieces to help visualise the outfit';
-const {width} = Dimensions.get('window');
+const videoSource = require('../../../../assets/videos/draganddrop.mp4');
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   content: {
     flex: 1,
@@ -21,7 +20,6 @@ const styles = StyleSheet.create({
   videoView: {
     marginVertical: 30,
     flex: 1,
-    backgroundColor: 'gray',
     justifyContent: 'center',
     alignItems: 'center'
   }
@@ -30,37 +28,27 @@ const styles = StyleSheet.create({
 type Props = {
   continue: () => void;
 }
-type State = {
-  textLength: number,
-};
 
-export default class Step3 extends Component<Props, State> {
-  
-    state: State = {
-      textLength: 0
-    }
-
-    componentDidMount() {
-
-    }
+export default class Step3 extends Component<Props> {
 
     render() {
       return (
         <View style={{flex: 1}}>
-          <TypeWriterText text={headerText} />
+          <TypeWriterText text={['moving pieces to help', 'visualise the outfit']} />
           <View style={styles.content}>
             <View style={styles.videoView}>
               <Video
                   shouldPlay={true}
-                  resizeMode={Video.RESIZE_MODE_COVER}
+                  resizeMode={Video.RESIZE_MODE_CONTAIN}
                   source={videoSource}
                   isLooping
                   style={{
                       height: width,
                       backgroundColor: '#ffffff',
-                      width: width,
+                      width: width * 546 / 852,
+                      borderWidth: 4,
+                      borderColor: 'white'
                   }}
-                  width={width}
                   useNativeControls={false}
                   usePoster={false}
               />

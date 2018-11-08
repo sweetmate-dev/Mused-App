@@ -31,8 +31,23 @@ export default class ObservableStore implements IUserStore {
     @action
     public setUserDetails = async (userId: string, userProfile: UserProfile) => {
         const { email } = userProfile;
-        const userData = await getUserDetails(email);
-        console.log('JOHN: ', userData)
+        let userData: any = {};
+        if (email === undefined) {
+            //anonymous user
+            userData = {
+                profile: {
+                    email: 'anonymous',
+                    firstName: 'anonymous',
+                    lastName: 'anonymous',
+                    name: 'anonymous'
+                },
+                details: {
+                    type: 'non-user'
+                }
+            };
+        } else {
+            userData = await getUserDetails(email);
+        }        
         await this.setUser({ userId, userData });
         this.loading = false;
     };

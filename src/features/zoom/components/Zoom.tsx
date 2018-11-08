@@ -5,6 +5,7 @@ import {
     ScrollView,
     Text,
     BackHandler,
+    Animated
     // TouchableOpacity,
 } from 'react-native';
 // import AutoHeightImage from 'react-native-auto-height-image';
@@ -13,7 +14,7 @@ import Ripple from 'react-native-material-ripple';
 // import { Button } from '../../shared';
 import theme from "../theme";
 // import { COLLECTION, BROWSE, NEWSFEED, VIEW } from '../../shared/routesKeys';
-import { zoomFaceImage, zoomLargeImage } from '../../shared';
+import { zoomFaceImage, zoomAdditionalImage } from '../../shared';
 
 const arrowIcon = require('../../../../assets/images/arrow-icon.png');
 const startIcon = require('../../../../assets/images/star_grey.png');
@@ -31,93 +32,117 @@ type Props = {
     createNewStyle: (id: ProductImage) => void;
     goBack: () => void;
 }
-export default class Zoom extends Component<Props> {
+type State = {
+    marginTop: any,
+};
+export default class Zoom extends Component<Props, State> {
     product: Product;
+
+    state: State = {
+        marginTop: new Animated.Value(0)
+    }
 
     componentWillMount() {
         const { navigation } = this.props;
         this.product = navigation.getParam('product', {});
+        console.log('JOHN: ', this.product)
     }
+
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this._goBack);
     }
+
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this._goBack);
     }
+
+    onScroll(nativeEvent: any) {
+        const { contentOffset } = nativeEvent;    
+        // const maxScrollHeight = contentSize.height - layoutMeasurement.height;
+        // const currentRestHeight = layoutMeasurement.height + contentOffset.y - contentSize.height;
+        // console.log(maxScrollHeight + ', ' + currentRestHeight);
+        this.state.marginTop.setValue(0 - contentOffset.y * 2 / 3);
+    }
+
     render() {
         const { id, description, priceLabel, brand, unbrandedName } = this.product;
         return (
-            <ScrollView>
-                <Swiper 
-                    style={theme.wrapper} 
-                    dotStyle={{width: 6, height: 6}}
-                    activeDotStyle={{width: 6, height: 6}}
-                    dotColor='gray'
-                    paginationStyle={{marginBottom: -15}}
-                    activeDotColor='black'>
-                    <View style={theme.wrapper}>
-                        <Image source={{uri: `${zoomFaceImage}${id}.jpg`}} style={theme.firstImage} />                        
-                    </View>
-                    <View style={[theme.wrapper, {justifyContent: 'center'}]}>
-                        <Image source={{uri: `${zoomLargeImage}${id}.jpg`}} style={theme.secondImage} />
-                    </View>
-                </Swiper>
-                <Ripple 
-                    style={theme.backButtonView}
-                    rippleContainerBorderRadius={15 / 2} 
-                    rippleSize={20} 
-                    rippleCentered={true} 
-                    onPress={this._goBack}>
-                    <Image
-                        style={{width: 13, height: 13, marginLeft: 22}}
-                        source={arrowIcon}
-                    />
-                </Ripple>
-                <Ripple
-                    style={theme.likeButtonView}
-                    rippleContainerBorderRadius={15 / 2} 
-                    rippleSize={20} 
-                    rippleCentered={true} 
-                    onPress={this._goBack}>
-                    <Image
-                        style={{width: 20, height: 20}}
-                        source={startIcon}
-                    />
-                </ Ripple>
-                <View style={theme.infoView}>
-                    <View style={theme.brandView}>
-                        <Text style={theme.brandText}>{brand.toUpperCase()}</Text>
-                        <Text style={theme.unbrandText}>{unbrandedName}</Text>
-                    </View>
-                    <View style={theme.priceView}>
-                        <Text style={theme.priceText}>{priceLabel}</Text>
-                    </View>
-                </View>
-                {/* <Image source={dottedLine} style={theme.dottedLine} /> */}
-                <View style={theme.buttonsContainer}>
-                    <Ripple
-                        rippleSize={240} 
-                        rippleColor='#FFFFFF'
-                        rippleCentered={true} 
-                        rippleDuration={1000}
-                        onPress={() => this.createNewStyle(this.product)}
-                    >
-                        <View style={theme.buttonView}>
-                            <View style={theme.backButton} />
-                            <View style={theme.frontButton}>
-                                <Image source={buttonLogo} style={theme.buttonLogo} />
-                                <Text style={theme.buttonText}>Style with Mused</Text>
-                            </View>
+            <View style={theme.container}>
+                <ScrollView 
+                    style={{flex: 1}}
+                    onScroll={({ nativeEvent }) => this.onScroll(nativeEvent)}
+                    scrollEventThrottle={100}
+                > 
+                    <Swiper
+                        style={theme.wrapper} 
+                        dotStyle={{width: 6, height: 6}}
+                        activeDotStyle={{width: 6, height: 6}}
+                        dotColor='#CACACA'
+                        paginationStyle={{marginBottom: -15}}
+                        activeDotColor='#949494'>
+                        <View style={theme.wrapper}>
+                            <Image source={{uri: `${zoomFaceImage}${id}.jpg`}} style={theme.firstImage} />                        
                         </View>
-                    </Ripple> 
-                    {/* <Button style={theme.rightButton} themeType='light' text='ADD TO CART'/> */}
-                </View>
-
-                <View style={theme.descContainer}>
-                    <Text style={theme.descTitle}>DESCRIPTION</Text>
-                    <Text style={theme.descText}>{description}</Text>
-                </View>
-            </ScrollView>   
+                        <View style={[theme.wrapper, {justifyContent: 'center'}]}>
+                            <Image source={{uri: `${zoomAdditionalImage}${id}_1.jpg`}} style={theme.secondImage} />
+                        </View>
+                        <View style={[theme.wrapper, {justifyContent: 'center'}]}>
+                            <Image source={{uri: `${zoomAdditionalImage}${id}_2.jpg`}} style={theme.firstImage} />
+                        </View>
+                        <View style={[theme.wrapper, {justifyContent: 'center'}]}>
+                            <Image source={{uri: `${zoomAdditionalImage}${id}_3.jpg`}} style={theme.firstImage} />
+                        </View>
+                    </Swiper>
+                    <Ripple 
+                        style={theme.backButtonView}
+                        rippleContainerBorderRadius={15 / 2} 
+                        rippleSize={20} 
+                        rippleCentered={true} 
+                        onPress={this._goBack}>
+                        <Image
+                            style={{width: 13, height: 13, marginLeft: 22}}
+                            source={arrowIcon}
+                        />
+                    </Ripple>
+                    <Ripple
+                        style={theme.likeButtonView}
+                        rippleContainerBorderRadius={15 / 2} 
+                        rippleSize={20} 
+                        rippleCentered={true} 
+                        onPress={this._goBack}>
+                        <Image
+                            style={{width: 20, height: 20}}
+                            source={startIcon}
+                        />
+                    </ Ripple>                 
+                    <Animated.View style={[theme.infoView, {marginTop: this.state.marginTop}]}>
+                        <View style={theme.brandView}>
+                            <Text style={theme.brandText}>{brand.toUpperCase()}</Text>
+                            <Text style={theme.unbrandText}>{unbrandedName}</Text>
+                        </View>
+                        <View style={theme.priceView}>
+                            <Text style={theme.priceText}>{priceLabel}</Text>
+                        </View>
+                    </Animated.View>
+                    {/* <Image source={dottedLine} style={theme.dottedLine} /> */}              
+                    <View style={theme.descContainer}>
+                        <Text style={theme.descText}>{description}</Text>
+                    </View>
+                </ScrollView>
+                <View style={theme.markView}></View>
+                <Ripple
+                    style={theme.buttonsContainer}
+                    rippleSize={240} 
+                    rippleColor='#FFFFFF'
+                    rippleCentered={true} 
+                    rippleDuration={1000}
+                    onPress={() => this.createNewStyle(this.product)}
+                >
+                    <Image source={buttonLogo} style={theme.buttonLogo} />
+                    <Text style={theme.buttonText}>STYLE IT</Text>   
+                </Ripple> 
+                {/* <Button style={theme.rightButton} themeType='light' text='ADD TO CART'/> */}
+            </View>
         )
     }
 

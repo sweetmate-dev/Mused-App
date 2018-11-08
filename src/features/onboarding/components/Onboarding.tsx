@@ -17,7 +17,7 @@ import Step5 from './Step5';
 import Step6 from './Step6';
 import Step7 from './Step7';
 import Step8 from './Step8';
-import { loginViaFBProvider, updateUser } from '../../../services'
+import { loginViaFBProvider, loginViaAnonProvider, updateUser } from '../../../services'
 
 const logoImage = require('../../../../assets/images/logo.png');
 
@@ -25,7 +25,7 @@ type Props = {
     navigation: any;
     setUserDetails: (userId: string, userProfile: UserProfile) => void;
     onSkipSignUp: () => void;
-    // navigateToNewsFeed: () => void;
+    setLoading: (value: boolean) => void
 }
 
 type State = {
@@ -55,7 +55,7 @@ export default class Onboarding extends Component<Props, State> {
           this.state.fadeIn,            
           {
               toValue: 0,                   
-              duration: 500, 
+              duration: 300, 
               useNativeDriver: true             
           }
       ).start(); 
@@ -65,11 +65,11 @@ export default class Onboarding extends Component<Props, State> {
             this.state.fadeIn,            
             {
                 toValue: 1,                   
-                duration: 300, 
+                duration: 200, 
                 useNativeDriver: true             
             }
         ).start(); 
-      }, 600) 
+      }, 350) 
     }
 
     onFacebookSignUp = async () => {
@@ -86,12 +86,16 @@ export default class Onboarding extends Component<Props, State> {
 
       if (type === 'success') {
           // login into Stitch app using FB token
+          this.props.setLoading(true)
           loginViaFBProvider(token).then((data: any) => {
               const userId = data.auth.authInfo.userId;
               const userProfile = data.auth.authInfo.userProfile.data;
-
               this._updateUser(userId, userProfile);
-          }, (error: Error) => console.log(error.message))
+              this.props.setLoading(false)
+          }, (error: Error) => {
+            this.props.setLoading(false)
+            console.log(error.message)
+          })
       } else {
           console.error(`Facebook.logInWithReadPermissionsAsync: ${type}`);
       }
@@ -111,7 +115,17 @@ export default class Onboarding extends Component<Props, State> {
     };
 
     onSkipSignUp = () => {
-      this.props.onSkipSignUp()
+      this.props.setLoading(true)
+      loginViaAnonProvider().then((data: any) => {
+        const userId = data.auth.authInfo.userId;
+        const userProfile = data.auth.authInfo.userProfile.data;
+        this._updateUser(userId, userProfile);
+        this.props.onSkipSignUp()
+        this.props.setLoading(false)
+      }, (error: Error) => {
+        this.props.setLoading(false)
+        console.log(error.message)
+      })
     }
 
     render() {

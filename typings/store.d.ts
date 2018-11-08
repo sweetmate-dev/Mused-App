@@ -34,11 +34,15 @@ interface IProductStore {
 interface IUiStore {
     footerIsVisible: boolean;
     contextMenuIsVisible: boolean;
+    loading: boolean;
+    requireAuth: boolean;
     navigation: any;
     currentRoute: string;
     prevRoute: string;
+    requestAuth: (value: boolean) => void;
     hideFooter: () => void;
     showFooter: () => void;
+    setLoading: (value: boolean) => void;
     setNavigation: (navigation: any) => void;
     toggleContextMenu: (flag: boolean) => void;
     navigate: (currentRoute: string, prevRoute: string, params?: any) => void;

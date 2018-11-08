@@ -11,7 +11,13 @@ export default class ObservableStore implements IUiStore {
     @observable currentRoute: string = NEWSFEED;
     @observable prevRoute: string = '';
     @observable routeArray: string[] = ['Newsfeed'];
-    
+    @observable loading: boolean = false;
+    @observable requireAuth: boolean = false;
+
+    @action
+    public  requestAuth = (value: boolean) =>  {
+        this.requireAuth = value;
+    }
 
     @action
     public  hideFooter = () =>  {
@@ -21,6 +27,11 @@ export default class ObservableStore implements IUiStore {
     @action
     public showFooter = () => {
         this.footerIsVisible = true;
+    }
+
+    @action
+    public setLoading = (value: boolean) => {
+        this.loading = value;
     }
  
     @action setNavigation = (navigation: any) => {

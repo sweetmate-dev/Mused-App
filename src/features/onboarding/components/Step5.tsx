@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import theme from '../../zoom/theme';
+import TypeWriterText from './Typewriter'
 
 const productImage = require('../../../../assets/images/newsfeed/newsfeed1.jpg');
 const buttonLogo = require('../../../../assets/images/button-logo.png');
-const arrow4GIF = require('../../../../assets/images/arrow4.gif');
-
-const {width} = Dimensions.get('window');
+const arrow4GIF = require('../../../../assets/images/Arrow_DOWN.gif');
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -33,22 +33,6 @@ const styles = StyleSheet.create({
       left: 0,
       width,
       top: 120
-  },
-  matchButtonWrapper: {
-      width: width * 0.65,
-      flexDirection: 'row',
-      alignItems: 'center',
-      backgroundColor: 'black',
-      height: 50,
-  },
-  matchLine: {
-      marginHorizontal: 20,
-      height: 1,
-      backgroundColor: 'white',
-      flex: 1,
-  },
-  matchButtonText: {
-      color: 'white',
   },
   markText: {
       fontSize: 30,
@@ -71,13 +55,13 @@ const styles = StyleSheet.create({
       height: 60,
   },
   infoView: {
-    opacity: 0.2,
+    opacity: 0.1,
     paddingHorizontal: 20,
     paddingVertical: 10,    
   },
   arrowIcon: {
       position: 'absolute',
-      bottom: 85,
+      bottom: 90,
       left: width * 0.35,
       width: 35,
       height: 35,
@@ -88,19 +72,8 @@ const styles = StyleSheet.create({
 type Props = {
   continue: () => void;
 }
-type State = {
-  textLength: number,
-};
 
-export default class Step5 extends Component<Props, State> {
-  
-    state: State = {
-      textLength: 0
-    }
-
-    componentDidMount() {
-
-    }
+export default class Step5 extends Component<Props> {
 
     render() {
       return (
@@ -108,9 +81,7 @@ export default class Step5 extends Component<Props, State> {
             <View style={styles.content}>                
               <Image source={productImage} style={styles.productImage} />
               <View style={styles.markTextView}>
-                <Text style={styles.markText}>
-                  ...you can style any piece you like
-                </Text>
+                <TypeWriterText text={['...you can style any', 'piece you like']} />
               </View>
             </View>
             <View style={[theme.infoView, styles.infoView]}>

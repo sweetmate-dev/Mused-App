@@ -25,20 +25,24 @@ type Props = {
     moveSlotLeft: () => void;
     fadeAnim: Animated.AnimatedValue;
     setSlotMachineEffect: (flag: boolean) => void;
+    requireAuth: () => void;
 }
 
 type State = {
     marginTop: any;
     selectedID: number;
+    triggeredNumber: number
 }
 
 export default class BrowseItems extends Component<Props, State> {
     state: State = {
         marginTop: new Animated.Value(0),
         selectedID: 999,
+        triggeredNumber: 0
     };
 
     isOnAnimate: boolean = false;
+    triggeredNumber: number = 0;
 
     componentWillReceiveProps(nextProps: Props) {
         if (nextProps.isMoveProduct) {
@@ -144,6 +148,8 @@ export default class BrowseItems extends Component<Props, State> {
             setSlotMachineEffect(false);
             this.isOnAnimate = false;
         }, 300)
+        if(this.triggeredNumber === 1) this.props.requireAuth()
+        this.triggeredNumber = this.triggeredNumber + 1;
     }
 
     _moveSlotLeft =  () =>

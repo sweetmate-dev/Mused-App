@@ -36,7 +36,6 @@ export default class ObservableStore implements IProductStore {
         return this.collection;
     }
     get listOfAlternatives() {
-        console.log(this.alternatives.length)
         return this.alternatives;
     }
     get listOfBookmarks() {
@@ -164,6 +163,7 @@ export default class ObservableStore implements IProductStore {
 
     @action
     public createNewOutfit = () => {
+        if(this.root.user.userProfile === null) return;
         const outfit: Outfit = {
             userEmail: this.root.user.userProfile.email,
             slots: this.arrayImages.map( ( product: ProductImage) => product.id as number),
@@ -174,6 +174,7 @@ export default class ObservableStore implements IProductStore {
 
     @action
     public createBookmark = async (productId: number) => {
+        if(this.root.user.userProfile === null) return;
         const bookmark: Bookmark = {
             userEmail: this.root.user.userProfile.email,
             productId,
@@ -185,6 +186,7 @@ export default class ObservableStore implements IProductStore {
 
     @action 
     getBookmarksByUserId = async () => {
+        if(this.root.user.userProfile === null) return;
         await getBookmarksByUserId(this.root.user.userProfile.email).then((bookmarks: Bookmark[]) => {
             this.bookmarks = bookmarks
         });

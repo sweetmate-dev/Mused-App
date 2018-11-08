@@ -14,6 +14,7 @@ declare module 'expo' {
   export const Facebook: any;
   // tslint:disable-next-line
   export const Constants: any;
+  export const BlurView: any;
   // tslint:disable-next-line
   export const Video: any;
 }

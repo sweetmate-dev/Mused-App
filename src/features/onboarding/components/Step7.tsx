@@ -6,7 +6,6 @@ import {
 
 import TypeWriterText from './Typewriter'
 
-const text = "Yes! You've got it.";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -18,15 +17,8 @@ const styles = StyleSheet.create({
 type Props = {
   continue: () => void;
 }
-type State = {
-  textLength: number,
-};
 
-export default class Step7 extends Component<Props, State> {
-
-    componentDidMount() {
-
-    }
+export default class Step7 extends Component<Props> {
 
     onEndEffect = () => {
       setTimeout(() => {
@@ -37,7 +29,7 @@ export default class Step7 extends Component<Props, State> {
     render() {
       return (
         <View style={styles.container}>
-          <TypeWriterText text={text} onEndEffect={() => this.onEndEffect()}/>
+          <TypeWriterText text={['Yes! You‘ve got it.', '']} onEndEffect={() => this.onEndEffect()}/>
         </View>
       )
     }

@@ -11,7 +11,7 @@ import { Video } from 'expo';
 import theme from '../theme';
 
 const { width } = Dimensions.get('window');
-const newfeedImage = require('../../../../assets/images/onboard/Screen1/static.jpg');
+const newfeedImage = require('../../../../assets/images/onboard/Screen1/background.jpg');
 const videoSource = require('../../../../assets/videos/1st-onboarding.mp4');
 type Props = {
     continue: () => void;
@@ -25,13 +25,26 @@ const styles = StyleSheet.create({
     position: 'relative'
   },
   italicText: {
-    fontStyle: 'italic',
-    fontSize: 30
+    fontFamily: 'GreatVibes',
+    fontSize: 40
   },
   videoView: {
-    height: width * 108 / 384,
+    position: 'absolute',
+    bottom: 50,
+    left: 0,
+    right: 0,
+    height: width * 192 / 700,
     alignItems: 'center',
-    marginTop: -100
+  },
+  headerText1: {
+    fontSize: 26,
+    fontFamily: 'RalewayBold',
+    textAlign: 'center'
+  },
+  headerText2: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 })
 
@@ -40,7 +53,11 @@ export default class Step0 extends Component<Props> {
     render() {
         return (
             <View style={theme.container}>
-              <Text style={theme.headerText}>Style inspiration you<Text style={styles.italicText}> can edit</Text></Text>
+              <Text style={styles.headerText1}>Style inspiration</Text>
+              <View style={styles.headerText2}>
+                <Text style={styles.headerText1}>you </Text>
+                <Text style={styles.italicText}>can edit</Text>
+              </View>              
               <View style={styles.content}>
                 <Image source={newfeedImage} style={theme.fullWidthImage} />
               </View>
@@ -51,8 +68,8 @@ export default class Step0 extends Component<Props> {
                   source={videoSource}
                   isLooping
                   style={{
-                      height: width * 108 / 384,
-                      backgroundColor: '#ffffff',
+                      height: width * 192 / 700,
+                      backgroundColor: '#FFFFFF',
                       width: width / 2,
                   }}
                   useNativeControls={false}

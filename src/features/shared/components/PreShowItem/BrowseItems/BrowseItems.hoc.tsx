@@ -45,8 +45,17 @@ function BrowseItemsHOC(BrowseItems: any) {
                     animate={animate}
                     fadeAnim={fadeAnim}
                     setSlotMachineEffect={setSlotMachineEffect}
+                    requireAuth={this._requireAuth}
                 />
       }
+
+      _requireAuth = () => {
+        const { root: { ui, user } } = this.props;
+        const { requestAuth }  = ui;
+        const { userProfile } = user;
+        if(userProfile && userProfile.email === 'anonymous') requestAuth(true)
+      }
+
       _changeArrayImages = (slotNumber: number, newImgUrl: ProductImage ) => {
         const { root: { products } } = this.props;
           const { changeArrayImages } = products;

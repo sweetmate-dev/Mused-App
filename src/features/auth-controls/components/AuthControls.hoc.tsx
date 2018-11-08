@@ -7,6 +7,7 @@ import { ROOT_STORE } from '../../stores';
 import { getAuthUserData } from '../../../services';
 import DotIndicator from '../../shared/components/Indicators/dot-indicator'
 import { Onboarding } from '../../onboarding';
+import AuthControls from './AuthControls';
 
 type Props = {
     root?: RootStore;
@@ -38,14 +39,15 @@ function AuthControlsHOC(Onboarding: any) {
         }
 
         render() {
-            const { root: { user } } = this.props;
-            const { userId, userProfile, loading } = user;
+            const { root: { user, ui } } = this.props;
+            const { userId, userProfile, loading, setUserDetails } = user;
+            const { requireAuth, requestAuth } = ui;
             const { newUser, skipped } = this.state;
             // user Auth ID
             if(!newUser && loading) {
                 return <DotIndicator size={6} count={3}/>
             }
-            else if ((!userId || ! userProfile) && !skipped || 1) {
+            else if ((!userId || ! userProfile) && !skipped) {
                 return <Onboarding onSkipSignUp={() => this.setState({skipped: true})}/>
             }
             return (
@@ -53,7 +55,14 @@ function AuthControlsHOC(Onboarding: any) {
                     <NavigatorStack />
                     <Footer />
                     <FooterButtons />
-                    <ContextMenu />              
+                    <ContextMenu />
+                    {   
+                        requireAuth && 
+                        <AuthControls 
+                            setUserDetails={setUserDetails}
+                            requestAuth={requestAuth}
+                        /> 
+                    }
                 </>
             )
       }

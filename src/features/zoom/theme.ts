@@ -7,16 +7,19 @@ const {width} = Dimensions.get('window');
 
 export default StyleSheet.create({
     container: {
-        backgroundColor: '#fff',        
-        paddingTop: 5,
-        paddingBottom: 50,
-        margin: 0
+        flex: 1,
+        backgroundColor: '#fff',
     },
-    wrapper: {
+    swiperView: {
+        position: 'absolute',
         width: width,
         height: width * 900 / 675,
         paddingHorizontal: 10,
-        // justifyContent: 'center'
+    },
+    wrapper: {
+        alignItems: 'center',
+        width: width,
+        height: (width - 20) * 900 / 675,
     },
     firstImage: {
         width: width - 20,
@@ -51,9 +54,15 @@ export default StyleSheet.create({
         height: 20,
         resizeMode: 'stretch'
     },
+    scrollTopView: {
+        width: width,
+        height: width * 900 / 675,
+        backgroundColor: 'transparent'
+    },
     infoView: {
+        paddingTop: 15,
         paddingHorizontal: 30,
-        // paddingTop: 5,
+        backgroundColor: 'white',
         flexDirection: 'row'
     },
     brandView: {
@@ -64,29 +73,43 @@ export default StyleSheet.create({
         alignItems: 'flex-end'
     },
     brandText: {
-        fontSize: 18,
+        fontSize: 16,
         fontFamily: 'RalewayBold',
         color: '#333',
     },
     unbrandText: {
-        fontSize: 13,
+        fontSize: 12,
         fontFamily: 'Lato',
         color: '#000',
         marginTop: 5
     },
     priceText: {
         color: '#000',
-        fontSize: 13,
+        fontSize: 12,
         fontFamily: 'LatoBold',
     },
+    markView: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 70,
+        height: 20,
+        opacity: 0.7,
+        backgroundColor: 'white'
+    },
     buttonsContainer: {
+        height: 70,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 15,
+        backgroundColor: 'black'
     },
     descContainer: {
-        padding: 30
+        paddingHorizontal: 30,
+        paddingBottom: 60,
+        paddingTop: 15,
+        backgroundColor: 'white',
     },
     descTitle: {
         fontFamily: 'RalewayBold',
@@ -141,11 +164,16 @@ export default StyleSheet.create({
         resizeMode: 'contain'
     },
     buttonText: {
-        fontFamily: 'Lato',
-        fontSize: 16,
-        lineHeight: 48,
-        textAlign: 'center',
+        fontFamily: 'LatoBold',
+        fontSize: 18,
         color: 'white',
         paddingLeft: 10
+    },
+    faintText: {
+        fontSize: 12,
+        opacity: 0.39,
+        fontFamily: 'Lato',
+        paddingHorizontal: 30,
+        paddingTop: 5
     }
 });

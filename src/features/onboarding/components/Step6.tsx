@@ -12,7 +12,7 @@ import {
 import theme from '../theme';
 import TypeWriterText from './Typewriter'
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const dressImage = require('../../../../assets/images/browse/browse3.jpg');
 const emptyImage = require('../../../../assets/images/empty.jpg');
 const ShoesImage1 = require('../../../../assets/images/collection/shoes.jpg');
@@ -35,46 +35,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative'
   },
-  markTextView: {
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: 'gray',
-    padding: 30,
-    backgroundColor: 'white',
-    position: 'absolute',
-    left: 0,
-    width,
-    top: 80
-  },
-  italicText: {
-    fontStyle: 'italic',
-    fontSize: 30
-  },
-  productImage: {
-    width,
-    height: width * 560 / 448
-  },
-  matchButtonWrapper: {
-    width: width * 0.65,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'black',
-    height: 50,
-  },
-  matchLine: {
-    marginHorizontal: 20,
-    height: 1,
-    backgroundColor: 'white',
-    flex: 1,
-  },
-  matchButtonText: {
-    color: 'white',
-  },
-  markText: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center'   
-  },
   clickableImageContainer: {
     flex: 1, 
     justifyContent: 'center',
@@ -86,7 +46,7 @@ const styles = StyleSheet.create({
   },
   itemImage: {
     width: width / 3, 
-    height: 180,
+    height: width / 3,
   },
   clickableTitle: {
     fontFamily: 'LatoBold',
@@ -104,9 +64,10 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    marginTop: -30
   },
   preItemView: {
-    height: 120,
+    height: 110,
     flexDirection: 'row',
     justifyContent: 'center',
     padding: 5,
@@ -115,8 +76,7 @@ const styles = StyleSheet.create({
   preItemImage: {
     width: width / 6, 
     height: 100,
-    padding: 5,
-    marginHorizontal: 5
+    marginHorizontal: 4
   },
 })
 
@@ -162,7 +122,7 @@ export default class Step7 extends Component<Props, State> {
         this.state.opacity,            
         {
             toValue: 0,                   
-            duration: 800, 
+            duration: 500, 
         }
       ).start(() => {
         this.state.opacity.setValue(1)
@@ -182,7 +142,7 @@ export default class Step7 extends Component<Props, State> {
     const { step } = this.state;
       return (
           <View style={styles.container}>
-            <TypeWriterText text={step === 1 ? "now match the shoes" : "...and a bag"} />
+            <TypeWriterText text={step === 1 ? ['now match the shoes', ''] : ['...and a bag', '']} />
             {
               step === 1 ?
               this.renderShoesScrollView()
@@ -225,7 +185,7 @@ export default class Step7 extends Component<Props, State> {
                   <View style={theme.line} />
                 </View>
               </TouchableWithoutFeedback>
-            </View>     
+            </View>
           </View>             
       )
   }

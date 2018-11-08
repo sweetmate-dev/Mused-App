@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {
+  View,
   Text,
   StyleSheet,
 } from 'react-native';
 
 type Props = {
-    text: string;
+    text: any;
     onEndEffect?: () => void;
     style?: any;
     delay?: number;
@@ -18,12 +19,11 @@ type State = {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 30,
-    height: 80,
+    fontSize: 26,
+    height: 40,
     textAlign: 'center',
-    marginVertical: 10,
     marginHorizontal: 10,
-    fontFamily: 'Raleway'
+    fontFamily: 'RalewayBold'
   }
 })
 
@@ -42,7 +42,7 @@ export default class TypeWriterText extends Component<Props, State> {
 
     componentDidMount() {
       this.startTypeWriterAnimation(1);
-      this.setState({text: this.props.text})
+      this.setState({text: JSON.stringify(this.props.text)})
     }
 
     componentWillUnmount() {
@@ -50,35 +50,35 @@ export default class TypeWriterText extends Component<Props, State> {
     }
 
     componentWillReceiveProps(props: any) {
-      if(props.text !== this.state.text){
+      if(JSON.stringify(props.text) !== this.state.text){
         this.startTypeWriterAnimation(1);
-        this.setState({text: props.text})
+        this.setState({text: JSON.stringify(props.text)})
       } 
     }
 
     startTypeWriterAnimation = (length: number) => {
         this.timer = setTimeout(() => {
             this.setState({textLength: length});
-            if(length < this.props.text.length){
+            if(length < this.props.text[0].length + this.props.text[1].length){
               this.startTypeWriterAnimation(length + 1);
             } 
             else {
               this.props.onEndEffect()           
             }
-            console.log(this.state.textLength)
         }, 35)
-    }
-
-    restartAnimation = () => {
-      this.startTypeWriterAnimation(1);
-      this.setState({text: this.props.text})
     }
 
     render() {
         return (
-          <Text style={[styles.text, this.props.style]}>
-            {this.props.text.substr(0, this.state.textLength)}
-          </Text>
+          <View>
+            <Text style={[styles.text, this.props.style]}>
+              {this.props.text[0].substr(0, this.state.textLength)}
+            </Text>
+            <Text style={[styles.text, this.props.style]}>
+              {this.props.text[1].substr(0, this.state.textLength - this.props.text[0].length)}
+            </Text>
+          </View>
+          
         )
     }
 }

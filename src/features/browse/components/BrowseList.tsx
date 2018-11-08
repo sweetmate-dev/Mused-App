@@ -95,7 +95,6 @@ export default class Browser extends Component<Props, State> {
     }
 
     _renderEmptyView = () => {
-        console.log(this.props.noResult)
         if(!this.props.noResult) {
             return <DotIndicator size={6} count={3} style={{paddingTop: 80}}/>
         } else {
