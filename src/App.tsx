@@ -7,9 +7,9 @@ import { Provider } from 'mobx-react';
 import { stores } from './features/stores';
 import { initClient } from './services';
 
-
 import 'es6-symbol/implement';
 
+console.disableYellowBox = true;
 type Props = {
   skipLoadingScreen: boolean;
 }
@@ -91,7 +91,9 @@ export default class App extends React.Component<Props, State> {
         'RalewayBold': require('../assets/fonts/Raleway-Bold.ttf'),
         'Lato': require('../assets/fonts/Lato-Regular.ttf'),
         'LatoBold': require('../assets/fonts/Lato-Bold.ttf'),
-        'GreatVibes': require('../assets/fonts/GreatVibes-Regular.ttf')
+        'GreatVibes': require('../assets/fonts/GreatVibes-Regular.ttf'),
+        'QuickSandRegular': require('../assets/fonts/quicksand.book-regular.otf'),
+        'QuickSandBold': require('../assets/fonts/quicksand.bold-regular.otf')
       }),
       initClient(),
     ]);

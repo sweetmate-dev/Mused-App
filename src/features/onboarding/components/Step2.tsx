@@ -13,6 +13,7 @@ import {
 import theme from '../theme';
 import Ripple from 'react-native-material-ripple';
 import TypeWriterText from './Typewriter'
+import * as API from '../../../services/api';
 
 const shirtImage = require('../../../../assets/images/collection/shirt.jpg');
 const shoesImage = require('../../../../assets/images/collection/shoes.jpg');
@@ -147,6 +148,7 @@ export default class Step2 extends Component<Props, State> {
         ).start();
         setTimeout(() => {
           this.setState({step: 2})
+          API.RegisterEvent('On-Create', {userType: 'View screen'});
           Animated.timing(                 
             this.state.fadeIn,            
             {

@@ -64,14 +64,15 @@ export default StyleSheet.create({
         marginTop: 20
     },
     scrollCellText:{
-        textAlign:'center',
-        fontSize:10,
-        marginHorizontal:5,
-        marginTop:20
+        textAlign: 'center',
+        fontSize: 10,
+        marginHorizontal: 5,
+        marginTop: 20,
+        fontFamily: 'QuickSandRegular'
     },
     scrollCellDivider:{
-        backgroundColor:'black',
-        height:1,
+        backgroundColor: 'black',
+        height: 1,
         width: 13
     },
     scrollCellExtra:{

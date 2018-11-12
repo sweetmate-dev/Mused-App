@@ -58,7 +58,7 @@ export default class SidebarScroll extends Component<Props, State> {
                 <AutoSizeImage uri={`${thumbnailImage}${props.item.id}`} />
                 {/* <View style={theme.scrollCellDivider} /> */}
                 <TouchableOpacity onPress={() => this.props.navigateToProductSingle(props.item)}>
-                    <Text style={[theme.scrollCellText, {fontFamily: 'LatoBold'}]}>{props.item.brand.toUpperCase()}</Text>
+                    <Text style={[theme.scrollCellText, {letterSpacing: 2, fontFamily: 'RalewayBold'}]}>{props.item.brand.toUpperCase()}</Text>
                     <Text style={[theme.scrollCellText, {marginTop: 3, fontSize: 9}]}>{props.item.unbrandedName}</Text>
                 </TouchableOpacity>
                 <View style={theme.divLine} />

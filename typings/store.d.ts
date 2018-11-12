@@ -2,6 +2,7 @@ interface IProductStore {
     getCollection: (slots: Slot[]) => void;
     resetCollection: () => void;
     getAlternatives: (ids: number[]) => void;
+    getDetailByProductId: (productId: number) => Promise;
     getAlternativesByFilter: () => void;
     listOfCollection: Product[];
     alternatives: Product[];

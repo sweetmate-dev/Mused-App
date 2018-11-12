@@ -36,6 +36,11 @@ declare module '@expo/videoplayer' {
   export default VideoPlayer;
 }
 
+declare module 'expo-mixpanel-analytics' {
+  const ExpoMixpanelAnalytics: any;
+  export default ExpoMixpanelAnalytics;
+}
+
 declare module 'react-native-material-ripple' {
      // tslint:disable-next-line
     const Ripple: any;

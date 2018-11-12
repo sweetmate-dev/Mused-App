@@ -9,6 +9,7 @@ import {
 import Ripple from 'react-native-material-ripple';
 import { thumbnailImage } from '../../shared';
 import theme from '../theme';
+import * as API from '../../../services/api';
 
 const likeIconUrl = require('../../../../assets/images/star_like.png');
 const notLikeIconUrl = require('../../../../assets/images/star.png');
@@ -109,26 +110,9 @@ export default class CollectionItem extends Component<Props, State> {
 
     _goToNext = () => {
         const { goToNext, item, alternatives } = this.props;
-        // Animated.sequence(
-        //     [ Animated.timing(                 
-        //     this.state.fadeIn,
-        //     {
-        //       toValue: 0.3,
-        //       duration: 250,
-        //       easing: Easing.cubic
-        //     }
-        //   ),
-        //   Animated.timing(                  
-        //     this.state.fadeIn,            
-        //     {
-        //       toValue: 1,                   
-        //       duration: 250,
-        //       easing: Easing.cubic           
-        //     }
-        //   ),
-        // ]).start(() => {
-        //     goToVideo(item.id, alternatives);
-        // });      
+        API.RegisterEvent("Cl-product", {
+            actionType: 'Click any product'
+        })
         goToNext(item.id, alternatives);
     }    
 
@@ -140,6 +124,9 @@ export default class CollectionItem extends Component<Props, State> {
             this.setState({isLiked: false, bookmark: null});
             return;
         }
+        API.RegisterEvent("Cl-bookmark", {
+            actionType: 'Click on bookmark'
+        })
         createBookmark(id);
     }
  }

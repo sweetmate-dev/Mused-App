@@ -12,7 +12,7 @@ import theme from '../theme';
  
 const testDataHeader = {
     title: 'The Look',
-    subTitle: 'Product style matches'
+    subTitle: 'Product matches for this outfit'
 }
 
 const testDataFooter = {
@@ -71,13 +71,12 @@ export default class CollectionList extends Component<Props, State> {
                         /> }
                     </View>
                 </Animated.View>
-            </View>
-            
+            </View>            
         )
     }
 
     _renderItem = (props: {item: Product, index: number}) =>
-        <CollectionItem  
+        <CollectionItem
             item={props.item} 
             countAlter={`${this.slots[props.index].alternatives.length}`}
             index={props.index}

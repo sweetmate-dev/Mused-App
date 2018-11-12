@@ -61,9 +61,17 @@ export default class ObservableStore implements IProductStore {
         this.noResult = false;
         await getProductsByIds(ids).then((products: Product[]) => {
             this.alternatives = [...products]
+            console.log(this.alternatives)
             if(this.alternatives.length === 0) this.noResult = true;
         });
     }
+
+    @action
+    public getDetailByProductId = (productId: number) => new Promise( async (resolve) => {
+        await getProductsByIds([productId]).then((products: Product[]) => {
+            resolve(products[0])
+        });
+      });
 
     @action
     public getAlternativesByFilter = async () => {

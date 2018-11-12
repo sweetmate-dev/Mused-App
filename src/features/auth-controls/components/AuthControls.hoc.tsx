@@ -47,7 +47,7 @@ function AuthControlsHOC(Onboarding: any) {
             if(!newUser && loading) {
                 return <DotIndicator size={6} count={3}/>
             }
-            else if ((!userId || ! userProfile) && !skipped) {
+            else if ((!userId || !userProfile) && !skipped) {
                 return <Onboarding onSkipSignUp={() => this.setState({skipped: true})}/>
             }
             return (

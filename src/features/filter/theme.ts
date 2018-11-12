@@ -101,7 +101,8 @@ export default StyleSheet.create({
         fontSize: 14,
         fontFamily: 'RalewayBold',
         lineHeight: 15,
-        textAlign: 'center'
+        textAlign: 'center',
+        letterSpacing: 2
     },
     textTabHeader: {
         fontSize: 16,
@@ -157,7 +158,7 @@ export default StyleSheet.create({
         justifyContent: 'center'
     },
     subCategoryText: {
-        fontFamily: 'Raleway',
+        fontFamily: 'QuickSandRegular',
         fontSize: 11,
         paddingLeft: 5,
         paddingTop: 3,
@@ -224,11 +225,13 @@ export default StyleSheet.create({
         fontSize: 14,
         fontFamily: 'RalewayBold',
         paddingBottom: 5,
-        textAlign: 'center'
+        textAlign: 'center',
+        letterSpacing: 2
     },
     subText: {
         fontSize: 11,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'QuickSandRegular'
     },
     filterImage: {
         position: 'absolute',

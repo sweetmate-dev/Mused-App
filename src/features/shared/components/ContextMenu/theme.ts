@@ -22,7 +22,7 @@ import {
     buttonText: {
         color: '#000000',
         fontSize: 8,
-        fontFamily: 'Lato'
+        fontFamily: 'QuickSandRegular'
     },
     mockImage: {
         width: 16,

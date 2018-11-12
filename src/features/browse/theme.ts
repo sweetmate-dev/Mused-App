@@ -130,16 +130,17 @@ export default  StyleSheet.create({
         paddingBottom: 15,
     },
     designerTxt: {
-        fontFamily: 'LatoBold',
+        fontFamily: 'RalewayBold',
         fontSize: 12,
         color: '#000',
         textAlign: 'center',
         lineHeight: 14,
         marginTop: 4,
         marginBottom: 4,
+        letterSpacing: 2,
     },
     descTxt: {
-        fontFamily: 'Lato',
+        fontFamily: 'QuickSandRegular',
         fontSize: 11,
         color: '#000',
         textAlign: 'center'

@@ -110,6 +110,7 @@ import {
         textAlign: 'center',
         fontSize: 10,
         color: '#000',
+        fontFamily: 'QuickSandRegular'
         // marginTop: 4
     },
     clickableImageContainer: {
@@ -122,15 +123,16 @@ import {
         overflow: 'hidden'
     },
     clickableTitle: {
-        fontFamily: 'LatoBold',
+        fontFamily: 'RalewayBold',
         fontSize: 11,
         color: '#000',
         marginTop: 10,
         marginBottom: 2,
-        textAlign: 'center'
+        textAlign: 'center',
+        letterSpacing: 2,
     },
     clickableSubTitle: {
-        fontFamily: 'Lato',
+        fontFamily: 'QuickSandRegular',
         fontSize: 11,
         color: '#000',
         textAlign: 'center'
@@ -143,14 +145,15 @@ import {
         marginTop: 25
     },
     headerTitle: {
-        fontSize: 18,
+        fontSize: 20,
+        letterSpacing: 2,
         fontFamily: 'RalewayBold',
         color: '#333',
         marginBottom: 2
     },
     headerSubTitle: {
         fontSize: 11,
-        fontFamily: 'Lato',
+        fontFamily: 'QuickSandRegular',
         color: '#000'
     },
     footerTitle: {

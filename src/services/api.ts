@@ -1,4 +1,12 @@
+import ExpoMixpanelAnalytics from 'expo-mixpanel-analytics';
 import { getClient, login } from './db';
+import { stores } from '../features/stores';
+
+export const analytics = new ExpoMixpanelAnalytics("5bec1d44013b90d5e620eb0a94957dde");
+export const AUTO_LOG_OUT_TIME = 30 * 60 * 1000;
+export let client_email: string = '';
+export let client_userId: string = '';
+export let last_event_time : number= 0;
 
 export const loginViaFBProvider = (token: string) => {
     return login('facebook', token);
@@ -108,4 +116,41 @@ export const getProductsByCategory = (category: string) => {
 export const getNewProducts = () => {
     const client = getClient();
     return client.callFunction("getNewProducts", []);
+}
+
+export const autoLogOut = async () => {
+    console.log('Auto logging out...')
+    await logout();
+    loginViaAnonProvider().then(async (data: any) => {
+        const userId = data.auth.authInfo.userId;
+        const userProfile = data.auth.authInfo.userProfile.data;
+        await updateUser(userProfile);
+        const { setUserDetails } = stores.root.user;
+        setUserDetails(userId, userProfile);
+    }, (error: Error) => {
+        console.log(error.message)
+    })
+}
+
+export const setIdentify = (identify: string) => {
+    analytics.identify(identify);
+}
+
+export const RegisterEvent = (eventName: string, params: any) => {
+    const CT = new Date().getTime();
+    if(last_event_time > 0 && CT - last_event_time > AUTO_LOG_OUT_TIME) {
+        //Auto Logout
+        autoLogOut();
+    }
+    if(eventName === 'Login'){
+        client_email = params.email;
+        client_userId = params.userId;
+    }
+    console.log(eventName)
+    analytics.track(eventName, {
+        ...params,
+        email: client_email,
+        userId: client_userId
+    });
+    last_event_time = new Date().getTime();
 }

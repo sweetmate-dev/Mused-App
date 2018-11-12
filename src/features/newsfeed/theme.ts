@@ -46,14 +46,13 @@ import {
           marginLeft: 7
         },
     itemImageContainer: { 
-        flex: 0.2, 
-        alignItems: 'center',
-         justifyContent: 'center',
-         paddingTop: 17
-        },
+        paddingHorizontal: 15,
+    },
     itemImage: {
-        width: 330, 
-        height: 390
+        width: width - 30, 
+        height: (width - 30) * 390 / 330,
+        borderWidth: 1,
+        borderColor: 'black'
     },
     authorText: {
         fontFamily: 'Lato',
@@ -69,6 +68,24 @@ import {
         borderTopWidth: 1,
         borderBottomColor: '#f1f1f1',
         borderBottomWidth: 1
+    },
+    titleView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 15
+    },
+    lineView: {
+        height: 1,
+        width: width / 6,
+        backgroundColor: 'black',
+    },
+    titleText: {
+        flex: 1,
+        paddingHorizontal: 20,
+        textAlign: 'center',
+        fontFamily: 'Raleway',
+        letterSpacing: 2,
+        fontSize: 14,
     }
   });
 

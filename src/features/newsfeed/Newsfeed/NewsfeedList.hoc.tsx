@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import NewsfeedList from './NewsfeedList';
-import { Header, COLLECTION, NEWSFEED } from '../../shared';
+import { Header, COLLECTION, NEWSFEED, BROWSE_ONLY, ZOOM } from '../../shared';
+import * as API from '../../../services/api';
 
 import { ROOT_STORE } from '../../stores';
 type Props = {
@@ -17,8 +18,21 @@ function NewsfeedHOC(Newsfeed: any) {
             header: <Header navigation={navigation} />
         } 
       };
-      componentDidMount() {
-        this.props.root.ui.setNavigation(this.props.navigation);
+      componentWillMount() {
+        const { root: {ui, user} } = this.props;
+        ui.setNavigation(this.props.navigation);
+        
+        setTimeout(() => {
+          API.setIdentify(user.userProfile.email);
+          API.RegisterEvent("Login", {
+            actionType: 'Login',
+            email: user.userProfile.email,
+            userId: user.userId,
+          })
+          API.RegisterEvent("Nf-View", {
+            actionType: 'View screen',
+          })
+        }, 1000) 
       }
       render() {
           const { root: { posts, products } } = this.props;
@@ -26,16 +40,47 @@ function NewsfeedHOC(Newsfeed: any) {
           const { getBookmarksByUserId, getCollection } = products;
         return <Newsfeed 
                     goToCollection={this._goToCollection}
+                    goToBrowseDirectly={this._goToBrowseDirectly}
+                    goToZoomDirectly={this._goToZoomDirectly}
                     getPosts={getPosts}
                     getCollection={getCollection}
                     listOfPosts={listOfPosts}
                     getBookmarksByUserId={getBookmarksByUserId}
                 />
       }
+
       _goToCollection = (params: any) => {
-        const { root: { ui} } = this.props;
-          const { navigate } = ui;
-          navigate(COLLECTION, NEWSFEED, params);          
+        const { root: { ui } } = this.props;
+        const { navigate } = ui;
+        navigate(COLLECTION, NEWSFEED, params);   
+        API.RegisterEvent("Nf-ClickPost", {          
+          event: 'Click post',
+          postType: 'inspire',
+        })       
+      }
+
+      _goToBrowseDirectly = (productIds: any) => {
+        const { root: { ui } } = this.props;
+        const { navigate } = ui;
+        navigate(BROWSE_ONLY, NEWSFEED, {productIds});  
+        API.RegisterEvent("Newsfeed", {
+          event: 'Click post',
+          postType: 'list',
+        })   
+      }
+
+      _goToZoomDirectly = (productId: number) => {
+        const { root: { ui, products } } = this.props;
+        const { navigate } = ui;
+        const { getDetailByProductId } = products;
+        getDetailByProductId(productId)
+        .then((product: any) => {
+          navigate(ZOOM, NEWSFEED, {product});
+        })
+        API.RegisterEvent("Newsfeed", {
+          event: 'Click post',
+          postType: 'product',
+        })
       }
     }
     return NewComp;

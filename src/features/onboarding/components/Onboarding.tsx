@@ -17,6 +17,7 @@ import Step5 from './Step5';
 import Step6 from './Step6';
 import Step7 from './Step7';
 import Step8 from './Step8';
+import * as API from '../../../services/api';
 import { loginViaFBProvider, loginViaAnonProvider, updateUser } from '../../../services'
 
 const logoImage = require('../../../../assets/images/logo.png');
@@ -43,6 +44,7 @@ export default class Onboarding extends Component<Props, State> {
     }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this._goBack);
+        API.RegisterEvent('On-Splash', {actionType: 'View screen'})
     }
 
     componentWillUnmount() {
@@ -50,6 +52,7 @@ export default class Onboarding extends Component<Props, State> {
     }
 
     onNext = () => {
+      this.setEvent(this.state.screenIndex);
       this.state.fadeIn.setValue(1)
       Animated.timing(                 
           this.state.fadeIn,            
@@ -72,7 +75,36 @@ export default class Onboarding extends Component<Props, State> {
       }, 350) 
     }
 
+    setEvent = (index: number) => {
+      switch(index){
+        case 0:
+          API.RegisterEvent('On-Newsfeed', {actionType: 'View screen'})
+          break;
+        case 1:
+          API.RegisterEvent('On-Switch', {actionType: 'View screen'})
+          break;
+        case 2:
+          API.RegisterEvent('On-Drag', {actionType: 'View screen'})
+          break;
+        case 3:
+          API.RegisterEvent('On-TapForDetails', {actionType: 'View screen'})
+          break;
+        case 4:
+          API.RegisterEvent('On-Zoom', {actionType: 'View screen'})
+          break;
+        case 5:
+          API.RegisterEvent('On-MatchShoes', {actionType: 'View screen'})
+          break;
+        case 7:
+          API.RegisterEvent('On-Welcome', {actionType: 'View screen'})
+          break;
+        default:
+          break;
+      }
+    }
+
     onFacebookSignUp = async () => {
+      API.RegisterEvent('On-FbSignup1', {actionType: 'Click button'})
       let authData;
       try {
            authData = await Facebook.logInWithReadPermissionsAsync('2127807207434704', {
@@ -115,6 +147,7 @@ export default class Onboarding extends Component<Props, State> {
     };
 
     onSkipSignUp = () => {
+      API.RegisterEvent('On-ContinueNewsfeed', {actionType: 'Click button'});
       this.props.setLoading(true)
       loginViaAnonProvider().then((data: any) => {
         const userId = data.auth.authInfo.userId;

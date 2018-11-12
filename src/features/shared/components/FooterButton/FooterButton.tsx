@@ -60,7 +60,7 @@ export default class FooterButton extends Component<Props, State> {
          : icons[icon];
         const textStyle = whiteTheme 
             ? { color: '#333' }
-            : { color: '#000', fontFamily: 'Lato'}
+            : { color: '#000', fontFamily: 'QuickSandRegular'}
         const backgroundColor = whiteTheme
             ? { backgroundColor: '#fff' }
             : { backgroundColor: 'transparent'}

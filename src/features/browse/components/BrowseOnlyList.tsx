@@ -33,6 +33,7 @@ type Props = {
     listOfBookmarks: Bookmark[];
     contextMenuIsVisible: boolean;
     arrayImages: ProductImage[];
+    noResult: boolean;
 };
 export default class Browser extends Component<Props, State> {
     state: State = {
@@ -42,7 +43,8 @@ export default class Browser extends Component<Props, State> {
     blackTimeOut: any
     componentDidMount() {
         const {getAlternatives, navigation} = this.props;
-        const productIds: number[] = navigation.getParam('alternatives', []);
+        const productIds: number[] = navigation.getParam('productIds', []);
+        console.log('JOHN ', productIds)
         getAlternatives(productIds);
         this.blackTimeOut = setTimeout(() => {
             this._fadeIn()
@@ -89,8 +91,13 @@ export default class Browser extends Component<Props, State> {
         ToastAndroid.show("You can't select double items.", ToastAndroid.SHORT);
     }
 
-    _renderEmptyView = () =>
-        <DotIndicator size={6} count={3} style={{paddingTop: 80}}/>
+    _renderEmptyView = () => {
+        if(!this.props.noResult) {
+            return <DotIndicator size={6} count={3} style={{paddingTop: 80}}/>
+        } else {
+            return <Text style={theme.emptyText}>No results</Text>
+        }
+    }
 
     _renderItem = (props: {item: Product, index: number}) =>
         <BrowseItem item={props.item} index={props.index}

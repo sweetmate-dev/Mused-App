@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import theme from '../theme';
 import TypeWriterText from './Typewriter'
+import * as API from '../../../services/api';
 
 const { width } = Dimensions.get('window');
 const dressImage = require('../../../../assets/images/browse/browse3.jpg');
@@ -131,6 +132,7 @@ export default class Step7 extends Component<Props, State> {
           selectedShoes: this.state.selectedImage,
           selectedImage: emptyImage,
         })
+        API.RegisterEvent('On-MatchBag', {userType: 'View screen'});
       }); 
       
     } else {

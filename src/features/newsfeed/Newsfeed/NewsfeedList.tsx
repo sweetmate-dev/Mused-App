@@ -8,9 +8,11 @@ import {
 
 import  NewsfeedItem from './NewsfeedItem';
 import theme from '../theme';
+import * as API from '../../../services/api';
 
 type State = {
-    fadeIn: any
+    fadeIn: any,
+    numberOfcontent: number
 };
 
 type Props = {
@@ -19,19 +21,40 @@ type Props = {
     getPosts: () => void;
     getBookmarksByUserId: () => void;
     getCollection: (slots: Slot[]) => void;
+    goToBrowseDirectly: (productIds: any) => void;
+    goToZoomDirectly: (productId: number) => void;
 }
 export default class NewsfeedList extends Component<Props, State> {
 
     state: State = {
-        fadeIn: new Animated.Value(1)
+        fadeIn: new Animated.Value(1),
+        numberOfcontent: 1
     }
 
     componentDidMount() {  
         this.props.getPosts();
         this.props.getBookmarksByUserId();
     }
-    render() {
 
+    onScroll(nativeEvent: any) {
+        const { contentOffset, contentSize, layoutMeasurement } = nativeEvent;    
+        const ScrollHeight = contentSize.height;
+        const contentOffsetY = layoutMeasurement.height + contentOffset.y;
+        const scrolledNewsfeedNum = Math.floor(this.props.listOfPosts.length * contentOffsetY / ScrollHeight);
+        
+        if(scrolledNewsfeedNum === this.state.numberOfcontent) return;
+        else {
+            console.log('scroll index: ', scrolledNewsfeedNum)
+            API.RegisterEvent("Nf-ScrollPost", {
+                actionType: 'Scroll depth',
+                number_Of_content: scrolledNewsfeedNum
+            })
+            this.setState({numberOfcontent: scrolledNewsfeedNum});
+        }
+        
+    }
+    
+    render() {
         return (
             <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
                 <StatusBar
@@ -39,10 +62,12 @@ export default class NewsfeedList extends Component<Props, State> {
                     barStyle="dark-content"
                 />
                 {(this.props.listOfPosts && this.props.listOfPosts.length) && <FlatList
+                    onScroll={({ nativeEvent }) => this.onScroll(nativeEvent)}
                     data={this.props.listOfPosts}
                     renderItem={this._renderItem}
                     keyExtractor={ (item) => `${item._id}`}
                     ItemSeparatorComponent={this._renderSeparator}
+                    scrollEventThrottle={1000}
                 />}
             </Animated.View>
         )
@@ -52,6 +77,8 @@ export default class NewsfeedList extends Component<Props, State> {
         <NewsfeedItem  
             item={props.item}
             goToCollection={this._goToCollection}
+            goToBrowseDirectly={this.props.goToBrowseDirectly}
+            goToZoomDirectly={this.props.goToZoomDirectly}
         />
 
     _goToCollection = (param: any) => {

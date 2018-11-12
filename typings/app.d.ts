@@ -52,6 +52,10 @@ type Post = {
     authorName: string;
     authorProfilePhoto: string;
     inspirationalImage: string;
+    title: string;
+    postType: string;
+    productIds: any;
+    productId: number;
     slots: Slot[]
 };
 

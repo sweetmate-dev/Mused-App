@@ -15,7 +15,7 @@ import {
     },
     footerCheckText: {
         fontSize: 8,
-        fontFamily: 'Lato'
+        fontFamily: 'QuickSandRegular'
     },
     footerButtonContainer: {
         alignItems: 'center',

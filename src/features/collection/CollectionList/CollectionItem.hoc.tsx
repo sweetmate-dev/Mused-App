@@ -4,6 +4,8 @@ import { inject, observer } from 'mobx-react';
 import CollectionItem from './CollectionItem';
 import { COLLECTION, ZOOM } from '../../shared';
 import { ROOT_STORE } from '../../stores';
+import * as API from '../../../services/api';
+
 type Props = {
     navigation?: any;
     root?: RootStore;
@@ -38,7 +40,11 @@ function CollectionItemHOC(CollectionItem: any) {
       _navigateToProductSingle = (product: Product) => {
         const { root: { ui } } = this.props;
         const {  navigate } = ui;
+        API.RegisterEvent("Cl-alternatives", {
+          actionType: "Click any 'alternatives' button"
+        });
         navigate(ZOOM, COLLECTION, {product});
+
       }
     }
     return NewComp;

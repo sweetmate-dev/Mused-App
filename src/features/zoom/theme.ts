@@ -76,17 +76,18 @@ export default StyleSheet.create({
         fontSize: 16,
         fontFamily: 'RalewayBold',
         color: '#333',
+        letterSpacing: 2
     },
     unbrandText: {
         fontSize: 12,
-        fontFamily: 'Lato',
+        fontFamily: 'QuickSandRegular',
         color: '#000',
-        marginTop: 5
+        marginTop: 5,
     },
     priceText: {
         color: '#000',
         fontSize: 12,
-        fontFamily: 'LatoBold',
+        fontFamily: 'QuickSandBold',
     },
     markView: {
         position: 'absolute',
@@ -117,7 +118,7 @@ export default StyleSheet.create({
         marginBottom: 10
     },
     descText: {
-        fontFamily: 'Lato',
+        fontFamily: 'QuickSandRegular',
         fontSize: 13,
         lineHeight: 22,
     },
@@ -164,10 +165,11 @@ export default StyleSheet.create({
         resizeMode: 'contain'
     },
     buttonText: {
-        fontFamily: 'LatoBold',
+        fontFamily: 'RalewayBold',
         fontSize: 18,
         color: 'white',
-        paddingLeft: 10
+        paddingLeft: 10,
+        letterSpacing: 2
     },
     faintText: {
         fontSize: 12,

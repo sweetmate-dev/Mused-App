@@ -14,6 +14,7 @@ import {
     loginViaFBProvider,
     updateUser 
 } from '../../../services'
+import * as API from '../../../services/api';
 
 const {width} = Dimensions.get('window');
 const logoImage = require('../../../../assets/images/logo.png');
@@ -117,10 +118,11 @@ export default class AuthControls extends Component<Props, State> {
                 const userId = data.auth.authInfo.userId;
                 const userProfile = data.auth.authInfo.userProfile.data;
                 this._updateUser(userId, userProfile);
-                this.props.requestAuth(false)
+                API.setIdentify(userProfile.email);
+                this.props.requestAuth(false);
             }, (error: Error) => {
-                this.setState({errorMsg: error.message})
-                this.props.requestAuth(false)
+                this.setState({errorMsg: error.message});
+                this.props.requestAuth(false);
             })
         } else {
             console.error(`Facebook.logInWithReadPermissionsAsync: ${type}`);
