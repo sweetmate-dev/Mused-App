@@ -40,8 +40,8 @@ function CollectionItemHOC(CollectionItem: any) {
       _navigateToProductSingle = (product: Product) => {
         const { root: { ui } } = this.props;
         const {  navigate } = ui;
-        API.RegisterEvent("Cl-alternatives", {
-          actionType: "Click any 'alternatives' button"
+        API.RegisterEvent("Cl-product", {
+          actionType: "Click any product"
         });
         navigate(ZOOM, COLLECTION, {product});
 

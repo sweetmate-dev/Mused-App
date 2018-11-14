@@ -38,14 +38,12 @@ export default class NewsfeedItem extends Component<Props> {
                         rippleCentered={true}
                         rippleContainerBorderRadius={width}>
                         {
-                            inspirationalImage.length === 0 &&
+                            (inspirationalImage === null || inspirationalImage.length === 0) ?
                             <Image
                                 source={defaultNewsImage}
                                 style={theme.itemImage}
                             />
-                        }
-                        {
-                            inspirationalImage.length > 0 &&
+                            :
                             <Image
                                 source={{uri: inspirationalImage + ' '}}
                                 style={theme.itemImage}

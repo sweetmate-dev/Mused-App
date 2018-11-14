@@ -12,6 +12,7 @@ import theme from '../theme';
 
 const { width } = Dimensions.get('window');
 const newfeedImage = require('../../../../assets/images/onboard/Screen1/background.jpg');
+const logoImage = require('../../../../assets/images/onboarding-0-logo.jpg');
 const videoSource = require('../../../../assets/videos/1st-onboarding.mp4');
 type Props = {
     continue: () => void;
@@ -24,9 +25,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative'
   },
-  italicText: {
-    fontFamily: 'GreatVibes',
-    fontSize: 40
+  logoImage: {
+    width: width * 0.7,
+    height: width * 0.7 * 296 / 800,
+    resizeMode: 'stretch',
+    marginLeft: width * 0.15
   },
   videoView: {
     position: 'absolute',
@@ -53,11 +56,7 @@ export default class Step0 extends Component<Props> {
     render() {
         return (
             <View style={theme.container}>
-              <Text style={styles.headerText1}>Style inspiration</Text>
-              <View style={styles.headerText2}>
-                <Text style={styles.headerText1}>you </Text>
-                <Text style={styles.italicText}>can edit</Text>
-              </View>              
+              <Image source={logoImage} style={styles.logoImage} />            
               <View style={styles.content}>
                 <Image source={newfeedImage} style={theme.fullWidthImage} />
               </View>
@@ -79,9 +78,9 @@ export default class Step0 extends Component<Props> {
               <View style={theme.buttonButtonView}>
                 <TouchableWithoutFeedback onPress={() => this.props.continue()} >
                   <View style={theme.buttonWrapper}>
-                    <View style={theme.line} />
-                    <Text style={theme.bottomButtonText}>CONTINUE</Text>
-                    <View style={theme.line} />
+                    {/* <View style={theme.line} /> */}
+                    <Text style={theme.bottomButtonText}>----------- CONTINUE ------------</Text>
+                    {/* <View style={theme.line} /> */}
                   </View>
                 </TouchableWithoutFeedback>
               </View>

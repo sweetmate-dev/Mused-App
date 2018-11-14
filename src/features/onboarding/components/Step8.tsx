@@ -9,27 +9,30 @@ import {
 } from 'react-native';
 import { Video } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import TypeWriterText from './Typewriter'
+// import TypeWriterText from './Typewriter'
 
+const logoImage = require('../../../../assets/images/onboarding-welcome-logo.jpg');
 const welcomeImage = require('../../../../assets/images/welcome-video-bg.jpg');
 const videoSource = require('../../../../assets/videos/wink-optimised.mp4');
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 20
+    paddingBottom: 20,
+    alignItems: 'center'
   },
   content: {
     flex: 1,
+    width,
     position: 'relative',
     justifyContent: 'center',
     alignItems: 'flex-end'
   },
   welcomeImage: {
-    height: height - 340,
-    width: (height - 340) * 476 / 623,
-    resizeMode: 'contain'
+    flex: 1,
+    width,
+    resizeMode: 'cover'
   },
   videoContainer: {
     position: 'absolute',
@@ -51,13 +54,14 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: '#4A56B8',
     marginBottom: 20,
-    padding: 10
+    padding: 10,
+    paddingRight: 0
   },
   facebookTextView: {
     flex: 1,
     height: 50,
     borderLeftColor: 'white',
-    borderLeftWidth: 1,
+    borderLeftWidth: 0,
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 10
@@ -65,6 +69,7 @@ const styles = StyleSheet.create({
   facebookText: {
     color: 'white',
     fontSize: 16,
+    fontFamily: 'RalewayBold'
   },
   skipButton: {
     width: width * 0.8,
@@ -75,14 +80,28 @@ const styles = StyleSheet.create({
   },
   skipButtonText: {
     fontSize: 16,
-    color: 'white'
+    color: 'white',
+    fontFamily: 'RalewayBold'
+  },
+  avatar: {
+    height: 50,
+    width: 50,
+    resizeMode: 'stretch'
+  },
+  logoImage: {
+    width: width * 0.7,
+    height: width * 0.7 * 96 / 566,
+    resizeMode: 'stretch',
+    marginVertical: 40
   }
 })
 
 type Props = {
+  firstName: string;
   continue: () => void;
   onFacebookSignUp: () => void;
-  onSkipSignUp: () => void
+  onSkipSignUp: () => void;
+  facebookId: string;
 }
 
 export default class Step8 extends Component<Props> {
@@ -98,10 +117,10 @@ export default class Step8 extends Component<Props> {
     render() {
       return (
         <View style={styles.container}>
-          <TypeWriterText text={['...so welcome to Mused!', '']} />
+          <Image source={logoImage} style={styles.logoImage} />
           <View style={styles.content}>
             <Image source={welcomeImage} style={styles.welcomeImage} />
-            <View style={styles.videoContainer}>            
+            <View style={styles.videoContainer}>
               <Video
                   shouldPlay={true}
                   resizeMode={Video.RESIZE_MODE_COVER}
@@ -125,13 +144,16 @@ export default class Step8 extends Component<Props> {
               <View style={styles.facebookButton}>
                 <Ionicons name="logo-facebook" size={40} color='white' />
                 <View style={styles.facebookTextView}>
-                  <Text style={styles.facebookText}>CONNECT WITH FACEBOOK</Text>
-                </View>                
+                  <Text style={styles.facebookText}>
+                    {this.props.firstName.length > 0 ? 'Continue as ' + this.props.firstName : 'Continue with Facebook'}
+                  </Text>
+                </View>
+                <Image source={{uri: 'https://graph.facebook.com/'+this.props.facebookId+'/picture?type=large'}} style={styles.avatar}/>
               </View>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={() => this.onClickSkip()}>
               <View style={styles.skipButton}>
-                  <Text style={styles.skipButtonText}>or... continue to newsfeed</Text>                
+                  <Text style={styles.skipButtonText}>GO TO NEWSFEED</Text>                
               </View>
             </TouchableWithoutFeedback>
           </View>

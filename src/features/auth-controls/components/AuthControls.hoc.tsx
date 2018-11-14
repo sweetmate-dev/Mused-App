@@ -41,7 +41,7 @@ function AuthControlsHOC(Onboarding: any) {
         render() {
             const { root: { user, ui } } = this.props;
             const { userId, userProfile, loading, setUserDetails } = user;
-            const { requireAuth, requestAuth } = ui;
+            const { requireAuth, requestAuth, setLoading } = ui;
             const { newUser, skipped } = this.state;
             // user Auth ID
             if(!newUser && loading) {
@@ -61,6 +61,7 @@ function AuthControlsHOC(Onboarding: any) {
                         <AuthControls 
                             setUserDetails={setUserDetails}
                             requestAuth={requestAuth}
+                            setLoading={setLoading}
                         /> 
                     }
                 </>

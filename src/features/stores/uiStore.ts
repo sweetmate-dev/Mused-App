@@ -1,5 +1,6 @@
 import { observable, action} from 'mobx';
 import { NEWSFEED } from '../shared';
+import * as API from '../../services/api';
 
 export default class ObservableStore implements IUiStore {
 
@@ -70,6 +71,11 @@ export default class ObservableStore implements IUiStore {
             this.prevRoute = '';
         }
         console.log('CURRENT SCREENS: ' + this.prevRoute + ', ' + this.currentRoute);
+        if(this.currentRoute === NEWSFEED){
+            API.RegisterEvent("Nf-view", {
+                actionType: "View screen"
+            })
+        }
         // this.navigation.goBack();
     }
 

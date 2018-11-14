@@ -9,6 +9,7 @@ import {
 import { findCategoryIndex } from '../../../shared';
 import { categoriesKeys } from '../../categoriesKeys';
 import theme from '../../theme';
+import * as API from '../../../../services/api';
 
 const SELECT_ALL: string = 'SELECT ALL';
 
@@ -29,9 +30,12 @@ export default class FilterCategories extends Component<Props> {
 
     _changeCategory = (category: string) => {
         const { categoryOpened } = this.state;
-        categoryOpened === category
-            ? this.setState({categoryOpened: ''})
-            : this.setState({categoryOpened: category})
+        if(categoryOpened === category) {
+            this.setState({categoryOpened: ''})
+        } else {
+            this.setState({categoryOpened: category})
+        }
+            
     }
 
 
@@ -99,15 +103,27 @@ export default class FilterCategories extends Component<Props> {
                     removeCategory(categoryOpened, item);
                 } else {
                     addNewCategory(categoryOpened, item);
+                    API.RegisterEvent("Fi-subcat", {
+                        actionType: "Click any subcategory",
+                        subcategory: item
+                    })
                 }
         } else {
-           addNewCategory(categoryOpened, item);
+            addNewCategory(categoryOpened, item);
+            API.RegisterEvent("Fi-subcat", {
+                actionType: "Click any subcategory",
+                subcategory: item
+            })
         }
     }
 
     _selectAllSubCategories = () => {
         const { categoryOpened } = this.state;
         const { selectAllSubCategories } = this.props;
+        API.RegisterEvent("Fi-catAll", {
+            actionType: "Click any category 'select all'",
+            category: categoryOpened
+        })
         selectAllSubCategories(categoryOpened);
     }
 }

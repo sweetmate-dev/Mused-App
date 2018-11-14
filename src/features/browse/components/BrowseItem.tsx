@@ -9,6 +9,7 @@ import Ripple from 'react-native-material-ripple';
 
 import { thumbnailImage } from '../../shared';
 import theme from '../theme';
+import * as API from '../../../services/api';
 
 const likeIconUrl = require('../../../../assets/images/star_like.png');
 const notLikeIconUrl = require('../../../../assets/images/star.png');
@@ -45,7 +46,6 @@ export default class BrowseItem extends Component<Props, State> {
         const {  id } = this.props.item;
         const bookmark: Bookmark = listOfBookmarks.find(( bookmark: Bookmark) => bookmark.productId === id);
         Boolean(bookmark) && this.setState({isLiked: true, bookmark })
-
     }
     // componentWillReceiveProps(newProps: Props) {
     //     const { listOfBookmarks } = this.props;
@@ -149,6 +149,9 @@ export default class BrowseItem extends Component<Props, State> {
         if(contextMenuIsVisible) {
             hideContextMenu();
         } else {
+            API.RegisterEvent("Br-photo", {
+                actionType: 'Click product photo'
+            })
             setNewImgUrl({img: {uri: item.image}, id: item.id, category: item.category});
         }
     };
@@ -156,7 +159,10 @@ export default class BrowseItem extends Component<Props, State> {
     _createBookmark = () => {
         const { createBookmark, deleteBookmarkById, item: { id } } = this.props;
         const { isLiked } = this.state;
-        
+        API.RegisterEvent("Br-bookmark", {
+            actionType: 'Click bookmark',
+            productID: id
+        })
         if (isLiked) {
             deleteBookmarkById(id);
         } else {

@@ -18,7 +18,7 @@ function NewsfeedHOC(Newsfeed: any) {
             header: <Header navigation={navigation} />
         } 
       };
-      componentWillMount() {
+      componentDidMount() {
         const { root: {ui, user} } = this.props;
         ui.setNavigation(this.props.navigation);
         
@@ -63,7 +63,7 @@ function NewsfeedHOC(Newsfeed: any) {
         const { root: { ui } } = this.props;
         const { navigate } = ui;
         navigate(BROWSE_ONLY, NEWSFEED, {productIds});  
-        API.RegisterEvent("Newsfeed", {
+        API.RegisterEvent("Nf-ClickPost", {
           event: 'Click post',
           postType: 'list',
         })   
@@ -77,7 +77,7 @@ function NewsfeedHOC(Newsfeed: any) {
         .then((product: any) => {
           navigate(ZOOM, NEWSFEED, {product});
         })
-        API.RegisterEvent("Newsfeed", {
+        API.RegisterEvent("Nf-ClickPost", {
           event: 'Click post',
           postType: 'product',
         })

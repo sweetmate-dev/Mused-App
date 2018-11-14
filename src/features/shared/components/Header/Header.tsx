@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import { COLLECTION, BROWSE, FILTER, NEWSFEED, VIDEOPLAYER, BROWSE_ONLY } from '../../routesKeys';
+import * as API from '../../../../services/api';
+
 type Props = {
     showContent?: boolean;
     navigation: any;
@@ -76,14 +78,19 @@ export default class Header extends Component<Props> {
             </View>
         )
     }
+
     onPressLogo = () => {
         const { 
             onPressLogo, 
             resetArrayImages, 
         } = this.props;
         resetArrayImages();
+        API.RegisterEvent("Hd-Logo", {
+            actionType: "Clicked 'Mused' logo"
+        })
         onPressLogo()
     }
+
     _goBack = () => {
         const { resetAlternativies,
                 clearFilters, 

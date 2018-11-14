@@ -4,6 +4,8 @@ import FooterButtons from './FooterButtons';
 import { COLLECTION, BROWSE, VIDEOPLAYER, FILTER, VIEW } from '../../../shared';
 import { ROOT_STORE } from '../../../stores';
 import { NEWSFEED } from '../../routesKeys';
+import * as API from '../../../../services/api';
+
 type Props = {
     root?: RootStore;
 };
@@ -12,9 +14,8 @@ function FooterButtonsHOC(FooterButtons: any) {
     @observer
     class NewComp extends Component<Props> {
       render() {
-          const { root: { ui, products, slots } } = this.props;
+          const { root: { ui, slots } } = this.props;
           const { currentRoute }  = ui;
-          const { createNewOutfit, openProductCategory } = products;
           const { newImgUrl } = slots;
           const footerIsVisible = 
             currentRoute === COLLECTION || currentRoute === VIDEOPLAYER || currentRoute === BROWSE ||  currentRoute === FILTER || currentRoute === VIEW;
@@ -23,23 +24,62 @@ function FooterButtonsHOC(FooterButtons: any) {
             <FooterButtons 
               currentRoute={currentRoute}
               navigateToFilter={this._navigateToFilter}
-              navigateToBrowse={this._navigateToBrowse}
+              navigateBackToBrowse={this._navigateBackToBrowse}
               navigateToView={this._navigateToView}
               clearFilterAndGoToBrowse={this._clearFilterAndGoToBrowse}
               applyFilter={this._applyFilter}
-              createNewOutfit={createNewOutfit}
-              openProductCategory={openProductCategory}
+              createNewOutfit={this._createNewOutfit}
+              openProductCategory={this._openProductCategory}
               newImgUrl={newImgUrl}
             />
               )
-      }
+    }
+
+    _openProductCategory = () => {
+      const { root: { products } } = this.props;
+      const { openProductCategory } = products;
+      API.RegisterEvent("Vw-footerFilter", {
+        actionType: "Click menu 'Filter'"
+      })
+      openProductCategory();
+    }
+
+    _navigateBackToBrowse = () => {
+      API.RegisterEvent("Vw-footerView", {
+        actionType: "Click menu 'View'"
+      })
+      this._navigateToBrowse();
+    }
+
+    _createNewOutfit = () => {
+      const { root: { ui, products } } = this.props;
+      const { currentRoute }  = ui;
+      const { createNewOutfit } = products;
+      if(currentRoute === COLLECTION) {
+        API.RegisterEvent("Cl-loveit", {
+          actionType: "Click on 'Love it' in footer"
+        })
+      } else {
+        API.RegisterEvent("Br-footerLove", {
+          actionType: "Click menu 'Love it'"
+        })
+      }      
+      createNewOutfit();
+    }
+
     _navigateToFilter = () => {
         const { root: { ui: { navigate } } } = this.props;
+        API.RegisterEvent("Br-footerFilter", {
+          actionType: "Click menu 'Filter'"
+        })
         navigate(FILTER, BROWSE);
     }
 
     _navigateToView = () => {
       const { root: { ui: { navigate } } } = this.props;
+      API.RegisterEvent("Br-footerView", {
+        actionType: "Click menu 'View'"
+      })
       navigate(VIEW, BROWSE);
     }
 
@@ -60,6 +100,9 @@ function FooterButtonsHOC(FooterButtons: any) {
       clearFilters();
       setPrevSlotNumber(arrayImages);
       cancelNewSlot();
+      API.RegisterEvent("Fi-cancel", {
+        actionType: "Click 'cancel'"
+      })
       setFilterTab('applied')
     }
 
@@ -67,6 +110,9 @@ function FooterButtonsHOC(FooterButtons: any) {
       const { root: { products: { getAlternativesByFilter }, filters  } } = this.props;
       const { setFilterTab } = filters;
       getAlternativesByFilter();
+      API.RegisterEvent("Fi-apply", {
+        actionType: "Click 'apply'"
+      })
       setFilterTab('applied');
       setTimeout(() => {
         this._navigateToBrowse();

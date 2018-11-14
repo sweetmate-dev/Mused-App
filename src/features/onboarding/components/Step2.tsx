@@ -8,22 +8,22 @@ import {
   Animated,
   ScrollView,
   TouchableWithoutFeedback,
-  Easing
+  // Easing
 } from 'react-native';
 import theme from '../theme';
 import Ripple from 'react-native-material-ripple';
 import TypeWriterText from './Typewriter'
 import * as API from '../../../services/api';
 
-const shirtImage = require('../../../../assets/images/collection/shirt.jpg');
-const shoesImage = require('../../../../assets/images/collection/shoes.jpg');
-const bagImage = require('../../../../assets/images/collection/bag.jpg');
-const browseImage1 = require('../../../../assets/images/browse/browse1.png');
-const browseImage2 = require('../../../../assets/images/browse/browse3.jpg');
-const browseImage3 = require('../../../../assets/images/browse/browse4.png');
-const browseImage4 = require('../../../../assets/images/browse/browse5.jpeg');
+const shirtImage = require('../../../../assets/images/onboarding-21-shirt.jpg');
+const shoesImage = require('../../../../assets/images/onboarding-21-shoe.jpg');
+const trousersImage = require('../../../../assets/images/onboarding-21-trousers.jpg');
+const browseImage1 = require('../../../../assets/images/onboarding-22-shirt1.jpg');
+const browseImage2 = require('../../../../assets/images/onboarding-22-shirt2.jpg');
+const browseImage3 = require('../../../../assets/images/onboarding-22-shirt3.jpg');
+const browseImage4 = require('../../../../assets/images/onboarding-22-shirt4.jpg');
 const arrow2GIF = require('../../../../assets/images/arrow2.gif');
-const arrow3GIF = require('../../../../assets/images/arrow3.gif');
+// const arrow3GIF = require('../../../../assets/images/arrow3.gif');
 
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   containerItem: {
-    flex: 1, 
     justifyContent: 'space-between', 
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
@@ -55,6 +54,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 10,
     color: '#000',
+    fontFamily: 'QuickSandRegular'
   },
   imageContainer: {
     flex: 0.4,
@@ -66,7 +66,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     flexDirection: 'column',
     paddingVertical: 20,
-    overflow: 'hidden'
+    overflow: 'hidden',
+  },
+  clickableImageContainerLeft: {
+    flex: 0.4, 
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+    flexDirection: 'column',
+    paddingVertical: 20,
+    overflow: 'hidden',
+    borderRightWidth: 1.5,
+    borderBottomWidth: 2,
+    borderColor: '#f9f9f9'
+  },
+  clickableImageContainerRight: {
+    flex: 0.4, 
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+    flexDirection: 'column',
+    paddingVertical: 20,
+    overflow: 'hidden',
+    borderBottomWidth: 2,
+    borderColor: '#f9f9f9'
   },
   itemImage: {
     width: width / 3, 
@@ -83,22 +106,28 @@ const styles = StyleSheet.create({
     marginHorizontal: 4
   },
   clickableTitle: {
-    fontFamily: 'LatoBold',
+    fontFamily: 'RalewayBold',
     fontSize: 11,
     color: '#000',
     marginTop: 10,
     marginBottom: 2,
-    textAlign: 'center'
+    textAlign: 'center',
+    letterSpacing: 2,
   },
   clickableSubTitle: {
-      fontFamily: 'Lato',
+      fontFamily: 'QuickSandRegular',
       fontSize: 11,
       color: '#000',
       textAlign: 'center'
   },
   scrollView: {
     flex: 1,
-    marginTop: -30
+    width
+  },
+  descWrapper: {
+    alignItems: 'center',
+    height: 70,
+    paddingBottom: 15,
   },
   gifIcon: {
     width: 50,
@@ -162,20 +191,21 @@ export default class Step2 extends Component<Props, State> {
       }
     }
 
-    onClickImage = (image: any) => {      
-      this.state.itemMarginTop.setValue(0)
-      Animated.timing(                 
-        this.state.itemMarginTop,            
-        {
-          toValue: 300,
-          duration: 300,
-          easing: Easing.cubic
-        }
-      ).start(() => {
-        this.state.itemMarginTop.setValue(0);        
-        if(this.state.slideCount === 3) this.props.continue();
-        this.setState({selectedImage: image, slideCount: this.state.slideCount + 1});
-      });
+    onClickImage = (image: any) => {     
+      console.log(image) 
+      // this.state.itemMarginTop.setValue(0)
+      // Animated.timing(                 
+      //   this.state.itemMarginTop,            
+      //   {
+      //     toValue: 300,
+      //     duration: 300,
+      //     easing: Easing.cubic
+      //   }
+      // ).start(() => {
+      //   this.state.itemMarginTop.setValue(0);        
+      //   if(this.state.slideCount === 3) this.props.continue();
+      //   this.setState({selectedImage: image, slideCount: this.state.slideCount + 1});
+      // });
     }
 
     render() {
@@ -189,14 +219,14 @@ export default class Step2 extends Component<Props, State> {
                       source={this.state.selectedImage}
                       resizeMode={'contain'}
                       style={[styles.preItemImage, {marginTop: this.state.itemMarginTop}]}
-                  />
+                  />                  
                   <Image
-                      source={shoesImage}
+                      source={trousersImage}
                       resizeMode={'contain'}
                       style={styles.preItemImage}
                   />
                   <Image
-                      source={bagImage}
+                      source={shoesImage}
                       resizeMode={'contain'}
                       style={styles.preItemImage}
                   />
@@ -204,9 +234,9 @@ export default class Step2 extends Component<Props, State> {
                 <View style={theme.buttonButtonView}>
                   <TouchableWithoutFeedback onPress={() => this.onPressClick()} >
                     <View style={theme.buttonWrapper}>
-                      <View style={theme.line} />
-                      <Text style={theme.bottomButtonText}>CONTINUE</Text>
-                      <View style={theme.line} />
+                      <Text style={theme.bottomButtonText}>
+                      ----------- {this.state.step === 1 ? 'CONTINUE' : 'VIEW'} ------------
+                      </Text>
                     </View>
                   </TouchableWithoutFeedback>
                 </View>              
@@ -218,28 +248,48 @@ export default class Step2 extends Component<Props, State> {
     renderStep1View = () => {
       return (
         <Animated.View style={[styles.content, {opacity: this.state.fadeIn}]}>
-          <TypeWriterText text={['...then pick something', 'to switch']} />
-          <View style={styles.containerItem}>
-            <TouchableWithoutFeedback onPress={() => this.onPressClick()}>
+          <TypeWriterText text={['Next you pick something', 'to switch']} />
+          <ScrollView style={styles.scrollView} scrollEnabled={false}>
+            <View style={styles.containerItem}>
+              <TouchableWithoutFeedback onPress={() => this.onPressClick()}>
+                <View style={[styles.alterContainer, {alignItems: 'center'}]}>
+                  <View style={styles.alterItem}>
+                      <Text style={styles.countText}>10</Text>
+                  </View>
+                  <Text style={[styles.countText, {marginTop: 3}]}>alternatives</Text>
+                  <Animated.Image source={arrow2GIF} style={styles.gifIcon} />
+                </View>   
+              </TouchableWithoutFeedback>
+              <View style={styles.clickableImageContainer}>
+                <Image
+                    source={shirtImage}
+                    resizeMode={'contain'}
+                    style={styles.itemImage}
+                />
+                <Text style={styles.clickableTitle}>BALENCIAGA</Text>
+                <Text style={styles.clickableSubTitle}>Graphic print blouse</Text>
+              </View>
+              <View style={styles.alterContainer} />
+            </View>
+            <View style={styles.containerItem}>
               <View style={[styles.alterContainer, {alignItems: 'center'}]}>
                 <View style={styles.alterItem}>
-                    <Text style={styles.countText}>10</Text>
+                    <Text style={styles.countText}>15</Text>
                 </View>
                 <Text style={[styles.countText, {marginTop: 3}]}>alternatives</Text>
-                <Animated.Image source={arrow2GIF} style={styles.gifIcon} />
               </View>   
-            </TouchableWithoutFeedback>
-            <View style={styles.clickableImageContainer}>
-              <Image
-                  source={shirtImage}
-                  resizeMode={'contain'}
-                  style={styles.itemImage}
-              />
-              <Text style={styles.clickableTitle}>EMILIOPUCCI</Text>
-              <Text style={styles.clickableSubTitle}>psychedelic print pleated dress</Text>
+              <View style={styles.clickableImageContainer}>
+                <Image
+                    source={trousersImage}
+                    resizeMode={'contain'}
+                    style={styles.itemImage}
+                />
+                <Text style={styles.clickableTitle}>ELLE</Text>
+                <Text style={styles.clickableSubTitle}>psychedelic print pleated bag</Text>
+              </View>
+              <View style={styles.alterContainer} />
             </View>
-            <View style={styles.alterContainer} />
-          </View>
+          </ScrollView>
         </Animated.View>
       )
     }
@@ -247,7 +297,7 @@ export default class Step2 extends Component<Props, State> {
     renderStep2View = () => {
       return (
         <Animated.View style={[styles.content, {opacity: this.state.fadeIn}]}>
-          <TypeWriterText text={['now create new looks!', '']} />
+          <TypeWriterText text={['Try using the ‘View‘ button', '(at the bottom of screen)']} />
           <ScrollView style={styles.scrollView}>
             <View style={{flexDirection: 'row'}}>
               <Ripple
@@ -256,19 +306,21 @@ export default class Step2 extends Component<Props, State> {
                 rippleDuration={300} 
                 rippleCentered={true}
                 rippleContainerBorderRadius={40}>
-              <View style={[styles.clickableImageContainer, {position: 'relative', width: width/2}]}>
+              <View style={[styles.clickableImageContainerLeft, {position: 'relative', width: width/2}]}>
                   <Image
                       source={browseImage1}
                       resizeMode={'contain'}
                       style={styles.itemImage}
                   />
-                  <Image
+                  {/* <Image
                     source={arrow3GIF}
                     resizeMode={'contain'}
                     style={styles.arrow3}
-                  />
-                  <Text style={styles.clickableTitle}>DOLCE & GABBANA</Text>
-                  <Text style={styles.clickableSubTitle}>Floral embroidered lace midi dress</Text>
+                  /> */}
+                  <View style={styles.descWrapper}>
+                    <Text style={styles.clickableTitle}>MARNI</Text>
+                    <Text style={styles.clickableSubTitle}>Gathered T-shirt</Text>
+                  </View>                  
                 </View>
               </Ripple>
               <Ripple
@@ -277,14 +329,16 @@ export default class Step2 extends Component<Props, State> {
                 rippleDuration={300} 
                 rippleCentered={true}
                 rippleContainerBorderRadius={40}>
-              <View style={[styles.clickableImageContainer, {width: width/2}]}>
+              <View style={[styles.clickableImageContainerRight, {width: width/2}]}>
                   <Image
                       source={browseImage2}
                       resizeMode={'contain'}
                       style={styles.itemImage}
                   />
-                  <Text style={styles.clickableTitle}>RICK OWENS</Text>
-                  <Text style={styles.clickableSubTitle}>sleeveless long dress</Text>
+                  <View style={styles.descWrapper}>
+                    <Text style={styles.clickableTitle}>FENDI</Text>
+                    <Text style={styles.clickableSubTitle}>Monster furry sweatshirt</Text>
+                  </View>                  
                 </View>
               </Ripple>
             </View>
@@ -295,14 +349,16 @@ export default class Step2 extends Component<Props, State> {
                   rippleDuration={300} 
                   rippleCentered={true}
                   rippleContainerBorderRadius={40}>
-                <View style={[styles.clickableImageContainer, {width: width/2}]}>
+                <View style={[styles.clickableImageContainerLeft, {width: width/2}]}>
                   <Image
                       source={browseImage3}
                       resizeMode={'contain'}
                       style={styles.itemImage}
                   />
-                  <Text style={styles.clickableTitle}>DOLCE & GABBANA</Text>
-                  <Text style={styles.clickableSubTitle}>Floral embroidered lace midi dress</Text>
+                  <View style={styles.descWrapper}>
+                    <Text style={styles.clickableTitle}>GUCCI</Text>
+                    <Text style={styles.clickableSubTitle}>Floral twill silk shirt</Text>
+                  </View>                  
                 </View>
               </Ripple>
               <Ripple
@@ -311,14 +367,16 @@ export default class Step2 extends Component<Props, State> {
                   rippleDuration={300} 
                   rippleCentered={true}
                   rippleContainerBorderRadius={40}>
-                <View style={[styles.clickableImageContainer, {width: width/2}]}>
+                <View style={[styles.clickableImageContainerRight, {width: width/2}]}>
                   <Image
                       source={browseImage4}
                       resizeMode={'contain'}
                       style={styles.itemImage}
                   />
-                  <Text style={styles.clickableTitle}>RICK OWENS</Text>
-                  <Text style={styles.clickableSubTitle}>sleeveless long dress</Text>
+                  <View style={styles.descWrapper}>
+                    <Text style={styles.clickableTitle}>ALEXANDER MCQUEEN</Text>
+                    <Text style={styles.clickableSubTitle}>Bug embellished blouse</Text>
+                  </View>                  
                 </View>
               </Ripple>
             </View>

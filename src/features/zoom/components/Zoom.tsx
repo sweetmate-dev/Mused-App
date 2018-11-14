@@ -8,21 +8,16 @@ import {
     Animated
     // TouchableOpacity,
 } from 'react-native';
-// import AutoHeightImage from 'react-native-auto-height-image';
 import Swiper from 'react-native-swiper';
 import Ripple from 'react-native-material-ripple';
-// import { Button } from '../../shared';
 import theme from "../theme";
-// import { COLLECTION, BROWSE, NEWSFEED, VIEW } from '../../shared/routesKeys';
+import * as API from '../../../services/api';
 import { zoomFaceImage, zoomAdditionalImage } from '../../shared';
 
 const arrowIcon = require('../../../../assets/images/arrow-icon.png');
-const startIcon = require('../../../../assets/images/star_grey.png');
-// const dottedLine = require('../../../../assets/images/dotted_line.png');
+const starIcon = require('../../../../assets/images/star.png');
+const starLikeIcon = require('../../../../assets/images/star_like.png');
 const buttonLogo = require('../../../../assets/images/button-logo.png');
-
-// const ZOOM1 = require('../../../../assets/images/zoom_1.jpg');
-// const ZOOM2 = require('../../../../assets/images/zoom_2.jpg');
 
 
 type Props = {
@@ -31,15 +26,20 @@ type Props = {
     setPrevCurrentRoutes: (currentRoute: string, prevRoute: string) => void;
     createNewStyle: (id: ProductImage) => void;
     goBack: () => void;
+    createBookmark: (productId: number) => void;
+    deleteBookmarkById: (_id: any) => void;
+    listOfBookmarks: Bookmark[];
 }
 type State = {
     marginTop: any,
+    isLiked: boolean,
 };
 export default class Zoom extends Component<Props, State> {
     product: Product;
 
     state: State = {
-        marginTop: new Animated.Value(0)
+        marginTop: new Animated.Value(0),
+        isLiked: false
     }
 
     componentWillMount() {
@@ -50,6 +50,10 @@ export default class Zoom extends Component<Props, State> {
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this._goBack);
+        const { listOfBookmarks } = this.props;
+        const { id } = this.product;
+        const bookmark: Bookmark = listOfBookmarks.find(( bookmark: Bookmark) => bookmark.productId === id);
+        Boolean(bookmark) && this.setState({isLiked: true })
     }
 
     componentWillUnmount() {
@@ -62,6 +66,13 @@ export default class Zoom extends Component<Props, State> {
         // const currentRestHeight = layoutMeasurement.height + contentOffset.y - contentSize.height;
         // console.log(maxScrollHeight + ', ' + currentRestHeight);
         this.state.marginTop.setValue(0 - contentOffset.y * 2 / 3);
+    }
+
+    _onChangeSwiperIndex = (index: number) => {
+        API.RegisterEvent("Zm-swipe", {
+            actionType: 'Swipe photo',
+            index
+        })
     }
 
     render() {
@@ -79,6 +90,7 @@ export default class Zoom extends Component<Props, State> {
                         activeDotStyle={{width: 6, height: 6}}
                         dotColor='#CACACA'
                         paginationStyle={{marginBottom: -15}}
+                        onIndexChanged={this._onChangeSwiperIndex}
                         activeDotColor='#949494'>
                         <View style={theme.wrapper}>
                             <Image source={{uri: `${zoomFaceImage}${id}.jpg`}} style={theme.firstImage} />                        
@@ -109,10 +121,10 @@ export default class Zoom extends Component<Props, State> {
                         rippleContainerBorderRadius={15 / 2} 
                         rippleSize={20} 
                         rippleCentered={true} 
-                        onPress={this._goBack}>
+                        onPress={this._onClickBookMark}>
                         <Image
                             style={{width: 20, height: 20}}
-                            source={startIcon}
+                            source={this.state.isLiked ? starLikeIcon : starIcon}
                         />
                     </ Ripple>                 
                     <Animated.View style={[theme.infoView, {marginTop: this.state.marginTop}]}>
@@ -151,6 +163,10 @@ export default class Zoom extends Component<Props, State> {
             id: product.id,
             img: {uri: product.image}
         }
+        API.RegisterEvent("Zm-style", {
+            actionType: "Click 'Style' button",
+            productID: product.id,
+        })
         this.props.createNewStyle(newProduct);
     }
 
@@ -159,9 +175,24 @@ export default class Zoom extends Component<Props, State> {
             navigation,
             goBack
         } = this.props;
-
         goBack()
         navigation.goBack();
         return true;
+    }
+
+    _onClickBookMark = () => {
+        const { createBookmark, deleteBookmarkById } = this.props;
+        const { id } = this.product;
+        const { isLiked } = this.state;
+        API.RegisterEvent("Zm-bookmark", {
+            actionType: 'Click bookmark button',
+            productID: id
+        })
+        if (isLiked) {
+            deleteBookmarkById(id);
+        } else {
+            createBookmark(id);
+        }
+        this.setState({isLiked: !isLiked}); 
     }
 }

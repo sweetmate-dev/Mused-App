@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import DragAndDropView from './DragAndDropView';
 import { Header, ZOOM, VIEW } from '../../shared';
 import { ROOT_STORE } from '../../stores';
+import * as API from '../../../services/api';
 
 type Props = {
     navigation: any;
@@ -42,6 +43,9 @@ function DragAndDropViewHOC(DragAndDropView: any) {
       _navigateToProductSingle = (product: Product) => {
         const { root: { ui } } = this.props;
         const {  navigate } = ui;
+        API.RegisterEvent("Vw-sidebarDetails", {
+          actionType: 'Click sidebar text details'
+        })
         navigate(ZOOM, VIEW, {product});
       }
     }

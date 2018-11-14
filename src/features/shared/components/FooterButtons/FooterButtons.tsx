@@ -9,7 +9,7 @@ import theme from './theme';
 import { footerButtons, footerDarkButtons, LOVE, CATEGORIES, APPLY, CANCEL, VIEW } from './buttonsKeys';
 type Props = {
     navigateToFilter: () => void;
-    navigateToBrowse: () => void;
+    navigateBackToBrowse: () => void;
     navigateToView: () => void;
     clearFilterAndGoToBrowse: () => void;
     applyFilter: () => void;
@@ -72,7 +72,7 @@ export default class Footer extends Component<Props> {
             const actions: HashMap<() => void> = {
              [LOVE]: this.props.createNewOutfit,
              [VIEW]: this.props.navigateToView,
-             [CATEGORIES]:  this._navigateToFilter,
+             [CATEGORIES]:  this.props.navigateToFilter,
          }
              return (
                  <FooterButton
@@ -109,29 +109,22 @@ export default class Footer extends Component<Props> {
         return  footerButtons.map( (button: HashMap<string>) => {
             const actions: HashMap<() => void> = {
                 [LOVE]: this.props.createNewOutfit,
-                [VIEW]: this.props.navigateToBrowse,
+                [VIEW]: this.props.navigateBackToBrowse,
                 [CATEGORIES]:  this.props.openProductCategory,
-         }
-             return (
-                 <FooterButton
-                         text={button.text}
-                         icon={button.icon}
-                         whiteTheme={true}
-                         navigate={actions[button.text]}
-                         key={button.text}
-                         newImgUrl={this.props.newImgUrl}
-                         />
-             )
+        }
+            return (
+                <FooterButton
+                    text={button.text}
+                    icon={button.icon}
+                    whiteTheme={true}
+                    navigate={actions[button.text]}
+                    key={button.text}
+                    newImgUrl={this.props.newImgUrl}
+                />
+            )
         })
-     }
+    }
     
-
-    _navigateToFilter = () => {
-        this.props.navigateToFilter();
-    }
-    _navigateToBrowse = () => {
-        this.props.navigateToBrowse();
-    }
     _fadeIn = () => {
         this.state.fadeIn.setValue(0)
         Animated.timing(                  

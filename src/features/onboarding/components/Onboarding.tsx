@@ -4,7 +4,8 @@ import {
     Animated,
     Image,
     View,
-    Platform
+    Platform,
+    AsyncStorage
 } from 'react-native';
 import { Facebook, Constants } from 'expo';
 import theme from '../theme';
@@ -31,12 +32,19 @@ type Props = {
 
 type State = {
   screenIndex: number;
-  fadeIn: any
+  fadeIn: any;
+  facebookData: any
 };
 export default class Onboarding extends Component<Props, State> {
     state: State = {
       screenIndex: 0,
-      fadeIn: new Animated.Value(1)
+      fadeIn: new Animated.Value(1),
+      facebookData: {
+        name: '',
+        token: '',
+        expires: 0,
+        id: ''
+      }
     }
 
     componentWillMount() {
@@ -44,7 +52,8 @@ export default class Onboarding extends Component<Props, State> {
     }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this._goBack);
-        API.RegisterEvent('On-Splash', {actionType: 'View screen'})
+        API.RegisterEvent('On-Splash', {actionType: 'View screen'});
+        this.backupFacebookAPIToken();
     }
 
     componentWillUnmount() {
@@ -104,39 +113,79 @@ export default class Onboarding extends Component<Props, State> {
     }
 
     onFacebookSignUp = async () => {
+      const { facebookData } = this.state;
       API.RegisterEvent('On-FbSignup1', {actionType: 'Click button'})
-      let authData;
-      try {
-           authData = await Facebook.logInWithReadPermissionsAsync('2127807207434704', {
-              permissions: ['public_profile', 'email'],
-              behavior: this.isAStandaloneApp() ? 'native' : 'web'
-          });
-      } catch (err) {
-          console.log(err.toString())
-      }
-      const { type, token } = authData;
+      if(facebookData.name.length > 0) this.FBLogin(facebookData.token, facebookData.expires);
+      else this.ShowFacebookSignUpModal();
+    }
 
-      if (type === 'success') {
-          // login into Stitch app using FB token
-          this.props.setLoading(true)
-          loginViaFBProvider(token).then((data: any) => {
-              const userId = data.auth.authInfo.userId;
-              const userProfile = data.auth.authInfo.userProfile.data;
-              this._updateUser(userId, userProfile);
-              this.props.setLoading(false)
-          }, (error: Error) => {
-            this.props.setLoading(false)
-            console.log(error.message)
-          })
-      } else {
-          console.error(`Facebook.logInWithReadPermissionsAsync: ${type}`);
+    ShowFacebookSignUpModal = async () => {
+      let authData;
+        try {
+            authData = await Facebook.logInWithReadPermissionsAsync('2127807207434704', {
+                permissions: ['public_profile', 'email'],
+                behavior: this.isAStandaloneApp() ? 'native' : 'web'
+            });
+        } catch (err) {
+            console.log(err.toString())
+        }
+        const { type, token, expires } = authData;        
+        if (type === 'success') {
+            this.FBLogin(token, expires)
+        } else {
+            console.log(`Facebook.logInWithReadPermissionsAsync: ${type}`);
+        }
+    }
+
+    saveFacebookData = async (param: any) => {
+      try {
+        await AsyncStorage.setItem('FacebookUser', JSON.stringify(param))
+      } catch (error) {
+        console.log('Error in saving Facebook AsName', error.toString())
+      }   
+    }
+
+    backupFacebookAPIToken = async () => {
+      try {
+        const data = await AsyncStorage.getItem('FacebookUser');
+        if (data !== null) {
+          // We have data!!
+          const facebookData = JSON.parse(data);
+          const CT = new Date().getTime();
+          if(CT < facebookData.expires * 1000){
+            this.setState({ facebookData })
+          }
+        }
+      } catch (error) {
+        // Error retrieving data
+        console.log('Error in getting saved Facebook API Token', error.toString())
       }
+    }
+
+    FBLogin = (token: string, expires: number) => {
+      this.props.setLoading(true)
+      loginViaFBProvider(token).then((data: any) => {
+          const userId = data.auth.authInfo.userId;
+          const userProfile = data.auth.authInfo.userProfile.data;
+          this.saveFacebookData({
+            token,
+            expires,
+            name: userProfile.first_name,
+            id: data.auth.authInfo.userProfile.identities[0].id
+          });
+          this._updateUser(userId, userProfile);
+      }, (error: Error) => {
+        this.props.setLoading(false)
+        console.log(error.message)
+      })
     }
 
     _updateUser = (userId: string, userProfile: any) => {
       updateUser(userProfile).then(
           () => {
               this.props.setUserDetails(userId, userProfile)
+              this.props.onSkipSignUp()
+              this.props.setLoading(false)
           },
           error => console.log(error)
       );
@@ -151,10 +200,14 @@ export default class Onboarding extends Component<Props, State> {
       this.props.setLoading(true)
       loginViaAnonProvider().then((data: any) => {
         const userId = data.auth.authInfo.userId;
-        const userProfile = data.auth.authInfo.userProfile.data;
-        this._updateUser(userId, userProfile);
-        this.props.onSkipSignUp()
-        this.props.setLoading(false)
+        // const userProfile = data.auth.authInfo.userProfile.data;
+        const userProfile = {
+          email: 'anonymous',
+          firstName: 'anonymous',
+          lastName: 'anonymous',
+          name: 'anonymous'
+        }
+        this._updateUser(userId, userProfile);        
       }, (error: Error) => {
         this.props.setLoading(false)
         console.log(error.message)
@@ -162,10 +215,10 @@ export default class Onboarding extends Component<Props, State> {
     }
 
     render() {
-      const { screenIndex } = this.state;
+      const { screenIndex, facebookData } = this.state;
         return (
           <View style={theme.container}>
-            {screenIndex === 5 || <Image source={logoImage} style={theme.logo} />  }
+            {screenIndex === 5 || screenIndex === 8 || <Image source={logoImage} style={theme.logo} />  }
             <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
             
             { 
@@ -203,6 +256,8 @@ export default class Onboarding extends Component<Props, State> {
             { 
               screenIndex === 8 && 
               <Step8 
+                firstName={facebookData.name}
+                facebookId={facebookData.id}
                 continue={this.onNext}
                 onFacebookSignUp={this.onFacebookSignUp}
                 onSkipSignUp={this.onSkipSignUp}

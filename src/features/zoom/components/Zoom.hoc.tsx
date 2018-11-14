@@ -17,14 +17,18 @@ function ZoomHOC(Zoom: any) {
     class NewComp extends Component<Props> {
       
         render() {
-            const { root: { ui }, navigation } = this.props;
+            const { root: { ui, products }, navigation } = this.props;
             const { setPrevCurrentRoutes, prevRoute, goBack } = ui;
+            const { createBookmark, deleteBookmarkById, listOfBookmarks } = products;
             return <Zoom
-                    setPrevCurrentRoutes={setPrevCurrentRoutes}
-                    prevRoute={prevRoute}
-                    navigation={navigation}
-                    createNewStyle={this.createStyleWithMused}
-                    goBack={goBack}
+                        setPrevCurrentRoutes={setPrevCurrentRoutes}
+                        prevRoute={prevRoute}
+                        navigation={navigation}
+                        createNewStyle={this.createStyleWithMused}
+                        goBack={goBack}
+                        createBookmark={createBookmark}
+                        deleteBookmarkById={deleteBookmarkById}
+                        listOfBookmarks={listOfBookmarks}
                   />
         }
 

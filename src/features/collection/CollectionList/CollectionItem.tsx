@@ -100,7 +100,7 @@ export default class CollectionItem extends Component<Props, State> {
                         <Image
                             source={isLiked ? likeIconUrl : notLikeIconUrl}
                             style={theme.likeImage}
-                            /> 
+                        /> 
                     </TouchableHighlight>
                 </View>
 
@@ -110,8 +110,8 @@ export default class CollectionItem extends Component<Props, State> {
 
     _goToNext = () => {
         const { goToNext, item, alternatives } = this.props;
-        API.RegisterEvent("Cl-product", {
-            actionType: 'Click any product'
+        API.RegisterEvent("Cl-alternatives", {
+            actionType: "Click any 'alternatives' button"
         })
         goToNext(item.id, alternatives);
     }    

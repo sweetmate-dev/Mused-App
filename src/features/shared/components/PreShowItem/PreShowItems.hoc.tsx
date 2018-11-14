@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import PreShowItems from './PreShowItems';
 import { FILTER } from '../../index';
 import { ROOT_STORE } from '../../../stores';
+import * as API from '../../../../services/api';
 
 type Props = {
     root?: RootStore;
@@ -27,6 +28,9 @@ function PreShowItemsHOC(PreShowItems: any) {
         const { setSlotNumber } = slots;
         addNewSlot()
         setSlotNumber(-1)
+        API.RegisterEvent("Br-add", {
+          actionType: 'Click footer photo'
+        })
         const { root: { ui } } = this.props;
         const {  navigate, currentRoute } = ui;
         navigate(FILTER, currentRoute, {goBack: () => this.onBack()});

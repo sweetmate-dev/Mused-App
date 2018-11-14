@@ -11,13 +11,13 @@ import {
 import theme from '../theme';
 import TypeWriterText from './Typewriter'
 
-const shirtImage = require('../../../../assets/images/collection/shirt.jpg');
-const shoesImage = require('../../../../assets/images/collection/shoes.jpg');
-const bagImage = require('../../../../assets/images/collection/bag.jpg');
-const browseImage1 = require('../../../../assets/images/browse/browse1.png');
-const browseImage2 = require('../../../../assets/images/browse/browse3.jpg');
-const browseImage3 = require('../../../../assets/images/browse/browse4.png');
-const browseImage4 = require('../../../../assets/images/browse/browse5.jpeg');
+const shirtImage = require('../../../../assets/images/onboarding-21-shirt.jpg');
+const shoesImage = require('../../../../assets/images/onboarding-21-shoe.jpg');
+const trousersImage = require('../../../../assets/images/onboarding-21-trousers.jpg');
+const browseImage1 = require('../../../../assets/images/onboarding-22-shirt1.jpg');
+const browseImage2 = require('../../../../assets/images/onboarding-22-shirt2.jpg');
+const browseImage3 = require('../../../../assets/images/onboarding-22-shirt3.jpg');
+const browseImage4 = require('../../../../assets/images/onboarding-22-shirt4.jpg');
 const arrow4GIF = require('../../../../assets/images/arrow4.gif');
 
 const {width} = Dimensions.get('window');
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    width
   },
   clickableImageContainer: {
     flex: 1, 
@@ -84,6 +85,15 @@ const styles = StyleSheet.create({
     width: 60,
     height: 50,
     resizeMode: 'contain',
+  },
+  leftItem: {
+    borderRightWidth: 1.5,
+    borderBottomWidth: 2,
+    borderColor: '#f9f9f9'
+  },
+  rightItem: {
+    borderBottomWidth: 2,
+    borderColor: '#f9f9f9'
   }
 })
 
@@ -96,11 +106,11 @@ export default class Step4 extends Component<Props> {
     render() {
       return (
         <View style={{flex: 1}}>
-        <TypeWriterText text={['for details on a product', 'just tap it‘s name']} />
+        <TypeWriterText text={['Tap the product name', 'to see it‘s details']} />
         <View style={styles.content}>
           <ScrollView style={styles.scrollView} scrollEnabled={false}>
             <View style={{flexDirection: 'row'}}>
-              <View style={styles.clickableImageContainer}>
+              <View style={[styles.clickableImageContainer, styles.leftItem]}>
                 <View style={styles.imageView}>
                   <Image
                       source={browseImage1}
@@ -111,40 +121,40 @@ export default class Step4 extends Component<Props> {
                 </View>
                 <TouchableWithoutFeedback onPress={() => this.props.continue()}>
                   <View style={styles.touchableView}>
-                    <Text style={styles.clickableTitle}>DOLCE & GABBANA</Text>
-                    <Text style={styles.clickableSubTitle}>Floral embroidered lace midi dress</Text>
+                    <Text style={styles.clickableTitle}>MARNI</Text>
+                    <Text style={styles.clickableSubTitle}>Gathered T-shirt</Text>
                     
                   </View>
                 </TouchableWithoutFeedback>                
               </View>
-              <View style={styles.clickableImageContainer}>
+              <View style={[styles.clickableImageContainer, styles.rightItem]}>
                 <Image
                     source={browseImage2}
                     resizeMode={'contain'}
                     style={styles.itemImage}
                 />
-                <Text style={styles.clickableTitle}>DOLCE & GABBANA</Text>
-                <Text style={styles.clickableSubTitle}>Floral embroidered lace midi dress</Text>
+                <Text style={styles.clickableTitle}>FENDI</Text>
+                <Text style={styles.clickableSubTitle}>Monster furry sweatshirt</Text>
               </View>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <View style={styles.clickableImageContainer}>
+              <View style={[styles.clickableImageContainer, styles.leftItem]}>
                 <Image
                     source={browseImage3}
                     resizeMode={'contain'}
                     style={styles.itemImage}
                 />
-                <Text style={styles.clickableTitle}>RICK OWENS</Text>
-                <Text style={styles.clickableSubTitle}>sleeveless long dress</Text>            
+                <Text style={styles.clickableTitle}>GUCCI</Text>
+                <Text style={styles.clickableSubTitle}>Floral twill silk shirt</Text>            
               </View>
-              <View style={styles.clickableImageContainer}>
+              <View style={[styles.clickableImageContainer, styles.rightItem]}>
                 <Image
                     source={browseImage4}
                     resizeMode={'contain'}
                     style={styles.itemImage}
                 />
-                <Text style={styles.clickableTitle}>RICK OWENS</Text>
-                <Text style={styles.clickableSubTitle}>sleeveless long dress</Text>
+                <Text style={styles.clickableTitle}>ALEXANDER MCQUEEN</Text>
+                <Text style={styles.clickableSubTitle}>Bug embellished blouse</Text>
               </View>
             </View>
           </ScrollView>
@@ -155,12 +165,12 @@ export default class Step4 extends Component<Props> {
                 style={styles.preItemImage}
             />
             <Image
-                source={shoesImage}
+                source={trousersImage}
                 resizeMode={'contain'}
                 style={styles.preItemImage}
             />
             <Image
-                source={bagImage}
+                source={shoesImage}
                 resizeMode={'contain'}
                 style={styles.preItemImage}
             />
@@ -169,9 +179,7 @@ export default class Step4 extends Component<Props> {
         <View style={theme.buttonButtonView}>
           <TouchableWithoutFeedback onPress={() => this.props.continue()} >
             <View style={theme.buttonWrapper}>
-              <View style={theme.line} />
-                <Text style={theme.bottomButtonText}>CONTINUE</Text>
-                <View style={theme.line} />
+              <Text style={theme.bottomButtonText}>----------- CONTINUE ------------</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>  

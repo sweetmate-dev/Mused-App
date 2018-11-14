@@ -16,14 +16,14 @@ import * as API from '../../../services/api';
 const { width } = Dimensions.get('window');
 const dressImage = require('../../../../assets/images/browse/browse3.jpg');
 const emptyImage = require('../../../../assets/images/empty.jpg');
-const ShoesImage1 = require('../../../../assets/images/collection/shoes.jpg');
-const ShoesImage2 = require('../../../../assets/images/collection/shoes1.jpg');
-const ShoesImage3 = require('../../../../assets/images/collection/shoes2.jpg');
-const ShoesImage4 = require('../../../../assets/images/collection/shoes3.jpg');
-const BagImage1 = require('../../../../assets/images/collection/bag.jpg');
-const BagImage2 = require('../../../../assets/images/collection/bag1.jpg');
-const BagImage3 = require('../../../../assets/images/collection/bag2.jpeg');
-const BagImage4 = require('../../../../assets/images/collection/bag3.jpeg');
+const SkirtImage1 = require('../../../../assets/images/onboarding-61-Skirt1.jpg');
+const SkirtImage2 = require('../../../../assets/images/onboarding-61-Skirt2.jpg');
+const SkirtImage3 = require('../../../../assets/images/onboarding-61-Skirt3.jpg');
+const SkirtImage4 = require('../../../../assets/images/onboarding-61-Skirt4.jpg');
+const ShoesImage1 = require('../../../../assets/images/onboarding-62-shoe1.jpg');
+const ShoesImage2 = require('../../../../assets/images/onboarding-62-shoe2.jpg');
+const ShoesImage3 = require('../../../../assets/images/onboarding-62-shoe3.jpg');
+const ShoesImage4 = require('../../../../assets/images/onboarding-62-shoe4.jpg');
 
 const styles = StyleSheet.create({
   container: {
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   },
   clickableImageContainer: {
     flex: 1, 
+    width: width / 2,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    width,
     marginTop: -30
   },
   preItemView: {
@@ -79,6 +81,15 @@ const styles = StyleSheet.create({
     height: 100,
     marginHorizontal: 4
   },
+  leftItem: {
+    borderRightWidth: 1.5,
+    borderBottomWidth: 2,
+    borderColor: '#f9f9f9'
+  },
+  rightItem: {
+    borderBottomWidth: 2,
+    borderColor: '#f9f9f9'
+  }
 })
 
 type Props = {
@@ -87,7 +98,7 @@ type Props = {
 type State = {
   step: number,
   selectedImage: any,
-  selectedShoes: any,
+  selectedSkirt: any,
   itemMarginTop: any,
   opacity: any
 };
@@ -96,7 +107,7 @@ export default class Step7 extends Component<Props, State> {
   state: State = {
     step: 1,
     selectedImage: emptyImage,
-    selectedShoes: emptyImage,
+    selectedSkirt: emptyImage,
     itemMarginTop: new Animated.Value(0),
     opacity: new Animated.Value(1)
   }
@@ -129,7 +140,7 @@ export default class Step7 extends Component<Props, State> {
         this.state.opacity.setValue(1)
         this.setState({
           step: 2, 
-          selectedShoes: this.state.selectedImage,
+          selectedSkirt: this.state.selectedImage,
           selectedImage: emptyImage,
         })
         API.RegisterEvent('On-MatchBag', {userType: 'View screen'});
@@ -144,7 +155,7 @@ export default class Step7 extends Component<Props, State> {
     const { step } = this.state;
       return (
           <View style={styles.container}>
-            <TypeWriterText text={step === 1 ? ['now match the shoes', ''] : ['...and a bag', '']} />
+            <TypeWriterText text={step === 1 ? ['Try matching a skirt', ''] : ['Now match some shoes', '']} />
             {
               step === 1 ?
               this.renderShoesScrollView()
@@ -165,7 +176,7 @@ export default class Step7 extends Component<Props, State> {
                 />  
                 :
                 <Image
-                  source={this.state.selectedShoes}
+                  source={this.state.selectedSkirt}
                   resizeMode={'contain'}
                   style={styles.preItemImage}
                 />
@@ -182,9 +193,7 @@ export default class Step7 extends Component<Props, State> {
             <View style={theme.buttonButtonView}>
               <TouchableWithoutFeedback onPress={() => this.onClickContinue()} >
                 <View style={theme.buttonWrapper}>
-                  <View style={theme.line} />
-                  <Text style={theme.bottomButtonText}>CONTINUE</Text>
-                  <View style={theme.line} />
+                  <Text style={theme.bottomButtonText}>----------- CONTINUE ------------</Text>
                 </View>
               </TouchableWithoutFeedback>
             </View>
@@ -196,50 +205,50 @@ export default class Step7 extends Component<Props, State> {
     return (
       <Animated.ScrollView style={[styles.scrollView, {opacity: this.state.opacity}]}>
         <View style={{flexDirection: 'row'}}>
-          <TouchableWithoutFeedback onPress={() => this.onClickImage(ShoesImage1)}>
-            <View style={[styles.clickableImageContainer, {width: width/2}]}>
+          <TouchableWithoutFeedback onPress={() => this.onClickImage(SkirtImage1)}>
+            <View style={[styles.clickableImageContainer, styles.leftItem]}>
               <Image
-                  source={ShoesImage1}
+                  source={SkirtImage1}
                   resizeMode={'contain'}
                   style={styles.itemImage}
               />
-              <Text style={styles.clickableTitle}>JIMMY CHOO</Text>
-              <Text style={styles.clickableSubTitle}>Romy 100 pumps</Text>
+              <Text style={styles.clickableTitle}>VERSACE</Text>
+              <Text style={styles.clickableSubTitle}>Signature print skirt</Text>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => this.onClickImage(ShoesImage2)}>
-            <View style={[styles.clickableImageContainer, {width: width/2}]}>
+          <TouchableWithoutFeedback onPress={() => this.onClickImage(SkirtImage2)}>
+            <View style={[styles.clickableImageContainer, styles.rightItem]}>
               <Image
-                  source={ShoesImage2}
+                  source={SkirtImage2}
                   resizeMode={'contain'}
                   style={styles.itemImage}
               />
-              <Text style={styles.clickableTitle}>JIMMY CHOO</Text>
-              <Text style={styles.clickableSubTitle}>Shar 85 sandal booties</Text>
+              <Text style={styles.clickableTitle}>JOSEPH</Text>
+              <Text style={styles.clickableSubTitle}>Holden Compact skirt</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <TouchableWithoutFeedback onPress={() => this.onClickImage(ShoesImage3)}>
-            <View style={[styles.clickableImageContainer, {width: width/2}]}>
+          <TouchableWithoutFeedback onPress={() => this.onClickImage(SkirtImage3)}>
+            <View style={[styles.clickableImageContainer, styles.leftItem]}>
               <Image
-                  source={ShoesImage3}
+                  source={SkirtImage3}
                   resizeMode={'contain'}
                   style={styles.itemImage}
               />
-              <Text style={styles.clickableTitle}>DOLCE & GABBANA</Text>
-              <Text style={styles.clickableSubTitle}>Floral embroidered lace midi dress</Text>
+              <Text style={styles.clickableTitle}>SEE BY CHLO…</Text>
+              <Text style={styles.clickableSubTitle}>long pleated skirt</Text>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => this.onClickImage(ShoesImage4)}>
-            <View style={[styles.clickableImageContainer, {width: width/2}]}>
+          <TouchableWithoutFeedback onPress={() => this.onClickImage(SkirtImage4)}>
+            <View style={[styles.clickableImageContainer, styles.rightItem]}>
               <Image
-                  source={ShoesImage4}
+                  source={SkirtImage4}
                   resizeMode={'contain'}
                   style={styles.itemImage}
               />
-              <Text style={styles.clickableTitle}>RICK OWENS</Text>
-              <Text style={styles.clickableSubTitle}>sleeveless long dress</Text>
+              <Text style={styles.clickableTitle}>GUCCI</Text>
+              <Text style={styles.clickableSubTitle}>GG web midi tweed skirt</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -251,50 +260,50 @@ export default class Step7 extends Component<Props, State> {
     return (
       <Animated.ScrollView style={[styles.scrollView, {opacity: this.state.opacity}]}>
         <View style={{flexDirection: 'row'}}>
-          <TouchableWithoutFeedback onPress={() => this.onClickImage(BagImage1)}>
-            <View style={[styles.clickableImageContainer, {width: width/2}]}>
+          <TouchableWithoutFeedback onPress={() => this.onClickImage(ShoesImage1)}>
+            <View style={[styles.clickableImageContainer, styles.leftItem]}>
               <Image
-                  source={BagImage1}
+                  source={ShoesImage1}
                   resizeMode={'contain'}
                   style={styles.itemImage}
               />
-              <Text style={styles.clickableTitle}>MICHAEL MICHAEL KORS</Text>
-              <Text style={styles.clickableSubTitle}>Saddle crossbody bag</Text>
+              <Text style={styles.clickableTitle}>ALEXANDER MCQUEEN</Text>
+              <Text style={styles.clickableSubTitle}>buffed leather sneakers</Text>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => this.onClickImage(BagImage2)}>
-            <View style={[styles.clickableImageContainer, {width: width/2}]}>
+          <TouchableWithoutFeedback onPress={() => this.onClickImage(ShoesImage2)}>
+            <View style={[styles.clickableImageContainer, styles.rightItem]}>
               <Image
-                  source={BagImage2}
+                  source={ShoesImage2}
                   resizeMode={'contain'}
                   style={styles.itemImage}
               />
-              <Text style={styles.clickableTitle}>MOSCHINO</Text>
-              <Text style={styles.clickableSubTitle}>Toy Bear wallet</Text>
+              <Text style={styles.clickableTitle}>PRADA</Text>
+              <Text style={styles.clickableSubTitle}>Pointed Toe 65 patent leather Mary Jane pumps</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <TouchableWithoutFeedback onPress={() => this.onClickImage(BagImage3)}>
-            <View style={[styles.clickableImageContainer, {width: width/2}]}>
+          <TouchableWithoutFeedback onPress={() => this.onClickImage(ShoesImage3)}>
+            <View style={[styles.clickableImageContainer, styles.leftItem]}>
               <Image
-                  source={BagImage3}
+                  source={ShoesImage3}
                   resizeMode={'contain'}
                   style={styles.itemImage}
               />
-              <Text style={styles.clickableTitle}>DOLCE & GABBANA</Text>
-              <Text style={styles.clickableSubTitle}>Floral embroidered lace midi dress</Text>
+              <Text style={styles.clickableTitle}>YEEZY</Text>
+              <Text style={styles.clickableSubTitle}>taupe 110 high heel mules</Text>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => this.onClickImage(BagImage4)}>
-            <View style={[styles.clickableImageContainer, {width: width/2}]}>
+          <TouchableWithoutFeedback onPress={() => this.onClickImage(ShoesImage4)}>
+            <View style={[styles.clickableImageContainer, styles.rightItem]}>
               <Image
-                  source={BagImage4}
+                  source={ShoesImage4}
                   resizeMode={'contain'}
                   style={styles.itemImage}
               />
-              <Text style={styles.clickableTitle}>RICK OWENS</Text>
-              <Text style={styles.clickableSubTitle}>sleeveless long dress</Text>
+              <Text style={styles.clickableTitle}>ATP ATELIER</Text>
+              <Text style={styles.clickableSubTitle}>Cynara 55 Ankle Boots</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>

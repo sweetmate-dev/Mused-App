@@ -6,17 +6,11 @@ import {
 } from 'react-native';
 
 import Ripple from 'react-native-material-ripple';
-// import FilterHeader from './FilterHeader';
-// import FilterSearch from './FilterSearch';
 import { selectionCount } from '../../shared';
 import DesignerItem from './DesignerItem';
 import FilterCategories from './FilterCategories/FilterCategories.hoc'
-// import testDataDesigners from '../testDesigners';
 import theme from '../theme';
-
-// const newIn = require('../../../../assets/images/filter-logo1.jpg');
-// const clothing = require('../../../../assets/images/filter-logo2.jpg');
-// const colour = require('../../../../assets/images/filter-logo3.jpg');
+import * as API from '../../../services/api';
 
 type Props = {
     listOfCategory: Category[];
@@ -122,14 +116,23 @@ export default class FilterList extends Component<Props> {
     }
 
     onClickNewIn = () => {
+        API.RegisterEvent("Fi-newIn", {
+            actionType: "Click 'New in' button"
+        })
         alert('coming soon')
     }
 
     onClickClothe = () => {
+        API.RegisterEvent("Fi-categories", {
+            actionType: "Click 'Categories' button"
+        })
         this._changeTab('categories')
     }
 
     onClickColour = () => {
+        API.RegisterEvent("Fi-colour", {
+            actionType: "Click 'Colour' button"
+        })
         alert('comming soon')
     }
 

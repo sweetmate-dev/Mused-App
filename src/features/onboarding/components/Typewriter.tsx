@@ -19,11 +19,11 @@ type State = {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 26,
-    height: 40,
+    fontSize: 25,
+    height: 30,
     textAlign: 'center',
-    marginHorizontal: 10,
-    fontFamily: 'RalewayBold'
+    fontFamily: 'RalewayBold',
+    letterSpacing: 1,
   }
 })
 
@@ -41,8 +41,10 @@ export default class TypeWriterText extends Component<Props, State> {
     timer: any;
 
     componentDidMount() {
-      this.startTypeWriterAnimation(1);
-      this.setState({text: JSON.stringify(this.props.text)})
+      setTimeout(() => {
+        this.startTypeWriterAnimation(1);
+        this.setState({text: JSON.stringify(this.props.text)})
+      }, this.props.delay)      
     }
 
     componentWillUnmount() {
@@ -65,7 +67,7 @@ export default class TypeWriterText extends Component<Props, State> {
             else {
               this.props.onEndEffect()           
             }
-        }, 35)
+        }, 25)
     }
 
     render() {

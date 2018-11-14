@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import theme from '../theme';
 import { thumbnailImage } from '../../../imagesUrls';
+import * as API from '../../../../../services/api';
 
 const blankImage = require('../../../../../../assets/images/empty.jpg')
 
@@ -125,7 +126,9 @@ export default class BrowseItems extends Component<Props, State> {
             this.setState({selectedID: productID})
             showContextMenu(productID)
         }
-        
+        API.RegisterEvent("Br-footerPhoto", {
+            actionType: 'Click footer photo'
+        })
     }
 
     startAnimation = (newImgUrl: any) => {

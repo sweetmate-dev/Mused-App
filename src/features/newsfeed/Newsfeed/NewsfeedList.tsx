@@ -8,7 +8,7 @@ import {
 
 import  NewsfeedItem from './NewsfeedItem';
 import theme from '../theme';
-import * as API from '../../../services/api';
+// import * as API from '../../../services/api';
 
 type State = {
     fadeIn: any,
@@ -44,12 +44,12 @@ export default class NewsfeedList extends Component<Props, State> {
         
         if(scrolledNewsfeedNum === this.state.numberOfcontent) return;
         else {
-            console.log('scroll index: ', scrolledNewsfeedNum)
-            API.RegisterEvent("Nf-ScrollPost", {
-                actionType: 'Scroll depth',
-                number_Of_content: scrolledNewsfeedNum
-            })
-            this.setState({numberOfcontent: scrolledNewsfeedNum});
+            // console.log('scroll index: ', scrolledNewsfeedNum)
+            // API.RegisterEvent("Nf-ScrollPost", {
+            //     actionType: 'Scroll depth',
+            //     number_Of_content: scrolledNewsfeedNum
+            // })
+            // this.setState({numberOfcontent: scrolledNewsfeedNum});
         }
         
     }

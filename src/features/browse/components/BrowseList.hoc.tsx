@@ -3,6 +3,8 @@ import { inject, observer } from 'mobx-react';
 import BrowseList from './BrowseList';
 import { Header, ZOOM, BROWSE } from '../../shared';
 import { ROOT_STORE } from '../../stores';
+import * as API from '../../../services/api';
+
 type Props = {
     navigation: any;
     root: RootStore;
@@ -41,6 +43,10 @@ function BrowseHOC(Browse: any) {
       _navigateToProductSingle = (product: Product) => {
         const { root: { ui } } = this.props;
         const {  navigate } = ui;
+        API.RegisterEvent("Br-details", {
+            actionType: 'Click product details',
+            productID: product.id
+        })
         navigate(ZOOM, BROWSE, {product});
     }
     _hideContextMenu = () => {

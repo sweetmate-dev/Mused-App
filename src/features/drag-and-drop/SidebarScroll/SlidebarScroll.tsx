@@ -5,6 +5,7 @@ import { thumbnailImage } from '../../shared';
 import { firstLetterUpper } from '../helper';
 import AutoSizeImage from '../../shared/components/AutoSizeImge'
 import theme from './theme';
+import * as API from '../../../services/api';
 
 const categoriesFilter: string[] = ['jewelry', 'belts', 'hats', 'scarves', 'gloves'];
 type Props = {
@@ -82,6 +83,9 @@ export default class SidebarScroll extends Component<Props, State> {
             id: item.id,
             img: {uri: item.image}
         };
+        API.RegisterEvent("Vw-slidebarPhoto", {
+            actionType: 'Click sidebar photo'
+        })
         addOrReplaceSixthSlot(newProductSlot);
     }
 

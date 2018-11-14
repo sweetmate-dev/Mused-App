@@ -8,7 +8,7 @@ const {width} = Dimensions.get('window');
 
 export default StyleSheet.create({
   container: {
-      backgroundColor: '#FFFFFF',        
+      backgroundColor: '#FFFFFF',      
       flex: 1,
   },
   logo: {
@@ -23,15 +23,16 @@ export default StyleSheet.create({
   },
   buttonButtonView: {
     height: 40,
-    paddingBottom: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    marginBottom: 15
   },
   buttonWrapper: {
     width: width * 0.7,
-    flexDirection: 'row',
-    alignItems: 'center'
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   line: {
     height: 1,
@@ -41,7 +42,9 @@ export default StyleSheet.create({
   bottomButtonText: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    fontSize: 9
+    fontSize: 9,
+    letterSpacing: 1,
+    fontFamily: 'QuickSandRegular'
   },
   headerText: {
     height: 80,
