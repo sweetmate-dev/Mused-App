@@ -16,6 +16,12 @@ function FilterListHOC(FilterList: any) {
             header: <Header navigation={navigation} />
         } 
       };
+
+      componentDidMount() {
+        const { root: { filters: { formatFilterCategories }}} = this.props;
+        formatFilterCategories();
+      }
+
       render() {
           const { root: { filters } } = this.props;
           const { listOfCategory, filterTab, setFilterTab} = filters;

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   Animated,
   TouchableHighlight,
-  Easing
+  Easing,
+  AsyncStorage
 } from 'react-native';
 import theme from '../theme';
 import { thumbnailImage } from '../../../imagesUrls';
@@ -26,7 +27,8 @@ type Props = {
     moveSlotLeft: () => void;
     fadeAnim: Animated.AnimatedValue;
     setSlotMachineEffect: (flag: boolean) => void;
-    requireAuth: () => void;
+    checkAnonUser: () => void;
+    setHighlightButtonText: (text: string) => void;
 }
 
 type State = {
@@ -151,8 +153,22 @@ export default class BrowseItems extends Component<Props, State> {
             setSlotMachineEffect(false);
             this.isOnAnimate = false;
         }, 300)
-        if(this.triggeredNumber === 1) this.props.requireAuth()
+        if(this.triggeredNumber === 1) {
+            this.getHighlightedButtonText();
+        }
+        else if(this.triggeredNumber > 8) this.props.checkAnonUser()
         this.triggeredNumber = this.triggeredNumber + 1;
+    }
+
+    getHighlightedButtonText = async () => {
+        // get highlighted button text
+        const { setHighlightButtonText } = this.props;
+        try {
+            const HT = await AsyncStorage.getItem('highlightText');
+            setHighlightButtonText(HT);
+        } catch (error) {
+            console.log('Error in getting Highlighed button text', error.toString())
+        }
     }
 
     _moveSlotLeft =  () =>

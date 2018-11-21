@@ -17,6 +17,7 @@ declare module 'expo' {
   export const BlurView: any;
   // tslint:disable-next-line
   export const Video: any;
+  export const LinearGradient: any;
 }
 
 declare module '@expo/vector-icons' {
@@ -55,4 +56,9 @@ declare module 'react-native-auto-height-image' {
 declare module 'react-native-indicators' {
   const DotIndicator: any;
   export default DotIndicator;
+}
+
+declare module 'react-native-modal-dropdown' {
+  const ModalDropdown: any;
+  export default ModalDropdown;
 }

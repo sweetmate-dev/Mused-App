@@ -31,6 +31,7 @@ export default class ObservableStore implements IProductStore {
     @observable slots: Slot[] = [];
     @observable noResult: boolean = false;
     @observable allProducts: any = {};
+    @observable fromMenu: boolean = false;
 
     get listOfCollection() {
         return this.collection;
@@ -51,6 +52,12 @@ export default class ObservableStore implements IProductStore {
     }
 
     @action
+    public setBrowseType = (type: number) => {
+        if(type === 1) this.fromMenu = false;
+        else this.fromMenu = true;
+    }
+
+    @action
     public openProductCategory = () => {
         this.toggleViewCategory = true;
         this.resetProductsByCategory()
@@ -61,7 +68,6 @@ export default class ObservableStore implements IProductStore {
         this.noResult = false;
         await getProductsByIds(ids).then((products: Product[]) => {
             this.alternatives = [...products]
-            console.log(this.alternatives)
             if(this.alternatives.length === 0) this.noResult = true;
         });
     }
@@ -225,12 +231,34 @@ export default class ObservableStore implements IProductStore {
         })
     }
 
+    public shuffle = (sourceArray: any) => {
+        for (var i = 0; i < sourceArray.length - 1; i++) {
+            var j = i + Math.floor(Math.random() * (sourceArray.length - i));
+    
+            var temp = sourceArray[j];
+            sourceArray[j] = sourceArray[i];
+            sourceArray[i] = temp;
+        }
+        return sourceArray;
+    }
+
+    public mergeArray = (products: any) => {
+        let res: any = [];
+        for(let i = 0; i < products.length; i++) {
+            res = res.concat(products[i]);
+            console.log(products[i].length)
+        }
+        return res;
+    }
+
     @action
-    getNewProducts = async () => {
+    getNewProducts = async (category: string) => {
         this.alternatives = []
         this.noResult = false;
-        await getNewProducts().then((products: Product[]) => {            
-            this.alternatives = [...products]
+        await getNewProducts(category).then((products: Product[]) => {
+
+            this.alternatives = [...this.shuffle(this.mergeArray(products))];
+            console.log(this.alternatives.length);
             if(this.alternatives.length === 0) this.noResult = true;
         });
     }

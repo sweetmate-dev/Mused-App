@@ -1,85 +1,99 @@
 import React, { Component } from 'react';
 import {
   View,
-  Platform,
+  Image,
+  TouchableWithoutFeedback,
   Text,
   StyleSheet,
   Dimensions,
-  Image,
   ScrollView
 } from 'react-native';
-import Ripple from 'react-native-material-ripple';
-import theme from '../../zoom/theme';
+import theme from '../theme';
+import TypeWriterText from './Typewriter'
 
-const productImage = require('../../../../assets/images/onboarding-zoom.jpg');
-const buttonLogo = require('../../../../assets/images/button-logo.png');
-const arrow4GIF = require('../../../../assets/images/Arrow_DOWN.gif');
-const { width } = Dimensions.get('window');
+const shirtImage = require('../../../../assets/images/onboarding-21-shirt.jpg');
+const shoesImage = require('../../../../assets/images/onboarding-21-shoe.jpg');
+const trousersImage = require('../../../../assets/images/onboarding-21-trousers.jpg');
+const browseImage1 = require('../../../../assets/images/onboarding-22-shirt1.jpg');
+const browseImage2 = require('../../../../assets/images/onboarding-22-shirt2.jpg');
+const browseImage3 = require('../../../../assets/images/onboarding-22-shirt3.jpg');
+const browseImage4 = require('../../../../assets/images/onboarding-22-shirt4.jpg');
+const arrow4GIF = require('../../../../assets/images/arrow4.gif');
 
+const {width} = Dimensions.get('window');
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
   content: {
-      flex: 1,
-      alignItems: 'center',
-      position: 'relative'
+    flex: 1,
+    position: 'relative'
   },
-  markTextView: {
-      padding: 30,
-      backgroundColor: 'white',
-      position: 'absolute',
-      left: 0,
-      width,
-      top: 120
+  scrollView: {
+    flex: 1,
+    width
   },
-  markText: {
-      fontSize: 30,
-      fontWeight: 'bold',
-      textAlign: 'center',
-      color: 'gray'
-  },
-  productImage: {
+  clickableImageContainer: {
+    flex: 1, 
+    width: width / 2,
+    justifyContent: 'center',
     alignItems: 'center',
-    width: width - 20,
-    height: (width - 20) * 900 / 675,
-    marginTop: Platform.OS === 'ios' ? 20 : 5,
-    resizeMode: 'cover'
+    backgroundColor: '#fff',
+    flexDirection: 'column',
+    paddingVertical: 20,
+    overflow: 'hidden'
   },
-  buttonsContainer: {
-      backgroundColor: 'black',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: 60,
+  itemImage: {
+    width: width / 3, 
+    height: 180,
   },
-  infoView: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,    
+  preItemView: {
+    height: 110,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 5,
+    overflow: 'hidden'
   },
-  arrowIcon: {
-      position: 'absolute',
-      bottom: 70,
-      left: width * 0.4,
-      width: 50,
-      height: 50,
-      resizeMode: 'contain'
+  preItemImage: {
+    width: width / 6, 
+    height: 100,
+    marginHorizontal: 4
   },
-  descContainer: {
-    paddingHorizontal: 30,
-    paddingBottom: 60,
-    paddingTop: 15,
-    backgroundColor: 'white',
+  clickableTitle: {
+    fontFamily: 'LatoBold',
+    fontSize: 11,
+    color: '#000',
+    marginTop: 10,
+    marginBottom: 2,
+    textAlign: 'center'
   },
-  markView: {
+  clickableSubTitle: {
+      fontFamily: 'Lato',
+      fontSize: 11,
+      color: '#000',
+      textAlign: 'center'
+  },
+  imageView: {
+    width: width / 3, 
+    height: 180,
+    position: 'relative'
+  },
+  touchableView: {
+    alignItems: 'center',
+  },
+  gifIcon: {
     position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'white',
-    opacity: 0.85
+    bottom: -12,
+    left: -30,
+    width: 60,
+    height: 50,
+    resizeMode: 'contain',
+  },
+  leftItem: {
+    borderRightWidth: 1.5,
+    borderBottomWidth: 2,
+    borderColor: '#f9f9f9'
+  },
+  rightItem: {
+    borderBottomWidth: 2,
+    borderColor: '#f9f9f9'
   }
 })
 
@@ -87,44 +101,91 @@ type Props = {
   continue: () => void;
 }
 
-export default class Step5 extends Component<Props> {
+export default class Step4 extends Component<Props> {
 
     render() {
       return (
-        <View style={styles.container}>
-            <ScrollView style={{flex: 1}}>
-                <View style={styles.content}>                
-                <Image source={productImage} style={styles.productImage} />
+        <View style={{flex: 1}}>
+        <TypeWriterText text={['Tap the product name', 'to see it‘s details']} />
+        <View style={styles.content}>
+          <ScrollView style={styles.scrollView} scrollEnabled={false}>
+            <View style={{flexDirection: 'row'}}>
+              <View style={[styles.clickableImageContainer, styles.leftItem]}>
+                <View style={styles.imageView}>
+                  <Image
+                      source={browseImage1}
+                      resizeMode={'contain'}
+                      style={styles.itemImage}
+                  />
+                  <Image source={arrow4GIF} style={styles.gifIcon} />
                 </View>
-                <View style={[theme.infoView, styles.infoView]}>
-                    <View style={theme.brandView}>
-                        <Text style={theme.brandText}>MARNI</Text>
-                        <Text style={theme.unbrandText}>Gathered T-shirt</Text>
-                    </View>
-                    <View style={theme.priceView}>
-                        <Text style={theme.priceText}>£620</Text>
-                    </View>                
-                </View>
-                <View style={styles.descContainer}>
-                    <Text style={theme.descText}>
-                        Having honed his creative eye at a number of high-profile fashion houses
-                    </Text>
-                </View>
-            </ScrollView>
-            <View style={styles.markView} />
-            <Image source={arrow4GIF} style={styles.arrowIcon} />
-            <Ripple
-                style={styles.buttonsContainer}
-                rippleSize={240}
-                rippleColor='#FFFFFF'
-                rippleCentered={true} 
-                rippleDuration={1000}
-                onPress={() => this.props.continue()}
-            >
-              <Image source={buttonLogo} style={theme.buttonLogo} />
-              <Text style={theme.buttonText}>STYLE IT</Text>              
-            </Ripple> 
-          </View>
+                <TouchableWithoutFeedback onPress={() => this.props.continue()}>
+                  <View style={styles.touchableView}>
+                    <Text style={styles.clickableTitle}>MARNI</Text>
+                    <Text style={styles.clickableSubTitle}>Gathered T-shirt</Text>
+                    
+                  </View>
+                </TouchableWithoutFeedback>                
+              </View>
+              <View style={[styles.clickableImageContainer, styles.rightItem]}>
+                <Image
+                    source={browseImage2}
+                    resizeMode={'contain'}
+                    style={styles.itemImage}
+                />
+                <Text style={styles.clickableTitle}>FENDI</Text>
+                <Text style={styles.clickableSubTitle}>Monster furry sweatshirt</Text>
+              </View>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <View style={[styles.clickableImageContainer, styles.leftItem]}>
+                <Image
+                    source={browseImage3}
+                    resizeMode={'contain'}
+                    style={styles.itemImage}
+                />
+                <Text style={styles.clickableTitle}>GUCCI</Text>
+                <Text style={styles.clickableSubTitle}>Floral print hoodle</Text>            
+              </View>
+              <View style={[styles.clickableImageContainer, styles.rightItem]}>
+                <Image
+                    source={browseImage4}
+                    resizeMode={'contain'}
+                    style={styles.itemImage}
+                />
+                <Text style={styles.clickableTitle}>ALEXANDER MCQUEEN</Text>
+                <Text style={styles.clickableSubTitle}>Bug embellished blouse</Text>
+              </View>
+            </View>
+          </ScrollView>
+          <View style={styles.preItemView}>
+            <Image
+                source={shirtImage}
+                resizeMode={'contain'}
+                style={styles.preItemImage}
+            />
+            <Image
+                source={trousersImage}
+                resizeMode={'contain'}
+                style={styles.preItemImage}
+            />
+            <Image
+                source={shoesImage}
+                resizeMode={'contain'}
+                style={styles.preItemImage}
+            />
+          </View>       
+        </View>
+        <View style={theme.buttonButtonView}>
+          <TouchableWithoutFeedback onPress={() => this.props.continue()} >
+            <View style={theme.buttonWrapper}>
+              <View style={theme.line} />
+              <Text style={theme.bottomButtonText}>CONTINUE</Text>
+              <View style={theme.line} />
+            </View>
+          </TouchableWithoutFeedback>
+        </View>  
+        </View>
       )
     }
 }

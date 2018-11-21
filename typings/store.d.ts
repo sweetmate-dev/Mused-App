@@ -11,12 +11,14 @@ interface IProductStore {
     toggleViewCategory: boolean;
     allProducts: any;
     getSliderToggleState: boolean;
+    fromMenu: boolean;
+    setBrowseType: (type: number) => void;
     openProductCategory: () => void;
     changeArrayImages: (slotNumber: number, newImg: ImageSourcePropType) => void;
     addNewSlot: () => void;
     cancelNewSlot: () => void;
     createStyleWithMused: (product: ProductImage) => void;
-    getNewProducts: () => void;
+    getNewProducts: (category: string) => void;
     moveImageToLeft: (slotNumber: number) => void;
     resetArrayImages: () => void;
     resetAlternativies: () => void;
@@ -55,8 +57,13 @@ interface IUserStore {
     userId: string;
     userProfile: UserProfile;
     loading: boolean;
-    logout: () => void;
+    autoLoggedOut: boolean;
+    highlightButtonText: string;
+    logout: () => void;    
+    autoLogOut: () => void;
+    removeAuthLogOut: () => void;
     setUserDetails: (userId: string, userProfile: UserProfile, cb?: (userId: string) => void) => void;
+    setHighlightButtonText: (text: string) => void;
 }
 
 interface ISlotsStore {
@@ -90,6 +97,7 @@ interface IFilterStore {
     selectAllSubCategories: (category: string) => void;
     setFilterTab: (tab: string) => void;
     clearFilters: () => void;
+    formatFilterCategories: () => void;
 }
 
 type RootStore = {

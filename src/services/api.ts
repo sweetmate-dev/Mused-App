@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native';
 import ExpoMixpanelAnalytics from 'expo-mixpanel-analytics';
 import { getClient, login } from './db';
 import { stores } from '../features/stores';
@@ -113,38 +114,51 @@ export const getProductsByCategory = (category: string) => {
     return client.callFunction("searchByCategory", [category]);
 }
 
-export const getNewProducts = () => {
+export const getNewProducts = (category: string) => {
     const client = getClient();
-    return client.callFunction("getNewProducts", []);
+    return client.callFunction("getNewProducts", [category]);
 }
 
 export const autoLogOut = async () => {
     console.log('Auto logging out...')
     await logout();
-    loginViaAnonProvider().then(async (data: any) => {
-        const userId = data.auth.authInfo.userId;
-        const userProfile = data.auth.authInfo.userProfile.data;
-        await updateUser(userProfile);
-        const { setUserDetails } = stores.root.user;
-        setUserDetails(userId, userProfile);
-    }, (error: Error) => {
-        console.log(error.message)
-    })
+    const { autoLogOut } = stores.root.user;
+    autoLogOut();
+    try {
+        await AsyncStorage.setItem('autoLoggedOut', 'true')
+    } catch (error) {
+        console.log(error.toString())
+    }  
+    // loginViaAnonProvider().then(async (data: any) => {
+    //     const userId = data.auth.authInfo.userId;
+    //     const userProfile = data.auth.authInfo.userProfile.data;
+    //     await updateUser(userProfile);
+    //     const { setUserDetails, autoLogOut } = stores.root.user;
+    //     setUserDetails(userId, userProfile);
+    //     autoLogOut();
+    // }, (error: Error) => {
+    //     console.log(error.message)
+    // })
 }
 
 export const setIdentify = (identify: string) => {
     analytics.identify(identify);
 }
 
-export const RegisterEvent = (eventName: string, params: any) => {
+export const RegisterEvent = async (eventName: string, params: any) => {
     const CT = new Date().getTime();
     if(last_event_time > 0 && CT - last_event_time > AUTO_LOG_OUT_TIME) {
         //Auto Logout
         autoLogOut();
     }
-    if(eventName === 'Login'){
+    if(eventName === 'Login' || eventName === 'Signup'){
         client_email = params.email;
         client_userId = params.userId;
+        try {
+            await AsyncStorage.setItem('autoLoggedOut', 'false')
+        } catch (error) {
+            console.log(error.toString())
+        } 
     }
     console.log(eventName)
     analytics.track(eventName, {

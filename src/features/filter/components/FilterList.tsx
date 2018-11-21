@@ -66,7 +66,7 @@ export default class FilterList extends Component<Props> {
                     rippleContainerBorderRadius={40}>
                     <View style={{flex: 1}}>
                         <Text style={theme.categoryText}>NEW IN</Text>
-                        <Text style={theme.subText}>Supporting text goes here</Text>
+                        <Text style={theme.subText}>All the latest products</Text>
                     </View>                        
                 </Ripple>
                 
@@ -79,10 +79,10 @@ export default class FilterList extends Component<Props> {
                     rippleContainerBorderRadius={40}>
                     <View style={{flex: 1}}>
                         <Text style={theme.categoryText}>CATEGORIES</Text>
-                        <Text style={theme.subText}>Supporting text goes here</Text>
+                        <Text style={theme.subText}>Select specific products</Text>
                     </View>                        
                 </Ripple>
-                <Ripple
+                {/* <Ripple
                     onPress={() => this.onClick('colour')}
                     style={theme.counterItemContainer}
                     rippleSize={120}
@@ -93,7 +93,7 @@ export default class FilterList extends Component<Props> {
                         <Text style={theme.categoryText}>COLOUR</Text>
                         <Text style={theme.subText}>Supporting text goes here</Text>
                     </View>                        
-                </Ripple>
+                </Ripple> */}
             </View>   
         )
     }

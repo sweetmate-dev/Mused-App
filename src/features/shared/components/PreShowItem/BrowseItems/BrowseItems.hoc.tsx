@@ -16,9 +16,10 @@ function BrowseItemsHOC(BrowseItems: any) {
     @observer
     class NewComp extends Component<Props> {
       render() {
-          const { root: { ui, products, slots}, animate, fadeAnim } = this.props;
+          const { root: { ui, products, slots, user}, animate, fadeAnim } = this.props;
           const { contextMenuIsVisible }  = ui;
           const { arrayImages, moveImageToLeft } = products;
+          const { setHighlightButtonText } = user;
           const { 
             setSlotNumber,
             slotNumber, 
@@ -45,11 +46,12 @@ function BrowseItemsHOC(BrowseItems: any) {
                     animate={animate}
                     fadeAnim={fadeAnim}
                     setSlotMachineEffect={setSlotMachineEffect}
-                    requireAuth={this._requireAuth}
+                    checkAnonUser={this._checkAnonUser}
+                    setHighlightButtonText={setHighlightButtonText}
                 />
       }
 
-      _requireAuth = () => {
+      _checkAnonUser = () => {
         const { root: { ui, user } } = this.props;
         const { requestAuth }  = ui;
         const { userProfile } = user;

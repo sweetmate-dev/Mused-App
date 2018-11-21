@@ -18,6 +18,7 @@ type Product = {
     description: string;
     category: string;
     image: string;
+    clickUrl: string;
     priceLabel: string;
     colors: string[];
     retailerName: string;
@@ -48,6 +49,7 @@ type ProductImage = {
 type Post = {
     _id: any;
     postId: number;
+    date: string;
     timeAgo: string;
     authorName: string;
     authorProfilePhoto: string;

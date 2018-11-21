@@ -44,8 +44,7 @@ export default class Browser extends Component<Props, State> {
     componentDidMount() {
         const {getAlternatives, navigation} = this.props;
         const productIds: number[] = navigation.getParam('productIds', []);
-        console.log('JOHN ', productIds)
-        getAlternatives(productIds);
+        if(productIds.length > 0) getAlternatives(productIds);
         this.blackTimeOut = setTimeout(() => {
             this._fadeIn()
         }, 500)        
@@ -62,7 +61,7 @@ export default class Browser extends Component<Props, State> {
                 <Animated.View style={[theme.browseOnlyView, {opacity: this.state.fadeIn, marginBottom: 0}]}>
                     <FlatList
                         data={_listOfAlternatives}
-                        ListHeaderComponent={this.renderHeaderComponent}
+                        // ListHeaderComponent={this.renderHeaderComponent}
                         ListFooterComponent={() => <View style={theme.footerComponent} />}
                         ListEmptyComponent={this._renderEmptyView}
                         renderItem={this._renderItem}

@@ -8,18 +8,19 @@ import {
     StyleSheet,
     Image,
     Dimensions,
-    AsyncStorage,
-    Animated
+    AsyncStorage
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+
 import {
     loginViaFBProvider,
     updateUser 
 } from '../../../services'
 import * as API from '../../../services/api';
-
 const { width } = Dimensions.get('window');
-const logoImage = require('../../../../assets/images/join-mused.jpg');
+
+const logoImage = require('../../../../assets/images/logo.png');
+
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
@@ -31,16 +32,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    content: {
-        flex: 1,
-        position: 'relative',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     logoImage: {
-        marginBottom: 45,
-        width: width * 0.6,
-        height: width * 0.6 * 96 / 380,
+        marginBottom: 25,
+        width: width * 0.25,
+        height: width * 0.25 * 86 / 243,
         resizeMode: 'stretch'
     },
     facebookButton: {
@@ -65,56 +60,32 @@ const styles = StyleSheet.create({
         fontSize: 14,
         letterSpacing: 1,
         fontFamily: 'RalewayBold'
-    },
-    skipButton: {
-        width: width * 0.8,
-        height: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white'
-    },
-    bottomText: {
-        fontSize: 14,
-        color: 'black',
-        backgroundColor: 'transparent',
-        fontFamily: 'QuickSandRegular'
     }
 })
 
 type Props = {
     setUserDetails: (userId: string, userProfile: UserProfile) => void;
     requestAuth: (value: boolean) => void;
-    setLoading: (value: boolean) => void
+    setLoading: (value: boolean) => void;
+    removeAuthLogOut: () => void;
+    navigate: (currentRoute: string, prevRoute: string, params?: any) => void;
 }
 
 type State = {
     userData: any;
-    errorMsg: string;
     firstName: string;
     token: string;
-    opacity: any
 };
 
-export default class AuthControls extends Component<Props, State> {
+export default class ReSignIn extends Component<Props, State> {
     state: State = {
         userData: null,
-        errorMsg: null,
         firstName: '',
-        token: '',
-        opacity: new Animated.Value(0)
+        token: ''
     };
 
     componentDidMount() {
         // this.backupFacebookAPIToken();
-        setTimeout(() => {
-            Animated.timing(                 
-                this.state.opacity,            
-                {
-                    toValue: 1,
-                    duration: 1000, 
-                }
-            ).start()
-        }, 1000)        
     }
 
     backupFacebookAPIToken = async () => {
@@ -177,15 +148,25 @@ export default class AuthControls extends Component<Props, State> {
             const userId = data.auth.authInfo.userId;
             const userProfile = data.auth.authInfo.userProfile.data;
             console.log(userProfile)
+            this.saveFacebookAsName(userProfile.first_name);
             this._updateUser(userId, userProfile);
             API.setIdentify(userProfile.email);
             API.RegisterEvent(actionType, { actionType })            
             this.props.requestAuth(false);
             this.props.setLoading(false);
+            this.props.removeAuthLogOut();
         }, (error: Error) => {
           console.log(error.message)
           this.props.setLoading(false)
         })
+    }
+
+    saveFacebookAsName = async (name: string) => {
+        try {
+          await AsyncStorage.setItem('FacebookAsName', name)
+        } catch (error) {
+          console.log('Error in saving Facebook AsName', error.toString())
+        }   
     }
 
     _updateUser = (userId: string, userProfile: any) => {
@@ -203,24 +184,17 @@ export default class AuthControls extends Component<Props, State> {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Animated.View style={[styles.container, {opacity: this.state.opacity}]}>
-                    <Image source={logoImage} style={styles.logoImage} />
-                    <TouchableWithoutFeedback onPress={() => this.onClickFacebook()}>
-                        <View style={styles.facebookButton}>
-                            <Ionicons name="logo-facebook" size={40} color='white' />
-                            <View style={styles.facebookTextView}>
-                            <Text style={styles.facebookText}>CONTINUE WITH FACEBOOK</Text>
-                            </View>                
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={() => console.log('')}>
-                        <View style={styles.skipButton}>
-                            <Text style={styles.bottomText}>...or signup using <Text style={{textDecorationLine: 'underline'}}>your email</Text></Text>   
-                        </View>
-                    </TouchableWithoutFeedback>
-                </Animated.View>
-            </View>
+          <View style={styles.container}>
+            <Image source={logoImage} style={styles.logoImage} />
+            <TouchableWithoutFeedback onPress={() => this.onClickFacebook()}>
+              <View style={styles.facebookButton}>
+                <Ionicons name="logo-facebook" size={40} color='white' />
+                <View style={styles.facebookTextView}>
+                  <Text style={styles.facebookText}>CONTINUE WITH FACEBOOK</Text>
+                </View>                
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
         )
       }
 }

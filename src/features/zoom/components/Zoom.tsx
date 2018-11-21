@@ -5,8 +5,9 @@ import {
     ScrollView,
     Text,
     BackHandler,
-    Animated
-    // TouchableOpacity,
+    Animated,
+    TouchableOpacity,
+    Linking
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Ripple from 'react-native-material-ripple';
@@ -17,14 +18,15 @@ import { zoomFaceImage, zoomAdditionalImage } from '../../shared';
 const arrowIcon = require('../../../../assets/images/arrow-icon.png');
 const starIcon = require('../../../../assets/images/star.png');
 const starLikeIcon = require('../../../../assets/images/star_like.png');
-const buttonLogo = require('../../../../assets/images/button-logo.png');
+// const buttonLogo = require('../../../../assets/images/button-logo.png');
+const farfetchIcon = require('../../../../assets/images/farfetch.png');
 
 
 type Props = {
     navigation: any;
     prevRoute: string;
     setPrevCurrentRoutes: (currentRoute: string, prevRoute: string) => void;
-    createNewStyle: (id: ProductImage) => void;
+    createNewStyle: (id: ProductImage, category: string) => void;
     goBack: () => void;
     createBookmark: (productId: number) => void;
     deleteBookmarkById: (_id: any) => void;
@@ -45,7 +47,7 @@ export default class Zoom extends Component<Props, State> {
     componentWillMount() {
         const { navigation } = this.props;
         this.product = navigation.getParam('product', {});
-        console.log('JOHN: ', this.product)
+        console.log(this.product)
     }
 
     componentDidMount() {
@@ -73,6 +75,14 @@ export default class Zoom extends Component<Props, State> {
             actionType: 'Swipe photo',
             index
         })
+    }
+
+    onClickLink = () => {
+        const { clickUrl } = this.product;
+        API.RegisterEvent("Zm-buy", {
+            actionType: "Click 'FARFETCH' icon",
+        })
+        Linking.openURL(clickUrl);
     }
 
     render() {
@@ -126,7 +136,7 @@ export default class Zoom extends Component<Props, State> {
                             style={{width: 20, height: 20}}
                             source={this.state.isLiked ? starLikeIcon : starIcon}
                         />
-                    </ Ripple>                 
+                    </Ripple>                 
                     <Animated.View style={[theme.infoView, {marginTop: this.state.marginTop}]}>
                         <View style={theme.brandView}>
                             <Text style={theme.brandText}>{brand.toUpperCase()}</Text>
@@ -140,6 +150,13 @@ export default class Zoom extends Component<Props, State> {
                     <View style={theme.descContainer}>
                         <Text style={theme.descText}>{description}</Text>
                     </View>
+                    <View style={theme.linkView}>
+                        <Text style={theme.descText}>Buy from</Text>
+                        <TouchableOpacity onPress={this.onClickLink}>
+                            <Image source={farfetchIcon} style={theme.linkIcon} />
+                        </TouchableOpacity>
+                        <Text style={theme.descText}>Tap to visit for details</Text>
+                    </View>
                 </ScrollView>
                 <View style={theme.markView}></View>
                 <Ripple
@@ -150,7 +167,7 @@ export default class Zoom extends Component<Props, State> {
                     rippleDuration={1000}
                     onPress={() => this.createNewStyle(this.product)}
                 >
-                    <Image source={buttonLogo} style={theme.buttonLogo} />
+                    {/* <Image source={buttonLogo} style={theme.buttonLogo} /> */}
                     <Text style={theme.buttonText}>STYLE IT</Text>   
                 </Ripple> 
                 {/* <Button style={theme.rightButton} themeType='light' text='ADD TO CART'/> */}
@@ -167,7 +184,7 @@ export default class Zoom extends Component<Props, State> {
             actionType: "Click 'Style' button",
             productID: product.id,
         })
-        this.props.createNewStyle(newProduct);
+        this.props.createNewStyle(newProduct, product.category);
     }
 
     _goBack = () => {

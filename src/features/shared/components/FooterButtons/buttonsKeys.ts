@@ -1,6 +1,6 @@
 export const LOVE: string = 'Love it';
 export const VIEW: string = 'View';
-export const CATEGORIES: string = 'Categories';
+export const CATEGORIES: string = 'Filter';
 export const APPLY: string = 'Apply';
 export const CLEAR: string = 'Clear';
 export const CANCEL: string = 'Cancel';

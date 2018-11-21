@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import FooterButtons from './FooterButtons';
-import { COLLECTION, BROWSE, VIDEOPLAYER, FILTER, VIEW } from '../../../shared';
+import { COLLECTION, BROWSE, VIDEOPLAYER, FILTER, VIEW, NEWSFEED, BROWSE_ONLY } from '../../../shared';
 import { ROOT_STORE } from '../../../stores';
-import { NEWSFEED } from '../../routesKeys';
 import * as API from '../../../../services/api';
 
 type Props = {
@@ -14,7 +13,7 @@ function FooterButtonsHOC(FooterButtons: any) {
     @observer
     class NewComp extends Component<Props> {
       render() {
-          const { root: { ui, slots } } = this.props;
+          const { root: { ui, slots, user } } = this.props;
           const { currentRoute }  = ui;
           const { newImgUrl } = slots;
           const footerIsVisible = 
@@ -31,6 +30,7 @@ function FooterButtonsHOC(FooterButtons: any) {
               createNewOutfit={this._createNewOutfit}
               openProductCategory={this._openProductCategory}
               newImgUrl={newImgUrl}
+              user={user}
             />
               )
     }
@@ -68,10 +68,12 @@ function FooterButtonsHOC(FooterButtons: any) {
     }
 
     _navigateToFilter = () => {
-        const { root: { ui: { navigate } } } = this.props;
+        const { root: { ui: { navigate }, products } } = this.props;
+        const { setBrowseType } = products;
         API.RegisterEvent("Br-footerFilter", {
           actionType: "Click menu 'Filter'"
         })
+        setBrowseType(1);
         navigate(FILTER, BROWSE);
     }
 
@@ -84,8 +86,10 @@ function FooterButtonsHOC(FooterButtons: any) {
     }
 
     _navigateToBrowse = () => {
-      const { root: { ui: { navigate } } } = this.props;
-      navigate(BROWSE, COLLECTION);
+      const { root: { ui: { navigate }, products } } = this.props;
+      const { fromMenu } = products;
+      if(fromMenu) navigate(BROWSE_ONLY, COLLECTION);
+      else navigate(BROWSE, COLLECTION);
     }
 
     _clearFilterAndGoToBrowse = () => {
@@ -106,10 +110,10 @@ function FooterButtonsHOC(FooterButtons: any) {
       setFilterTab('applied')
     }
 
-    _applyFilter = () => {
+    _applyFilter = async () => {
       const { root: { products: { getAlternativesByFilter }, filters  } } = this.props;
       const { setFilterTab } = filters;
-      getAlternativesByFilter();
+      await getAlternativesByFilter();
       API.RegisterEvent("Fi-apply", {
         actionType: "Click 'apply'"
       })

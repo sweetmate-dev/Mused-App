@@ -13,7 +13,7 @@ import theme from '../theme';
 const { width } = Dimensions.get('window');
 const newfeedImage = require('../../../../assets/images/onboard/Screen1/background.jpg');
 const logoImage = require('../../../../assets/images/onboarding-0-logo.jpg');
-const videoSource = require('../../../../assets/videos/1st-onboarding.mp4');
+const videoSource = require('../../../../assets/videos/onboarding-1st.mp4');
 type Props = {
     continue: () => void;
 }
@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
     width: width * 0.7,
     height: width * 0.7 * 296 / 800,
     resizeMode: 'stretch',
-    marginLeft: width * 0.15
+    marginLeft: width * 0.15,
+    marginTop: -10
   },
   videoView: {
     position: 'absolute',
@@ -78,9 +79,9 @@ export default class Step0 extends Component<Props> {
               <View style={theme.buttonButtonView}>
                 <TouchableWithoutFeedback onPress={() => this.props.continue()} >
                   <View style={theme.buttonWrapper}>
-                    {/* <View style={theme.line} /> */}
-                    <Text style={theme.bottomButtonText}>----------- CONTINUE ------------</Text>
-                    {/* <View style={theme.line} /> */}
+                    <View style={theme.line} />
+                    <Text style={theme.bottomButtonText}>CONTINUE</Text>
+                    <View style={theme.line} />
                   </View>
                 </TouchableWithoutFeedback>
               </View>

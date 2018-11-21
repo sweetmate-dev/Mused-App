@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
   imageWrapper: {
     width: width,
     height: width * 568 / 400,
-    position: 'relative'
+    position: 'relative',
+    marginTop: 10
   },
   templateImage: {
     width: width,
@@ -30,14 +31,14 @@ const styles = StyleSheet.create({
   },
   fadeImageWrapper: {
     position: 'absolute',
-    width: width * 502 / 788,
-    height: width * 745 / 788,
-    top: width * 75 / 788,
-    left: width * 130 / 788
+    width: width * 530 / 788,
+    height: width * 775 / 788,
+    top: width * 63 / 788,
+    left: width * 118 / 788
   },
   fadeImage: {
-    width: width * 502 / 800,
-    height: width * 745 / 800,
+      width: width * 530 / 800,
+      height: width * 775 / 800,
   }
 })
 

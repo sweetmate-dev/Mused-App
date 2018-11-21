@@ -17,6 +17,7 @@ type Props = {
     openProductCategory: () => void;
     currentRoute: string;
     newImgUrl: ProductImage;
+    user: IUserStore;
 }
 
 
@@ -75,13 +76,14 @@ export default class Footer extends Component<Props> {
              [CATEGORIES]:  this.props.navigateToFilter,
          }
              return (
-                 <FooterButton
-                         text={button.text}
-                         icon={button.icon}
-                         navigate={actions[button.text]}
-                         key={button.text}
-                         newImgUrl={this.props.newImgUrl}
-                         />
+                <FooterButton
+                    text={button.text}
+                    icon={button.icon}
+                    navigate={actions[button.text]}
+                    key={button.text}
+                    newImgUrl={this.props.newImgUrl}
+                    user={this.props.user}
+                />
              )
         })     
     }

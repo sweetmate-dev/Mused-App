@@ -65,6 +65,7 @@ import {
         borderTopWidth: 1,
         borderTopColor: '#000',
         width: width - 100,
+        marginTop: 20,
         justifyContent: 'center', 
         flexDirection: 'column',
         alignItems: 'center'
@@ -119,7 +120,7 @@ import {
         alignItems: 'center',
         backgroundColor: '#fff',
         flexDirection: 'column',
-        paddingVertical: 20,
+        paddingTop: 20,
         overflow: 'hidden'
     },
     clickableTitle: {

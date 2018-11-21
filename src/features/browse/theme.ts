@@ -28,11 +28,12 @@ export default  StyleSheet.create({
         fontSize: 18,
         fontFamily: 'RalewayBold',
         color: '#333',
-        marginBottom: 2
+        marginBottom: 2,
+        letterSpacing: 2,
     },
     headerSubTitle: {
         fontSize: 11,
-        fontFamily: 'Lato',
+        fontFamily: 'QuickSandRegular',
         color: '#000'
     },
     underlineTitle: { 
@@ -126,7 +127,7 @@ export default  StyleSheet.create({
     descContainer: {
         alignItems: 'center',
         width: IMAGE_WIDTH * 1.2,
-        height: 70,
+        height: 100,
         paddingBottom: 15,
     },
     designerTxt: {
@@ -143,6 +144,12 @@ export default  StyleSheet.create({
         fontFamily: 'QuickSandRegular',
         fontSize: 11,
         color: '#000',
+        textAlign: 'center'
+    },
+    priceText: {
+        color: '#000',
+        fontSize: 12,
+        fontFamily: 'QuickSandBold',
         textAlign: 'center'
     },
 

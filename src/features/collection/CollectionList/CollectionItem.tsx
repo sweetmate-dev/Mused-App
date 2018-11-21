@@ -4,8 +4,8 @@ import {
   View,
   Image,
   TouchableHighlight,
-  Animated,
 } from 'react-native';
+import { LinearGradient } from 'expo';
 import Ripple from 'react-native-material-ripple';
 import { thumbnailImage } from '../../shared';
 import theme from '../theme';
@@ -30,19 +30,20 @@ type Props = {
 type State = {
     isLiked: boolean;
     bookmark: Bookmark | null;
-    fadeIn: any
+    gradientColor: string
 }
 export default class CollectionItem extends Component<Props, State> {
     state: State = {
         isLiked: false,
         bookmark: null,
-        fadeIn: new Animated.Value(1)
+        gradientColor: '#666666'
     }
     componentDidMount() {
         const { listOfBookmarks } = this.props;
         const {  id } = this.props.item;
         const bookmark: Bookmark = listOfBookmarks.find(( bookmark: Bookmark) => bookmark.productId === id);
         Boolean(bookmark) && this.setState({isLiked: true, bookmark })
+        this.startGradientAnimation();
     }
     componentWillReceiveProps(newProps: Props) {
         const { listOfBookmarks } = this.props;
@@ -52,31 +53,68 @@ export default class CollectionItem extends Component<Props, State> {
             Boolean(bookmark) && this.setState({isLiked: true, bookmark })
         }  
     }
+
+    startGradientAnimation = () => {        
+        setTimeout(() => {
+            this.setState({gradientColor: '#888888'})
+        }, 100); 
+        setTimeout(() => {
+            this.setState({gradientColor: '#999999'})
+        }, 200);
+        setTimeout(() => {
+            this.setState({gradientColor: '#AAAAAA'})
+        }, 300);
+        setTimeout(() => {
+            this.setState({gradientColor: '#BBBBBB'})
+        }, 400);
+        setTimeout(() => {
+            this.setState({gradientColor: '#CCCCCC'})
+        }, 500);
+        setTimeout(() => {
+            this.setState({gradientColor: '#DDDDDD'})
+        }, 600);
+        setTimeout(() => {
+            this.setState({gradientColor: '#EEEEEE'})
+        }, 700);
+        setTimeout(() => {
+            this.setState({gradientColor: '#FFFFFF'})
+        }, 800);    
+        setTimeout(() => {
+            this.startGradientAnimation();
+        }, 900);      
+    }
+
     render() {
         const { countAlter, item } = this.props;
         const { brand, unbrandedName, id } = this.props.item;
-        const { isLiked } = this.state;
+        const { isLiked, gradientColor } = this.state;
         return (
             <View style={theme.containerItem}>
-
-                <Ripple 
-                    onPress={this._goToNext} 
-                    style={theme.alterContainer}
-                    rippleSize={80}
-                    rippleDuration={300} 
-                    rippleContainerBorderRadius={40}>
-                    <View style={{alignItems: 'center'}}>
-                        <View style={theme.alterItem}>
-                            <Text style={theme.countText}>{countAlter}</Text>
-                        </View>
-                        <Text style={[theme.countText, {marginTop: 3}]}>alternatives</Text>
-                    </View>                        
-                </Ripple>                    
+                    <Ripple 
+                        onPress={this._goToNext} 
+                        style={theme.alterContainer}
+                        rippleSize={80}
+                        rippleDuration={300} 
+                        rippleContainerBorderRadius={40}>
+                        <View style={{alignItems: 'center'}}>
+                            <LinearGradient 
+                                colors={[
+                                    '#FFFFFF',
+                                    gradientColor
+                                ]}
+                                style={theme.alterItem}
+                            >
+                                <Text style={theme.countText}>{countAlter}</Text>
+                            </LinearGradient>       
+                            <Text style={[theme.countText, {marginTop: 3}]}>alternatives</Text>
+                        </View>                        
+                    </Ripple>  
+                           
                     
                 <View style={theme.imageContainer}>
                     <Ripple 
                         onPress={() => this.props.navigateToProductSingle(item)}
-                        style={[theme.clickableImageContainer, {opacity: this.state.fadeIn}]}
+                        style={theme.clickableImageContainer}
                         rippleSize={150}
                         rippleDuration={300} 
                         rippleCentered={true}

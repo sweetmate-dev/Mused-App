@@ -22,17 +22,18 @@ export default StyleSheet.create({
     flex: 1,
   },
   buttonButtonView: {
-    height: 40,
+    height: 55,
+    width,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    marginBottom: 15
+    paddingBottom: 15
   },
   buttonWrapper: {
-    width: width * 0.7,
+    width: width * 0.5,
     height: 40,
     alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'row',
   },
   line: {
     height: 1,
@@ -44,7 +45,7 @@ export default StyleSheet.create({
     paddingVertical: 10,
     fontSize: 9,
     letterSpacing: 1,
-    fontFamily: 'QuickSandRegular'
+    fontFamily: 'QuickSandBold'
   },
   headerText: {
     height: 80,

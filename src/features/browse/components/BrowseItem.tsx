@@ -56,7 +56,7 @@ export default class BrowseItem extends Component<Props, State> {
     //     }  
     // }
     render() {
-        const {item: { brand, unbrandedName, id, /*priceLabel*/ }, index} =  this.props;
+        const {item: { brand, unbrandedName, id, priceLabel }, index, browseOnly} =  this.props;
         let borderStyle = {};
         if(index % 2 === 0) {
             borderStyle = {
@@ -71,7 +71,7 @@ export default class BrowseItem extends Component<Props, State> {
             }
         }
         return (
-            <View style={[theme.productContainer, borderStyle]}>
+            <View key={id} style={[theme.productContainer, borderStyle]}>
                 {this._renderLikeIcon()}
                 <View style={theme.imageContainer}>
                     <Ripple
@@ -97,9 +97,9 @@ export default class BrowseItem extends Component<Props, State> {
                         rippleDuration={300} 
                         rippleContainerBorderRadius={40}>
                         <View style={theme.descWrapper}>
-                            <Text style={theme.designerTxt}>{brand.toUpperCase()}</Text>
-                            <Text style={[theme.descTxt, {paddingVertical: 3}]}>{unbrandedName}</Text>
-                            {/* <Text style={theme.descTxt}>{priceLabel}</Text> */}
+                            <Text style={theme.designerTxt}>{brand !== undefined && brand.toUpperCase()}</Text>
+                            <Text style={[theme.descTxt, {paddingVertical: 3, lineHeight: 12, fontSize: 9}]}>{unbrandedName}</Text>
+                            {browseOnly && <Text style={theme.descTxt}>{priceLabel}</Text>}
                         </ View>
                     </Ripple>
                 </View>

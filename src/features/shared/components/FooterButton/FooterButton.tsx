@@ -3,7 +3,8 @@ import {
   Text,
   View,
   Image,
-  StyleProp
+  StyleProp,
+  Animated
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 
@@ -34,9 +35,11 @@ type Props = {
     styleForContainer?: StyleProp<any>;
     navigate?: () => void
     newImgUrl?: ProductImage;
+    user?: IUserStore;
 };
 type State = {
-    isSavedOutfit: boolean
+    isSavedOutfit: boolean;
+    opacity: any
 }
 export default class FooterButton extends Component<Props, State> {
     static defaultProps = {
@@ -45,13 +48,30 @@ export default class FooterButton extends Component<Props, State> {
         styleForContainer: {}
     }
     state = {
-        isSavedOutfit: false 
+        isSavedOutfit: false,
+        opacity: new Animated.Value(0.4)
     }
     componentWillReceiveProps(newProps: Props) {
         if (this.props.text === LOVE && newProps.newImgUrl !== this.props.newImgUrl) {
             this.setState({isSavedOutfit: false})
         }
     }
+
+    componentDidMount() {
+        this.startHighlightAnimation();
+    }
+
+    startHighlightAnimation = () => {
+        this.state.opacity.setValue(0.4);
+        Animated.timing(                 
+            this.state.opacity,            
+            {
+                toValue: 0,                   
+                duration: 1500, 
+            }
+        ).start(() => this.startHighlightAnimation());   
+    }
+
     render() {
         const {text, icon, whiteTheme, greyTheme, styleForContainer }  = this.props;
         let iconSource = 
@@ -67,9 +87,20 @@ export default class FooterButton extends Component<Props, State> {
         const backgroundColorGrey = greyTheme ? { backgroundColor: '#dfdede'} : {}
         const _styleForContainer = styleForContainer;
         // const underlayColor: string = whiteTheme ? '#fff' : '#000';
+        let isHighlighted = false;
+        if(this.props.user !== undefined){
+            const { user: {userProfile, highlightButtonText} } = this.props;
+            if(userProfile && userProfile.email === 'anonymous' && text === highlightButtonText) isHighlighted = true;
+        }
+        
         return (
             <Ripple
-                style={[theme.footerButtonContainer, backgroundColor, backgroundColorGrey, _styleForContainer]}
+                style={[
+                    theme.footerButtonContainer, 
+                    backgroundColor, 
+                    backgroundColorGrey, 
+                    _styleForContainer,                    
+                ]}
                 onPress={this._navigateToRoute}
                 rippleSize={40}
                 rippleDuration={300} 
@@ -77,12 +108,33 @@ export default class FooterButton extends Component<Props, State> {
                 <View  style={[theme.footerButtonConfirmContainer, backgroundColor, backgroundColorGrey]}>
                     <Image style={[theme.footerCheckImage]} source={iconSource} />
                     <Text style={[theme.footerCheckText, textStyle]}>{text}</Text>
+                    <Animated.View 
+                        style={{
+                            backgroundColor: 'gray',
+                            opacity: isHighlighted ? this.state.opacity : 0,
+                            position: 'absolute',
+                            top: 8,
+                            bottom: 8,
+                            right: 8,
+                            left: 8,
+                            borderRadius: 10,
+                            overflow: 'hidden'
+                        }}                        
+                    />
                 </View>
             </Ripple>
         )
     }
     _navigateToRoute = () => {
-        const { navigate, text }  = this.props;
+        const { navigate, text, user }  = this.props;
+
+        // toggle Highlight button text
+        if(user !== undefined) {
+            const { user: { highlightButtonText, setHighlightButtonText} } = this.props;
+            if(highlightButtonText === 'View' && text === 'View') setHighlightButtonText('Categories');
+            else if(highlightButtonText === 'Categories' && text === 'Categories') setHighlightButtonText('');
+        }        
+
         if (!navigate) {
             return;
         }

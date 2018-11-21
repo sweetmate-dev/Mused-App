@@ -104,7 +104,10 @@ export default class Browser extends Component<Props, State> {
         
 
     _renderItem = (props: {item: Product, index: number}) =>
-        <BrowseItem item={props.item} index={props.index}
+        <BrowseItem 
+            key={props.item.id}
+            item={props.item} 
+            index={props.index}
             likedItemIndex={this.state.likedItemIndex}
             likeItem={this._likeItem}
             navigateToProductSingle={this.props.navigateToProductSingle}

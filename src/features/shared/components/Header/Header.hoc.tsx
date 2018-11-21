@@ -17,29 +17,27 @@ function HeaderHOC(Header: any) {
     class NewComp extends Component<Props> {
         render() {
             const { navigation, showContent,  root: { ui, user, products, filters } } = this.props;
-            const { setPrevCurrentRoutes, currentRoute, prevRoute, navigate, goBack } = ui;
-            const { userProfile, logout } = user;
-            const { resetArrayImages, resetAlternativies, resetCollection } = products;
+            const { userProfile, logout, setUserDetails } = user;
+            const { resetArrayImages, resetAlternativies, resetCollection, getNewProducts, setBrowseType } = products;
             const { filterTab, clearFilters } = filters;
 
             return <Header
-                    setPrevCurrentRoutes={setPrevCurrentRoutes}
                     navigation={navigation}
                     showContent={showContent}
                     userProfile={userProfile}
                     logout={logout}
-                    currentRoute={currentRoute}
                     hideContextMenu={this._hideContextMenu}
                     resetArrayImages={resetArrayImages}
                     filterTab={filterTab}
                     backToFilterTabs={this._setFilterTab}
                     clearFilters={clearFilters}
                     resetAlternativies={resetAlternativies}
-                    prevRoute={prevRoute}
                     onPressLogo={this.onPressLogo}
-                    goBack={goBack}
-                    navigate={navigate}
                     resetCollection={resetCollection}
+                    getNewProducts={getNewProducts}
+                    setBrowseType={setBrowseType}
+                    setUserDetails={setUserDetails}
+                    ui={ui}
             />
         }
 

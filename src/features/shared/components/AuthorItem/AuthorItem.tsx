@@ -22,7 +22,7 @@ export default class AuthorItem extends Component<Props> {
     };
     render() {
         const {  author, time, imgAuthorUrl, authorContainer, onCollection, postType } = this.props;
-        let pt = 'Inspiration by';
+        let pt = 'Selected by';
         if(postType === 'list') pt = 'List by';
         else if(postType === 'product') pt = 'Product by';
         return (

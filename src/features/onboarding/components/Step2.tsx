@@ -8,7 +8,7 @@ import {
   Animated,
   ScrollView,
   TouchableWithoutFeedback,
-  // Easing
+  Easing
 } from 'react-native';
 import theme from '../theme';
 import Ripple from 'react-native-material-ripple';
@@ -153,7 +153,8 @@ type State = {
   itemMarginTop: any,
   selectedImage: any,
   step: number,
-  slideCount: number
+  slideCount: number,
+  disableContinue: boolean
 };
 
 export default class Step2 extends Component<Props, State> {
@@ -163,7 +164,8 @@ export default class Step2 extends Component<Props, State> {
       itemMarginTop: new Animated.Value(0),
       step: 1,
       selectedImage: shirtImage,
-      slideCount: 0
+      slideCount: 0,
+      disableContinue: false
     }
 
     onPressClick = () => {
@@ -186,26 +188,30 @@ export default class Step2 extends Component<Props, State> {
             }
           ).start();
         }, 500)
-      } else {
+      } else if(!this.state.disableContinue){
         this.props.continue()
       }
     }
 
     onClickImage = (image: any) => {     
-      console.log(image) 
-      // this.state.itemMarginTop.setValue(0)
-      // Animated.timing(                 
-      //   this.state.itemMarginTop,            
-      //   {
-      //     toValue: 300,
-      //     duration: 300,
-      //     easing: Easing.cubic
-      //   }
-      // ).start(() => {
-      //   this.state.itemMarginTop.setValue(0);        
-      //   if(this.state.slideCount === 3) this.props.continue();
-      //   this.setState({selectedImage: image, slideCount: this.state.slideCount + 1});
-      // });
+      this.state.itemMarginTop.setValue(0)
+      Animated.timing(                 
+        this.state.itemMarginTop,            
+        {
+          toValue: 300,
+          duration: 300,
+          easing: Easing.cubic
+        }
+      ).start(() => {
+        this.state.itemMarginTop.setValue(0);        
+        if(this.state.slideCount === 3){
+          this.setState({disableContinue: true})
+          setTimeout(() => {
+            this.props.continue();
+          }, 2000);          
+        } 
+        this.setState({selectedImage: image, slideCount: this.state.slideCount + 1});
+      });
     }
 
     render() {
@@ -234,9 +240,9 @@ export default class Step2 extends Component<Props, State> {
                 <View style={theme.buttonButtonView}>
                   <TouchableWithoutFeedback onPress={() => this.onPressClick()} >
                     <View style={theme.buttonWrapper}>
-                      <Text style={theme.bottomButtonText}>
-                      ----------- {this.state.step === 1 ? 'CONTINUE' : 'VIEW'} ------------
-                      </Text>
+                      <View style={theme.line} />
+                      <Text style={theme.bottomButtonText}>CONTINUE</Text>
+                      <View style={theme.line} />
                     </View>
                   </TouchableWithoutFeedback>
                 </View>              
@@ -297,7 +303,7 @@ export default class Step2 extends Component<Props, State> {
     renderStep2View = () => {
       return (
         <Animated.View style={[styles.content, {opacity: this.state.fadeIn}]}>
-          <TypeWriterText text={['Try using the ‘View‘ button', '(at the bottom of screen)']} />
+          <TypeWriterText text={['now create new looks!', '']} />
           <ScrollView style={styles.scrollView}>
             <View style={{flexDirection: 'row'}}>
               <Ripple
@@ -357,7 +363,7 @@ export default class Step2 extends Component<Props, State> {
                   />
                   <View style={styles.descWrapper}>
                     <Text style={styles.clickableTitle}>GUCCI</Text>
-                    <Text style={styles.clickableSubTitle}>Floral twill silk shirt</Text>
+                    <Text style={styles.clickableSubTitle}>Floral print hoodle</Text>
                   </View>                  
                 </View>
               </Ripple>

@@ -6,6 +6,8 @@ import {
   Dimensions
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
+import moment from 'moment'
+// import { timeSince } from '../../../services/operators';
 
 import { AuthorItem, } from '../../shared';
 import theme from '../theme';
@@ -22,7 +24,7 @@ type Props = {
 export default class NewsfeedItem extends Component<Props> {
 
     render() {
-        const { timeAgo, authorProfilePhoto, authorName, inspirationalImage, title, postType } = this.props.item;
+        const { date, authorProfilePhoto, authorName, inspirationalImage, title, postType } = this.props.item;
         return (
             <View style={theme.container}>
                 <View style={theme.titleView}>
@@ -54,12 +56,17 @@ export default class NewsfeedItem extends Component<Props> {
                 <AuthorItem
                     postType={postType}
                     author={authorName}
-                    time={timeAgo}
+                    time={this.getTimeSincePost(date)}
                     imgAuthorUrl={{uri: authorProfilePhoto}}
                     authorContainer={theme.authorContainer}
                 />
             </View>
         )
+    }
+
+    getTimeSincePost = (date: string) => {
+        // return timeSince(date) + ' ago'
+        return moment(new Date(date)).fromNow(false)
     }
 
     _navigateToCollection = () => {
@@ -69,7 +76,6 @@ export default class NewsfeedItem extends Component<Props> {
             goToZoomDirectly,
             item: {timeAgo, authorProfilePhoto, authorName, slots, postType, productIds, productId } 
         } = this.props;
-        console.log('postType: ', postType)
         if(postType === 'list') {
             goToBrowseDirectly(productIds)
             return;

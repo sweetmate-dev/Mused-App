@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native';
 import { observable, action } from 'mobx';
 
 import { getUserDetails, logout } from '../../services';
@@ -10,6 +11,8 @@ export default class ObservableStore implements IUserStore {
     @observable profile: UserProfile = null;
     @observable userDetails: any = null;
     @observable loading: boolean = true;
+    @observable autoLoggedOut: boolean = false;
+    @observable highlightButtonText: string = '';
 
     @action
     public logout = () => {
@@ -26,6 +29,26 @@ export default class ObservableStore implements IUserStore {
 
     public get userId() {
         return this.id;
+    }
+
+    @action
+    public autoLogOut = () => {
+        this.autoLoggedOut = true;
+    }
+
+    @action
+    public removeAuthLogOut = () => {
+        this.autoLoggedOut = false;
+    }
+
+    @action
+    public setHighlightButtonText = async (text: string) => {        
+        try {
+            await AsyncStorage.setItem('highlightText', text);
+            this.highlightButtonText = text;
+        } catch (error) {
+            console.log('Error in setting Highlighted buttont ext', error.toString())
+        }
     }
 
     @action

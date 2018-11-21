@@ -18,6 +18,7 @@ import Step5 from './Step5';
 import Step6 from './Step6';
 import Step7 from './Step7';
 import Step8 from './Step8';
+import Step9 from './Step9';
 import * as API from '../../../services/api';
 import { loginViaFBProvider, loginViaAnonProvider, updateUser } from '../../../services'
 
@@ -96,15 +97,18 @@ export default class Onboarding extends Component<Props, State> {
           API.RegisterEvent('On-Drag', {actionType: 'View screen'})
           break;
         case 3:
-          API.RegisterEvent('On-TapForDetails', {actionType: 'View screen'})
+          API.RegisterEvent('On-Drag', {actionType: 'View screen'})
           break;
         case 4:
-          API.RegisterEvent('On-Zoom', {actionType: 'View screen'})
+          API.RegisterEvent('On-TapForDetails', {actionType: 'View screen'})
           break;
         case 5:
-          API.RegisterEvent('On-MatchShoes', {actionType: 'View screen'})
+          API.RegisterEvent('On-Zoom', {actionType: 'View screen'})
           break;
-        case 7:
+        case 6:
+          API.RegisterEvent('On-MatchSkirt', {actionType: 'View screen'})
+          break;
+        case 8:
           API.RegisterEvent('On-Welcome', {actionType: 'View screen'})
           break;
         default:
@@ -182,8 +186,8 @@ export default class Onboarding extends Component<Props, State> {
 
     _updateUser = (userId: string, userProfile: any) => {
       updateUser(userProfile).then(
-          () => {
-              this.props.setUserDetails(userId, userProfile)
+          async () => {
+              await this.props.setUserDetails(userId, userProfile)
               this.props.onSkipSignUp()
               this.props.setLoading(false)
           },
@@ -218,7 +222,7 @@ export default class Onboarding extends Component<Props, State> {
       const { screenIndex, facebookData } = this.state;
         return (
           <View style={theme.container}>
-            {screenIndex === 5 || screenIndex === 8 || <Image source={logoImage} style={theme.logo} />  }
+            {screenIndex === 6 || screenIndex === 9 || <Image source={logoImage} style={theme.logo} />  }
             <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
             
             { 
@@ -255,7 +259,11 @@ export default class Onboarding extends Component<Props, State> {
             }
             { 
               screenIndex === 8 && 
-              <Step8 
+              <Step8 continue={this.onNext}/> 
+            }
+            { 
+              screenIndex === 9 && 
+              <Step9 
                 firstName={facebookData.name}
                 facebookId={facebookData.id}
                 continue={this.onNext}

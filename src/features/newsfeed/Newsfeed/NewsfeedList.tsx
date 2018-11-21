@@ -53,8 +53,31 @@ export default class NewsfeedList extends Component<Props, State> {
         }
         
     }
+
+    //sort newsfeed by pin field
+    /*
+        if 0 please treat as normal, no speical treatment needed
+        if 1 please place at the top of newfeed
+        if 2 please place 2nd on newsfeed
+        if 3 please place 3rd on newsfeed
+    */
+    sortData = (data: any) => {
+        if(data === undefined) return [];
+        for(let i = 0; i < data.length; i++){
+            for(let j = i + 1; j < data.length; j++){
+                if(data[j].pin === 0) continue;
+                if(data[i].pin > data[j].pin || (data[i].pin === 0)) {
+                    const temp = data[i];
+                    data[i] = data[j];
+                    data[j] = temp;
+                }
+            }
+        }
+        return data;
+    }
     
     render() {
+        // console.log(this.sortData(this.props.listOfPosts))
         return (
             <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
                 <StatusBar
@@ -63,7 +86,7 @@ export default class NewsfeedList extends Component<Props, State> {
                 />
                 {(this.props.listOfPosts && this.props.listOfPosts.length) && <FlatList
                     onScroll={({ nativeEvent }) => this.onScroll(nativeEvent)}
-                    data={this.props.listOfPosts}
+                    data={this.sortData(this.props.listOfPosts)}
                     renderItem={this._renderItem}
                     keyExtractor={ (item) => `${item._id}`}
                     ItemSeparatorComponent={this._renderSeparator}

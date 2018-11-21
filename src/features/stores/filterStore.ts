@@ -69,4 +69,9 @@ export default class ObservableStore implements IFilterStore {
         }
      }
 
+     @action
+     public formatFilterCategories = () => {
+         this.categoriesFilter = [];
+     }
+
 }

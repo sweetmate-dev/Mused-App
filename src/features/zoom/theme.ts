@@ -99,16 +99,17 @@ export default StyleSheet.create({
         backgroundColor: 'white'
     },
     buttonsContainer: {
-        height: 70,
+        height: 60,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 15,
+        marginHorizontal: 10,
+        marginBottom: 10,
         backgroundColor: 'black'
     },
     descContainer: {
         paddingHorizontal: 30,
-        paddingBottom: 60,
+        paddingBottom: 30,
         paddingTop: 15,
         backgroundColor: 'white',
     },
@@ -177,5 +178,15 @@ export default StyleSheet.create({
         fontFamily: 'Lato',
         paddingHorizontal: 30,
         paddingTop: 5
+    },
+    linkIcon: {
+        width,
+        height: 22, 
+        marginVertical: 10,
+        resizeMode: 'contain',
+    },
+    linkView: {
+        alignItems: 'center',
+        paddingBottom: 60
     }
 });

@@ -9,7 +9,7 @@ const hasLoopSupport = !major && minor >= 45;
 export default class Indicator extends PureComponent {
   static defaultProps = {
     animationEasing: Easing.linear,
-    animationDuration: 1200,
+    animationDuration: 600,
 
     animating: true,
     interaction: true,
