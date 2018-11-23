@@ -16,6 +16,7 @@ type Props = {
     listOfCategory: Category[];
     filterTab: string;
     setFilterTab: (tab: string) => void;
+    onClickNewIn: () => void;
 }
 export default class FilterList extends Component<Props> {
     state = { 
@@ -119,7 +120,7 @@ export default class FilterList extends Component<Props> {
         API.RegisterEvent("Fi-newIn", {
             actionType: "Click 'New in' button"
         })
-        alert('coming soon')
+        this.props.onClickNewIn();
     }
 
     onClickClothe = () => {

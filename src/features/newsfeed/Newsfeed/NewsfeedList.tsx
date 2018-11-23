@@ -5,14 +5,18 @@ import {
   StatusBar,
   Animated
 } from 'react-native';
+import { Permissions, Notifications } from 'expo';
 
 import  NewsfeedItem from './NewsfeedItem';
 import theme from '../theme';
 // import * as API from '../../../services/api';
+const DAY_TIME = 24 * 3600 * 1000;
 
 type State = {
     fadeIn: any,
-    numberOfcontent: number
+    numberOfcontent: number,
+    token: string,
+    notification: any,
 };
 
 type Props = {
@@ -28,13 +32,76 @@ export default class NewsfeedList extends Component<Props, State> {
 
     state: State = {
         fadeIn: new Animated.Value(1),
-        numberOfcontent: 1
+        numberOfcontent: 1,
+        token: null,
+        notification: null,
     }
 
     componentDidMount() {  
         this.props.getPosts();
         this.props.getBookmarksByUserId();
+        // this.registerForPushNotifications();
     }
+
+    async registerForPushNotifications() {
+        const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    
+        if (status !== 'granted') {
+          const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+          if (status !== 'granted') {
+            return;
+          }
+        }
+    
+        const token = await Notifications.getExpoPushTokenAsync();
+    
+        Notifications.addListener(this.handleNotification);
+    
+        this.setState({
+          token,
+        });
+        // this.sendPushNotification(token)
+        Notifications.scheduleLocalNotificationAsync({
+            title: 'Mused',
+            body: 'Hi, it‘s Mused. 15 new looks are ready to edit',
+        }, {
+            time: (new Date().getTime()) + DAY_TIME * 1
+        })
+        Notifications.scheduleLocalNotificationAsync({
+            title: 'Mused',
+            body: 'Create an outfit from your Balenciaga faves',
+        }, {
+            time: (new Date().getTime()) + DAY_TIME * 2
+        })
+        Notifications.scheduleLocalNotificationAsync({
+            title: 'Mused',
+            body: 'Try styling this trend?',
+        }, {
+            time: (new Date().getTime()) + DAY_TIME * 3
+        })
+    }
+
+    sendPushNotification = (token = this.state.token) => {
+        return fetch('https://exp.host/--/api/v2/push/send', {
+          body: JSON.stringify({
+            to: token,
+            title: 'Mused',
+            body: 'Welcome to You!',
+            data: { message: 'Welcome to You!' },
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+        });
+    }
+    
+    handleNotification = (notification: any) => {
+        this.setState({
+            notification,
+        });
+        console.log('Notification Data', notification)
+    };
 
     onScroll(nativeEvent: any) {
         const { contentOffset, contentSize, layoutMeasurement } = nativeEvent;    
@@ -78,6 +145,7 @@ export default class NewsfeedList extends Component<Props, State> {
     
     render() {
         // console.log(this.sortData(this.props.listOfPosts))
+        if(this.props.listOfPosts !== undefined) console.log('NewsFeed Length: ' , this.props.listOfPosts.length);
         return (
             <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
                 <StatusBar

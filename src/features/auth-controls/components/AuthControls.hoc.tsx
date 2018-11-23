@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
 import { inject, observer } from 'mobx-react';
+import { Permissions, Notifications } from 'expo';
 // import AuthControls from './AuthControls';
 import { NavigatorStack } from '../../navigation';
 import { Footer, FooterButtons, ContextMenu } from '../../shared';
@@ -11,12 +12,17 @@ import { Onboarding } from '../../onboarding';
 import AuthControls from './AuthControls';
 import ReSignIn from './ResignIn';
 
+const DAY_TIME = 24 * 3600 * 1000;
+const notificationIcon = 'https://cdn-images.farfetch-contents.com/13/38/44/13/13384413_15718070_480.jpg';
+
 type Props = {
     root?: RootStore;
 };
 type State = {
-    newUser: boolean;
-    skipped: boolean
+    newUser: boolean,
+    skipped: boolean,
+    token: string,
+    notification: any,
 };
 
 function AuthControlsHOC(Onboarding: any) {
@@ -26,8 +32,11 @@ function AuthControlsHOC(Onboarding: any) {
     class NewComponent extends Component<Props, State> {
         state: State = {
             newUser: false,
-            skipped: false
+            skipped: false,
+            token: null,
+            notification: null,
         }
+
         componentDidMount() {
             this.checkAutoLoggedOut()
             const userAuthData = getAuthUserData();
@@ -39,9 +48,70 @@ function AuthControlsHOC(Onboarding: any) {
             } else {
                 this.setState({newUser: true})
             }
+            // this.registerForPushNotifications()
         }
 
+        async registerForPushNotifications() {
+            const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
         
+            if (status !== 'granted') {
+                const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+                if (status !== 'granted') {
+                    return;
+                }
+            }
+        
+            const token = await Notifications.getExpoPushTokenAsync();        
+            Notifications.addListener(this.handleNotification);
+        
+            this.setState({
+                token,
+            });
+            // this.sendPushNotification(token)
+            Notifications.scheduleLocalNotificationAsync({
+                title: 'Mused',
+                body: 'Hi, it‘s Mused. 15 new looks are ready to edit',
+                icon: notificationIcon
+            }, {
+                time: (new Date().getTime()) + DAY_TIME * 1
+            })
+            Notifications.scheduleLocalNotificationAsync({
+                title: 'Mused',
+                body: 'Create an outfit from these 10 Balenciaga faves',
+                icon: notificationIcon
+            }, {
+                time: (new Date().getTime()) + DAY_TIME * 2
+            })
+            Notifications.scheduleLocalNotificationAsync({
+                title: 'Mused',
+                body: 'Try styling this trend?',
+                icon: notificationIcon
+            }, {
+                time: (new Date().getTime()) + DAY_TIME * 3
+            })
+        }
+
+        handleNotification = (notification: any) => {
+            this.setState({
+                notification,
+            });
+            console.log('Notification Data', notification)
+        };
+
+        sendPushNotification = (token = this.state.token) => {
+            return fetch('https://exp.host/--/api/v2/push/send', {
+              body: JSON.stringify({
+                to: token,
+                title: 'Mused',
+                body: 'Welcome to You!',
+                data: { message: 'Welcome to You!' },
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              method: 'POST',
+            });
+        }
 
         checkAutoLoggedOut = async () => {
             try {
@@ -57,6 +127,7 @@ function AuthControlsHOC(Onboarding: any) {
         }
 
         _onSkipSignUp = async () => {
+            this.registerForPushNotifications();
             this.setState({newUser: false});
         }
 

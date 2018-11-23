@@ -54,4 +54,9 @@ export default class ObservableStore implements ISlotsStore {
     addOrReplaceSixthSlot = (item: HashMap<string>) => {
         this.sixthSlot = item;
     }
+
+    @action
+    removeSixthSlot = () => {
+        this.sixthSlot = null;
+    }
 }

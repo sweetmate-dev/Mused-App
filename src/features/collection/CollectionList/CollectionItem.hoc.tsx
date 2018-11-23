@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import CollectionItem from './CollectionItem';
-import { COLLECTION, ZOOM } from '../../shared';
+import { COLLECTION, COLLECTION_ZOOM } from '../../shared';
 import { ROOT_STORE } from '../../stores';
 import * as API from '../../../services/api';
 
@@ -43,8 +43,7 @@ function CollectionItemHOC(CollectionItem: any) {
         API.RegisterEvent("Cl-product", {
           actionType: "Click any product"
         });
-        navigate(ZOOM, COLLECTION, {product});
-
+        navigate(COLLECTION_ZOOM, COLLECTION, {product});
       }
     }
     return NewComp;

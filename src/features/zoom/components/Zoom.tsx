@@ -86,7 +86,8 @@ export default class Zoom extends Component<Props, State> {
     }
 
     render() {
-        const { id, description, priceLabel, brand, unbrandedName } = this.product;
+        const { id, description, priceLabel, brand, unbrandedName, category } = this.product;
+        console.log(category)
         return (
             <View style={theme.container}>
                 <ScrollView 
@@ -94,27 +95,51 @@ export default class Zoom extends Component<Props, State> {
                     onScroll={({ nativeEvent }) => this.onScroll(nativeEvent)}
                     scrollEventThrottle={100}
                 > 
-                    <Swiper
-                        style={theme.wrapper} 
-                        dotStyle={{width: 6, height: 6}}
-                        activeDotStyle={{width: 6, height: 6}}
-                        dotColor='#CACACA'
-                        paginationStyle={{marginBottom: -15}}
-                        onIndexChanged={this._onChangeSwiperIndex}
-                        activeDotColor='#949494'>
-                        <View style={theme.wrapper}>
-                            <Image source={{uri: `${zoomFaceImage}${id}.jpg`}} style={theme.firstImage} />                        
-                        </View>
-                        <View style={[theme.wrapper, {justifyContent: 'center'}]}>
-                            <Image source={{uri: `${zoomAdditionalImage}${id}_1.jpg`}} style={theme.secondImage} />
-                        </View>
-                        <View style={[theme.wrapper, {justifyContent: 'center'}]}>
-                            <Image source={{uri: `${zoomAdditionalImage}${id}_2.jpg`}} style={theme.firstImage} />
-                        </View>
-                        <View style={[theme.wrapper, {justifyContent: 'center'}]}>
-                            <Image source={{uri: `${zoomAdditionalImage}${id}_3.jpg`}} style={theme.firstImage} />
-                        </View>
-                    </Swiper>
+                    {
+                        (category === 'jewelry' || category === 'belts' || category === 'gloves' || category === 'hats' || category === 'scarves') ?
+                        <Swiper
+                            style={theme.wrapper} 
+                            dotStyle={{width: 6, height: 6}}
+                            activeDotStyle={{width: 6, height: 6}}
+                            dotColor='#CACACA'
+                            paginationStyle={{marginBottom: -15}}
+                            onIndexChanged={this._onChangeSwiperIndex}
+                            activeDotColor='#949494'
+                        >                
+                            <View style={[theme.wrapper, {justifyContent: 'center'}]}>
+                                <Image source={{uri: `${zoomAdditionalImage}${id}_1.jpg`}} style={theme.firstImage} />
+                            </View>
+                            <View style={[theme.wrapper, {justifyContent: 'center'}]}>
+                                <Image source={{uri: `${zoomAdditionalImage}${id}_2.jpg`}} style={theme.firstImage} />
+                            </View>
+                            <View style={[theme.wrapper, {justifyContent: 'center'}]}>
+                                <Image source={{uri: `${zoomAdditionalImage}${id}_3.jpg`}} style={theme.firstImage} />
+                            </View>
+                        </Swiper>
+                        :
+                        <Swiper
+                            style={theme.wrapper} 
+                            dotStyle={{width: 6, height: 6}}
+                            activeDotStyle={{width: 6, height: 6}}
+                            dotColor='#CACACA'
+                            paginationStyle={{marginBottom: -15}}
+                            onIndexChanged={this._onChangeSwiperIndex}
+                            activeDotColor='#949494'
+                        >
+                            <View style={theme.wrapper}>
+                                <Image source={{uri: `${zoomFaceImage}${id}.jpg`}} style={theme.firstImage} />                        
+                            </View>                    
+                            <View style={[theme.wrapper, {justifyContent: 'center'}]}>
+                                <Image source={{uri: `${zoomAdditionalImage}${id}_1.jpg`}} style={theme.firstImage} />
+                            </View>
+                            <View style={[theme.wrapper, {justifyContent: 'center'}]}>
+                                <Image source={{uri: `${zoomAdditionalImage}${id}_2.jpg`}} style={theme.firstImage} />
+                            </View>
+                            <View style={[theme.wrapper, {justifyContent: 'center'}]}>
+                                <Image source={{uri: `${zoomAdditionalImage}${id}_3.jpg`}} style={theme.firstImage} />
+                            </View>
+                        </Swiper>
+                    }
                     <Ripple 
                         style={theme.backButtonView}
                         rippleContainerBorderRadius={15 / 2} 

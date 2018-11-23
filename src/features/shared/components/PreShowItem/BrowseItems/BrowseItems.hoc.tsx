@@ -55,6 +55,7 @@ function BrowseItemsHOC(BrowseItems: any) {
         const { root: { ui, user } } = this.props;
         const { requestAuth }  = ui;
         const { userProfile } = user;
+        console.log('Checking Anonymous User...')
         if(userProfile && userProfile.email === 'anonymous') requestAuth(true)
       }
 

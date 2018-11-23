@@ -71,6 +71,7 @@ export const getProductsByCatsSubs = (categories: Category[]) => {
     const client = getClient();
     let _categories = 
         [...categories.map( (category: Category) => ({...category, subCategories: [...category.subCategories]}))];
+    console.log(_categories)
     return client.callFunction("getProductsByCatsSubs", [_categories]);
 }
 
@@ -116,6 +117,7 @@ export const getProductsByCategory = (category: string) => {
 
 export const getNewProducts = (category: string) => {
     const client = getClient();
+    console.log(category)
     return client.callFunction("getNewProducts", [category]);
 }
 

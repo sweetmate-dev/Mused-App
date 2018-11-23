@@ -12,6 +12,7 @@ import {
     COLLECTION,
     VIDEOPLAYER,
     BROWSE, 
+    COLLECTION_ZOOM,
     BROWSE_ONLY,
     NEWSFEED, 
     ZOOM, 
@@ -33,11 +34,17 @@ export default createStackNavigator(
         },
         [BROWSE]: {
             screen:  Browse
-        },
+        },        
         [BROWSE_ONLY]: {
             screen: BrowseOnly
         },
         [ZOOM]: {
+            screen:  Zoom,
+            navigationOptions: {
+                header: null
+            }
+        },
+        [COLLECTION_ZOOM]: {
             screen:  Zoom,
             navigationOptions: {
                 header: null

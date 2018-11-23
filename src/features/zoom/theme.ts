@@ -83,6 +83,7 @@ export default StyleSheet.create({
         fontFamily: 'QuickSandRegular',
         color: '#000',
         marginTop: 5,
+        lineHeight: 16
     },
     priceText: {
         color: '#000',

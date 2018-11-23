@@ -19,7 +19,7 @@ function NewsfeedHOC(Newsfeed: any) {
         } 
       };
       componentDidMount() {
-        const { root: {ui, user} } = this.props;
+        const { root: { ui, user } } = this.props;
         ui.setNavigation(this.props.navigation);
         
         setTimeout(() => {
@@ -35,9 +35,9 @@ function NewsfeedHOC(Newsfeed: any) {
         }, 1000) 
       }
       render() {
-          const { root: { posts, products } } = this.props;
-          const { listOfPosts, getPosts } = posts;
-          const { getBookmarksByUserId, getCollection } = products;
+        const { root: { posts, products } } = this.props;
+        const { listOfPosts, getPosts } = posts;
+        const { getBookmarksByUserId, getCollection } = products;
         return <Newsfeed 
                     goToCollection={this._goToCollection}
                     goToBrowseDirectly={this._goToBrowseDirectly}
@@ -50,8 +50,9 @@ function NewsfeedHOC(Newsfeed: any) {
       }
 
       _goToCollection = (params: any) => {
-        const { root: { ui } } = this.props;
+        const { root: { ui, slots: { removeSixthSlot } } } = this.props;
         const { navigate } = ui;
+        removeSixthSlot();
         navigate(COLLECTION, NEWSFEED, params);   
         API.RegisterEvent("Nf-ClickPost", {          
           event: 'Click post',

@@ -111,9 +111,10 @@ function FooterButtonsHOC(FooterButtons: any) {
     }
 
     _applyFilter = async () => {
-      const { root: { products: { getAlternativesByFilter }, filters  } } = this.props;
+      const { root: { products: { getAlternativesByFilter, resetAlternativies }, filters  } } = this.props;
       const { setFilterTab } = filters;
-      await getAlternativesByFilter();
+      resetAlternativies();
+      getAlternativesByFilter();
       API.RegisterEvent("Fi-apply", {
         actionType: "Click 'apply'"
       })

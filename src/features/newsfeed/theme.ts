@@ -76,15 +76,16 @@ import {
     },
     lineView: {
         height: 1,
-        width: width / 6,
+        width: width / 8,
         backgroundColor: 'black',
     },
     titleText: {
         flex: 1,
-        paddingHorizontal: 20,
+        paddingHorizontal: 15,
         textAlign: 'center',
         fontFamily: 'Raleway',
         letterSpacing: 2,
+        lineHeight: 20,
         fontSize: 14,
     }
   });

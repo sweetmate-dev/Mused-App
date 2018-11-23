@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    width
+    width,    
   },
   descWrapper: {
     alignItems: 'center',
@@ -304,7 +304,7 @@ export default class Step2 extends Component<Props, State> {
       return (
         <Animated.View style={[styles.content, {opacity: this.state.fadeIn}]}>
           <TypeWriterText text={['now create new looks!', '']} />
-          <ScrollView style={styles.scrollView}>
+          <ScrollView style={[styles.scrollView, {marginTop: -30}]}>
             <View style={{flexDirection: 'row'}}>
               <Ripple
                 onPress={() => this.onClickImage(browseImage1)}

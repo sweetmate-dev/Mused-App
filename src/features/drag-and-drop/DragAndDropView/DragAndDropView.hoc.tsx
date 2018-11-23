@@ -18,6 +18,7 @@ function DragAndDropViewHOC(DragAndDropView: any) {
             header: <Header navigation={navigation} />
         } 
       };
+
       render() {
           const { root: { products, slots } } = this.props;
           const { getProductsByCategory, allProducts, categoryInDrag, listOfProductsByCategories, arrayImages, resetProductsByCategory, toggleViewCategory } = products;

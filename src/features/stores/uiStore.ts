@@ -52,6 +52,7 @@ export default class ObservableStore implements IUiStore {
             temp.push(this.routeArray[i])
         }
         this.routeArray = temp;
+        console.log(temp)
         if(this.routeArray.length > 0) this.prevRoute = this.routeArray[this.routeArray.length - 1];
         else this.prevRoute = '';
         this.currentRoute = currentRoute;

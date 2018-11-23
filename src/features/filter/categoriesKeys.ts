@@ -1,5 +1,6 @@
 export const categoriesKeys: Category[] = [
     {
+        label: 'JEANS',
         category: 'jeans',
         subCategories: [
             'bootcut-jeans',
@@ -14,6 +15,7 @@ export const categoriesKeys: Category[] = [
         ]
     },
     {
+        label: 'DRESSES',
         category: 'dresses',
         subCategories: [
             'cocktail-dresses',
@@ -22,6 +24,7 @@ export const categoriesKeys: Category[] = [
         ]
     },
     {
+        label: 'JACKETS',
         category: 'jackets',
         subCategories: [
             'vests',
@@ -32,8 +35,12 @@ export const categoriesKeys: Category[] = [
         ]
     },
     {
-        category: 'knitwear',
+        label: 'KNITWEAR',
+        category: 'sweaters',
         subCategories: [
+            'sweaters',
+            'longsleeve-tops',
+            'sweatshirts',
             'cardigans',
             'cashmere',
             'crewnecks',
@@ -42,6 +49,7 @@ export const categoriesKeys: Category[] = [
         ]
     },
     {
+        label: 'SKIRTS',
         category: 'skirts',
         subCategories: [
             'mini-skirts',
@@ -50,50 +58,54 @@ export const categoriesKeys: Category[] = [
         ]
     },
     {
-        category: 'tops',
+        label: 'TOPS',
+        category: 'womens-tops',
         subCategories: [
-            'button front tops',
+            'button-front-tops',
             'camis',
-            'cashmere tops',
+            'cashmere-tops',
             'halters',
-            'longsleeve top',
+            'longsleeve-tops',
             'polos',
-            'shortsleeve tops',
-            'sleeveless tops',
+            'shortsleeve-tops',
+            'sleeveless-tops',
             't-shirts',
             'tanks',
             'tunics'
         ]
     },
     {
-        category: 'trousers',
+        label: 'TROUSERS',
+        category: 'womens-pants',
         subCategories: [
             'casual',
             'cropped',
             'dress',
             'leggings',
             'skinny',
-            'wide leg'
+            'wide-leg'
         ]
     },
     {
-        category: 'shoes',
+        label: 'SHOES',
+        category: 'womens-shoes',
         subCategories: [
             'boots',
             'espadrills',
-            'evening shoes',
+            'evening-shoes',
             'flats',
             'heels',
             'mules & clogs',
             'platforms',
             'sandals',
-            'sports shoes',
+            'sports-shoes',
             'trainers',
             'wedges',
         ]
     },
     {
-        category: 'bags',
+        label: 'BAGS',
+        category: 'handbags',
         subCategories: [
             'backpacks',
             'clutches',

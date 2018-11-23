@@ -81,6 +81,7 @@ interface ISlotsStore {
     setMoveProduct: (flag: boolean) => void;
     getSixthSlot: HashMap<string>;
     addOrReplaceSixthSlot: (item: HashMap<string>) => void;
+    removeSixthSlot: () => void;
 }
 
 interface IPostsStore {

@@ -57,15 +57,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 4
   },
   clickableTitle: {
-    fontFamily: 'LatoBold',
+    fontFamily: 'RalewayBold',
     fontSize: 11,
     color: '#000',
     marginTop: 10,
     marginBottom: 2,
-    textAlign: 'center'
+    textAlign: 'center',
+    letterSpacing: 2,
   },
   clickableSubTitle: {
-      fontFamily: 'Lato',
+      fontFamily: 'QuickSandRegular',
       fontSize: 11,
       color: '#000',
       textAlign: 'center'

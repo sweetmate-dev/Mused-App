@@ -18,6 +18,8 @@ declare module 'expo' {
   // tslint:disable-next-line
   export const Video: any;
   export const LinearGradient: any;
+  export const Permissions: any;
+  export const Notifications: any;
 }
 
 declare module '@expo/vector-icons' {

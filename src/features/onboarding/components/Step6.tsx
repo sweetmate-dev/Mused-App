@@ -12,7 +12,7 @@ import Ripple from 'react-native-material-ripple';
 import theme from '../../zoom/theme';
 
 const productImage = require('../../../../assets/images/photo-faded.jpg');
-const buttonLogo = require('../../../../assets/images/button-logo.png');
+// const buttonLogo = require('../../../../assets/images/button-logo.png');
 const arrow4GIF = require('../../../../assets/images/Arrow_DOWN.gif');
 const { width } = Dimensions.get('window');
 
@@ -53,6 +53,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       height: 60,
+      marginHorizontal: 10,
+      marginBottom: 10,
   },
   infoView: {
     paddingHorizontal: 20,
@@ -113,7 +115,7 @@ export default class Step5 extends Component<Props> {
                 rippleDuration={1000}
                 onPress={() => this.props.continue()}
             >
-              <Image source={buttonLogo} style={theme.buttonLogo} />
+              {/* <Image source={buttonLogo} style={theme.buttonLogo} /> */}
               <Text style={theme.buttonText}>STYLE IT</Text>              
             </Ripple> 
           </View>

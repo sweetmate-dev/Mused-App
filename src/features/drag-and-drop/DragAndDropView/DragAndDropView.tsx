@@ -129,20 +129,23 @@ export default class DragAndDropAreaView extends React.Component<Props, State> {
     private _renderDraggables = () => {
         return this.props.dragrabbleItems.map((item : ProductImage, index: number) => {
             const isLastItem: boolean = this.props.hasSixthSlot && index ===  this.props.dragrabbleItems.length - 1;
-            return ( <Draggable key={index+1} 
-                                selected={this.state.selecteds[index]} 
-                                fadeInDuration={index*500}
-                                imageSource={{uri: `${transThumbnailImage}${item.id}`}}
-                                reverse={false} renderShape='image'
-                                dimensions={this.state.dimensions}
-                                x={this.calcPosX(index)} 
-                                y={this.calcPosY(index)} 
-                                offsetX={0} offsetY={0}
-                                renderSize={isLastItem ? imageSmallSize : imageSize} 
-                                pressInDrag={() => this._pressInDrag(index)}
-                                categoryInDrag={this.props.categoryInDrag}
-                                item={item}
-                               />)
+            return ( 
+                <Draggable 
+                    key={index+1} 
+                    selected={this.state.selecteds[index]} 
+                    fadeInDuration={index*500}
+                    imageSource={{uri: `${transThumbnailImage}${item.id}`}}
+                    reverse={false} renderShape='image'
+                    dimensions={this.state.dimensions}
+                    x={this.calcPosX(index)} 
+                    y={this.calcPosY(index)} 
+                    offsetX={0} offsetY={0}
+                    renderSize={isLastItem ? imageSmallSize : imageSize} 
+                    pressInDrag={() => this._pressInDrag(index)}
+                    categoryInDrag={this.props.categoryInDrag}
+                    item={item}
+                />
+            )
         })
     }
 }

@@ -67,6 +67,7 @@ type Slot = {
 };
 
 type Category = {
+    label?: string;
     category: string;
     subCategories: string[];
 }

@@ -17,7 +17,8 @@ const demoHeader = {
 
 type State = {
     likedItemIndex: null | number;
-    fadeIn: any
+    fadeIn: any;
+    prevProducts: string;
 };
 type Props = {
     navigation: any;
@@ -37,9 +38,11 @@ type Props = {
 export default class Browser extends Component<Props, State> {
     state: State = {
         likedItemIndex: null,
-        fadeIn: new Animated.Value(0)
+        fadeIn: new Animated.Value(0),
+        prevProducts: ''
     }
-    blackTimeOut: any
+    blackTimeOut: any;
+    prevProducts: any;
     componentDidMount() {
         const {getAlternatives, navigation} = this.props;
         const from: string = navigation.getParam('from', '');
@@ -54,6 +57,13 @@ export default class Browser extends Component<Props, State> {
         clearTimeout(this.blackTimeOut)
     }
 
+    componentWillReceiveProps(props: any) {
+        if(JSON.stringify(props.listOfAlternatives) !== this.prevProducts) {
+            this.scrollToTop();
+            this.prevProducts = JSON.stringify(props.listOfAlternatives)
+        }        
+    }
+
     render() {
         // const headerComponent = (
         //     <View style={theme.listTitleContainer}>
@@ -64,6 +74,7 @@ export default class Browser extends Component<Props, State> {
             <View style={[theme.container]}>
                 <Animated.View style={[theme.productListContainer, {opacity: this.state.fadeIn}]}>
                     <FlatList
+                        ref='_scrollView'
                         data={_listOfAlternatives}
                         ListHeaderComponent={this.renderHeaderComponent}
                         ListFooterComponent={() => <View style={theme.footerComponent} />}
@@ -88,6 +99,14 @@ export default class Browser extends Component<Props, State> {
                 {/* <View style={theme.underlineTitle}></View> */}
             </View>
         )
+    }
+
+    scrollToTop = () => {
+        const scrollInstant: any = this.refs._scrollView;
+        if(scrollInstant === undefined) return;
+        setTimeout(() => {          
+          scrollInstant.scrollToOffset({x: 0, y: 0, animated: true})
+        }, 1500) 
     }
 
     onDuplicated = () => {

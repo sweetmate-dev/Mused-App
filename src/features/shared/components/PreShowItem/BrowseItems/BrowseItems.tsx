@@ -8,6 +8,7 @@ import {
 import theme from '../theme';
 import { thumbnailImage } from '../../../imagesUrls';
 import * as API from '../../../../../services/api';
+// import { isNumeric } from '../../../../../services/operators';
 
 const blankImage = require('../../../../../../assets/images/empty.jpg')
 
@@ -34,14 +35,12 @@ type Props = {
 type State = {
     marginTop: any;
     selectedID: number;
-    triggeredNumber: number
 }
 
 export default class BrowseItems extends Component<Props, State> {
     state: State = {
         marginTop: new Animated.Value(0),
         selectedID: 999,
-        triggeredNumber: 0
     };
 
     isOnAnimate: boolean = false;
@@ -51,7 +50,11 @@ export default class BrowseItems extends Component<Props, State> {
         if (nextProps.isMoveProduct) {
             this._moveSlotLeft();
         }
-      }
+    }
+
+    componentDidMount() {
+        this.getHighlightedButtonText();
+    }
     
     render() {
         return this._renderBrowseList();
@@ -133,7 +136,7 @@ export default class BrowseItems extends Component<Props, State> {
         })
     }
 
-    startAnimation = (newImgUrl: any) => {
+    startAnimation = async (newImgUrl: any) => {
         const { slotNumber, changeArrayImages, setSlotNumber, setNewImgUrl, setSlotMachineEffect } = this.props;
         this.state.marginTop.setValue(0);
         this.isOnAnimate = true;
@@ -153,21 +156,42 @@ export default class BrowseItems extends Component<Props, State> {
             setSlotMachineEffect(false);
             this.isOnAnimate = false;
         }, 300)
-        if(this.triggeredNumber === 1) {
+        if(this.triggeredNumber === 0) {
             this.getHighlightedButtonText();
         }
-        else if(this.triggeredNumber > 8) this.props.checkAnonUser()
-        this.triggeredNumber = this.triggeredNumber + 1;
+        try {
+            this.triggeredNumber = this.triggeredNumber + 1;
+            const TN = JSON.parse(await AsyncStorage.getItem('trigger')).number;
+            console.log(TN);            
+            if(TN !== null) {
+                if(Number(TN) > 8) this.props.checkAnonUser();                
+                this.saveTriggeredNumber(Number(TN) + 1);
+            } else {
+                this.saveTriggeredNumber(1);
+            }
+        } catch (error) {
+            console.log('Error in getting triggered number', error.toString());
+            this.saveTriggeredNumber(1);
+        }
+    }
+
+    saveTriggeredNumber = async (number: number) => {
+        try {
+            AsyncStorage.setItem('trigger', JSON.stringify({number}));
+        } catch (error) {
+            console.log('Error in saving triggered number', error.toString())
+        }
     }
 
     getHighlightedButtonText = async () => {
-        // get highlighted button text
         const { setHighlightButtonText } = this.props;
-        try {
+        try {            
             const HT = await AsyncStorage.getItem('highlightText');
-            setHighlightButtonText(HT);
+            console.log('Getting highlightText...', HT);
+            if(HT !== null) setHighlightButtonText(HT);
+            else setHighlightButtonText('View');
         } catch (error) {
-            console.log('Error in getting Highlighed button text', error.toString())
+            console.log('Error in getting Highlighed button text', error.toString());
         }
     }
 

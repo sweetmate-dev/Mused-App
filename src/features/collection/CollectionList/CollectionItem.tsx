@@ -5,7 +5,6 @@ import {
   Image,
   TouchableHighlight,
 } from 'react-native';
-import { LinearGradient } from 'expo';
 import Ripple from 'react-native-material-ripple';
 import { thumbnailImage } from '../../shared';
 import theme from '../theme';
@@ -13,6 +12,7 @@ import * as API from '../../../services/api';
 
 const likeIconUrl = require('../../../../assets/images/star_like.png');
 const notLikeIconUrl = require('../../../../assets/images/star.png');
+const AnimationImage = require('../../../../assets/images/gif_transparent.gif')
 
 type Props = {
     item: Product;
@@ -87,7 +87,7 @@ export default class CollectionItem extends Component<Props, State> {
     render() {
         const { countAlter, item } = this.props;
         const { brand, unbrandedName, id } = this.props.item;
-        const { isLiked, gradientColor } = this.state;
+        const { isLiked } = this.state;
         return (
             <View style={theme.containerItem}>
                     <Ripple 
@@ -97,15 +97,10 @@ export default class CollectionItem extends Component<Props, State> {
                         rippleDuration={300} 
                         rippleContainerBorderRadius={40}>
                         <View style={{alignItems: 'center'}}>
-                            <LinearGradient 
-                                colors={[
-                                    '#FFFFFF',
-                                    gradientColor
-                                ]}
-                                style={theme.alterItem}
-                            >
+                            <View style={theme.alterItem}>
+                                <Image source={AnimationImage} style={theme.animationImage} />
                                 <Text style={theme.countText}>{countAlter}</Text>
-                            </LinearGradient>       
+                            </View>                                 
                             <Text style={[theme.countText, {marginTop: 3}]}>alternatives</Text>
                         </View>                        
                     </Ripple>  

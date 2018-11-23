@@ -56,7 +56,7 @@ export default class FilterCategories extends Component<Props> {
                 <TouchableHighlight onPress={() => this._changeCategory(_category.category)} underlayColor={'transparent'}>
                     <View style={theme.categoryTouchable}>
                         <Text style={theme.textTabNavigation}>
-                            {_category.category.toUpperCase()}
+                            {_category.label}
                         </Text>
                     </View>                    
                 </TouchableHighlight>

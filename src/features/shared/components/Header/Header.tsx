@@ -14,7 +14,7 @@ import Ripple from 'react-native-material-ripple';
 import { COLLECTION, BROWSE, FILTER, NEWSFEED, VIDEOPLAYER, BROWSE_ONLY } from '../../routesKeys';
 import * as API from '../../../../services/api';
 import { loginViaAnonProvider, updateUser } from '../../../../services'
-const menuItems = ['NEWSFEED', 'NEW IN', 'SHOP CATEGORIES', 'SIGN OUT'];
+const menuItems = ['NEWSFEED', 'SHOP NEW', 'SHOP CATEGORIES', 'SIGN OUT'];
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -93,7 +93,8 @@ type Props = {
     getNewProducts: () => void;
     setBrowseType: (type: number) => void;
     setUserDetails: (userId: string, userProfile: any) => void;
-    ui: IUiStore
+    ui: IUiStore;
+    getPosts: () => void;
 }
 export default class Header extends Component<Props> {
 
@@ -256,10 +257,13 @@ export default class Header extends Component<Props> {
                 filterTab, 
                 backToFilterTabs,
                 ui: {currentRoute, prevRoute, navigate, goBack},
-                resetCollection
+                resetCollection,
+                getPosts
              } = this.props;
         const route: string = currentRoute;
         console.log(route + ', ' + prevRoute);
+        //refresh newsfeed data
+        getPosts();
         // if (NEWSFEED === route) return true;
         if (COLLECTION === route) {
             resetArrayImages();

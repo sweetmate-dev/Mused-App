@@ -25,3 +25,7 @@ export const timeSince = (date: string) => {
   }
   return Math.floor(seconds) + " seconds";
 }
+
+export const isNumeric = (n: string) => {
+  return !isNaN(parseFloat(n)) && isFinite(Number(n));
+}

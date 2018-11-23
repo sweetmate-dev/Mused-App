@@ -98,7 +98,7 @@ export default class BrowseItem extends Component<Props, State> {
                         rippleContainerBorderRadius={40}>
                         <View style={theme.descWrapper}>
                             <Text style={theme.designerTxt}>{brand !== undefined && brand.toUpperCase()}</Text>
-                            <Text style={[theme.descTxt, {paddingVertical: 3, lineHeight: 12, fontSize: 9}]}>{unbrandedName}</Text>
+                            <Text style={[theme.descTxt, {paddingVertical: 3, lineHeight: 15}]}>{unbrandedName}</Text>
                             {browseOnly && <Text style={theme.descTxt}>{priceLabel}</Text>}
                         </ View>
                     </Ripple>

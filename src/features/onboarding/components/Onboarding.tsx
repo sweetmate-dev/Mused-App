@@ -48,9 +48,6 @@ export default class Onboarding extends Component<Props, State> {
       }
     }
 
-    componentWillMount() {
-
-    }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this._goBack);
         API.RegisterEvent('On-Splash', {actionType: 'View screen'});

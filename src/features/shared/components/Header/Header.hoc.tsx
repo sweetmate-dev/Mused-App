@@ -16,10 +16,11 @@ function HeaderHOC(Header: any) {
     @observer
     class NewComp extends Component<Props> {
         render() {
-            const { navigation, showContent,  root: { ui, user, products, filters } } = this.props;
+            const { navigation, showContent,  root: { ui, user, products, filters, posts } } = this.props;
             const { userProfile, logout, setUserDetails } = user;
-            const { resetArrayImages, resetAlternativies, resetCollection, getNewProducts, setBrowseType } = products;
+            const { resetArrayImages, resetAlternativies, resetCollection, setBrowseType } = products;
             const { filterTab, clearFilters } = filters;
+            const { getPosts } = posts;
 
             return <Header
                     navigation={navigation}
@@ -34,21 +35,28 @@ function HeaderHOC(Header: any) {
                     resetAlternativies={resetAlternativies}
                     onPressLogo={this.onPressLogo}
                     resetCollection={resetCollection}
-                    getNewProducts={getNewProducts}
+                    getNewProducts={this._getNewProducts}
                     setBrowseType={setBrowseType}
                     setUserDetails={setUserDetails}
                     ui={ui}
+                    getPosts={getPosts}
             />
         }
 
         onPressLogo = () => {
-            const {   root: { ui: { navigate } } } = this.props;
+            const {   root: { ui: { navigate }, posts: { getPosts } } } = this.props;
+            getPosts();
             navigate(NEWSFEED, '', {});
         }
 
         _hideContextMenu = () => {
             const {   root: { ui: { toggleContextMenu } } } = this.props;
             toggleContextMenu(false);
+        }
+
+        _getNewProducts = () => {
+            const {   root: { products: { getNewProducts } } } = this.props;
+            getNewProducts('all');
         }
 
         _setFilterTab = () => {

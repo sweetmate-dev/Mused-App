@@ -111,7 +111,7 @@ export default class AuthControls extends Component<Props, State> {
                 this.state.opacity,            
                 {
                     toValue: 1,
-                    duration: 1000, 
+                    duration: 3500, 
                 }
             ).start()
         }, 1000)        

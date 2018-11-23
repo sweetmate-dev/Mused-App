@@ -99,10 +99,22 @@ import {
     alterItem: {
         borderWidth: 1,
         borderColor: '#000',
-        width: 30,
-        height: 20,
+        width: 32,
+        height: 22,
         alignItems: 'center',
         justifyContent: 'center',
+        position: 'relative',
+        backgroundColor: 'white'
+    },
+    animationImage: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        width: 30,
+        height: 20,
+        resizeMode: 'stretch'
     },
     alterButtonContainer: {
         marginHorizontal: 5
@@ -136,7 +148,8 @@ import {
         fontFamily: 'QuickSandRegular',
         fontSize: 11,
         color: '#000',
-        textAlign: 'center'
+        textAlign: 'center',
+        lineHeight: 15
     },
     likeImageContainer: {
         flex: 0.2, 
