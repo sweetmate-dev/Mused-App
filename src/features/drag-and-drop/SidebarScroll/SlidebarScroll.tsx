@@ -70,7 +70,7 @@ export default class SidebarScroll extends Component<Props, State> {
     private _renderCategoryItem = (item: string, index: number) => {
         return (
             <TouchableOpacity onPress={() => this._onPressCategory(item)} key={index} style={theme.categoriesFilterWrapper}>
-                <Text style={[theme.categoriesFilterText, {fontFamily: 'Lato'}]}>{firstLetterUpper(item)}</Text>
+                <Text style={theme.categoriesFilterText}>{firstLetterUpper(item)}</Text>
             </TouchableOpacity>
         )
     }

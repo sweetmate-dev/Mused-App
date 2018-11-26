@@ -23,7 +23,7 @@ const icons: HashMap<HashMap<string>> = {
     back: require('../../../../../assets/images/back_icon.png'),
     view: require('../../../../../assets/images/view_icon.png'),
     category: require('../../../../../assets/images/category_icon.png'),
-    apply: require('../../../../../assets/images/apply.png'),
+    apply: require('../../../../../assets/images/switch.png'),
     cancel: require('../../../../../assets/images/cancel.png'),
 };
 

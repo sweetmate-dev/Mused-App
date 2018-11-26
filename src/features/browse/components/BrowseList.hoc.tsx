@@ -18,6 +18,13 @@ function BrowseHOC(Browse: any) {
             header: <Header navigation={navigation} />
         } 
       };
+
+      componentWillMount() {
+          const { root: { products: { resetAlternativies }}} = this.props;
+          resetAlternativies();
+          console.log('reset alternatives...')
+      }
+
       render() {
           const { root: { slots, products, ui }, navigation } = this.props;
           const { contextMenuIsVisible } = ui;

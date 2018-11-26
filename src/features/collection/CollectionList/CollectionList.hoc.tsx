@@ -42,11 +42,10 @@ function CollectionHOC(Collection: any) {
         }
 
         _goToNext = (slotNumber: number, alternatives: number[], originSlots: Slot[]) => {
-            const { root: { ui, slots, products: { resetAlternativies } } } = this.props;
+            const { root: { ui, slots } } = this.props;
             const { navigate } = ui;
             const { setSlotNumber } = slots;
             setSlotNumber(slotNumber);
-            resetAlternativies();
             navigate(BROWSE, COLLECTION, {from: 'collection', alternatives, onBack: () => this.onBack(originSlots)});
         }      
 
