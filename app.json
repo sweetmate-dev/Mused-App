@@ -13,7 +13,7 @@
       "backgroundColor": "#ffffff",
       "barStyle": "dark-content"
     },
-    "version": "1.0.0",
+    "version": "1.0.1",    
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -31,7 +31,8 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.cdempire.shopapp"
+      "package": "com.cdempire.shopapp",
+      "versionCode": 2
     },
     "facebookScheme": "fb2127807207434704",
     "facebookAppId": "2127807207434704",

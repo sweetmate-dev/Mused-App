@@ -1,4 +1,5 @@
 import { observable, action} from 'mobx';
+import { StackActions, NavigationActions } from 'react-navigation';
 import { NEWSFEED } from '../shared';
 import * as API from '../../services/api';
 
@@ -46,6 +47,18 @@ export default class ObservableStore implements IUiStore {
     @action
     navigate = (currentRoute: string, prevRoute: string, params: any = {}) => {
         console.log(prevRoute);
+        if(currentRoute === NEWSFEED) {
+            const resetAction = StackActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({routeName: NEWSFEED})
+                ]
+            })
+            this.navigation.dispatch(resetAction);
+            this.currentRoute = currentRoute;
+            this.prevRoute = '';
+            return;
+        }
         let temp = []
         for(let i = 0; i < this.routeArray.length; i++){            
             if(currentRoute === this.routeArray[i]) break;
@@ -64,7 +77,7 @@ export default class ObservableStore implements IUiStore {
     goBack = () => {
         console.log('CURRENT SCREENS: ' + JSON.stringify(this.routeArray))
         if(this.routeArray.length === 1) return;
-        this.routeArray.splice(-1,1);
+        this.routeArray.splice(-1, 1);
         this.currentRoute = this.routeArray[this.routeArray.length - 1];
         if(this.routeArray.length > 1) {
             this.prevRoute = this.routeArray[this.routeArray.length - 2];            

@@ -30,8 +30,7 @@ export const transitionConfig = () => {
           });
   
         return { opacity, transform: [{ translateX }] };
-      }
-      else {
+      } else {
         const translateX = 0;
         const translateY = 0;
         const opacity = props.position.interpolate({
