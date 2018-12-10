@@ -83,6 +83,7 @@ export default class NewsfeedItem extends Component<Props> {
             goToZoomDirectly(productId)
             return;
         }
+        console.log(this.props.item);
         goToCollection(
         {
             productIds: slots,

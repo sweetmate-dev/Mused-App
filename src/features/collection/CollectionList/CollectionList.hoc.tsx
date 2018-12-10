@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import CollectionList from './CollectionList';
-import { Header, COLLECTION, BROWSE } from '../../shared';
+import { Header, COLLECTION, BROWSE, BROWSE_ONLY } from '../../shared';
 import { ROOT_STORE } from '../../stores';
 type Props = {
     navigation: any;
@@ -26,7 +26,7 @@ function CollectionHOC(Collection: any) {
         render() {
             const { root: { ui, products }, navigation } = this.props;
             const { currentRoute }  = ui;
-            const { listOfCollection, getCollection, listOfBookmarks, createBookmark, deleteBookmarkById} = products;
+            const { listOfCollection, getCollection, isFromOutfit, listOfBookmarks, createBookmark, deleteBookmarkById} = products;
             return (
                 <Collection 
                     listOfCollection={listOfCollection} 
@@ -37,16 +37,26 @@ function CollectionHOC(Collection: any) {
                     listOfBookmarks={listOfBookmarks}
                     createBookmark={createBookmark}
                     deleteBookmarkById={deleteBookmarkById}
+                    goToNewProducts={this._goToNewProducts}
+                    isFromOutfit={isFromOutfit}
                 />
             ) 
         }
 
+        _goToNewProducts = () => {
+            const { root: { ui, products: {getNewProducts} } } = this.props;
+            const { navigate } = ui;
+            getNewProducts('all');
+            navigate(BROWSE_ONLY, COLLECTION);
+        }
+
         _goToNext = (slotNumber: number, alternatives: number[], originSlots: Slot[]) => {
-            const { root: { ui, slots } } = this.props;
+            const { root: { ui, slots }, navigation } = this.props;
             const { navigate } = ui;
             const { setSlotNumber } = slots;
             setSlotNumber(slotNumber);
-            navigate(BROWSE, COLLECTION, {from: 'collection', alternatives, onBack: () => this.onBack(originSlots)});
+            const collectionFrom = navigation.getParam('from', 'newsfeed');
+            navigate(BROWSE, COLLECTION, {from: 'collection', collectionFrom, alternatives, onBack: () => this.onBack(originSlots)});
         }      
 
         onBack = (slots: Slot[]) => {

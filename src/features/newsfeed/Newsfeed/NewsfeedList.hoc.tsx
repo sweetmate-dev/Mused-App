@@ -50,9 +50,10 @@ function NewsfeedHOC(Newsfeed: any) {
       }
 
       _goToCollection = (params: any) => {
-        const { root: { ui, slots: { removeSixthSlot } } } = this.props;
+        const { root: { ui, slots: { removeSixthSlot }, products: { setFromOutfit } } } = this.props;
         const { navigate } = ui;
         removeSixthSlot();
+        setFromOutfit(false);
         navigate(COLLECTION, NEWSFEED, params);   
         API.RegisterEvent("Nf-ClickPost", {          
           event: 'Click post',

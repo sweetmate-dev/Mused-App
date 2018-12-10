@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import moment from 'moment';
+import lodash from 'lodash';
 
 import { 
     getProductsByIds,
@@ -11,9 +12,11 @@ import {
     getProductsByCategory,
     getProductsByCategoryInitial,
     getNewProducts,
+    getOutfits,
 } from '../../services';
 
 import { slotsOrder } from '../shared';
+import * as API from '../../services/api';
 
 
 export default class ObservableStore implements IProductStore {
@@ -32,15 +35,24 @@ export default class ObservableStore implements IProductStore {
     @observable noResult: boolean = false;
     @observable allProducts: any = {};
     @observable fromMenu: boolean = false;
+    @observable myRecentOutfit: Product[] = [];
+    @observable allOutfitSlots: any = [];
+    @observable fromOutfit: boolean = false;
 
     get listOfCollection() {
         return this.collection;
     }
+
     get listOfAlternatives() {
         return this.alternatives;
     }
+
     get listOfBookmarks() {
         return this.bookmarks;
+    }
+
+    get isFromOutfit() {
+        return this.fromOutfit;
     }
 
     get listOfProductsByCategories() {
@@ -49,6 +61,14 @@ export default class ObservableStore implements IProductStore {
     
     get getSliderToggleState() {
         return this.toggleViewCategory;
+    }
+
+    get getMyRecentOutfit() {
+        return this.myRecentOutfit;
+    }
+
+    get getMyOutfitSlots() {
+        return this.allOutfitSlots;
     }
 
     @action
@@ -111,6 +131,11 @@ export default class ObservableStore implements IProductStore {
                 category: product.category
             }
         });
+    }
+
+    @action
+    public setFromOutfit = (value: boolean) => {
+        this.fromOutfit = value;
     }
 
     @action
@@ -178,12 +203,31 @@ export default class ObservableStore implements IProductStore {
     @action
     public createNewOutfit = () => {
         if(this.root.user.userProfile === null) return;
-        const outfit: Outfit = {
+        const outfit: any = {
             userEmail: this.root.user.userProfile.email,
             slots: this.arrayImages.map( ( product: ProductImage) => product.id as number),
             timestamp: moment().format()
         };
         createOutfit(outfit);
+    }
+
+    @action
+    public fetchMyOutfits = async () => {
+        await getOutfits().then((result: Outfit[]) => {
+            
+            const temp = lodash.filter(result, function(o: any) {
+                return o.userEmail === API.client_email;
+            });
+            console.log('MyOutfits: ', temp);
+            this.allOutfitSlots = temp;
+            if(temp.length > 0){
+                const recentSlots = temp[temp.length - 1].slots;
+                console.log('Recent Slots: ', recentSlots)
+                getProductsByIds(recentSlots).then((products: Product[]) => {
+                    this.myRecentOutfit = products;
+                });
+            }
+        })
     }
 
     @action
@@ -202,7 +246,12 @@ export default class ObservableStore implements IProductStore {
     getBookmarksByUserId = async () => {
         if(this.root.user.userProfile === null) return;
         await getBookmarksByUserId(this.root.user.userProfile.email).then((bookmarks: Bookmark[]) => {
-            this.bookmarks = bookmarks
+            //filter bookmarks
+            const temp = lodash.filter(bookmarks, function(o: any) {
+                return o.productId !== null;
+            });
+            this.bookmarks = lodash.uniqBy(temp, 'productId');
+            console.log(this.bookmarks.length)
         });
     }
 

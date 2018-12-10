@@ -145,7 +145,7 @@ export default class NewsfeedList extends Component<Props, State> {
     
     render() {
         // console.log(this.sortData(this.props.listOfPosts))
-        if(this.props.listOfPosts !== undefined) console.log('NewsFeed Length: ' , this.props.listOfPosts.length);
+        if(this.props.listOfPosts !== undefined) console.log('NewsFeed Length: ' , this.props.listOfPosts);
         return (
             <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
                 <StatusBar

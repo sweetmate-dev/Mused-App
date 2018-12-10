@@ -30,20 +30,17 @@ type Props = {
 type State = {
     isLiked: boolean;
     bookmark: Bookmark | null;
-    gradientColor: string
 }
 export default class CollectionItem extends Component<Props, State> {
     state: State = {
         isLiked: false,
         bookmark: null,
-        gradientColor: '#666666'
     }
     componentDidMount() {
         const { listOfBookmarks } = this.props;
         const {  id } = this.props.item;
         const bookmark: Bookmark = listOfBookmarks.find(( bookmark: Bookmark) => bookmark.productId === id);
         Boolean(bookmark) && this.setState({isLiked: true, bookmark })
-        this.startGradientAnimation();
     }
     componentWillReceiveProps(newProps: Props) {
         const { listOfBookmarks } = this.props;
@@ -52,36 +49,6 @@ export default class CollectionItem extends Component<Props, State> {
             const bookmark: Bookmark = newProps.listOfBookmarks.find(( bookmark: Bookmark) => bookmark.productId === id);
             Boolean(bookmark) && this.setState({isLiked: true, bookmark })
         }  
-    }
-
-    startGradientAnimation = () => {        
-        setTimeout(() => {
-            this.setState({gradientColor: '#888888'})
-        }, 100); 
-        setTimeout(() => {
-            this.setState({gradientColor: '#999999'})
-        }, 200);
-        setTimeout(() => {
-            this.setState({gradientColor: '#AAAAAA'})
-        }, 300);
-        setTimeout(() => {
-            this.setState({gradientColor: '#BBBBBB'})
-        }, 400);
-        setTimeout(() => {
-            this.setState({gradientColor: '#CCCCCC'})
-        }, 500);
-        setTimeout(() => {
-            this.setState({gradientColor: '#DDDDDD'})
-        }, 600);
-        setTimeout(() => {
-            this.setState({gradientColor: '#EEEEEE'})
-        }, 700);
-        setTimeout(() => {
-            this.setState({gradientColor: '#FFFFFF'})
-        }, 800);    
-        setTimeout(() => {
-            this.startGradientAnimation();
-        }, 900);      
     }
 
     render() {

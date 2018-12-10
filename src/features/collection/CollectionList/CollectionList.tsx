@@ -32,7 +32,9 @@ type Props = {
     goToNext: (slotNumber: number, alternatives: number[], slots: Slot[]) => void;
     createBookmark: (productId: number) => void;
     deleteBookmarkById: (_id: any) => void;
-    currentRoute: string
+    currentRoute: string;
+    goToNewProducts: () => void;
+    isFromOutfit: boolean;
 }
 
 type State = {
@@ -43,6 +45,7 @@ type State = {
 export default class CollectionList extends Component<Props, State> {
 
     slots: Slot[];
+    from: string;
 
     state: State = {
         showFooter: false,
@@ -52,11 +55,14 @@ export default class CollectionList extends Component<Props, State> {
     componentWillMount() {
         const { navigation } = this.props;
         this.slots = navigation.getParam('productIds', []);
+        this.from = navigation.getParam('from', 'newsfeed');
+        console.log(this.slots)
         // getCollection(this.slots);
     }
 
     render() {
-        const {  listOfCollection } = this.props;   
+        const {  listOfCollection } = this.props; 
+        console.log('listOfCollection', listOfCollection)  
         return (
             <View style={theme.wrapper}>
                 <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
@@ -78,7 +84,7 @@ export default class CollectionList extends Component<Props, State> {
     _renderItem = (props: {item: Product, index: number}) =>
         <CollectionItem
             item={props.item} 
-            countAlter={`${this.slots[props.index].alternatives.length}`}
+            countAlter={this.props.isFromOutfit ? '>' : `${this.slots[props.index].alternatives.length}`}
             index={props.index}
             goToNext={this._goToNext}
             alternatives={this.slots[props.index].alternatives}
@@ -93,6 +99,7 @@ export default class CollectionList extends Component<Props, State> {
 
     _renderFooter = () => {
         const authorItem: Author = this.props.navigation.getParam('authorItem');
+        if(this.props.isFromOutfit) return null
         return (
             <CollectionFooter item={authorItem} visible={this.state.showFooter} title={testDataFooter.title} onCollection={true} />
         )
