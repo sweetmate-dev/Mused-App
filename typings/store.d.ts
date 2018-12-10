@@ -4,6 +4,9 @@ interface IProductStore {
     getAlternatives: (ids: number[]) => void;
     getDetailByProductId: (productId: number) => Promise;
     getAlternativesByFilter: () => void;
+    isFromOutfit: boolean;
+    getMyRecentOutfit: Product[];
+    getMyOutfitSlots: any;
     listOfCollection: Product[];
     alternatives: Product[];
     arrayImages: ProductImage[];
@@ -13,6 +16,7 @@ interface IProductStore {
     getSliderToggleState: boolean;
     fromMenu: boolean;
     setBrowseType: (type: number) => void;
+    setFromOutfit: (value: boolean) => void;
     openProductCategory: () => void;
     changeArrayImages: (slotNumber: number, newImg: ImageSourcePropType) => void;
     addNewSlot: () => void;
@@ -23,6 +27,7 @@ interface IProductStore {
     resetArrayImages: () => void;
     resetAlternativies: () => void;
     createNewOutfit: () => void;
+    fetchMyOutfits: () => void;
     createBookmark: (productId: number) => void;
     deleteBookmarkById: (_id: any) => void;
     getBookmarksByUserId: () => void;

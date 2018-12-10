@@ -1,6 +1,7 @@
 export const COLLECTION: string = 'Collection';
 export const VIDEOPLAYER: string = 'Video Player';
 export const BROWSE: string = 'Browse';
+export const MYACCOUNT: string = 'MyAccount';
 export const COLLECTION_ZOOM: string = 'Collection Zoom';
 export const BROWSE_ONLY: string = 'Browse Only';
 export const NEWSFEED: string = 'Newsfeed';

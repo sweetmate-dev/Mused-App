@@ -7,6 +7,7 @@ import { Browse, BrowseOnly } from '../browse';
 import { Zoom } from '../zoom';
 import { Filter } from '../filter';
 import { DragAndDrop } from '../drag-and-drop';
+import { MyAccount } from '../myaccount';
 
 import { 
     COLLECTION,
@@ -17,7 +18,9 @@ import {
     NEWSFEED, 
     ZOOM, 
     FILTER,
-    VIEW } from '../shared';
+    VIEW, 
+    MYACCOUNT
+} from '../shared';
 
 import { transitionConfig } from './transitionConfig';
 
@@ -55,6 +58,9 @@ export default createStackNavigator(
         },
         [VIEW]: {
             screen: DragAndDrop
+        },
+        [MYACCOUNT]: {
+            screen: MyAccount
         }
     }, {
 

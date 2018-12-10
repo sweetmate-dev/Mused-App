@@ -36,7 +36,7 @@ export default class AuthorItem extends Component<Props> {
                                 style={theme.authorImage}
                                 source={imgAuthorUrl} />
                             <View  style={theme.authorTextContainer}>
-                                <Text style={theme.authorText}> {author.toUpperCase()}</Text>
+                                <Text style={theme.authorText}> {author !== undefined ? author.toUpperCase(): 'someone'}</Text>
                                 <Text style={theme.authorText}>{time}</Text>
                             </View>
                         </View>
@@ -51,7 +51,7 @@ export default class AuthorItem extends Component<Props> {
                             <View  style={theme.authorTextContainer}>
                                 <Text style={theme.authorText}>{pt}</Text>
                                 <Text style={theme.authorText}>
-                                    {author.toUpperCase()}
+                                    {author !== undefined && author.toUpperCase()}
                                 </Text>
                             </View>
                         </View>

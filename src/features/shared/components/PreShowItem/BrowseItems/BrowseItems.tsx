@@ -164,7 +164,7 @@ export default class BrowseItems extends Component<Props, State> {
             const TN = JSON.parse(await AsyncStorage.getItem('trigger')).number;
             console.log(TN);            
             if(TN !== null) {
-                if(Number(TN) > 8) this.props.checkAnonUser();                
+                if(Number(TN) === 8) this.props.checkAnonUser();                
                 this.saveTriggeredNumber(Number(TN) + 1);
             } else {
                 this.saveTriggeredNumber(1);

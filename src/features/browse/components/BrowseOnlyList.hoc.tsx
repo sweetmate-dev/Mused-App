@@ -41,7 +41,7 @@ function BrowseHOC(Browse: any) {
                         deleteBookmarkById={deleteBookmarkById}
                         contextMenuIsVisible={contextMenuIsVisible}
                         arrayImages={arrayImages}
-                        noResult={noResult}
+                        noResult={noResult}                        
                     />
         }
 

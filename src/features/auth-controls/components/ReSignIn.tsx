@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import {
     loginViaFBProvider,
+    loginViaAnonProvider,
     updateUser 
 } from '../../../services'
 import * as API from '../../../services/api';
@@ -60,6 +61,19 @@ const styles = StyleSheet.create({
         fontSize: 14,
         letterSpacing: 1,
         fontFamily: 'RalewayBold'
+    },
+    skipButton: {
+        width: width * 0.8,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white'
+    },
+    bottomText: {
+        fontSize: 14,
+        color: 'black',
+        backgroundColor: 'transparent',
+        fontFamily: 'QuickSandRegular'
     }
 })
 
@@ -161,6 +175,28 @@ export default class ReSignIn extends Component<Props, State> {
         })
     }
 
+    onSkipSignUp = () => {
+        API.RegisterEvent('On-emailsignup', {actionType: 'Click email signup button'});
+        this.props.setLoading(true)
+        loginViaAnonProvider().then((data: any) => {
+          const userId = data.auth.authInfo.userId;
+          // const userProfile = data.auth.authInfo.userProfile.data;
+          const userProfile = {
+            email: 'anonymous',
+            firstName: 'anonymous',
+            lastName: 'anonymous',
+            name: 'anonymous'
+          }
+          this._updateUser(userId, userProfile);
+          this.props.requestAuth(false);
+          this.props.setLoading(false);  
+          this.props.removeAuthLogOut();   
+        }, (error: Error) => {
+          this.props.setLoading(false)
+          console.log(error.message)
+        })
+      }
+
     saveFacebookAsName = async (name: string) => {
         try {
           await AsyncStorage.setItem('FacebookAsName', name)
@@ -193,6 +229,11 @@ export default class ReSignIn extends Component<Props, State> {
                   <Text style={styles.facebookText}>CONTINUE WITH FACEBOOK</Text>
                 </View>                
               </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => this.onSkipSignUp()}>
+                <View style={styles.skipButton}>
+                    <Text style={styles.bottomText}>...or signup using <Text style={{textDecorationLine: 'underline'}}>your email</Text></Text>   
+                </View>
             </TouchableWithoutFeedback>
           </View>
         )

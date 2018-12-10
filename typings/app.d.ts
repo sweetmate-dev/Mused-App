@@ -73,6 +73,7 @@ type Category = {
 }
 
 type Outfit = {
+    _id: any;
     userEmail: string;
     slots: number[];
     timestamp: string;

@@ -14,6 +14,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import {
     loginViaFBProvider,
+    loginViaAnonProvider,
     updateUser 
 } from '../../../services'
 import * as API from '../../../services/api';
@@ -201,6 +202,27 @@ export default class AuthControls extends Component<Props, State> {
         return !(Platform.OS === 'ios' && Constants.appOwnership === 'expo');
     };
 
+    onSkipSignUp = () => {
+        API.RegisterEvent('On-emailsignup', {actionType: 'Click email signup button'});
+        this.props.setLoading(true)
+        loginViaAnonProvider().then((data: any) => {
+          const userId = data.auth.authInfo.userId;
+          // const userProfile = data.auth.authInfo.userProfile.data;
+          const userProfile = {
+            email: 'anonymous',
+            firstName: 'anonymous',
+            lastName: 'anonymous',
+            name: 'anonymous'
+          }
+          this._updateUser(userId, userProfile);
+          this.props.requestAuth(false);
+          this.props.setLoading(false);     
+        }, (error: Error) => {
+          this.props.setLoading(false)
+          console.log(error.message)
+        })
+      }
+
     render() {
         return (
             <View style={styles.container}>
@@ -214,7 +236,7 @@ export default class AuthControls extends Component<Props, State> {
                             </View>                
                         </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={() => console.log('')}>
+                    <TouchableWithoutFeedback onPress={() => this.onSkipSignUp()}>
                         <View style={styles.skipButton}>
                             <Text style={styles.bottomText}>...or signup using <Text style={{textDecorationLine: 'underline'}}>your email</Text></Text>   
                         </View>

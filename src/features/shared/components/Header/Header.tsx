@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Ripple from 'react-native-material-ripple';
-import { COLLECTION, BROWSE, FILTER, NEWSFEED, VIDEOPLAYER, BROWSE_ONLY } from '../../routesKeys';
+import { COLLECTION, BROWSE, FILTER, NEWSFEED, VIDEOPLAYER, BROWSE_ONLY, MYACCOUNT } from '../../routesKeys';
 import * as API from '../../../../services/api';
 import { loginViaAnonProvider, updateUser } from '../../../../services'
 const menuItems = ['NEWSFEED', 'SHOP NEW', 'SHOP CATEGORIES', 'SIGN OUT'];
@@ -162,7 +162,7 @@ export default class Header extends Component<Props> {
                                 <View style={styles.dropDownSeparator} />
                             )}
                             onSelect={(index: string) => this.onClickOption(index)}
-                            style={styles.profileIcon}
+                            style={[styles.profileIcon, {marginLeft: 8}]}
                         >
                             <Image 
                                 style={styles.profileIcon}
@@ -180,7 +180,7 @@ export default class Header extends Component<Props> {
         API.RegisterEvent("Hd-account", {
             actionType: "Clicked person icon on header"
         })
-        alert('coming soon')
+        this.props.ui.navigate(MYACCOUNT, '', {});
     }
 
     onClickOption = async (index: string) => {

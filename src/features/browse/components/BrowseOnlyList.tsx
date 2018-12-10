@@ -34,7 +34,7 @@ type Props = {
     listOfBookmarks: Bookmark[];
     contextMenuIsVisible: boolean;
     arrayImages: ProductImage[];
-    noResult: boolean;
+    noResult: boolean;    
 };
 export default class Browser extends Component<Props, State> {
     state: State = {

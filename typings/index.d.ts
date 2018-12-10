@@ -33,6 +33,11 @@ declare module '@expo/vector-icons' {
   export const Entypo: any;
 }
 
+declare module 'lodash' {
+  const lodash: any;
+  export default lodash;
+}
+
 declare module '@expo/videoplayer' {
   // tslint:disable-next-line
   const VideoPlayer: any;

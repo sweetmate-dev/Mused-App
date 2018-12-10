@@ -13,7 +13,7 @@ import AuthControls from './AuthControls';
 import ReSignIn from './ResignIn';
 
 const DAY_TIME = 24 * 3600 * 1000;
-// const notificationIcon = 'https://cdn-images.farfetch-contents.com/13/38/44/13/13384413_15718070_480.jpg';
+const iconURL = 'http://www.mused-app.com/assets/notification-icon.png';
 
 type Props = {
     root?: RootStore;
@@ -71,21 +71,21 @@ function AuthControlsHOC(Onboarding: any) {
             Notifications.scheduleLocalNotificationAsync({
                 title: 'Mused',
                 body: 'Hi, it‘s Mused. 15 new looks are ready to edit',
-                // icon: notificationIcon
+                icon: iconURL
             }, {
                 time: (new Date().getTime()) + DAY_TIME * 1
             })
             Notifications.scheduleLocalNotificationAsync({
                 title: 'Mused',
                 body: 'Create an outfit from these 10 Balenciaga faves',
-                // icon: notificationIcon
+                icon: iconURL
             }, {
                 time: (new Date().getTime()) + DAY_TIME * 2
             })
             Notifications.scheduleLocalNotificationAsync({
                 title: 'Mused',
                 body: 'Try styling this trend?',
-                // icon: notificationIcon
+                icon: iconURL
             }, {
                 time: (new Date().getTime()) + DAY_TIME * 3
             })

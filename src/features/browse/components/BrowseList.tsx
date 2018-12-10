@@ -34,6 +34,7 @@ type Props = {
     contextMenuIsVisible: boolean;
     arrayImages: ProductImage[];
     noResult: boolean;
+    getNewProducts: (category: string) => void;
 };
 export default class Browser extends Component<Props, State> {
     state: State = {
@@ -47,7 +48,9 @@ export default class Browser extends Component<Props, State> {
         const {getAlternatives, navigation} = this.props;
         const from: string = navigation.getParam('from', '');
         const productIds: number[] = navigation.getParam('alternatives', []);
-        if(from === 'collection') getAlternatives(productIds);        
+        if(navigation.getParam('collectionFrom', '') === 'outfit'){
+            this.props.getNewProducts('all');
+        } else if(from === 'collection') getAlternatives(productIds);        
         this.blackTimeOut = setTimeout(() => {
             this._fadeIn()
         }, 500)        

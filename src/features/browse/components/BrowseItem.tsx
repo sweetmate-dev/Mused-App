@@ -103,7 +103,6 @@ export default class BrowseItem extends Component<Props, State> {
                         </ View>
                     </Ripple>
                 </View>
-
             </View>
         )
     };
