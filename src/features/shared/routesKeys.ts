@@ -1,4 +1,5 @@
 export const COLLECTION: string = 'Collection';
+export const INSTAGRAM: string = 'Instagram Slide';
 export const VIDEOPLAYER: string = 'Video Player';
 export const BROWSE: string = 'Browse';
 export const MYACCOUNT: string = 'MyAccount';

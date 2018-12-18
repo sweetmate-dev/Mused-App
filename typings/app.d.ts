@@ -61,6 +61,15 @@ type Post = {
     slots: Slot[]
 };
 
+type RetailerPost = {
+    _id: any;
+    title: string;
+    date: string;
+    inspirationalImage: string;
+    slots: Slot[];
+    postId: number
+}
+
 type Slot = {
     productId: number;
     alternatives: number[];

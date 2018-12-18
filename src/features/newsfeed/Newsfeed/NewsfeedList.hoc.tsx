@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import NewsfeedList from './NewsfeedList';
-import { Header, COLLECTION, NEWSFEED, BROWSE_ONLY, ZOOM } from '../../shared';
+import { Header, COLLECTION, NEWSFEED, BROWSE_ONLY, ZOOM, INSTAGRAM } from '../../shared';
 import * as API from '../../../services/api';
 
 import { ROOT_STORE } from '../../stores';
@@ -36,16 +36,20 @@ function NewsfeedHOC(Newsfeed: any) {
       }
       render() {
         const { root: { posts, products } } = this.props;
-        const { listOfPosts, getPosts } = posts;
+        const { listOfPosts, listOfRetailerPosts, getPosts } = posts;
         const { getBookmarksByUserId, getCollection } = products;
+        console.log(listOfRetailerPosts)
         return <Newsfeed 
                     goToCollection={this._goToCollection}
                     goToBrowseDirectly={this._goToBrowseDirectly}
                     goToZoomDirectly={this._goToZoomDirectly}
                     getPosts={getPosts}
                     getCollection={getCollection}
+                    goToInstagramSlide={this._goToInstagramSlide}
                     listOfPosts={listOfPosts}
+                    listOfRetailerPosts={listOfRetailerPosts}
                     getBookmarksByUserId={getBookmarksByUserId}
+                    onClickRetailerPost={this._onClickRetailerPost}
                 />
       }
 
@@ -59,6 +63,21 @@ function NewsfeedHOC(Newsfeed: any) {
           event: 'Click post',
           postType: 'inspire',
         })       
+      }
+
+      _onClickRetailerPost = async (post: RetailerPost) => {
+        const { getCollection, setFromOutfit, resetArrayImages } = this.props.root.products;
+        setFromOutfit(false)
+        await resetArrayImages();
+        getCollection(post.slots);
+        this.props.root.ui.navigate(COLLECTION, NEWSFEED, {
+          productIds: post.slots,
+          from: 'instagram'
+        }); 
+      }
+
+      _goToInstagramSlide = (slots: any) => {
+        this.props.root.ui.navigate(INSTAGRAM, NEWSFEED, {slots});  
       }
 
       _goToBrowseDirectly = (productIds: any) => {

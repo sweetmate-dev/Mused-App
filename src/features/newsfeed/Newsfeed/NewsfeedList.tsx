@@ -9,6 +9,7 @@ import { Permissions, Notifications } from 'expo';
 
 import  NewsfeedItem from './NewsfeedItem';
 import theme from '../theme';
+import RetailerPosts from './RetailerPost';
 // import * as API from '../../../services/api';
 const DAY_TIME = 24 * 3600 * 1000;
 
@@ -21,12 +22,15 @@ type State = {
 
 type Props = {
     listOfPosts: Post[];
+    listOfRetailerPosts: RetailerPost[];
     goToCollection: (params: any) => void;
     getPosts: () => void;
     getBookmarksByUserId: () => void;
     getCollection: (slots: Slot[]) => void;
     goToBrowseDirectly: (productIds: any) => void;
     goToZoomDirectly: (productId: number) => void;
+    goToInstagramSlide: (slots: any) => void;
+    onClickRetailerPost: (post: RetailerPost) => void;
 }
 export default class NewsfeedList extends Component<Props, State> {
 
@@ -145,7 +149,6 @@ export default class NewsfeedList extends Component<Props, State> {
     
     render() {
         // console.log(this.sortData(this.props.listOfPosts))
-        if(this.props.listOfPosts !== undefined) console.log('NewsFeed Length: ' , this.props.listOfPosts);
         return (
             <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
                 <StatusBar
@@ -159,6 +162,7 @@ export default class NewsfeedList extends Component<Props, State> {
                     keyExtractor={ (item) => `${item._id}`}
                     ItemSeparatorComponent={this._renderSeparator}
                     scrollEventThrottle={1000}
+                    ListFooterComponent={this._renderFooter.bind(this)}
                 />}
             </Animated.View>
         )
@@ -170,7 +174,25 @@ export default class NewsfeedList extends Component<Props, State> {
             goToCollection={this._goToCollection}
             goToBrowseDirectly={this.props.goToBrowseDirectly}
             goToZoomDirectly={this.props.goToZoomDirectly}
+            goToInstagramSlide={this.props.goToInstagramSlide}
         />
+
+    _renderFooter = () => {
+        const {listOfRetailerPosts} = this.props;
+        if(listOfRetailerPosts){
+            return(
+                <View>
+                    <View style={theme.separator}></View>
+                    <RetailerPosts
+                        posts={listOfRetailerPosts}
+                        onClickPost={this.props.onClickRetailerPost}
+                    />
+                </View>
+            )
+        } else {
+            return null
+        }
+    }    
 
     _goToCollection = (param: any) => {
         const { goToCollection, getCollection } = this.props;

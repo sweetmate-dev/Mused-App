@@ -56,13 +56,11 @@ export default class CollectionList extends Component<Props, State> {
         const { navigation } = this.props;
         this.slots = navigation.getParam('productIds', []);
         this.from = navigation.getParam('from', 'newsfeed');
-        console.log(this.slots)
-        // getCollection(this.slots);
     }
 
     render() {
         const {  listOfCollection } = this.props; 
-        console.log('listOfCollection', listOfCollection)  
+        // console.log('listOfCollection', listOfCollection)  
         return (
             <View style={theme.wrapper}>
                 <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
@@ -99,7 +97,7 @@ export default class CollectionList extends Component<Props, State> {
 
     _renderFooter = () => {
         const authorItem: Author = this.props.navigation.getParam('authorItem');
-        if(this.props.isFromOutfit) return null
+        if(this.props.isFromOutfit || this.from === 'instagram') return null
         return (
             <CollectionFooter item={authorItem} visible={this.state.showFooter} title={testDataFooter.title} onCollection={true} />
         )

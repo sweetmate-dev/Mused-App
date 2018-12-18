@@ -91,7 +91,9 @@ interface ISlotsStore {
 
 interface IPostsStore {
     posts: Post[];
+    retailerPosts: RetailerPost[];
     getPosts: () => void;
+    listOfRetailerPosts: RetailerPost[];
     listOfPosts: Post[];
 }
 

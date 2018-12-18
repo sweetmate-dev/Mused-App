@@ -61,6 +61,16 @@ export const getPosts = () => {
     return client.callFunction("getPosts", []);
 }
 
+export const getRetailerPosts = () => {
+    const client = getClient();
+    return client.callFunction("getRetailerPosts", []);
+}
+
+export const addRetailerPosts = (post: RetailerPost) => {
+    const client = getClient();
+    return client.callFunction("addRetailerPosts", [post]);
+}
+
 export const getProductsByIds = (ids: number[]) => {
     const client = getClient();
     const _ids = [...ids];

@@ -19,12 +19,14 @@ type Props = {
     goToCollection: (params: any) => void;
     goToBrowseDirectly: (productIds: any) => void;
     goToZoomDirectly: (productId: number) => void;
+    goToInstagramSlide: (slots: any) => void;
 };
 
 export default class NewsfeedItem extends Component<Props> {
 
     render() {
         const { date, authorProfilePhoto, authorName, inspirationalImage, title, postType } = this.props.item;
+        console.log('postType', postType)
         return (
             <View style={theme.container}>
                 <View style={theme.titleView}>
@@ -53,13 +55,18 @@ export default class NewsfeedItem extends Component<Props> {
                         }
                     </Ripple>
                 </View>
-                <AuthorItem
-                    postType={postType}
-                    author={authorName}
-                    time={this.getTimeSincePost(date)}
-                    imgAuthorUrl={{uri: authorProfilePhoto}}
-                    authorContainer={theme.authorContainer}
-                />
+                {
+                    postType !== 'instagram' ?
+                    <AuthorItem
+                        postType={postType}
+                        author={authorName}
+                        time={this.getTimeSincePost(date)}
+                        imgAuthorUrl={{uri: authorProfilePhoto}}
+                        authorContainer={theme.authorContainer}
+                    />
+                    :
+                    <View style={{height: 30}} />
+                }                
             </View>
         )
     }
@@ -74,6 +81,7 @@ export default class NewsfeedItem extends Component<Props> {
             goToBrowseDirectly, 
             goToCollection, 
             goToZoomDirectly,
+            goToInstagramSlide,
             item: {timeAgo, authorProfilePhoto, authorName, slots, postType, productIds, productId } 
         } = this.props;
         if(postType === 'list') {
@@ -82,7 +90,11 @@ export default class NewsfeedItem extends Component<Props> {
         } else if(postType === 'product') {
             goToZoomDirectly(productId)
             return;
+        } else if(postType === 'instagram') {
+            goToInstagramSlide(slots)
+            return;
         }
+
         console.log(this.props.item);
         goToCollection(
         {
