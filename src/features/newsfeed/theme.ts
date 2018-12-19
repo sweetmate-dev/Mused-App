@@ -49,8 +49,6 @@ import {
         paddingHorizontal: 15,
     },
     itemImage: {
-        width: width - 30, 
-        height: (width - 30) * 390 / 330,
         borderWidth: 1,
         borderColor: 'black'
     },

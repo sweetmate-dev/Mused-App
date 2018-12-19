@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import moment from 'moment'
-// import { timeSince } from '../../../services/operators';
+import AutoHeightImage from 'react-native-auto-height-image';
 
 import { AuthorItem, } from '../../shared';
 import theme from '../theme';
@@ -48,9 +48,10 @@ export default class NewsfeedItem extends Component<Props> {
                                 style={theme.itemImage}
                             />
                             :
-                            <Image
+                            <AutoHeightImage
                                 source={{uri: inspirationalImage + ' '}}
                                 style={theme.itemImage}
+                                width={width - 30}
                             />
                         }
                     </Ripple>

@@ -11,15 +11,16 @@ import {
 import Swiper from 'react-native-swiper';
 import Ripple from 'react-native-material-ripple';
 import * as API from '../../../services/api';
+const InstagramImage = require('../../../../assets/images/instagram.png');
 
 const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: -10,
+        marginTop: -5,
         flex: 1,
         backgroundColor: 'white',
-        padding: 20,
+        paddingHorizontal: 20,
         paddingBottom: 10
     },
     buttonViewer: {
@@ -41,9 +42,7 @@ const styles = StyleSheet.create({
         letterSpacing: 2
     },
     indexView: {
-        height: 40,
-        marginBottom: 10,
-        flexDirection: 'row',
+        height: 60,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
         fontSize: 10,
         letterSpacing: 2,
         textAlign: 'center',
-        marginVertical: 10
+        margin: 2
     },
     wrapper: {
         width: width - 40,
@@ -64,32 +63,38 @@ const styles = StyleSheet.create({
         width: width - 40,
         height: height - 270,
         alignItems: 'center',
-        borderBottomWidth: 1,
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderColor: 'black',
-        padding: 1
     },
     slideImage: {
-        width: width - 42,
-        height: height - 272,
+        width: width - 40,
+        height: height - 250,
         resizeMode: 'cover'
     },
     slideHeader: {
         height: 60,
         flexDirection: 'row',
         alignItems: 'center',
-        borderTopWidth: 1,
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderColor: 'black',
-        padding: 10
+        paddingVertical: 10
     },
-    slideAvatar: {
+    avatarView: {
         width: 40,
         height: 40,        
+        position: 'relative',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    instagram: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: 40,
+        height: 40,
+        resizeMode: 'stretch',
+    },
+    slideAvatar: {
+        width: 36,
+        height: 36,        
         resizeMode: 'cover',
-        borderRadius: 20,
+        borderRadius: 18,
     },
     slideHeaderInfo: {
         flex: 1,
@@ -97,19 +102,19 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
     },
     name: {
-        fontSize: 14,
+        fontSize: 12,
         fontFamily: 'RalewayBold',
         color: 'black',
         marginBottom: 3,
     },
     role: {
-        fontSize: 14,
+        fontSize: 12,
         fontFamily: 'Raleway',
         color: 'black'
     },
     viewButton: {
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        paddingHorizontal: 15,
+        paddingVertical: 6,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#3897F0',
@@ -182,7 +187,6 @@ export default class InstagramSlide extends Component<Props, State> {
     }
 
     onPressMore = () => {
-        alert(this.state.slideIndex)
         Linking.openURL(JSON.parse(this.state.slots[this.state.slideIndex].instagramURL).author_url);
     }
 
@@ -205,10 +209,13 @@ export default class InstagramSlide extends Component<Props, State> {
                         return(
                             <View key={instagram.title}>
                                 <View style={styles.slideHeader}>
-                                    <Image source={{uri: tempImageURL}} style={styles.slideAvatar} />
+                                    <View style={styles.avatarView}>
+                                        <Image source={InstagramImage} style={styles.instagram} />
+                                        <Image source={{uri: tempImageURL}} style={styles.slideAvatar} />
+                                    </View>
                                     <View style={styles.slideHeaderInfo}>
                                         <Text style={styles.name}>{instagram.author_name}</Text>
-                                        <Text style={styles.role}>{this.getDescription(instagram.title)}</Text>
+                                        {/* <Text style={styles.role}>{this.getDescription(instagram.title)}</Text> */}
                                     </View>
                                     <TouchableOpacity onPress={() => this.props.onClickViewProfile(instagram.author_url)}>
                                         <View style={styles.viewButton}>
@@ -225,7 +232,7 @@ export default class InstagramSlide extends Component<Props, State> {
                 }
                 </Swiper>
                 <View style={styles.indexView}>
-                    <Text style={styles.indexText}>Look {slideIndex + 1} of {slots.length} - </Text>
+                    <Text style={styles.indexText}>Look {slideIndex + 1} of {slots.length}</Text>
                     <TouchableOpacity onPress={() => this.onPressMore()}>
                         <Text style={styles.indexText}>View more on Instagram</Text>
                     </TouchableOpacity>
