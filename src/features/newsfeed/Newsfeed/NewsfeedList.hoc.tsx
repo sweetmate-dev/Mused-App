@@ -17,11 +17,12 @@ function NewsfeedHOC(Newsfeed: any) {
         return {
             header: <Header navigation={navigation} />
         } 
-      };
+      };      
+
       componentDidMount() {
-        const { root: { ui, user } } = this.props;
+        const { root: { ui, user, products: { getNewProducts } } } = this.props;
         ui.setNavigation(this.props.navigation);
-        
+        getNewProducts('all');
         setTimeout(() => {
           API.setIdentify(user.userProfile.email);
           API.RegisterEvent("Login", {
@@ -37,8 +38,7 @@ function NewsfeedHOC(Newsfeed: any) {
       render() {
         const { root: { posts, products } } = this.props;
         const { listOfPosts, listOfRetailerPosts, getPosts } = posts;
-        const { getBookmarksByUserId, getCollection } = products;
-        console.log(listOfRetailerPosts)
+        const { getBookmarksByUserId, getCollection, listOfAlternatives, listOfRecentNewProducts } = products;
         return <Newsfeed 
                     goToCollection={this._goToCollection}
                     goToBrowseDirectly={this._goToBrowseDirectly}
@@ -50,6 +50,10 @@ function NewsfeedHOC(Newsfeed: any) {
                     listOfRetailerPosts={listOfRetailerPosts}
                     getBookmarksByUserId={getBookmarksByUserId}
                     onClickRetailerPost={this._onClickRetailerPost}
+                    listOfAlternatives={listOfAlternatives}
+                    listOfRecentNewProducts={listOfRecentNewProducts}
+                    onClickNewProduct={this._onClickNewProduct}
+                    onViewAllNewProduct={this._onViewAllNewProduct}
                 />
       }
 
@@ -70,13 +74,45 @@ function NewsfeedHOC(Newsfeed: any) {
         setFromOutfit(false)
         await resetArrayImages();
         getCollection(post.slots);
+        API.RegisterEvent("Nf-ClickPost", {          
+          event: 'Click post',
+          postType: 'Retailer',
+        });
         this.props.root.ui.navigate(COLLECTION, NEWSFEED, {
           productIds: post.slots,
           from: 'instagram'
-        }); 
+        });        
+      }
+
+      _onClickNewProduct = (item: Product) => {
+        const { root: { ui, products } } = this.props;
+        const { navigate } = ui;
+        const { getDetailByProductId } = products;
+        getDetailByProductId(item.id)
+        .then((product: any) => {
+          navigate(ZOOM, NEWSFEED, {product});
+        })
+        API.RegisterEvent("Nf-ClickPost", {
+          event: 'Click post',
+          postType: 'New Product',
+        })
+      }
+
+      _onViewAllNewProduct =  () => {
+        const { root: { ui } } = this.props;
+        const { navigate } = ui;
+        navigate(BROWSE_ONLY, NEWSFEED, {});
+        API.RegisterEvent("Nf-ClickPost", {
+          event: 'Click post',
+          postType: 'View All New Products',
+        })
       }
 
       _goToInstagramSlide = (slots: any) => {
+        API.RegisterEvent("Nf-ClickPost", {          
+          event: 'Click post',
+          postType: 'Instagram',
+        }) 
         this.props.root.ui.navigate(INSTAGRAM, NEWSFEED, {slots});  
       }
 

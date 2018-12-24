@@ -167,7 +167,7 @@ export default class Header extends Component<Props> {
                             <Image 
                                 style={styles.profileIcon}
                                 source={require('../../../../../assets/images/hamburger-icon.png')} 
-                            /> 
+                            />
                         </ModalDropdown>
                     }
                 </View>
@@ -283,7 +283,7 @@ export default class Header extends Component<Props> {
         if (BROWSE_ONLY === route) {
             hideContextMenu();
             clearFilters();
-            resetAlternativies();
+            // resetAlternativies();
         }
         if (VIDEOPLAYER === route) {
 

@@ -36,6 +36,7 @@
     },
     "facebookScheme": "fb2127807207434704",
     "facebookAppId": "2127807207434704",
-    "facebookDisplayName": "MusedApp"
+    "facebookDisplayName": "MusedApp",
+    "scheme": "musedapp"
   }
 }

@@ -38,6 +38,7 @@ export default class ObservableStore implements IProductStore {
     @observable myRecentOutfit: Product[] = [];
     @observable allOutfitSlots: any = [];
     @observable fromOutfit: boolean = false;
+    @observable recentNewProducts: Product[] = [];
 
     get listOfCollection() {
         return this.collection;
@@ -45,6 +46,10 @@ export default class ObservableStore implements IProductStore {
 
     get listOfAlternatives() {
         return this.alternatives;
+    }
+
+    get listOfRecentNewProducts() {
+        return this.recentNewProducts;
     }
 
     get listOfBookmarks() {
@@ -305,8 +310,8 @@ export default class ObservableStore implements IProductStore {
         this.alternatives = []
         this.noResult = false;
         await getNewProducts(category).then((products: Product[]) => {
-
             this.alternatives = [...this.shuffle(this.mergeArray(products))];
+            this.recentNewProducts = this.alternatives.slice(0, 10);
             console.log(this.alternatives.length);
             if(this.alternatives.length === 0) this.noResult = true;
         });

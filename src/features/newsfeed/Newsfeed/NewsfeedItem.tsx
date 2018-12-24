@@ -26,7 +26,6 @@ export default class NewsfeedItem extends Component<Props> {
 
     render() {
         const { date, authorProfilePhoto, authorName, inspirationalImage, title, postType } = this.props.item;
-        console.log('postType', postType)
         return (
             <View style={theme.container}>
                 <View style={theme.titleView}>

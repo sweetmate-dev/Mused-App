@@ -9,8 +9,10 @@ interface IProductStore {
     getMyOutfitSlots: any;
     listOfCollection: Product[];
     alternatives: Product[];
+    recentNewProducts: Product[];
     arrayImages: ProductImage[];
     listOfAlternatives: Product[];
+    listOfRecentNewProducts: Product[];
     toggleViewCategory: boolean;
     allProducts: any;
     getSliderToggleState: boolean;

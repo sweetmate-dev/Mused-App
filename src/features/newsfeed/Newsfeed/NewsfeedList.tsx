@@ -3,13 +3,14 @@ import {
   View,
   FlatList,
   StatusBar,
-  Animated
+  Animated,
 } from 'react-native';
-import { Permissions, Notifications } from 'expo';
+import { Permissions, Notifications, Linking } from 'expo';
 
 import  NewsfeedItem from './NewsfeedItem';
 import theme from '../theme';
 import RetailerPosts from './RetailerPost';
+import NewProductList from './NewProductList';
 // import * as API from '../../../services/api';
 const DAY_TIME = 24 * 3600 * 1000;
 
@@ -23,6 +24,8 @@ type State = {
 type Props = {
     listOfPosts: Post[];
     listOfRetailerPosts: RetailerPost[];
+    listOfAlternatives: Product[];
+    listOfRecentNewProducts: Product[];
     goToCollection: (params: any) => void;
     getPosts: () => void;
     getBookmarksByUserId: () => void;
@@ -31,6 +34,8 @@ type Props = {
     goToZoomDirectly: (productId: number) => void;
     goToInstagramSlide: (slots: any) => void;
     onClickRetailerPost: (post: RetailerPost) => void;
+    onClickNewProduct: (product: Product) => void;
+    onViewAllNewProduct: () => void;
 }
 export default class NewsfeedList extends Component<Props, State> {
 
@@ -44,7 +49,13 @@ export default class NewsfeedList extends Component<Props, State> {
     componentDidMount() {  
         this.props.getPosts();
         this.props.getBookmarksByUserId();
+        Linking.addEventListener('url', this._handleOpenUrl)
         // this.registerForPushNotifications();
+    }
+
+    _handleOpenUrl = (event: any) => {
+        let { path, queryParams } = Linking.parse(event.url);
+        console.log(`${event.url} - Linked to app with path: ${path} and data: ${JSON.stringify(queryParams)}`);
     }
 
     async registerForPushNotifications() {
@@ -107,24 +118,6 @@ export default class NewsfeedList extends Component<Props, State> {
         console.log('Notification Data', notification)
     };
 
-    onScroll(nativeEvent: any) {
-        const { contentOffset, contentSize, layoutMeasurement } = nativeEvent;    
-        const ScrollHeight = contentSize.height;
-        const contentOffsetY = layoutMeasurement.height + contentOffset.y;
-        const scrolledNewsfeedNum = Math.floor(this.props.listOfPosts.length * contentOffsetY / ScrollHeight);
-        
-        if(scrolledNewsfeedNum === this.state.numberOfcontent) return;
-        else {
-            // console.log('scroll index: ', scrolledNewsfeedNum)
-            // API.RegisterEvent("Nf-ScrollPost", {
-            //     actionType: 'Scroll depth',
-            //     number_Of_content: scrolledNewsfeedNum
-            // })
-            // this.setState({numberOfcontent: scrolledNewsfeedNum});
-        }
-        
-    }
-
     //sort newsfeed by pin field
     /*
         if 0 please treat as normal, no speical treatment needed
@@ -156,7 +149,6 @@ export default class NewsfeedList extends Component<Props, State> {
                     barStyle="dark-content"
                 />
                 {(this.props.listOfPosts && this.props.listOfPosts.length) && <FlatList
-                    onScroll={({ nativeEvent }) => this.onScroll(nativeEvent)}
                     data={this.sortData(this.props.listOfPosts)}
                     renderItem={this._renderItem}
                     keyExtractor={ (item) => `${item._id}`}
@@ -178,7 +170,7 @@ export default class NewsfeedList extends Component<Props, State> {
         />
 
     _renderFooter = () => {
-        const {listOfRetailerPosts} = this.props;
+        const {listOfRetailerPosts, listOfRecentNewProducts} = this.props;
         if(listOfRetailerPosts){
             return(
                 <View>
@@ -186,6 +178,12 @@ export default class NewsfeedList extends Component<Props, State> {
                     <RetailerPosts
                         posts={listOfRetailerPosts}
                         onClickPost={this.props.onClickRetailerPost}
+                    />
+                    <View style={theme.separator}></View>
+                    <NewProductList
+                        products={listOfRecentNewProducts}
+                        onClickProduct={this.props.onClickNewProduct}
+                        onClickViewAll={this.props.onViewAllNewProduct}
                     />
                 </View>
             )
@@ -213,7 +211,11 @@ export default class NewsfeedList extends Component<Props, State> {
                 }, 300)            
             });  
         }, 300)
-        
+
+        // console.log(param)
+        // let redirectUrl = Linking.makeUrl('path/into/app', { hello: 'world', goodbye: 'now'});
+        // alert(redirectUrl)
+        // Linking.openURL('musedapp://path/to?index=9');
     }
 
     _renderSeparator = () =>

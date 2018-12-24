@@ -182,8 +182,8 @@ export default class InstagramSlide extends Component<Props, State> {
     }
 
     getDescription = (title: string) => {
-        if(title.length < 15) return title;
-        return title.substr(0, 15) + '...'
+        if(title.length < 25) return title;
+        return title.substr(0, 25) + ' ...'
     }
 
     onPressMore = () => {

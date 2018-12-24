@@ -34,7 +34,8 @@ type Props = {
     listOfBookmarks: Bookmark[];
     contextMenuIsVisible: boolean;
     arrayImages: ProductImage[];
-    noResult: boolean;    
+    noResult: boolean; 
+    getNewProducts: (category: string) => void;   
 };
 export default class Browser extends Component<Props, State> {
     state: State = {
@@ -45,9 +46,10 @@ export default class Browser extends Component<Props, State> {
     blackTimeOut: any;
     prevProducts: any;
     componentDidMount() {
-        const {getAlternatives, navigation} = this.props;
+        const {getAlternatives, navigation, getNewProducts} = this.props;
         const productIds: number[] = navigation.getParam('productIds', []);
         if(productIds.length > 0) getAlternatives(productIds);
+        else getNewProducts('all')
         this.blackTimeOut = setTimeout(() => {
             this._fadeIn()
         }, 500)        
@@ -74,7 +76,7 @@ export default class Browser extends Component<Props, State> {
                         data={_listOfAlternatives}
                         // ListHeaderComponent={this.renderHeaderComponent}
                         ListFooterComponent={() => <View style={theme.footerComponent} />}
-                        ListEmptyComponent={this._renderEmptyView}
+                        // ListEmptyComponent={this._renderEmptyView}
                         renderItem={this._renderItem}
                         keyExtractor={ item => `${item.id}`}
                         numColumns={2}

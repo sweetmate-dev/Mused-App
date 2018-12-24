@@ -20,6 +20,7 @@ declare module 'expo' {
   export const LinearGradient: any;
   export const Permissions: any;
   export const Notifications: any;
+  export const Linking: any;
 }
 
 declare module '@expo/vector-icons' {
