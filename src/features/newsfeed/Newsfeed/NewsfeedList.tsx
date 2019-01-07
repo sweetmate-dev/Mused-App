@@ -4,14 +4,17 @@ import {
   FlatList,
   StatusBar,
   Animated,
+  Image,
+  Text,
+  TouchableOpacity
 } from 'react-native';
-import { Permissions, Notifications, Linking } from 'expo';
+import { Permissions, Notifications } from 'expo';
 
 import  NewsfeedItem from './NewsfeedItem';
 import theme from '../theme';
 import RetailerPosts from './RetailerPost';
 import NewProductList from './NewProductList';
-// import * as API from '../../../services/api';
+
 const DAY_TIME = 24 * 3600 * 1000;
 
 type State = {
@@ -19,6 +22,8 @@ type State = {
     numberOfcontent: number,
     token: string,
     notification: any,
+    slots: any[],
+    instagram_inspirationalImage: string
 };
 
 type Props = {
@@ -26,13 +31,14 @@ type Props = {
     listOfRetailerPosts: RetailerPost[];
     listOfAlternatives: Product[];
     listOfRecentNewProducts: Product[];
+    instagramInspirationalImage: string;
     goToCollection: (params: any) => void;
     getPosts: () => void;
     getBookmarksByUserId: () => void;
     getCollection: (slots: Slot[]) => void;
     goToBrowseDirectly: (productIds: any) => void;
     goToZoomDirectly: (productId: number) => void;
-    goToInstagramSlide: (slots: any) => void;
+    goToInstagramSlide: () => void;
     onClickRetailerPost: (post: RetailerPost) => void;
     onClickNewProduct: (product: Product) => void;
     onViewAllNewProduct: () => void;
@@ -44,19 +50,14 @@ export default class NewsfeedList extends Component<Props, State> {
         numberOfcontent: 1,
         token: null,
         notification: null,
+        slots: [],
+        instagram_inspirationalImage: ''
     }
 
     componentDidMount() {  
         this.props.getPosts();
-        this.props.getBookmarksByUserId();
-        Linking.addEventListener('url', this._handleOpenUrl)
-        // this.registerForPushNotifications();
-    }
-
-    _handleOpenUrl = (event: any) => {
-        let { path, queryParams } = Linking.parse(event.url);
-        console.log(`${event.url} - Linked to app with path: ${path} and data: ${JSON.stringify(queryParams)}`);
-    }
+        this.props.getBookmarksByUserId();        
+    }    
 
     async registerForPushNotifications() {
         const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
@@ -152,8 +153,8 @@ export default class NewsfeedList extends Component<Props, State> {
                     data={this.sortData(this.props.listOfPosts)}
                     renderItem={this._renderItem}
                     keyExtractor={ (item) => `${item._id}`}
-                    ItemSeparatorComponent={this._renderSeparator}
                     scrollEventThrottle={1000}
+                    ListHeaderComponent={this._renderHeader}
                     ListFooterComponent={this._renderFooter.bind(this)}
                 />}
             </Animated.View>
@@ -169,12 +170,31 @@ export default class NewsfeedList extends Component<Props, State> {
             goToInstagramSlide={this.props.goToInstagramSlide}
         />
 
+    _renderHeader = () => {
+        const { instagramInspirationalImage } = this.props;
+        if(instagramInspirationalImage.length === 0) return null;
+        return (
+            <View>
+                <View style={theme.titleView}>
+                    <View style={theme.lineView}></View>
+                    <Text style={theme.titleText}>Today's Instagram Looks</Text>
+                    <View style={theme.lineView}></View>
+                </View>
+                <TouchableOpacity 
+                    onPress={this.props.goToInstagramSlide}
+                >
+                    <Image source={{uri: instagramInspirationalImage}} style={theme.instagramImage} />
+                </TouchableOpacity>                
+                <View style={theme.separator}></View>
+            </View>
+        )
+    }        
+
     _renderFooter = () => {
         const {listOfRetailerPosts, listOfRecentNewProducts} = this.props;
         if(listOfRetailerPosts){
             return(
                 <View>
-                    <View style={theme.separator}></View>
                     <RetailerPosts
                         posts={listOfRetailerPosts}
                         onClickPost={this.props.onClickRetailerPost}
@@ -211,11 +231,6 @@ export default class NewsfeedList extends Component<Props, State> {
                 }, 300)            
             });  
         }, 300)
-
-        // console.log(param)
-        // let redirectUrl = Linking.makeUrl('path/into/app', { hello: 'world', goodbye: 'now'});
-        // alert(redirectUrl)
-        // Linking.openURL('musedapp://path/to?index=9');
     }
 
     _renderSeparator = () =>

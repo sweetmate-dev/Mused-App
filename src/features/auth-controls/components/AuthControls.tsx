@@ -20,7 +20,7 @@ import {
 import * as API from '../../../services/api';
 
 const { width } = Dimensions.get('window');
-const logoImage = require('../../../../assets/images/join-mused.jpg');
+const logoImage = require('../../../../assets/images/join.png');
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     logoImage: {
         marginBottom: 45,
         width: width * 0.6,
-        height: width * 0.6 * 96 / 380,
+        height: width * 0.6 * 2.5 / 10.11,
         resizeMode: 'stretch'
     },
     facebookButton: {
@@ -112,10 +112,10 @@ export default class AuthControls extends Component<Props, State> {
                 this.state.opacity,            
                 {
                     toValue: 1,
-                    duration: 3500, 
+                    duration: 1500, 
                 }
             ).start()
-        }, 1000)        
+        }, 500)        
     }
 
     backupFacebookAPIToken = async () => {

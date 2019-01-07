@@ -21,8 +21,10 @@ export default  StyleSheet.create({
         justifyContent: 'center', 
         flexDirection: 'column',
         alignItems: 'center',
-        marginBottom: 20,
-        marginTop: 20
+        paddingBottom: 20,
+        marginTop: 20,
+        borderBottomWidth: 2,
+        borderColor: '#f9f9f9'
     },
     headerTitle: {
         fontSize: 18,
@@ -195,5 +197,10 @@ export default  StyleSheet.create({
         textAlign: 'center',
         fontSize: 14,
         color: '#555'
+    },
+
+    topProductsView: {
+        flexWrap: 'wrap',
+        flexDirection: 'row'
     }
 });

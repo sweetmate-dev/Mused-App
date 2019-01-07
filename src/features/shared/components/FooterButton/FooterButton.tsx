@@ -131,8 +131,7 @@ export default class FooterButton extends Component<Props, State> {
         // toggle Highlight button text
         if(user !== undefined) {
             const { user: { highlightButtonText, setHighlightButtonText} } = this.props;
-            if(highlightButtonText === 'View' && text === 'View') setHighlightButtonText('Filter');
-            else if(highlightButtonText === 'Filter' && text === 'Filter') setHighlightButtonText('none');
+            if(highlightButtonText === 'View' && text === 'View') setHighlightButtonText('none');
         }        
 
         if (!navigate) {

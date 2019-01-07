@@ -94,10 +94,10 @@ export default class Step5 extends Component<Props> {
                 <View style={[theme.infoView, styles.infoView]}>
                     <View style={theme.brandView}>
                         <Text style={theme.brandText}>MARNI</Text>
-                        <Text style={theme.unbrandText}>Gathered T-shirt</Text>
-                    </View>
-                    <View style={theme.priceView}>
                         <Text style={theme.priceText}>£620</Text>
+                    </View>
+                    <View style={theme.brandView}>
+                        <Text style={theme.unbrandText}>Gathered T-shirt</Text>                        
                     </View>                
                 </View>
                 <View style={styles.descContainer}>

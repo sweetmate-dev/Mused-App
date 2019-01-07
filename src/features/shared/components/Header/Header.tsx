@@ -7,14 +7,14 @@ import {
     BackHandler,
     StyleSheet,
     Dimensions,
-    Text
+    Text,
 } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Ripple from 'react-native-material-ripple';
 import { COLLECTION, BROWSE, FILTER, NEWSFEED, VIDEOPLAYER, BROWSE_ONLY, MYACCOUNT } from '../../routesKeys';
 import * as API from '../../../../services/api';
 import { loginViaAnonProvider, updateUser } from '../../../../services'
-const menuItems = ['NEWSFEED', 'SHOP NEW', 'SHOP CATEGORIES', 'SIGN OUT'];
+const menuItems = ['MY ACCOUNT', 'SHOP NEW', 'SHOP CATEGORIES', 'SIGN OUT'];
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -54,26 +54,30 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     dropDownText: {
-        height: width * 0.125,
-        fontSize: 14, 
+        fontSize: 12, 
         backgroundColor: 'transparent',
         fontFamily: 'QuickSandRegular',
         textAlign: 'center',
-        padding: 10,
-        borderColor: '#FFFFFF',
+        padding: 20,
         justifyContent: 'center'
     },
     dropDownStyle: {
-        width: width * 0.6, 
-        height: width * 0.5 + 20, 
+        width: width * 0.5, 
+        height: 250,
         backgroundColor: 'white', 
         borderWidth: 1,
+        borderRadius: 0,
         borderColor: 'gray',
         marginTop: 5,
-        paddingTop: 10
+        paddingVertical: 10
     },
     dropDownSeparator: {
-        height: 0,
+        height: 1,
+        backgroundColor: 'gray',
+        width: 50
+    },
+    itemView: {
+        alignItems: 'center',
     }
 })
 
@@ -155,11 +159,14 @@ export default class Header extends Component<Props> {
                             dropdownStyle={styles.dropDownStyle}
                             renderRow={(option: string) => (
                                 <TouchableOpacity>
-                                    <Text style={styles.dropDownText}>{option}</Text>
+                                    <View style={styles.itemView}>
+                                        <Text style={styles.dropDownText}>{option}</Text>
+                                        {option === 'SIGN OUT' || <View style={styles.dropDownSeparator} />}
+                                    </View>
                                 </TouchableOpacity>
                             )}
                             renderSeparator={() => (
-                                <View style={styles.dropDownSeparator} />
+                                <View style={{height: 0}} />
                             )}
                             onSelect={(index: string) => this.onClickOption(index)}
                             style={[styles.profileIcon, {marginLeft: 8}]}
@@ -189,7 +196,7 @@ export default class Header extends Component<Props> {
         })
         switch (Number(index)) {
             case 0:
-                this.props.onPressLogo();
+                alert('comming soon')
                 break;
             case 1:
                 await this.props.getNewProducts();

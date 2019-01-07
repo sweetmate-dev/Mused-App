@@ -67,6 +67,27 @@ import {
         borderBottomColor: '#f1f1f1',
         borderBottomWidth: 1
     },
+    instagramImageView: {
+        width: width / 5 - 12,
+        height: width / 5 - 12,
+        borderRadius: width / 10 - 6,
+        overflow: 'hidden',
+        marginHorizontal: 7.5,
+        position: 'relative',
+        justifyContent: 'center',
+        alignItems: 'center' 
+    },
+    instagramPostImage: {        
+        width: width / 5 - 18,
+        height: width / 5 - 18,
+        borderRadius: width / 10 - 9,        
+    },
+    instagramImage: {
+        marginLeft: 15,
+        width: width - 30,
+        height: 100,
+        resizeMode: 'contain'
+    },
     titleView: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -79,12 +100,22 @@ import {
     },
     titleText: {
         flex: 1,
-        paddingHorizontal: 15,
         textAlign: 'center',
         fontFamily: 'Raleway',
         letterSpacing: 2,
         lineHeight: 20,
         fontSize: 14,
+    },
+    redirectText: {
+        fontFamily: 'Raleway',
+        fontSize: 14,
+        marginBottom: 30
+    },
+    instagramList: {
+        padding: 7.5, 
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent: 'center'
     }
   });
 

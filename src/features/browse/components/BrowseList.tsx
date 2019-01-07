@@ -19,6 +19,7 @@ type State = {
     likedItemIndex: null | number;
     fadeIn: any;
     prevProducts: string;
+    isNew: boolean
 };
 type Props = {
     navigation: any;
@@ -35,12 +36,14 @@ type Props = {
     arrayImages: ProductImage[];
     noResult: boolean;
     getNewProducts: (category: string) => void;
+    newUser: boolean
 };
 export default class Browser extends Component<Props, State> {
     state: State = {
         likedItemIndex: null,
         fadeIn: new Animated.Value(0),
-        prevProducts: ''
+        prevProducts: '',
+        isNew: false
     }
     blackTimeOut: any;
     prevProducts: any;
@@ -50,7 +53,10 @@ export default class Browser extends Component<Props, State> {
         const productIds: number[] = navigation.getParam('alternatives', []);
         if(navigation.getParam('collectionFrom', '') === 'outfit'){
             this.props.getNewProducts('all');
-        } else if(from === 'collection') getAlternatives(productIds);        
+        } else if(from === 'collection') {
+            getAlternatives(productIds);        
+        }
+
         this.blackTimeOut = setTimeout(() => {
             this._fadeIn()
         }, 500)        
@@ -67,6 +73,8 @@ export default class Browser extends Component<Props, State> {
         }        
     }
 
+    
+
     render() {
         // const headerComponent = (
         //     <View style={theme.listTitleContainer}>
@@ -78,7 +86,7 @@ export default class Browser extends Component<Props, State> {
                 <Animated.View style={[theme.productListContainer, {opacity: this.state.fadeIn}]}>
                     <FlatList
                         ref='_scrollView'
-                        data={_listOfAlternatives}
+                        data={this.props.newUser ? _listOfAlternatives.slice(6) : _listOfAlternatives}
                         ListHeaderComponent={this.renderHeaderComponent}
                         ListFooterComponent={() => <View style={theme.footerComponent} />}
                         ListEmptyComponent={this._renderEmptyView}
@@ -95,13 +103,37 @@ export default class Browser extends Component<Props, State> {
     }
 
     renderHeaderComponent = () => {
-        return(
-            <View style={theme.containerHeader}>
-                <Text style={theme.headerTitle}>{demoHeader.title.toUpperCase()}</Text>
-                <Text style={theme.headerSubTitle}>{demoHeader.subTitle}</Text>
-                {/* <View style={theme.underlineTitle}></View> */}
-            </View>
-        )
+        if(this.props.newUser && this.props.listOfAlternatives.length > 0) {
+            return(
+                <View>
+                    <View style={theme.containerHeader}>
+                        <Text style={theme.headerTitle}>{demoHeader.title.toUpperCase()}</Text>
+                        <Text style={theme.headerSubTitle}>{demoHeader.subTitle}</Text>
+                        {/* <View style={theme.underlineTitle}></View> */}
+                    </View>
+                    <View style={theme.topProductsView}>
+                        {
+                            this.props.listOfAlternatives.slice(0, 6).map((product: Product, index) => {
+                                return this._renderItem({item: product, index})
+                            })
+                        }
+                    </View>
+                    <View style={theme.containerHeader}>
+                        <Text style={theme.headerTitle}>To see different products</Text>
+                        <Text style={theme.headerSubTitle}>Tap 'filter' at bottom of screen</Text>
+                        {/* <View style={theme.underlineTitle}></View> */}
+                    </View>
+                </View>
+            )
+        } else {
+            return (
+                <View style={theme.containerHeader}>
+                    <Text style={theme.headerTitle}>{demoHeader.title.toUpperCase()}</Text>
+                    <Text style={theme.headerSubTitle}>{demoHeader.subTitle}</Text>
+                    {/* <View style={theme.underlineTitle}></View> */}
+                </View>
+            )
+        }
     }
 
     scrollToTop = () => {

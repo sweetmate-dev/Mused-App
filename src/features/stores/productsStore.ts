@@ -311,7 +311,7 @@ export default class ObservableStore implements IProductStore {
         this.noResult = false;
         await getNewProducts(category).then((products: Product[]) => {
             this.alternatives = [...this.shuffle(this.mergeArray(products))];
-            this.recentNewProducts = this.alternatives.slice(0, 10);
+            this.recentNewProducts = this.alternatives.slice(0, 20);
             console.log(this.alternatives.length);
             if(this.alternatives.length === 0) this.noResult = true;
         });

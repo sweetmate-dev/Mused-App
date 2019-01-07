@@ -58,7 +58,8 @@ type Post = {
     postType: string;
     productIds: any;
     productId: number;
-    slots: Slot[]
+    slots: Slot[];
+    hidden: boolean;
 };
 
 type RetailerPost = {

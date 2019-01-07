@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Image,
   Dimensions
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
@@ -19,13 +18,14 @@ type Props = {
     goToCollection: (params: any) => void;
     goToBrowseDirectly: (productIds: any) => void;
     goToZoomDirectly: (productId: number) => void;
-    goToInstagramSlide: (slots: any) => void;
+    goToInstagramSlide: () => void;
 };
 
 export default class NewsfeedItem extends Component<Props> {
 
     render() {
-        const { date, authorProfilePhoto, authorName, inspirationalImage, title, postType } = this.props.item;
+        const { date, authorProfilePhoto, authorName, inspirationalImage, title, postType, hidden } = this.props.item;
+        if(hidden || postType === 'instagram') return null;
         return (
             <View style={theme.container}>
                 <View style={theme.titleView}>
@@ -42,9 +42,10 @@ export default class NewsfeedItem extends Component<Props> {
                         rippleContainerBorderRadius={width}>
                         {
                             (inspirationalImage === null || inspirationalImage.length === 0) ?
-                            <Image
+                            <AutoHeightImage
                                 source={defaultNewsImage}
                                 style={theme.itemImage}
+                                width={width - 30}
                             />
                             :
                             <AutoHeightImage
@@ -66,7 +67,8 @@ export default class NewsfeedItem extends Component<Props> {
                     />
                     :
                     <View style={{height: 30}} />
-                }                
+                }        
+                <View style={theme.separator}></View>        
             </View>
         )
     }
@@ -91,11 +93,10 @@ export default class NewsfeedItem extends Component<Props> {
             goToZoomDirectly(productId)
             return;
         } else if(postType === 'instagram') {
-            goToInstagramSlide(slots)
+            goToInstagramSlide()
             return;
         }
 
-        console.log(this.props.item);
         goToCollection(
         {
             productIds: slots,

@@ -1,14 +1,14 @@
 Arguments: 
-  /Users/chao/.nvm/versions/node/v6.1.0/bin/node /usr/local/bin/yarn dev
+  /Users/chao/.nvm/versions/node/v8.11.4/bin/node /usr/local/bin/yarn dev
 
 PATH: 
-  /Users/chao/.nvm/versions/node/v6.1.0/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/chao/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+  /Users/chao/.nvm/versions/node/v8.11.4/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/chao/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/chao/anaconda3/bin
 
 Yarn version: 
   1.5.1
 
 Node version: 
-  6.1.0
+  8.11.4
 
 Platform: 
   darwin x64
@@ -87,11 +87,10 @@ Trace:
   Directory: /Volumes/Work/UpworkProject/mused-mobile.git
   Output:
   
-      at ProcessTermError.Error (native)
       at ProcessTermError.MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
       at new ProcessTermError (/usr/local/lib/node_modules/yarn/lib/cli.js:226:113)
       at ChildProcess.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:30281:17)
-      at emitTwo (events.js:106:13)
-      at ChildProcess.emit (events.js:191:7)
-      at maybeClose (internal/child_process.js:850:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:215:5)
+      at emitTwo (events.js:126:13)
+      at ChildProcess.emit (events.js:214:7)
+      at maybeClose (internal/child_process.js:925:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Linking } from 'react-native';
 import { inject, observer } from 'mobx-react';
-import InstagramSlide from './InstagramSlide';
+import InstagramPost from './InstagramPost';
 
 import { ROOT_STORE } from '../../stores';
 import { Header, COLLECTION, INSTAGRAM } from '../../shared';
@@ -11,7 +11,7 @@ type Props = {
     root?: RootStore;
     showContent?: boolean;
 };
-function InstagramSlideHOC(InstagramSlideView: any) {
+function InstagramPostHOC(InstagramPostView: any) {
     @inject(ROOT_STORE)
 
     @observer
@@ -27,7 +27,7 @@ function InstagramSlideHOC(InstagramSlideView: any) {
 
         render() {
             const { navigation } = this.props;
-            return <InstagramSlideView
+            return <InstagramPostView
                         navigation={navigation}
                         onClickStyleIt={this._onClickStyleIt}
                         onClickViewProfile={this._onClickViewProfile}
@@ -49,4 +49,4 @@ function InstagramSlideHOC(InstagramSlideView: any) {
     return NewComp;
   }
 
-export default InstagramSlideHOC(InstagramSlide);
+export default InstagramPostHOC(InstagramPost);

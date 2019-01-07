@@ -8,7 +8,7 @@ import { Zoom } from '../zoom';
 import { Filter } from '../filter';
 import { DragAndDrop } from '../drag-and-drop';
 import { MyAccount } from '../myaccount';
-import { InstagramSlide } from '../instagram-slide';
+import { InstagramPost } from '../instagram-post';
 
 import { 
     COLLECTION,
@@ -65,7 +65,7 @@ export default createStackNavigator(
             screen: MyAccount
         },
         [INSTAGRAM]: {
-            screen: InstagramSlide
+            screen: InstagramPost
         }
     }, {
 

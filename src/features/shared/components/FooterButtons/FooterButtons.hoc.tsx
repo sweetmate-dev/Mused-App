@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AsyncStorage } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import FooterButtons from './FooterButtons';
 import { COLLECTION, BROWSE, VIDEOPLAYER, FILTER, VIEW, NEWSFEED, BROWSE_ONLY } from '../../../shared';
@@ -70,6 +71,13 @@ function FooterButtonsHOC(FooterButtons: any) {
     _navigateToFilter = () => {
         const { root: { ui: { navigate }, products } } = this.props;
         const { setBrowseType } = products;
+
+        const { root: { user: {newUser, setNewUser} } } = this.props;
+        if(newUser) {
+          AsyncStorage.setItem('newUser', 'no');
+          setNewUser(false)
+        }
+        
         API.RegisterEvent("Br-footerFilter", {
           actionType: "Click menu 'Filter'"
         })

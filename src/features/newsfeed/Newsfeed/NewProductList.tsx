@@ -10,11 +10,12 @@ import Ripple from 'react-native-material-ripple';
 
 import { thumbnailImage } from '../../shared';
 const { width} = Dimensions.get('window');
+const IMAGE_WIDTH = width / 3;
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',    
-    padding: 15,    
+    paddingVertical: 15,    
   },
   listView: {
     flexDirection: 'row',
@@ -22,10 +23,9 @@ const styles = StyleSheet.create({
   },
   listItemWrapper: {
     width: (width - 50) / 2,
-    height: (width - 50) / 2,
-    margin: 5,
-    borderWidth: 1,
-    borderColor: 'black',
+    marginVertical: 20,
+    // borderWidth: 1,
+    // borderColor: 'black',
   },
   listItem: {
     width: (width - 50) / 2,
@@ -36,10 +36,10 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: 'cover',
     width: width / 3,
-    height: width / 3,
+    height: 150,
   },
   headerView: {
-    paddingVertical: 15,
+    padding: 15,
     flexDirection: 'row',
     alignItems: 'center'
   },
@@ -77,7 +77,47 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     letterSpacing: 2
-  }
+  },
+  productContainer: {
+    overflow: 'hidden',
+    width: width / 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: 4,
+    paddingRight: 4,
+  },
+  imageContainer: {
+    width: IMAGE_WIDTH,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10
+  },
+  descContainer: {
+    alignItems: 'center',
+    width: IMAGE_WIDTH * 1.2,
+    height: 85,
+  },
+  descWrapper: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  designerTxt: {
+    fontFamily: 'RalewayBold',
+    fontSize: 12,
+    color: '#000',
+    textAlign: 'center',
+    lineHeight: 14,
+    marginTop: 4,
+    marginBottom: 4,
+    letterSpacing: 2,
+  },
+  descTxt: {
+    fontFamily: 'QuickSandRegular',
+    fontSize: 11,
+    color: '#000',
+    textAlign: 'center'
+  },
 })
 
 type Props = {
@@ -100,23 +140,48 @@ export default class NewProductList extends Component<Props> {
           <View style={styles.listView}>
           {
             products.map((post: Product, index) => {
-              return(
-                <Ripple
-                  key={index}
-                  style={styles.listItemWrapper}
-                  onPress={() => this.props.onClickProduct(post)}
-                  rippleColor={'rgb(255, 255, 255)'}
-                  rippleDuration={300}
-                  rippleCentered={true}
-                  rippleContainerBorderRadius={width}>
-                  <View style={styles.listItem}>
-                    <Image
-                        source={{uri: `${thumbnailImage}${post.id}`}}
-                        style={styles.image}
-                        resizeMode={'contain'}
-                    />  
+              const { brand, unbrandedName, id } =  post;
+              let borderStyle = {};
+              if(index % 2 === 0) {
+                  borderStyle = {
+                      borderRightWidth: 1.5,
+                      borderBottomWidth: 2,
+                      borderColor: '#f9f9f9'
+                  }
+              } else {
+                  borderStyle = {
+                      borderBottomWidth: 2,
+                      borderColor: '#f9f9f9'
+                  }
+              }
+              return (
+                  <View key={id} style={[styles.productContainer, borderStyle]}>
+                      <View style={styles.imageContainer}>
+                        <Ripple
+                          key={index}
+                          style={styles.listItemWrapper}
+                          onPress={() => this.props.onClickProduct(post)}
+                          rippleColor={'rgb(255, 255, 255)'}
+                          rippleDuration={300}
+                          rippleCentered={true}
+                          rippleContainerBorderRadius={width}>
+                          <View style={styles.listItem}>
+                            <Image
+                                source={{uri: `${thumbnailImage}${post.id}`}}
+                                style={styles.image}
+                                resizeMode={'contain'}
+                            />  
+                          </View>
+                        </Ripple>
+                      </View>
+                      {/* <View style={theme.imgDivider} /> */}
+                      <View style={styles.descContainer}>
+                        <View style={styles.descWrapper}>
+                            <Text style={styles.designerTxt}>{brand !== undefined && brand.toUpperCase()}</Text>
+                            <Text style={[styles.descTxt, {paddingVertical: 3, lineHeight: 15}]}>{unbrandedName}</Text>
+                        </View>
+                      </View>
                   </View>
-                </Ripple>
               )
             })
           }

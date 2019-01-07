@@ -57,6 +57,7 @@ export default class ObservableStore implements IUiStore {
             this.navigation.dispatch(resetAction);
             this.currentRoute = currentRoute;
             this.prevRoute = '';
+            this.routeArray=[currentRoute];
             return;
         }
         let temp = []

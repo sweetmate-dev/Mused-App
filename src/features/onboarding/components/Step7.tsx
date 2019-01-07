@@ -16,7 +16,7 @@ import * as API from '../../../services/api';
 
 const { width } = Dimensions.get('window');
 const dressImage = require('../../../../assets/images/onboarding-22-shirt1.jpg');
-const emptyImage = require('../../../../assets/images/empty.jpg');
+const emptyImage = require('../../../../assets/images/dots.png');
 const SkirtImage1 = require('../../../../assets/images/onboarding-61-Skirt1.jpg');
 const SkirtImage2 = require('../../../../assets/images/onboarding-61-Skirt2.jpg');
 const SkirtImage3 = require('../../../../assets/images/onboarding-61-Skirt3.jpg');

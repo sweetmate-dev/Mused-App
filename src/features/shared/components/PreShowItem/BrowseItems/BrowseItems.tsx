@@ -10,7 +10,7 @@ import { thumbnailImage } from '../../../imagesUrls';
 import * as API from '../../../../../services/api';
 // import { isNumeric } from '../../../../../services/operators';
 
-const blankImage = require('../../../../../../assets/images/empty.jpg')
+const blankImage = require('../../../../../../assets/images/dots.png')
 
 type Props = {
     arrayImgs: ProductImage[];

@@ -20,11 +20,14 @@ export default StyleSheet.create({
         alignItems: 'center',
         width: width,
         height: (width - 20) * 900 / 675,
+        marginTop: 5    
     },
     firstImage: {
         width: width - 20,
         height: (width - 20) * 900 / 675,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
+        borderWidth: 1,
+        borderColor: 'black'
     },
     secondImage: {
         width: width - 10,
@@ -33,8 +36,8 @@ export default StyleSheet.create({
     },
     backButtonView: {
         position: 'absolute',
-        top: 10,
-        left: 0,
+        top: 20,
+        left: 10,
         width: 30,
         height: 40,
         justifyContent: 'center',
@@ -60,17 +63,17 @@ export default StyleSheet.create({
         backgroundColor: 'transparent'
     },
     infoView: {
-        paddingTop: 15,
+        paddingTop: 10,
         paddingHorizontal: 30,
         backgroundColor: 'white',
-        flexDirection: 'row'
+        borderTopWidth: 1,
+        borderColor: 'black'
     },
     brandView: {
-        flex: 4,
-    },
-    priceView: {
-        flex: 1,
-        alignItems: 'flex-end'
+        paddingTop: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     brandText: {
         fontSize: 16,
@@ -82,13 +85,19 @@ export default StyleSheet.create({
         fontSize: 12,
         fontFamily: 'QuickSandRegular',
         color: '#000',
-        marginTop: 5,
         lineHeight: 16
     },
     priceText: {
         color: '#000',
+        fontSize: 16,
+        fontFamily: 'RalewayBold',
+    },
+    saleText: {
+        color: '#000',
+        textDecorationLine: 'underline',
         fontSize: 12,
-        fontFamily: 'QuickSandBold',
+        lineHeight: 16,
+        fontFamily: 'QuickSandRegular',
     },
     markView: {
         position: 'absolute',
@@ -188,6 +197,20 @@ export default StyleSheet.create({
     },
     linkView: {
         alignItems: 'center',
-        paddingBottom: 60
+        justifyContent: 'center',
+        marginBottom: 60,
+        marginHorizontal: width / 6,
+        position: 'relative',
+        height: 160,
+    },
+    borderImage: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        resizeMode: 'stretch',
+        width: width * 2 / 3,
+        height: 160,
     }
 });

@@ -13,6 +13,7 @@ export default class ObservableStore implements IUserStore {
     @observable loading: boolean = true;
     @observable autoLoggedOut: boolean = false;
     @observable highlightButtonText: string = '';
+    @observable newUser: boolean = true;
 
     @action
     public logout = () => {
@@ -39,6 +40,11 @@ export default class ObservableStore implements IUserStore {
     @action
     public removeAuthLogOut = () => {
         this.autoLoggedOut = false;
+    }
+
+    @action
+    public setNewUser = (value: boolean) => {
+        this.newUser = value
     }
 
     @action

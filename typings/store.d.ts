@@ -66,6 +66,8 @@ interface IUserStore {
     loading: boolean;
     autoLoggedOut: boolean;
     highlightButtonText: string;
+    newUser: boolean;
+    setNewUser: (value: boolean) => void;
     logout: () => void;    
     autoLogOut: () => void;
     removeAuthLogOut: () => void;

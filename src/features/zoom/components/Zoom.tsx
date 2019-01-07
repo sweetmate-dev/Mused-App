@@ -16,11 +16,8 @@ import * as API from '../../../services/api';
 import { zoomFaceImage, zoomAdditionalImage } from '../../shared';
 
 const arrowIcon = require('../../../../assets/images/arrow-icon.png');
-const starIcon = require('../../../../assets/images/star.png');
-const starLikeIcon = require('../../../../assets/images/star_like.png');
-// const buttonLogo = require('../../../../assets/images/button-logo.png');
 const farfetchIcon = require('../../../../assets/images/farfetch.png');
-
+const borderImage = require('../../../../assets/images/dotted-border.png');
 
 type Props = {
     navigation: any;
@@ -151,7 +148,7 @@ export default class Zoom extends Component<Props, State> {
                             source={arrowIcon}
                         />
                     </Ripple>
-                    <Ripple
+                    {/* <Ripple
                         style={theme.likeButtonView}
                         rippleContainerBorderRadius={15 / 2} 
                         rippleSize={20} 
@@ -161,14 +158,17 @@ export default class Zoom extends Component<Props, State> {
                             style={{width: 20, height: 20}}
                             source={this.state.isLiked ? starLikeIcon : starIcon}
                         />
-                    </Ripple>                 
+                    </Ripple>                  */}
                     <Animated.View style={[theme.infoView, {marginTop: this.state.marginTop}]}>
                         <View style={theme.brandView}>
                             <Text style={theme.brandText}>{brand.toUpperCase()}</Text>
-                            <Text style={theme.unbrandText}>{unbrandedName}</Text>
+                            <Text style={theme.priceText}>{priceLabel}</Text>                            
                         </View>
-                        <View style={theme.priceView}>
-                            <Text style={theme.priceText}>{priceLabel}</Text>
+                        <View style={theme.brandView}>
+                            <Text style={theme.unbrandText}>{unbrandedName}</Text>
+                            <TouchableOpacity onPress={this._onClickBookMark}>
+                                <Text style={theme.saleText}>Sale alert{this.state.isLiked ? ' on' : ''}</Text>
+                            </TouchableOpacity>
                         </View>
                     </Animated.View>
                     {/* <Image source={dottedLine} style={theme.dottedLine} /> */}              
@@ -176,6 +176,7 @@ export default class Zoom extends Component<Props, State> {
                         <Text style={theme.descText}>{description}</Text>
                     </View>
                     <View style={theme.linkView}>
+                        <Image source={borderImage} style={theme.borderImage} />
                         <Text style={theme.descText}>Buy from</Text>
                         <TouchableOpacity onPress={this.onClickLink}>
                             <Image source={farfetchIcon} style={theme.linkIcon} />

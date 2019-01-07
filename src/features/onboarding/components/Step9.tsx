@@ -11,7 +11,7 @@ import { Video } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 // import TypeWriterText from './Typewriter'
 
-const logoImage = require('../../../../assets/images/onboarding-welcome-logo.jpg');
+const logoImage = require('../../../../assets/images/welcome.png');
 const welcomeImage = require('../../../../assets/images/welcome-video-bg.jpg');
 const videoSource = require('../../../../assets/videos/wink-optimised.mp4');
 const { width } = Dimensions.get('window');
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   logoImage: {
     width: width * 0.7,
-    height: width * 0.7 * 96 / 566,
+    height: width * 0.7 * 2.5 / 14.9,
     resizeMode: 'stretch',
     marginVertical: 40
   }
