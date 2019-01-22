@@ -7,7 +7,7 @@ import AutoSizeImage from '../../shared/components/AutoSizeImge'
 import theme from './theme';
 import * as API from '../../../services/api';
 
-const categoriesFilter: string[] = ['jewelry', 'belts', 'hats', 'scarves', 'gloves'];
+const categoriesFilter: string[] = ['jewelry', 'belts', 'hats', 'scarves'];
 type Props = {
     listOfProductsByCategories: Product[];
     navigateToProductSingle: (product: Product) => void;
@@ -92,8 +92,8 @@ export default class SidebarScroll extends Component<Props, State> {
     private _onPressCategory = (category: string) => {
         const { getProductsByCategory } = this.props;
         getProductsByCategory(category);
-        if(this.props.allProducts[category] === undefined) this.setTimeOutToShow(3000)
-        else this.setTimeOutToShow(1000)
+        if(this.props.allProducts[category] === undefined) this.setTimeOutToShow(1500)
+        else this.setTimeOutToShow(500)
     }
 
     setTimeOutToShow = (duration: number) => {

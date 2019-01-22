@@ -34,10 +34,11 @@ function ZoomHOC(Zoom: any) {
 
         createStyleWithMused = (product: ProductImage, category: string) => {
             const { root: { products, slots, ui } } = this.props;
-            const { createStyleWithMused, getNewProducts } = products;
+            const { createStyleWithMused, getNewProducts, setBrowseType } = products;
             const { setSlotNumber } = slots;
             const { navigate } = ui;
             createStyleWithMused(product);
+            setBrowseType(1);
             getNewProducts(category);
             setSlotNumber(-1);
             navigate(BROWSE, ZOOM, {from: 'zoom'});

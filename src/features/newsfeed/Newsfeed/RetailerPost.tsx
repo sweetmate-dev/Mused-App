@@ -76,7 +76,7 @@ export default class RetailerPosts extends Component<Props> {
         <View style={styles.container}>
           <View style={styles.headerView}>
             <View style={styles.line} />
-            <Text style={styles.title}>MORE LOOKS</Text>
+            <Text style={styles.title}>More looks</Text>
             <View style={styles.line} />
           </View>
           <View style={styles.listView}>

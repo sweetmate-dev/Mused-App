@@ -51,9 +51,6 @@ export default  StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
     },
-    videoPlayer: {
-        width: width,
-    },
     listTitle: {
         fontFamily: 'Lato',
         fontSize: 11,

@@ -134,7 +134,7 @@ export default class NewProductList extends Component<Props> {
         <View style={styles.container}>
           <View style={styles.headerView}>
             <View style={styles.line} />
-            <Text style={styles.title}>NEW IN</Text>
+            <Text style={styles.title}>New in</Text>
             <View style={styles.line} />
           </View>
           <View style={styles.listView}>

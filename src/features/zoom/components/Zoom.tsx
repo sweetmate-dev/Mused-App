@@ -7,16 +7,21 @@ import {
     BackHandler,
     Animated,
     TouchableOpacity,
-    Linking
+    Linking,
+    Dimensions
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Ripple from 'react-native-material-ripple';
+import AutoHeightImage from 'react-native-auto-height-image';
 import theme from "../theme";
 import * as API from '../../../services/api';
-import { zoomFaceImage, zoomAdditionalImage } from '../../shared';
+import { zoomFaceImage, zoomAdditionalImage, largiImage } from '../../shared';
 
+const {width} = Dimensions.get('window');
+const ImageHeight = (width - 20) * 900 / 720;
 const arrowIcon = require('../../../../assets/images/arrow-icon.png');
 const farfetchIcon = require('../../../../assets/images/farfetch.png');
+const netIcon = require('../../../../assets/images/net-a-porter.jpg');
 const borderImage = require('../../../../assets/images/dotted-border.png');
 
 type Props = {
@@ -32,13 +37,23 @@ type Props = {
 type State = {
     marginTop: any,
     isLiked: boolean,
+    faceImageWidth: number,
+    addImageWidth_1: number,
+    addImageWidth_2: number,
+    addImageWidth_3: number,
+    largiImageWidth: number
 };
 export default class Zoom extends Component<Props, State> {
     product: Product;
 
     state: State = {
         marginTop: new Animated.Value(0),
-        isLiked: false
+        isLiked: false,
+        faceImageWidth: width - 140,
+        addImageWidth_1: width - 140,
+        addImageWidth_2: width - 140,
+        addImageWidth_3: width - 140,
+        largiImageWidth: width - 140
     }
 
     componentWillMount() {
@@ -53,6 +68,7 @@ export default class Zoom extends Component<Props, State> {
         const { id } = this.product;
         const bookmark: Bookmark = listOfBookmarks.find(( bookmark: Bookmark) => bookmark.productId === id);
         Boolean(bookmark) && this.setState({isLiked: true })
+        this.resizeImages();
     }
 
     componentWillUnmount() {
@@ -82,8 +98,43 @@ export default class Zoom extends Component<Props, State> {
         Linking.openURL(clickUrl);
     }
 
+    resizeImages = () => {
+        const { id } = this.product;
+        Image.getSize(`${zoomFaceImage}${id}.jpg`, (width: number, height: number) => {
+            this.setState({faceImageWidth: width * ImageHeight / height});
+        },
+        (error: any) => {
+            console.log(error)
+        });
+        Image.getSize(`${zoomAdditionalImage}${id}_1.jpg`, (width: number, height: number) => {
+            this.setState({addImageWidth_1: width * ImageHeight / height});
+        },
+        (error: any) => {
+            console.log(error)
+        });
+        Image.getSize(`${zoomAdditionalImage}${id}_2.jpg`, (width: number, height: number) => {
+            this.setState({addImageWidth_2: width * ImageHeight / height});
+        },
+        (error: any) => {
+            console.log(error)
+        });
+        Image.getSize(`${zoomAdditionalImage}${id}_3.jpg`, (width: number, height: number) => {
+            this.setState({addImageWidth_3: width * ImageHeight / height});
+        },
+        (error: any) => {
+            console.log(error)
+        });
+        Image.getSize(`${largiImage}${id}.jpg`, (width: number, height: number) => {
+            this.setState({largiImageWidth: width * ImageHeight / height});
+        },
+        (error: any) => {
+            console.log(error)
+        });
+    }
+
     render() {
-        const { id, description, priceLabel, brand, unbrandedName, category } = this.product;
+        const { id, description, priceLabel, brand, unbrandedName, category, retailerName } = this.product;
+        // const { faceImageWidth, addImageWidth_1, addImageWidth_2, addImageWidth_3, largiImageWidth } = this.state;
         console.log(category)
         return (
             <View style={theme.container}>
@@ -93,7 +144,7 @@ export default class Zoom extends Component<Props, State> {
                     scrollEventThrottle={100}
                 > 
                     {
-                        (category === 'jewelry' || category === 'belts' || category === 'gloves' || category === 'hats' || category === 'scarves') ?
+                        category === 'scarves' ?
                         <Swiper
                             style={theme.wrapper} 
                             dotStyle={{width: 6, height: 6}}
@@ -102,18 +153,37 @@ export default class Zoom extends Component<Props, State> {
                             paginationStyle={{marginBottom: -15}}
                             onIndexChanged={this._onChangeSwiperIndex}
                             activeDotColor='#949494'
+                            showsPagination={false}
                         >                
-                            <View style={[theme.wrapper, {justifyContent: 'center'}]}>
-                                <Image source={{uri: `${zoomAdditionalImage}${id}_1.jpg`}} style={theme.firstImage} />
+                            <View style={theme.wrapper}>
+                                <View style={theme.wrapperOutLineView} />
+                                <View style={theme.slideImageContainer}>
+                                    <Image 
+                                        style={theme.slideImage}
+                                        source={{uri: `${zoomFaceImage}${id}.jpg`}} 
+                                    />       
+                                </View>
+                            </View>                    
+                            <View style={theme.wrapper}>
+                                <View style={theme.wrapperOutLineView} />
+                                <View style={theme.slideImageContainer}>
+                                    <Image 
+                                        style={theme.slideImage}
+                                        source={{uri: `${zoomAdditionalImage}${id}_1.jpg`}} 
+                                    /> 
+                                </View>
                             </View>
-                            <View style={[theme.wrapper, {justifyContent: 'center'}]}>
-                                <Image source={{uri: `${zoomAdditionalImage}${id}_2.jpg`}} style={theme.firstImage} />
-                            </View>
-                            <View style={[theme.wrapper, {justifyContent: 'center'}]}>
-                                <Image source={{uri: `${zoomAdditionalImage}${id}_3.jpg`}} style={theme.firstImage} />
+                            <View style={theme.wrapper}>
+                                <View style={theme.wrapperOutLineView} />
+                                <View style={theme.slideImageContainer}>
+                                    <AutoHeightImage 
+                                        width={width / 2}
+                                        source={{uri: `${largiImage}${id}.jpg`}} 
+                                    /> 
+                                </View>
                             </View>
                         </Swiper>
-                        :
+                        :(category === 'jewelry' || category === 'belts' || category === 'gloves' || category === 'hats' || category === 'shoes' || category === 'womens-shoes') ?
                         <Swiper
                             style={theme.wrapper} 
                             dotStyle={{width: 6, height: 6}}
@@ -122,18 +192,90 @@ export default class Zoom extends Component<Props, State> {
                             paginationStyle={{marginBottom: -15}}
                             onIndexChanged={this._onChangeSwiperIndex}
                             activeDotColor='#949494'
+                            showsPagination={false}
+                        >                
+                            <View style={theme.wrapper}>
+                                <View style={theme.wrapperOutLineView} />
+                                <View style={theme.slideImageContainer}>
+                                    <Image 
+                                        style={theme.slideImage}
+                                        source={{uri: `${zoomAdditionalImage}${id}_1.jpg`}} 
+                                    /> 
+                                </View>
+                            </View>
+                            <View style={theme.wrapper}>
+                                <View style={theme.wrapperOutLineView} />
+                                <View style={theme.slideImageContainer}>
+                                    <Image 
+                                        style={theme.slideImage}
+                                        source={{uri: `${zoomAdditionalImage}${id}_2.jpg`}} 
+                                    /> 
+                                </View>
+                            </View>
+                            <View style={theme.wrapper}>
+                                <View style={theme.wrapperOutLineView} />
+                                <View style={theme.slideImageContainer}>
+                                    <Image 
+                                        style={theme.slideImage}
+                                        source={{uri: `${zoomAdditionalImage}${id}_3.jpg`}} 
+                                    /> 
+                                </View>
+                            </View>
+                        </Swiper>
+                        :<Swiper
+                            style={theme.wrapper} 
+                            dotStyle={{width: 6, height: 6}}
+                            activeDotStyle={{width: 6, height: 6}}
+                            dotColor='#CACACA'
+                            paginationStyle={{marginBottom: -15}}
+                            onIndexChanged={this._onChangeSwiperIndex}
+                            activeDotColor='#949494'
+                            showsPagination={false}
                         >
                             <View style={theme.wrapper}>
-                                <Image source={{uri: `${zoomFaceImage}${id}.jpg`}} style={theme.firstImage} />                        
+                                <View style={theme.wrapperOutLineView} />
+                                <View style={theme.slideImageContainer}>
+                                    <Image 
+                                        style={theme.slideImage}
+                                        source={{uri: `${zoomFaceImage}${id}.jpg`}} 
+                                    /> 
+                                </View>
                             </View>                    
-                            <View style={[theme.wrapper, {justifyContent: 'center'}]}>
-                                <Image source={{uri: `${zoomAdditionalImage}${id}_1.jpg`}} style={theme.firstImage} />
+                            <View style={theme.wrapper}>
+                                <View style={theme.wrapperOutLineView} />
+                                <View style={theme.slideImageContainer}>
+                                    <Image 
+                                        style={theme.slideImage}
+                                        source={{uri: `${zoomAdditionalImage}${id}_1.jpg`}} 
+                                    /> 
+                                </View>
                             </View>
-                            <View style={[theme.wrapper, {justifyContent: 'center'}]}>
-                                <Image source={{uri: `${zoomAdditionalImage}${id}_2.jpg`}} style={theme.firstImage} />
+                            <View style={theme.wrapper}>
+                                <View style={theme.wrapperOutLineView} />
+                                <View style={theme.slideImageContainer}>
+                                    <Image 
+                                        style={theme.slideImage}
+                                        source={{uri: `${zoomAdditionalImage}${id}_2.jpg`}} 
+                                    /> 
+                                </View>
                             </View>
-                            <View style={[theme.wrapper, {justifyContent: 'center'}]}>
-                                <Image source={{uri: `${zoomAdditionalImage}${id}_3.jpg`}} style={theme.firstImage} />
+                            <View style={theme.wrapper}>
+                                <View style={theme.wrapperOutLineView} />
+                                <View style={theme.slideImageContainer}>
+                                    <Image 
+                                        style={theme.slideImage}
+                                        source={{uri: `${zoomAdditionalImage}${id}_3.jpg`}} 
+                                    /> 
+                                </View>
+                            </View>
+                            <View style={theme.wrapper}>
+                                <View style={theme.wrapperOutLineView} />
+                                <View style={theme.slideImageContainer}>
+                                    <AutoHeightImage 
+                                        width={width / 2}
+                                        source={{uri: `${largiImage}${id}.jpg`}} 
+                                    /> 
+                                </View>
                             </View>
                         </Swiper>
                     }
@@ -144,7 +286,7 @@ export default class Zoom extends Component<Props, State> {
                         rippleCentered={true} 
                         onPress={this._goBack}>
                         <Image
-                            style={{width: 13, height: 13, marginLeft: 22}}
+                            style={{width: 13, height: 13}}
                             source={arrowIcon}
                         />
                     </Ripple>
@@ -179,7 +321,7 @@ export default class Zoom extends Component<Props, State> {
                         <Image source={borderImage} style={theme.borderImage} />
                         <Text style={theme.descText}>Buy from</Text>
                         <TouchableOpacity onPress={this.onClickLink}>
-                            <Image source={farfetchIcon} style={theme.linkIcon} />
+                            <Image source={retailerName === "NET-A-PORTER" ? netIcon : farfetchIcon} style={theme.linkIcon} />
                         </TouchableOpacity>
                         <Text style={theme.descText}>Tap to visit for details</Text>
                     </View>

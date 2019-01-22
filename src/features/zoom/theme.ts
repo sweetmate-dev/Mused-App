@@ -10,24 +10,36 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-    swiperView: {
+    wrapper: {        
+        width: width,
+        height: (width - 20) * 900 / 720,          
+        position: 'relative' 
+    },
+    wrapperOutLineView: {
         position: 'absolute',
-        width: width,
-        height: width * 900 / 675,
-        paddingHorizontal: 10,
-    },
-    wrapper: {
-        alignItems: 'center',
-        width: width,
-        height: (width - 20) * 900 / 675,
-        marginTop: 5    
-    },
-    firstImage: {
-        width: width - 20,
-        height: (width - 20) * 900 / 675,
-        resizeMode: 'contain',
-        borderWidth: 1,
+        top: 30,
+        right: 29,
+        width: 60,
+        height: (width - 20) * 900 / 720 - 40,
+        borderTopWidth: 1,
+        borderRightWidth: 1,
         borderColor: 'black'
+    },
+    slideImageContainer: {
+        marginTop: 40,
+        width: width - 78,
+        marginHorizontal: 39,
+        height: (width - 20) * 900 / 720 - 20,
+        borderWidth: 1,
+        borderColor: 'black',   
+        resizeMode: 'cover',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    slideImage: {
+        width: width - 80,
+        height: (width - 20) * 900 / 720 - 22,
+        resizeMode: 'cover'
     },
     secondImage: {
         width: width - 10,
@@ -36,12 +48,8 @@ export default StyleSheet.create({
     },
     backButtonView: {
         position: 'absolute',
-        top: 20,
-        left: 10,
-        width: 30,
-        height: 40,
-        justifyContent: 'center',
-        alignItems: 'center'
+        top: 24,
+        left: 22,
     },
     likeButtonView: {
         position: 'absolute',
@@ -79,13 +87,15 @@ export default StyleSheet.create({
         fontSize: 16,
         fontFamily: 'RalewayBold',
         color: '#333',
-        letterSpacing: 2
+        letterSpacing: 2,
+        width: width / 2
     },
     unbrandText: {
         fontSize: 12,
         fontFamily: 'QuickSandRegular',
         color: '#000',
-        lineHeight: 16
+        lineHeight: 16,
+        width: width * 0.6
     },
     priceText: {
         color: '#000',

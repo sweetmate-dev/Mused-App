@@ -36,7 +36,9 @@ type Props = {
     arrayImages: ProductImage[];
     noResult: boolean;
     getNewProducts: (category: string) => void;
-    newUser: boolean
+    newUser: boolean,
+    onScrollEndDrag: (e: any) => void;
+    AllList: Product[];
 };
 export default class Browser extends Component<Props, State> {
     state: State = {
@@ -67,19 +69,15 @@ export default class Browser extends Component<Props, State> {
     }
 
     componentWillReceiveProps(props: any) {
-        if(JSON.stringify(props.listOfAlternatives) !== this.prevProducts) {
+        if(JSON.stringify(props.AllList) !== this.prevProducts) {
             this.scrollToTop();
-            this.prevProducts = JSON.stringify(props.listOfAlternatives)
-        }        
+            this.prevProducts = JSON.stringify(props.AllList)
+        }
     }
 
     
 
     render() {
-        // const headerComponent = (
-        //     <View style={theme.listTitleContainer}>
-        //         <Text style={theme.listTitle}>{`${this.props.listOfAlternatives.length } items found`.toUpperCase()}</Text>
-        //     </View>);
         const _listOfAlternatives = [...this.props.listOfAlternatives];
         return (
             <View style={[theme.container]}>
@@ -94,8 +92,14 @@ export default class Browser extends Component<Props, State> {
                         keyExtractor={ item => `${item.id}`}
                         numColumns={2}
                         scrollEventThrottle={300}
-                        onScroll={this.props.hideContextMenu}
                         initialNumToRender={10}
+                        onScrollEndDrag={({ nativeEvent }) => {
+                            this.props.onScrollEndDrag(nativeEvent);
+                        }}
+                        onMomentumScrollBegin={({ nativeEvent }) => {
+                            this.props.hideContextMenu();
+                            console.log(nativeEvent.contentSize);
+                        }}
                     />
                 </Animated.View>
             </View>

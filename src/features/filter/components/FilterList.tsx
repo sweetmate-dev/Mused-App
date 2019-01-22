@@ -26,11 +26,11 @@ export default class FilterList extends Component<Props> {
     render() {
         const { filterTab } = this.props;
         if(filterTab === 'applied') {
-            this.startFadeOut()
+            // this.startFadeOut()
         } 
         return (
             <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
-                { !Boolean(filterTab) && this._renderTabs()}
+                { filterTab === '' && this._renderTabs()}
                 { filterTab === 'categories' && <FilterCategories />}
             </Animated.View>
         )

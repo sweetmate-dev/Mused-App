@@ -15,13 +15,7 @@ import ProductItem from './ProductItem';
 import OutfitItem from './OutfitItem';
 import Ripple from 'react-native-material-ripple';
 import lodash from 'lodash';
-// import Swiper from 'react-native-swiper';
-// import Ripple from 'react-native-material-ripple';
-// import * as API from '../../services/api';
-// import { thumbnailImage } from '../shared';
-// import { getProductsByIds } from '../../services';
-// const starIcon = require('../../../../assets/images/star.png');
-// const starLikeIcon = require('../../../../assets/images/star_like.png');
+import DotIndicator from '../shared/components/Indicators/dot-indicator'
 
 const { width } = Dimensions.get('window');
 
@@ -58,8 +52,10 @@ const styles = StyleSheet.create({
         borderColor: 'black'
     },
     buttonText: {
-        fontSize: 13,
-        fontFamily: 'QuickSandBold',
+        fontSize: 12,
+        fontFamily: 'QuickSandRegular',
+        color: 'black',
+        letterSpacing: 2
     },
     outfitView: {
         paddingVertical: 20,
@@ -74,8 +70,19 @@ const styles = StyleSheet.create({
     },
     emptyText: {
         textAlign: 'center',
-        color: 'gray',
+        color: 'black',
+        fontSize: 11,
         fontFamily: 'QuickSandRegular'
+    },
+    loadingView: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white'
     }
 })
 
@@ -96,6 +103,7 @@ type State = {
     recentOutfit: any,
     allBookmark: boolean,
     allOutfit: boolean,
+    loading: boolean
 };
 export default class MyAccount extends Component<Props, State> {
     product: Product;
@@ -104,11 +112,15 @@ export default class MyAccount extends Component<Props, State> {
         isLiked: false,
         recentOutfit: {},
         allBookmark: false,
-        allOutfit: false
+        allOutfit: false,
+        loading: true
     }
 
     componentDidMount() {
-        this.getMyOutFits();        
+        this.getMyOutFits();  
+        setTimeout(() => {
+            this.setState({loading: false})
+        }, 1500)      
     }
 
     getMyOutFits = async () => {
@@ -124,7 +136,7 @@ export default class MyAccount extends Component<Props, State> {
             const BT = new Date(o.timestamp).getTime();
             return Math.abs(CT - BT) < 28 * 86400 * 1000;
         }).reverse();    
-        let bookmarks = temp;    
+        let bookmarks = temp;
         // if(!allBookmark) {
         //     bookmarks = temp.slice(0, 4);   
         // } else {
@@ -135,82 +147,90 @@ export default class MyAccount extends Component<Props, State> {
             return (CT - BT) < 28 * 86400 * 1000;
         }).reverse();
         return (
-            <ScrollView style={styles.container}>
-                <Text style={styles.bookmarkText}>RECENTLY BOOKMARKED</Text>
-                {
-                    bookmarks.length === 0 &&
-                    <Text style={styles.emptyText}>No results</Text>
-                }
-                <View style={[styles.productListView, {maxHeight: allBookmark ? null : 540, overflow: 'hidden'}]}>
+            <View style={styles.container}>
+                <ScrollView style={styles.container}>
+                    <Text style={styles.bookmarkText}>RECENTLY BOOKMARKED</Text>
                     {
-                        bookmarks.map((bookmark: any) => {
+                        bookmarks.length === 0 &&
+                        <Text style={styles.emptyText}>You need to bookmark something</Text>
+                    }
+                    <View style={[styles.productListView, {maxHeight: allBookmark ? null : 540, overflow: 'hidden'}]}>
+                        {
+                            bookmarks.map((bookmark: any) => {
+                                return(
+                                    <ProductItem
+                                        key={bookmark.productId}
+                                        productId={bookmark.productId}
+                                        productStore={this.props.productStore}
+                                        onClickBookmark={this.props.onClickBookmark}
+                                        onClickProduct={this.props.onClickProduct}
+                                        position={'left'}
+                                    />
+                                )
+                            })
+                        }
+                    </View>
+                    <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 30}}>
+                    {
+                        !allBookmark && temp.length > 4 &&
+                        <View style={styles.buttonView}>
+                            <Ripple
+                                onPress={() => this.setState({allBookmark: true})}
+                                rippleSize={40}
+                                rippleDuration={300} 
+                                rippleContainerBorderRadius={40}>
+                                <View style={styles.button}>
+                                    <Text style={styles.buttonText}>SEE ALL BOOKMARKED</Text>
+                                </View>
+                            </Ripple>
+                        </View>
+                    }
+                    <Text style={styles.bookmarkText}>OUTFITS RECENTLY CREATED</Text>           
+                    {
+                        (allOutfitIn4Weeks.length === 0) ?
+                        <Text style={styles.emptyText}>You need to add something</Text>
+                        :(allOutfitIn4Weeks.length > 0 && !allOutfit) ?
+                        <OutfitItem
+                            slots={allOutfitIn4Weeks[0]}
+                            onClick={this.props.onClickCollection}
+                            border={false}
+                        />
+                        :(myOutFit !== undefined && allOutfit) ?
+                        allOutfitIn4Weeks.map((slots: any, index: any) => {
                             return(
-                                <ProductItem
-                                    key={bookmark.productId}
-                                    productId={bookmark.productId}
-                                    productStore={this.props.productStore}
-                                    onClickBookmark={this.props.onClickBookmark}
-                                    onClickProduct={this.props.onClickProduct}
-                                    position={'left'}
+                                <OutfitItem
+                                    key={index}
+                                    slots={slots}
+                                    onClick={this.props.onClickCollection}
+                                    border
                                 />
                             )
                         })
+                        :null
                     }
-                </View>
-                <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 30}}>
+                    {
+                        !allOutfit && allOutfitIn4Weeks.length > 0 &&
+                        <View style={styles.buttonView}>
+                            <Ripple
+                                onPress={() => this.setState({allOutfit: true})}
+                                rippleSize={40}
+                                rippleDuration={300} 
+                                rippleContainerBorderRadius={40}>
+                                <View style={styles.button}>
+                                    <Text style={styles.buttonText}>SEE ALL OUTFITS</Text>
+                                </View>
+                            </Ripple>
+                        </View>
+                    }     
+                    </View>           
+                </ScrollView>
                 {
-                    !allBookmark && temp.length > 4 &&
-                    <View style={styles.buttonView}>
-                        <Ripple
-                            onPress={() => this.setState({allBookmark: true})}
-                            rippleSize={40}
-                            rippleDuration={300} 
-                            rippleContainerBorderRadius={40}>
-                            <View style={styles.button}>
-                                <Text style={styles.buttonText}>SEE ALL BOOKMARKED</Text>
-                            </View>
-                        </Ripple>
+                    this.state.loading && 
+                    <View style={styles.loadingView}>
+                        <DotIndicator size={6} count={3} />
                     </View>
                 }
-                <Text style={styles.bookmarkText}>OUTFITS RECENTLY CREATED</Text>           
-                {
-                    (allOutfitIn4Weeks.length === 0) ?
-                    <Text style={styles.emptyText}>No results</Text>
-                    :(allOutfitIn4Weeks.length > 0 && !allOutfit) ?
-                    <OutfitItem
-                        slots={allOutfitIn4Weeks[0]}
-                        onClick={this.props.onClickCollection}
-                        border={false}
-                    />
-                    :(myOutFit !== undefined && allOutfit) ?
-                    allOutfitIn4Weeks.map((slots: any, index: any) => {
-                        return(
-                            <OutfitItem
-                                key={index}
-                                slots={slots}
-                                onClick={this.props.onClickCollection}
-                                border
-                            />
-                        )
-                    })
-                    :null
-                }
-                {
-                    !allOutfit && allOutfitIn4Weeks.length > 0 &&
-                    <View style={styles.buttonView}>
-                        <Ripple
-                            onPress={() => this.setState({allOutfit: true})}
-                            rippleSize={40}
-                            rippleDuration={300} 
-                            rippleContainerBorderRadius={40}>
-                            <View style={styles.button}>
-                                <Text style={styles.buttonText}>SEE ALL OUTFITS</Text>
-                            </View>
-                        </Ripple>
-                    </View>
-                }     
-                </View>           
-            </ScrollView>
+            </View>
         )
     }
 

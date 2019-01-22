@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import { getPosts, getRetailerPosts } from '../../services';
+import { getPosts, getRetailerPosts, getPostById } from '../../services';
 import moment from 'moment';
 
 
@@ -27,9 +27,23 @@ export default class ObservableStore implements IPostsStore {
                   timeAgo: moment(post.timeAgo).fromNow()
               }  
             })
-        ) 
+        )         
+    };
+
+    @action
+    public getRetailerPosts = async () => {
         await getRetailerPosts().then((posts: RetailerPost[]) => {
             this.retailerPosts = posts;
+            console.log('Retailer posts: ', posts)
         })
-    };}
+    }
+
+    @action
+    public getPostById = (postId: number) => new Promise( async (resolve) => {
+        await getPostById(postId).then((post: Post) => {
+            console.log('result', post);
+            resolve(post)
+        });
+      });
+}
     

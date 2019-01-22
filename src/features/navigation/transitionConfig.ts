@@ -4,7 +4,7 @@ import { ZOOM, COLLECTION_ZOOM } from '../shared';
 export const transitionConfig = () => {
   return {
     transitionSpec: {
-      duration: 1000,
+      duration: 200,
       easing: Easing.out(Easing.poly(10)),
       timing: Animated.timing,
       useNativeDriver: true
@@ -35,7 +35,7 @@ export const transitionConfig = () => {
         const translateY = 0;
         const opacity = props.position.interpolate({
           inputRange: [thisSceneIndex - 0.7, thisSceneIndex, thisSceneIndex + 0.7],
-          outputRange: [0, 1, 0]
+          outputRange: [1, 1, 1]
         });
         return { opacity, transform: [{translateX}, {translateY}]};
       }      

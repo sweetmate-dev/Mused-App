@@ -78,12 +78,13 @@ export const categoriesKeys: Category[] = [
         label: 'TROUSERS',
         category: 'womens-pants',
         subCategories: [
-            'casual',
-            'cropped',
-            'dress',
+            'womens-pants',
+            'cropped-jeans',
+            'straight-leg-jeans',
+            'cropped-pants',
+            'wide-leg-pants',
+            'skinny-pants',
             'leggings',
-            'skinny',
-            'wide-leg'
         ]
     },
     {

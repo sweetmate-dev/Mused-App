@@ -33,7 +33,6 @@ type Props = {
     createBookmark: (productId: number) => void;
     deleteBookmarkById: (_id: any) => void;
     currentRoute: string;
-    goToNewProducts: () => void;
     isFromOutfit: boolean;
 }
 

@@ -66,6 +66,11 @@ export const getRetailerPosts = () => {
     return client.callFunction("getRetailerPosts", []);
 }
 
+export const getPostById = (id: number) => {
+    const client = getClient();
+    return client.callFunction("getPostById", [id]);
+}
+
 export const addRetailerPosts = (post: RetailerPost) => {
     const client = getClient();
     return client.callFunction("addRetailerPosts", [post]);
@@ -161,7 +166,7 @@ export const RegisterEvent = async (eventName: string, params: any) => {
     const CT = new Date().getTime();
     if(last_event_time > 0 && CT - last_event_time > AUTO_LOG_OUT_TIME) {
         //Auto Logout
-        autoLogOut();
+        // autoLogOut();
     }
     if(eventName === 'Login' || eventName === 'Signup'){
         client_email = params.email;

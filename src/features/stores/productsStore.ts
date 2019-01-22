@@ -39,6 +39,7 @@ export default class ObservableStore implements IProductStore {
     @observable allOutfitSlots: any = [];
     @observable fromOutfit: boolean = false;
     @observable recentNewProducts: Product[] = [];
+    @observable browseOnlyProducts: Product[] = [];
 
     get listOfCollection() {
         return this.collection;
@@ -46,6 +47,10 @@ export default class ObservableStore implements IProductStore {
 
     get listOfAlternatives() {
         return this.alternatives;
+    }
+
+    get listOfProducts() {
+        return this.browseOnlyProducts;
     }
 
     get listOfRecentNewProducts() {
@@ -80,6 +85,7 @@ export default class ObservableStore implements IProductStore {
     public setBrowseType = (type: number) => {
         if(type === 1) this.fromMenu = false;
         else this.fromMenu = true;
+        console.log('fromMenu', type)
     }
 
     @action
@@ -106,11 +112,13 @@ export default class ObservableStore implements IProductStore {
 
     @action
     public getAlternativesByFilter = async () => {
-        // this.alternatives = []
+        if(this.fromMenu) this.browseOnlyProducts = [];
+        else this.alternatives = [];
         this.noResult = false;
-        await getProductsByCatsSubs(this.root.filters.listOfCategory).then((products: Product[]) => {            
-            this.alternatives = [...products]
-            if(this.alternatives.length === 0) this.noResult = true;
+        await getProductsByCatsSubs(this.root.filters.listOfCategory).then((products: Product[]) => {  
+            if(this.fromMenu) this.browseOnlyProducts = [...products];        
+            else this.alternatives = [...products];
+            if(products.length === 0) this.noResult = true;
         });
     }
 
@@ -189,7 +197,8 @@ export default class ObservableStore implements IProductStore {
     }
 
     @action resetAlternativies = () => {
-        this.alternatives = [];
+        if(this.fromMenu) this.browseOnlyProducts = [];
+        else this.alternatives = [];
     }
 
     @action
@@ -223,7 +232,6 @@ export default class ObservableStore implements IProductStore {
             const temp = lodash.filter(result, function(o: any) {
                 return o.userEmail === API.client_email;
             });
-            console.log('MyOutfits: ', temp);
             this.allOutfitSlots = temp;
             if(temp.length > 0){
                 const recentSlots = temp[temp.length - 1].slots;
@@ -274,11 +282,13 @@ export default class ObservableStore implements IProductStore {
             this.productsByCategories = this.allProducts[category];
         }
         await getProductsByCategoryInitial(category).then( (products: Product[]) => {
+            console.log('initial products', products);
             if(this.allProducts[category] === undefined) this.productsByCategories = products;
             this.categoryInDrag = category;
             if(this.productsByCategories.length === 0) this.noResult = true;
         })
         await getProductsByCategory(category).then( (products: Product[]) => {
+            console.log('all products', products);
             this.productsByCategories = products;
             this.allProducts[category] = products;
             this.categoryInDrag = category;         
@@ -307,13 +317,22 @@ export default class ObservableStore implements IProductStore {
 
     @action
     getNewProducts = async (category: string) => {
-        this.alternatives = []
+        if(this.fromMenu) this.browseOnlyProducts = [];
+        else this.alternatives = [];
         this.noResult = false;
         await getNewProducts(category).then((products: Product[]) => {
-            this.alternatives = [...this.shuffle(this.mergeArray(products))];
-            this.recentNewProducts = this.alternatives.slice(0, 20);
+            if(this.fromMenu) {
+                this.browseOnlyProducts = [...this.shuffle(this.mergeArray(products))];
+                this.recentNewProducts = this.browseOnlyProducts.slice(0, 10);
+                this.browseOnlyProducts.map((product: Product) => {
+                    console.log(product.category + ',' + product.subCategories);
+                })
+            } else {
+                this.alternatives = [...this.shuffle(this.mergeArray(products))];
+                this.recentNewProducts = this.alternatives.slice(0, 10);
+            }            
             console.log(this.alternatives.length);
-            if(this.alternatives.length === 0) this.noResult = true;
+            if(products.length === 0) this.noResult = true;
         });
     }
 

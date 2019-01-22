@@ -1,8 +1,7 @@
 import { createStackNavigator } from 'react-navigation';
 
-import { Newsfeed } from '../newsfeed'
+import { Newsfeed, PostItem } from '../newsfeed'
 import { Collection } from '../collection';
-import { VideoPlayer } from '../video-player';
 import { Browse, BrowseOnly } from '../browse';
 import { Zoom } from '../zoom';
 import { Filter } from '../filter';
@@ -12,7 +11,6 @@ import { InstagramPost } from '../instagram-post';
 
 import { 
     COLLECTION,
-    VIDEOPLAYER,
     BROWSE, 
     COLLECTION_ZOOM,
     BROWSE_ONLY,
@@ -21,7 +19,9 @@ import {
     FILTER,
     VIEW, 
     MYACCOUNT,
-    INSTAGRAM
+    INSTAGRAM,
+    POSTITEM,
+    MENU_FILTER
 } from '../shared';
 
 import { transitionConfig } from './transitionConfig';
@@ -33,9 +33,6 @@ export default createStackNavigator(
         },
         [COLLECTION]: {
             screen: Collection
-        },
-        [VIDEOPLAYER]: {
-            screen: VideoPlayer
         },
         [BROWSE]: {
             screen:  Browse
@@ -58,6 +55,9 @@ export default createStackNavigator(
         [FILTER]: {
             screen:  Filter
         },
+        [MENU_FILTER]: {
+            screen:  Filter
+        },
         [VIEW]: {
             screen: DragAndDrop
         },
@@ -66,6 +66,9 @@ export default createStackNavigator(
         },
         [INSTAGRAM]: {
             screen: InstagramPost
+        },
+        [POSTITEM]: {
+            screen: PostItem
         }
     }, {
 

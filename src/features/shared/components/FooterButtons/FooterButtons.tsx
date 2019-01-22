@@ -4,7 +4,7 @@ import {
   Animated
 } from 'react-native';
 import FooterButton from '../FooterButton/FooterButton';
-import { COLLECTION, BROWSE, FILTER, VIDEOPLAYER, VIEW as VIEW_SCREEN } from '../../routesKeys';
+import { COLLECTION, BROWSE, FILTER, VIEW as VIEW_SCREEN, MENU_FILTER } from '../../routesKeys';
 import theme from './theme';
 import { footerButtons, footerDarkButtons, LOVE, CATEGORIES, APPLY, CANCEL, VIEW } from './buttonsKeys';
 type Props = {
@@ -46,7 +46,7 @@ export default class Footer extends Component<Props> {
     _renderFooter = () => {
         const { currentRoute  } = this.props;
         let buttons: HashMap<string>[] = [];
-        if (currentRoute === COLLECTION || currentRoute === VIDEOPLAYER) {
+        if (currentRoute === COLLECTION) {
             buttons = [...footerButtons.filter((button: HashMap<string>) => button.text === LOVE)]
         }
         if (currentRoute === BROWSE) {
@@ -63,7 +63,8 @@ export default class Footer extends Component<Props> {
                     currentRoute === VIEW_SCREEN ? {backgroundColor: '#FFF'} : {},
                     {opacity: this.state.fadeIn}]}>
                  { currentRoute === FILTER && this._renderDarkFooterButtons() }
-                 { (currentRoute === COLLECTION || currentRoute === BROWSE || currentRoute === VIDEOPLAYER ) && this._renderWhiteFooterButtons(buttons) }
+                 { currentRoute === MENU_FILTER && this._renderDarkFooterButtons() }
+                 { (currentRoute === COLLECTION || currentRoute === BROWSE ) && this._renderWhiteFooterButtons(buttons) }
                  { currentRoute === VIEW_SCREEN && this._renderDragAndDropButtons() }
             </Animated.View>
         )

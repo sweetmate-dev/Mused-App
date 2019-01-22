@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import FooterButtons from './FooterButtons';
-import { COLLECTION, BROWSE, VIDEOPLAYER, FILTER, VIEW, NEWSFEED, BROWSE_ONLY } from '../../../shared';
+import { COLLECTION, BROWSE, FILTER, VIEW, BROWSE_ONLY } from '../../../shared';
 import { ROOT_STORE } from '../../../stores';
 import * as API from '../../../../services/api';
+import { MENU_FILTER } from '../../routesKeys';
 
 type Props = {
     root?: RootStore;
@@ -14,13 +15,16 @@ function FooterButtonsHOC(FooterButtons: any) {
     @observer
     class NewComp extends Component<Props> {
       render() {
-          const { root: { ui, slots, user } } = this.props;
-          const { currentRoute }  = ui;
-          const { newImgUrl } = slots;
-          const footerIsVisible = 
-            currentRoute === COLLECTION || currentRoute === VIDEOPLAYER || currentRoute === BROWSE ||  currentRoute === FILTER || currentRoute === VIEW;
+        const { root: { ui, slots, user } } = this.props;
+        const { currentRoute }  = ui;
+        const { newImgUrl } = slots;
+        const footerIsVisible = currentRoute === COLLECTION || 
+                                currentRoute === BROWSE || 
+                                currentRoute === FILTER || 
+                                currentRoute === MENU_FILTER || 
+                                currentRoute === VIEW;
         return (
-            footerIsVisible &&  
+          footerIsVisible &&  
             <FooterButtons 
               currentRoute={currentRoute}
               navigateToFilter={this._navigateToFilter}
@@ -33,7 +37,7 @@ function FooterButtonsHOC(FooterButtons: any) {
               newImgUrl={newImgUrl}
               user={user}
             />
-              )
+        )
     }
 
     _openProductCategory = () => {
@@ -46,10 +50,11 @@ function FooterButtonsHOC(FooterButtons: any) {
     }
 
     _navigateBackToBrowse = () => {
+      const { root: { ui: { navigate } } } = this.props;
       API.RegisterEvent("Vw-footerView", {
         actionType: "Click menu 'View'"
       })
-      this._navigateToBrowse();
+      navigate(BROWSE, COLLECTION);
     }
 
     _createNewOutfit = () => {
@@ -69,7 +74,7 @@ function FooterButtonsHOC(FooterButtons: any) {
     }
 
     _navigateToFilter = () => {
-        const { root: { ui: { navigate }, products } } = this.props;
+        const { root: { ui: { navigate }, products, filters: {setFilterTab} } } = this.props;
         const { setBrowseType } = products;
 
         const { root: { user: {newUser, setNewUser} } } = this.props;
@@ -81,6 +86,7 @@ function FooterButtonsHOC(FooterButtons: any) {
         API.RegisterEvent("Br-footerFilter", {
           actionType: "Click menu 'Filter'"
         })
+        setFilterTab('');
         setBrowseType(1);
         navigate(FILTER, BROWSE);
     }
@@ -96,37 +102,35 @@ function FooterButtonsHOC(FooterButtons: any) {
     _navigateToBrowse = () => {
       const { root: { ui: { navigate }, products } } = this.props;
       const { fromMenu } = products;
-      if(fromMenu) navigate(BROWSE_ONLY, COLLECTION);
+      if(fromMenu) navigate(BROWSE_ONLY, COLLECTION, {fromMenu});
       else navigate(BROWSE, COLLECTION);
     }
 
     _clearFilterAndGoToBrowse = () => {
       const { root: { filters, products, slots, ui } } = this.props;
-      const { clearFilters, setFilterTab } = filters;
+      const { clearFilters } = filters;
       const { cancelNewSlot, arrayImages } = products;
       const { setPrevSlotNumber } = slots;
-      const { prevRoute, navigate } = ui;
+      const { goBack, navigation } = ui;
 
-      if(prevRoute === COLLECTION) navigate(COLLECTION, NEWSFEED);
-      else this._navigateToBrowse();      
+      // if(prevRoute === COLLECTION) navigate(COLLECTION, NEWSFEED);
+      // else this._navigateToBrowse();      
       clearFilters();
       setPrevSlotNumber(arrayImages);
       cancelNewSlot();
+      goBack();
+      navigation.goBack();
       API.RegisterEvent("Fi-cancel", {
         actionType: "Click 'cancel'"
       })
-      setFilterTab('applied')
     }
 
     _applyFilter = async () => {
-      const { root: { products: { getAlternativesByFilter, resetAlternativies }, filters  } } = this.props;
-      const { setFilterTab } = filters;
-      resetAlternativies();
+      const { root: { products: { getAlternativesByFilter } } } = this.props;
       getAlternativesByFilter();
       API.RegisterEvent("Fi-apply", {
         actionType: "Click 'apply'"
       })
-      setFilterTab('applied');
       setTimeout(() => {
         this._navigateToBrowse();
       }, 500)      

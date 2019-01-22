@@ -91,7 +91,7 @@ export default class ObservableStore implements IUiStore {
                 actionType: "View screen"
             })
         }
-        // this.navigation.goBack();
+        this.navigation.navigate(this.currentRoute, {})
     }
 
     @action

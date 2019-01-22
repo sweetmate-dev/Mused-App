@@ -52,10 +52,9 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     },
     slideHeader: {
-        height: 60,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 10
+        paddingVertical: 16
     },
     avatarView: {
         width: 30,
@@ -241,7 +240,7 @@ export default class InstagramPost extends Component<Props, State> {
         const instagram = JSON.parse(slot.slot.instagramURL);
         let showDate: boolean = false;
         if(props.index === 0) showDate = false;
-        else if(slot.date !== this.timeAgo) {
+        else if(slot.date !== this.timeAgo && this.timeAgo === this.state.slots[0].date) {
             showDate = true;            
         }
         this.timeAgo = slot.date;
@@ -250,7 +249,7 @@ export default class InstagramPost extends Component<Props, State> {
                 {
                     showDate ?
                     <View style={styles.separator}>
-                        <Text style={styles.dateText}>INSTAGRAM LOOKS FOR {slot.date.toUpperCase()}</Text>
+                        <Text style={styles.dateText}>Past Instagram Looks</Text>
                     </View>
                     :props.index > 0 ?
                     <View style={styles.separator}></View>

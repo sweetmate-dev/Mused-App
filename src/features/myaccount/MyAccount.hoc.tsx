@@ -69,7 +69,6 @@ function MyAccountHoc(Account: any) {
                 },
                 from: 'outfit'
             }
-            console.log(params)
             navigate(COLLECTION, MYACCOUNT, params);
         }
 

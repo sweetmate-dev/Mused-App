@@ -12,6 +12,7 @@ interface IProductStore {
     recentNewProducts: Product[];
     arrayImages: ProductImage[];
     listOfAlternatives: Product[];
+    listOfProducts: Product[];
     listOfRecentNewProducts: Product[];
     toggleViewCategory: boolean;
     allProducts: any;
@@ -97,6 +98,8 @@ interface IPostsStore {
     posts: Post[];
     retailerPosts: RetailerPost[];
     getPosts: () => void;
+    getRetailerPosts: () => void;
+    getPostById: (postId: number) => Promise;
     listOfRetailerPosts: RetailerPost[];
     listOfPosts: Post[];
 }

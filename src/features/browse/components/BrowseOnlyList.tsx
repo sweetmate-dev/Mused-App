@@ -27,7 +27,7 @@ type Props = {
     setNewImgUrl: (newImgUrl: HashMap<string>) => void;
     hideContextMenu: () => void;
     isSlotMachine: boolean;
-    listOfAlternatives: Product[];
+    listOfProducts: Product[];
     getAlternatives: (ids: number[]) => void;
     createBookmark: (productId: number) => void;
     deleteBookmarkById: (_id: any) => void;
@@ -35,7 +35,9 @@ type Props = {
     contextMenuIsVisible: boolean;
     arrayImages: ProductImage[];
     noResult: boolean; 
-    getNewProducts: (category: string) => void;   
+    getNewProducts: (category: string) => void;  
+    onScrollEndDrag: (e: any) => void;
+    AllList: Product[]; 
 };
 export default class Browser extends Component<Props, State> {
     state: State = {
@@ -48,8 +50,9 @@ export default class Browser extends Component<Props, State> {
     componentDidMount() {
         const {getAlternatives, navigation, getNewProducts} = this.props;
         const productIds: number[] = navigation.getParam('productIds', []);
+        const fromMenu: boolean = navigation.getParam('fromMenu', false);
         if(productIds.length > 0) getAlternatives(productIds);
-        else getNewProducts('all')
+        else if(!fromMenu) getNewProducts('all')
         this.blackTimeOut = setTimeout(() => {
             this._fadeIn()
         }, 500)        
@@ -60,28 +63,31 @@ export default class Browser extends Component<Props, State> {
     }
 
     componentWillReceiveProps(props: any) {
-        if(JSON.stringify(props.listOfAlternatives) !== this.prevProducts) {
+        if(JSON.stringify(props.AllList) !== this.prevProducts) {
             this.scrollToTop();
-            this.prevProducts = JSON.stringify(props.listOfAlternatives)
-        }        
+            this.prevProducts = JSON.stringify(props.AllList)
+        }     
     }
 
     render() {
-        const _listOfAlternatives = [...this.props.listOfAlternatives];
+        const _listOfProducts = [...this.props.listOfProducts];
         return (
             <View style={[theme.container]}>
                 <Animated.View style={[theme.browseOnlyView, {opacity: this.state.fadeIn, marginBottom: 0}]}>
                     <FlatList
                         ref='_scrollView'
-                        data={_listOfAlternatives}
+                        data={_listOfProducts}
                         // ListHeaderComponent={this.renderHeaderComponent}
                         ListFooterComponent={() => <View style={theme.footerComponent} />}
-                        // ListEmptyComponent={this._renderEmptyView}
+                        ListEmptyComponent={this._renderEmptyView}
                         renderItem={this._renderItem}
                         keyExtractor={ item => `${item.id}`}
                         numColumns={2}
                         scrollEventThrottle={300}
-                        onScroll={this.props.hideContextMenu}
+                        onScrollEndDrag={({ nativeEvent }) => {
+                            this.props.onScrollEndDrag(nativeEvent);
+                            this.props.hideContextMenu;
+                        }}
                         initialNumToRender={10}
                     />
                 </Animated.View>

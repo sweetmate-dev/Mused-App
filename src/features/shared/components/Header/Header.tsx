@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Ripple from 'react-native-material-ripple';
-import { COLLECTION, BROWSE, FILTER, NEWSFEED, VIDEOPLAYER, BROWSE_ONLY, MYACCOUNT } from '../../routesKeys';
+import { COLLECTION, BROWSE, FILTER, NEWSFEED, BROWSE_ONLY, MYACCOUNT, MENU_FILTER } from '../../routesKeys';
 import * as API from '../../../../services/api';
 import { loginViaAnonProvider, updateUser } from '../../../../services'
 const menuItems = ['MY ACCOUNT', 'SHOP NEW', 'SHOP CATEGORIES', 'SIGN OUT'];
@@ -99,6 +99,7 @@ type Props = {
     setUserDetails: (userId: string, userProfile: any) => void;
     ui: IUiStore;
     getPosts: () => void;
+    setFilterTab: (str: string) => void;
 }
 export default class Header extends Component<Props> {
 
@@ -118,9 +119,10 @@ export default class Header extends Component<Props> {
                         navigation.state.routeName !== NEWSFEED ?
                         <View>
                             <Ripple rippleContainerBorderRadius={15 / 2} rippleSize={20} rippleCentered={true} onPress={this._goBack}>
-                            <Image
-                                style={styles.backIcon}
-                                source={require('../../../../../assets/images/arrow-icon.png')} />
+                                <Image
+                                    style={styles.backIcon}
+                                    source={require('../../../../../assets/images/arrow-icon.png')} 
+                                />
                             </Ripple>
                         </View>
                         :
@@ -143,15 +145,6 @@ export default class Header extends Component<Props> {
                 </View> */}
 
                 <View style={styles.rightView}>
-                    { 
-                        showContent &&  
-                        <TouchableWithoutFeedback onPress={this._onPressAvatar}>
-                            <Image
-                                style={styles.profileIcon}
-                                source={require('../../../../../assets/images/profile-icon.png')} 
-                            />
-                        </TouchableWithoutFeedback> 
-                    }
                     { 
                         showContent &&  
                         <ModalDropdown
@@ -183,28 +176,25 @@ export default class Header extends Component<Props> {
         )
     }
 
-    _onPressAvatar = () => {
-        API.RegisterEvent("Hd-account", {
-            actionType: "Clicked person icon on header"
-        })
-        this.props.ui.navigate(MYACCOUNT, '', {});
-    }
-
     onClickOption = async (index: string) => {
         API.RegisterEvent("Hd-ham", {
             actionType: "Selected one on header menu"
         })
         switch (Number(index)) {
             case 0:
-                alert('comming soon')
+                API.RegisterEvent("Hd-account", {
+                    actionType: "Clicked person icon on header"
+                })
+                this.props.ui.navigate(MYACCOUNT, '', {});
                 break;
             case 1:
                 await this.props.getNewProducts();
-                this.props.ui.navigate(BROWSE_ONLY, '', {});
+                this.props.ui.navigate(BROWSE_ONLY, '', {fromMenu: true});
                 break;
             case 2:
                 this.props.setBrowseType(2);
-                this.props.ui.navigate(FILTER, '', {});
+                this.props.setFilterTab('categories');
+                this.props.ui.navigate(MENU_FILTER, '', {});
                 break;
             case 3:
                 API.autoLogOut()
@@ -256,8 +246,8 @@ export default class Header extends Component<Props> {
     }
 
     _goBack = () => {
-        const { resetAlternativies,
-                clearFilters, 
+        const {
+            clearFilters, 
                 navigation, 
                 hideContextMenu, 
                 resetArrayImages, 
@@ -285,15 +275,12 @@ export default class Header extends Component<Props> {
             }
             hideContextMenu();
             clearFilters();
-            resetAlternativies();
+            // resetAlternativies();
         }
         if (BROWSE_ONLY === route) {
             hideContextMenu();
             clearFilters();
             // resetAlternativies();
-        }
-        if (VIDEOPLAYER === route) {
-
         }
         if (FILTER === route) {
             if (filterTab) {
@@ -302,7 +289,7 @@ export default class Header extends Component<Props> {
             }
         }
         goBack();
-        this.props.navigation.goBack();
+        // this.props.navigation.goBack();
         if (COLLECTION === route) {
             return false
         }

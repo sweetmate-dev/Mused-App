@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { Permissions, Notifications } from 'expo';
-// import AuthControls from './AuthControls';
 import { NavigatorStack } from '../../navigation';
 import { Footer, FooterButtons, ContextMenu } from '../../shared';
 import { ROOT_STORE } from '../../stores';
@@ -48,7 +47,6 @@ function AuthControlsHOC(Onboarding: any) {
             } else {
                 this.setState({newUser: true})
             }
-            // this.registerForPushNotifications()
         }
 
         async registerForPushNotifications() {
@@ -70,24 +68,19 @@ function AuthControlsHOC(Onboarding: any) {
             // this.sendPushNotification(token)
             Notifications.scheduleLocalNotificationAsync({
                 title: 'Mused',
-                body: 'Hi, it‘s Mused. 15 new looks are ready to edit',
+                body: 'New street style looks ready to edit',
                 icon: iconURL
             }, {
-                time: (new Date().getTime()) + DAY_TIME * 1
+                time: (new Date().getTime()) + DAY_TIME * 1,
+                repeat: 'week'
             })
             Notifications.scheduleLocalNotificationAsync({
                 title: 'Mused',
-                body: 'Create an outfit from these 10 Balenciaga faves',
+                body: 'New products now in = create new looks',
                 icon: iconURL
             }, {
-                time: (new Date().getTime()) + DAY_TIME * 2
-            })
-            Notifications.scheduleLocalNotificationAsync({
-                title: 'Mused',
-                body: 'Try styling this trend?',
-                icon: iconURL
-            }, {
-                time: (new Date().getTime()) + DAY_TIME * 3
+                time: (new Date().getTime()) + DAY_TIME * 3,
+                repeat: 'week'
             })
         }
 

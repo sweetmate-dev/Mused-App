@@ -50,7 +50,10 @@ import {
     },
     itemImage: {
         borderWidth: 1,
-        borderColor: 'black'
+        borderColor: 'black',
+        width: width - 30,
+        height: width * 1.2,
+        resizeMode: 'cover'
     },
     authorText: {
         fontFamily: 'Lato',
@@ -116,6 +119,16 @@ import {
         flexDirection: 'row', 
         alignItems: 'center', 
         justifyContent: 'center'
+    },
+    loadingView: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white'
     }
   });
 

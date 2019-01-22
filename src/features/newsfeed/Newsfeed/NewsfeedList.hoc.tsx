@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { AsyncStorage, View } from 'react-native';
 import { Linking } from 'expo';
 import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 import _ from 'lodash';
 import NewsfeedList from './NewsfeedList';
-import { Header, COLLECTION, NEWSFEED, BROWSE_ONLY, ZOOM, INSTAGRAM, BROWSE } from '../../shared';
+import { Header, COLLECTION, NEWSFEED, BROWSE_ONLY, ZOOM, COLLECTION_ZOOM, INSTAGRAM, BROWSE } from '../../shared';
 import * as API from '../../../services/api';
-
+import DotIndicator from '../../shared/components/Indicators/dot-indicator'
 import { ROOT_STORE } from '../../stores';
-import theme from '../theme';
 
 type Props = {
     navigation: any;
@@ -18,6 +17,7 @@ type Props = {
 
 type State = {
   redirecting: boolean,
+  scrolledToEnd: boolean
 };
 
 function NewsfeedHOC(Newsfeed: any) {
@@ -31,13 +31,13 @@ function NewsfeedHOC(Newsfeed: any) {
       };      
 
       state: State = {
-        redirecting: false
+        redirecting: false,
+        scrolledToEnd: false
       }
 
       componentDidMount() {
-        const { root: { ui, user, products: { getNewProducts } } } = this.props;
+        const { root: { ui, user } } = this.props;
         ui.setNavigation(this.props.navigation);
-        getNewProducts('all');
         setTimeout(() => {
           API.setIdentify(user.userProfile.email);
           API.RegisterEvent("Login", {
@@ -51,10 +51,12 @@ function NewsfeedHOC(Newsfeed: any) {
         }, 1000) 
 
         Linking.addEventListener('url', this._handleOpenUrl)
-        // this.registerForPushNotifications();
-        // this._handleOpenUrl({url: 'musedapp://styleit?productId=751828991'})
+        // setTimeout(() => {
+        //   this._handleOpenUrl({url: 'musedapp://post?id=68'});
+        //   this._handleOpenUrl({url: 'musedapp://styleit?productId=741043595'});
+        //   this._handleOpenUrl({url: 'musedapp://new-products?category=all'});
+        // }, 4000);        
         this._checkNewUser();
-
       }
 
       _checkNewUser = async () => {
@@ -68,11 +70,12 @@ function NewsfeedHOC(Newsfeed: any) {
       }
 
       _handleOpenUrl = (event: any) => {
-        const { root: { ui: {navigate}, slots: {setSlotNumber}, products } } = this.props;
+        const { root: { ui: {navigate}, slots: {setSlotNumber}, products, posts } } = this.props;
         let { path, queryParams } = Linking.parse(event.url);
         const { getDetailByProductId, createStyleWithMused, getNewProducts } = products;
-        this.setState({redirecting: true});
+        const { getPostById } = posts;
         console.log('deep linking event', event);
+        this.setState({redirecting: true});
         switch(path) {
             case 'styleit':
                 const productId = queryParams.productId;
@@ -81,62 +84,143 @@ function NewsfeedHOC(Newsfeed: any) {
                         id: productId,
                         img: {uri: product.image}
                     }
+                    this.setState({redirecting: false});
                     createStyleWithMused(params);
                     getNewProducts(product.category);
                     setSlotNumber(-1);
-                    this.setState({redirecting: false}, () => {
-                      navigate(BROWSE, ZOOM, {from: 'zoom'});
-                    })                    
+                    navigate(BROWSE, ZOOM, {from: 'zoom'});                  
                 });
                 break;
-            default:
+            case 'new-products':
+                const category = queryParams.category;
+                getNewProducts(category);
                 this.setState({redirecting: false});
+                navigate(BROWSE_ONLY, '', {});
+                break;
+            case 'post':
+                const postId = queryParams.id;
+                getPostById(postId).then((post: Post) => {
+                  this.setState({redirecting: false}, () => {
+                    if(post === null) {
+                      alert('The post is not available');
+                    } else {
+                      this._navigateToSpecialPost(post);
+                    }                    
+                  });
+                  
+                });
+                break;
+            default:                
+                this.setState({redirecting: false}, () => {
+                  console.log('Invalid deep link');
+                });
                 break;
         }
     }
 
-    getInstagramInspirationalImage = () => {
-      const { root: { posts } } = this.props;
-      const { listOfPosts } = posts;
-      let imageUrl: string = '';      
-      _.reverse(_.sortBy(listOfPosts, "date")).map((post: Post) => {            
-        if(post.postType === 'instagram') {  
-          imageUrl = post.inspirationalImage;                 
+    _navigateToSpecialPost(post: Post) {
+      const { timeAgo, authorProfilePhoto, authorName, slots, postType, productIds, productId } = post;
+        if(postType === 'list') {
+          const { root: { ui } } = this.props;
+          const { navigate } = ui;
+          navigate(BROWSE_ONLY, NEWSFEED, {productIds});  
+          API.RegisterEvent("Nf-ClickPost", {
+            event: 'Click post',
+            postType: 'list',
+          });
+          return;
+        } else if(postType === 'product') {
+          const { root: { ui, products } } = this.props;
+          const { navigate } = ui;
+          const { getDetailByProductId } = products;
+          getDetailByProductId(productId)
+          .then((product: any) => {
+            navigate(COLLECTION_ZOOM, NEWSFEED, {product});
+          })
+          API.RegisterEvent("Nf-ClickPost", {
+            event: 'Click post',
+            postType: 'product',
+          })
+          return;
+        } else if(postType === 'instagram') {
+          API.RegisterEvent("Nf-ClickPost", {          
+            event: 'Click post',
+            postType: 'Instagram',
+          }) 
+          let slots: any = [];
+          post.slots.map((slot: any) => {
+              slots.push({
+                date: moment(new Date(post.date)).fromNow(false),
+                slot,
+                key: String(post.postId) + String(JSON.parse(slot.instagramURL).media_id)
+              })
+            })   
+          this.props.root.ui.navigate(INSTAGRAM, NEWSFEED, {slots});  
+          return;
         }
-      })
-      return imageUrl;
+        const params = {
+          productIds: slots,
+          authorItem: {
+              timeAgo,
+              authorProfilePhoto,
+              authorName
+          }
+        };
+        const { root: { ui, slots: { removeSixthSlot }, products: { getCollection, setFromOutfit } } } = this.props;
+        const { navigate } = ui;
+        removeSixthSlot();
+        setFromOutfit(false);
+        getCollection(params.productIds)
+        navigate(COLLECTION, NEWSFEED, params);   
+        API.RegisterEvent("Nf-ClickPost", {          
+          event: 'Click post',
+          postType: 'inspire',
+        })        
     }
-
+    
     render() {
         const { root: { posts, products } } = this.props;
         const { listOfPosts, listOfRetailerPosts, getPosts } = posts;
         const { getBookmarksByUserId, getCollection, listOfAlternatives, listOfRecentNewProducts } = products;
-        if(this.state.redirecting) {
-          return (
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={theme.redirectText}>Redirecting...</Text>
-            </View>
-          )
-        }
-        const inspirationalImage = this.getInstagramInspirationalImage();
+        return(
+          <View style={{flex: 1}}>
+            <Newsfeed 
+              goToCollection={this._goToCollection}
+              goToBrowseDirectly={this._goToBrowseDirectly}
+              goToZoomDirectly={this._goToZoomDirectly}
+              getPosts={getPosts}
+              getCollection={getCollection}
+              goToInstagramSlide={this._goToInstagramSlide}
+              listOfPosts={listOfPosts}
+              listOfRetailerPosts={listOfRetailerPosts}
+              getBookmarksByUserId={getBookmarksByUserId}
+              onClickRetailerPost={this._onClickRetailerPost}
+              listOfAlternatives={listOfAlternatives}
+              listOfRecentNewProducts={listOfRecentNewProducts}
+              onClickNewProduct={this._onClickNewProduct}
+              onViewAllNewProduct={this._onViewAllNewProduct}
+              onScroll={(nativeEvent: any) => this.onScroll(nativeEvent)}
+            />
+            {
+              this.state.redirecting && 
+              <View style={{position: 'absolute', backgroundColor: 'white', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
+                <DotIndicator size={6} count={3} />
+              </View>
+            }            
+          </View>
+        )
+      }
 
-        return <Newsfeed 
-                  goToCollection={this._goToCollection}
-                  goToBrowseDirectly={this._goToBrowseDirectly}
-                  goToZoomDirectly={this._goToZoomDirectly}
-                  getPosts={getPosts}
-                  getCollection={getCollection}
-                  goToInstagramSlide={this._goToInstagramSlide}
-                  listOfPosts={listOfPosts}
-                  instagramInspirationalImage={inspirationalImage}
-                  listOfRetailerPosts={listOfRetailerPosts}
-                  getBookmarksByUserId={getBookmarksByUserId}
-                  onClickRetailerPost={this._onClickRetailerPost}
-                  listOfAlternatives={listOfAlternatives}
-                  listOfRecentNewProducts={listOfRecentNewProducts}
-                  onClickNewProduct={this._onClickNewProduct}
-                  onViewAllNewProduct={this._onViewAllNewProduct}
-                />
+      onScroll(nativeEvent: any) {
+        const { root: { posts: {getRetailerPosts}, products: {getNewProducts} } } = this.props;
+
+        const { contentOffset, layoutMeasurement, contentSize } = nativeEvent;    
+        console.log(layoutMeasurement.height + contentOffset.y + ', ' + contentSize.height)
+        if(!this.state.scrolledToEnd && (layoutMeasurement.height + contentOffset.y === contentSize.height)) {
+          getRetailerPosts();
+          getNewProducts('all');
+          this.setState({scrolledToEnd: true})
+        }
       }
 
       _goToCollection = (params: any) => {
@@ -172,7 +256,7 @@ function NewsfeedHOC(Newsfeed: any) {
         const { getDetailByProductId } = products;
         getDetailByProductId(item.id)
         .then((product: any) => {
-          navigate(ZOOM, NEWSFEED, {product});
+          navigate(COLLECTION_ZOOM, NEWSFEED, {product});
         })
         API.RegisterEvent("Nf-ClickPost", {
           event: 'Click post',
@@ -229,7 +313,7 @@ function NewsfeedHOC(Newsfeed: any) {
         const { getDetailByProductId } = products;
         getDetailByProductId(productId)
         .then((product: any) => {
-          navigate(ZOOM, NEWSFEED, {product});
+          navigate(COLLECTION_ZOOM, NEWSFEED, {product});
         })
         API.RegisterEvent("Nf-ClickPost", {
           event: 'Click post',

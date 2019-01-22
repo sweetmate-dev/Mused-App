@@ -8,14 +8,13 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import { Permissions, Notifications } from 'expo';
+import _ from 'lodash';
 
 import  NewsfeedItem from './NewsfeedItem';
 import theme from '../theme';
 import RetailerPosts from './RetailerPost';
 import NewProductList from './NewProductList';
-
-const DAY_TIME = 24 * 3600 * 1000;
+import DotIndicator from '../../shared/components/Indicators/dot-indicator'
 
 type State = {
     fadeIn: any,
@@ -23,7 +22,8 @@ type State = {
     token: string,
     notification: any,
     slots: any[],
-    instagram_inspirationalImage: string
+    instagram_inspirationalImage: string,
+    loading: boolean
 };
 
 type Props = {
@@ -31,7 +31,6 @@ type Props = {
     listOfRetailerPosts: RetailerPost[];
     listOfAlternatives: Product[];
     listOfRecentNewProducts: Product[];
-    instagramInspirationalImage: string;
     goToCollection: (params: any) => void;
     getPosts: () => void;
     getBookmarksByUserId: () => void;
@@ -42,6 +41,7 @@ type Props = {
     onClickRetailerPost: (post: RetailerPost) => void;
     onClickNewProduct: (product: Product) => void;
     onViewAllNewProduct: () => void;
+    onScroll: (e: any) => void;
 }
 export default class NewsfeedList extends Component<Props, State> {
 
@@ -51,73 +51,30 @@ export default class NewsfeedList extends Component<Props, State> {
         token: null,
         notification: null,
         slots: [],
-        instagram_inspirationalImage: ''
+        instagram_inspirationalImage: '',
+        loading: true
     }
 
     componentDidMount() {  
         this.props.getPosts();
-        this.props.getBookmarksByUserId();        
+        this.props.getBookmarksByUserId();
+        setTimeout(() => {
+            this.setState({loading: false})
+        }, 1500)   
     }    
 
-    async registerForPushNotifications() {
-        const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-    
-        if (status !== 'granted') {
-          const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-          if (status !== 'granted') {
-            return;
+    componentWillReceiveProps(props: any) {
+        const { listOfPosts } = props;
+        if(listOfPosts === undefined || this.state.instagram_inspirationalImage.length > 0 || listOfPosts.length === 0) return null;
+        let imageUrl: string = '';      
+        _.reverse(_.sortBy(listOfPosts, "date")).map((post: Post) => {            
+          if(post.postType === 'instagram') {  
+            imageUrl = post.inspirationalImage;                 
           }
-        }
-    
-        const token = await Notifications.getExpoPushTokenAsync();
-    
-        Notifications.addListener(this.handleNotification);
-    
-        this.setState({
-          token,
-        });
-        // this.sendPushNotification(token)
-        Notifications.scheduleLocalNotificationAsync({
-            title: 'Mused',
-            body: 'Hi, it‘s Mused. 15 new looks are ready to edit',
-        }, {
-            time: (new Date().getTime()) + DAY_TIME * 1
         })
-        Notifications.scheduleLocalNotificationAsync({
-            title: 'Mused',
-            body: 'Create an outfit from your Balenciaga faves',
-        }, {
-            time: (new Date().getTime()) + DAY_TIME * 2
-        })
-        Notifications.scheduleLocalNotificationAsync({
-            title: 'Mused',
-            body: 'Try styling this trend?',
-        }, {
-            time: (new Date().getTime()) + DAY_TIME * 3
-        })
+        this.setState({instagram_inspirationalImage: imageUrl});
+        return true;
     }
-
-    sendPushNotification = (token = this.state.token) => {
-        return fetch('https://exp.host/--/api/v2/push/send', {
-          body: JSON.stringify({
-            to: token,
-            title: 'Mused',
-            body: 'Welcome to You!',
-            data: { message: 'Welcome to You!' },
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-        });
-    }
-    
-    handleNotification = (notification: any) => {
-        this.setState({
-            notification,
-        });
-        console.log('Notification Data', notification)
-    };
 
     //sort newsfeed by pin field
     /*
@@ -142,7 +99,6 @@ export default class NewsfeedList extends Component<Props, State> {
     }
     
     render() {
-        // console.log(this.sortData(this.props.listOfPosts))
         return (
             <Animated.View style={[theme.container, {opacity: this.state.fadeIn}]}>
                 <StatusBar
@@ -156,7 +112,13 @@ export default class NewsfeedList extends Component<Props, State> {
                     scrollEventThrottle={1000}
                     ListHeaderComponent={this._renderHeader}
                     ListFooterComponent={this._renderFooter.bind(this)}
+                    onScroll={({ nativeEvent }) => this.props.onScroll(nativeEvent)}
                 />}
+                {this.state.loading && 
+                    <View style={theme.loadingView}>
+                        <DotIndicator size={6} count={3} />
+                    </View>
+                }
             </Animated.View>
         )
     }
@@ -171,8 +133,8 @@ export default class NewsfeedList extends Component<Props, State> {
         />
 
     _renderHeader = () => {
-        const { instagramInspirationalImage } = this.props;
-        if(instagramInspirationalImage.length === 0) return null;
+        const { instagram_inspirationalImage } = this.state;
+        if(instagram_inspirationalImage.length === 0) return null;
         return (
             <View>
                 <View style={theme.titleView}>
@@ -183,7 +145,7 @@ export default class NewsfeedList extends Component<Props, State> {
                 <TouchableOpacity 
                     onPress={this.props.goToInstagramSlide}
                 >
-                    <Image source={{uri: instagramInspirationalImage}} style={theme.instagramImage} />
+                    <Image source={{uri: instagram_inspirationalImage}} style={theme.instagramImage} />
                 </TouchableOpacity>                
                 <View style={theme.separator}></View>
             </View>

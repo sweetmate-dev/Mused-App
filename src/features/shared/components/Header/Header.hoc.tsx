@@ -19,7 +19,7 @@ function HeaderHOC(Header: any) {
             const { navigation, showContent,  root: { ui, user, products, filters, posts } } = this.props;
             const { userProfile, logout, setUserDetails } = user;
             const { resetArrayImages, resetAlternativies, resetCollection, setBrowseType } = products;
-            const { filterTab, clearFilters } = filters;
+            const { filterTab, clearFilters, setFilterTab } = filters;
             const { getPosts } = posts;
 
             return <Header
@@ -40,6 +40,7 @@ function HeaderHOC(Header: any) {
                     setUserDetails={setUserDetails}
                     ui={ui}
                     getPosts={getPosts}
+                    setFilterTab={setFilterTab}
             />
         }
 

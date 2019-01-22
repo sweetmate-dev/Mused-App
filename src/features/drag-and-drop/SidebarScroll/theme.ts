@@ -92,8 +92,8 @@ export default StyleSheet.create({
         height:25
     },
     categoriesFilterText: {
-        fontSize: 14,
-        fontFamily: 'Raleway',
+        fontSize: 11,
+        fontFamily: 'QuickSandRegular',
         textAlign: 'center'
     },
     categoriesFilterWrapper: {

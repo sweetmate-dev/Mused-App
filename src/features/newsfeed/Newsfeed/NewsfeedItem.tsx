@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Dimensions
+  Dimensions,
+  Image
 } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import moment from 'moment'
-import AutoHeightImage from 'react-native-auto-height-image';
+// import AutoHeightImage from 'react-native-auto-height-image';
 
 import { AuthorItem, } from '../../shared';
 import theme from '../theme';
@@ -25,6 +26,7 @@ export default class NewsfeedItem extends Component<Props> {
 
     render() {
         const { date, authorProfilePhoto, authorName, inspirationalImage, title, postType, hidden } = this.props.item;
+        console.log(this.props.item.postId);
         if(hidden || postType === 'instagram') return null;
         return (
             <View style={theme.container}>
@@ -42,16 +44,14 @@ export default class NewsfeedItem extends Component<Props> {
                         rippleContainerBorderRadius={width}>
                         {
                             (inspirationalImage === null || inspirationalImage.length === 0) ?
-                            <AutoHeightImage
+                            <Image
                                 source={defaultNewsImage}
                                 style={theme.itemImage}
-                                width={width - 30}
                             />
                             :
-                            <AutoHeightImage
+                            <Image
                                 source={{uri: inspirationalImage + ' '}}
                                 style={theme.itemImage}
-                                width={width - 30}
                             />
                         }
                     </Ripple>

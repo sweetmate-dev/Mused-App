@@ -85,7 +85,10 @@ const styles = StyleSheet.create({
     width: IMAGE_WIDTH,
     height: IMAGE_HEIGHT,
   },
-  
+  emptyView: {
+    width: width / 2,
+    height: IMAGE_HEIGHT + 120
+  }
 })
 
 type Props = {
@@ -118,8 +121,21 @@ export default class ProductItem extends Component<Props, State> {
     render() {
       const { product, isLoading } = this.state;
       if(product === null || product === undefined) return null;
+      let borderStyle = {};
+        if(this.props.position === 'left' || 1) {
+            borderStyle = {
+                borderRightWidth: 1.5,
+                borderBottomWidth: 2,
+                borderColor: '#f9f9f9'
+            }
+        } else {
+            borderStyle = {
+                borderBottomWidth: 2,
+                borderColor: '#f9f9f9'
+            }
+        }
       return (
-        <View style={styles.productContainer}>
+        <View style={[styles.productContainer, borderStyle]}>
             {
               (product !== null && product !== undefined) &&
               <TouchableHighlight 
