@@ -84,7 +84,7 @@ export default class Browser extends Component<Props, State> {
                 <Animated.View style={[theme.productListContainer, {opacity: this.state.fadeIn}]}>
                     <FlatList
                         ref='_scrollView'
-                        data={this.props.newUser ? _listOfAlternatives.slice(6) : _listOfAlternatives}
+                        data={_listOfAlternatives}
                         ListHeaderComponent={this.renderHeaderComponent}
                         ListFooterComponent={() => <View style={theme.footerComponent} />}
                         ListEmptyComponent={this._renderEmptyView}
@@ -117,8 +117,8 @@ export default class Browser extends Component<Props, State> {
                     </View>
                     <View style={theme.topProductsView}>
                         {
-                            this.props.listOfAlternatives.slice(0, 6).map((product: Product, index) => {
-                                return this._renderItem({item: product, index})
+                            this.props.listOfAlternatives.slice(0, 4).map((product: Product, index) => {
+                                return this._renderItem({item: product, index: index - 5})
                             })
                         }
                     </View>
@@ -161,25 +161,32 @@ export default class Browser extends Component<Props, State> {
     }
         
 
-    _renderItem = (props: {item: Product, index: number}) =>
-        <BrowseItem 
-            key={props.item.id}
-            item={props.item} 
-            index={props.index}
-            likedItemIndex={this.state.likedItemIndex}
-            likeItem={this._likeItem}
-            navigateToProductSingle={this.props.navigateToProductSingle}
-            setNewImgUrl={this.props.setNewImgUrl}
-            hideContextMenu={this.props.hideContextMenu}
-            isSlotMachine={this.props.isSlotMachine}
-            createBookmark={this.props.createBookmark}
-            listOfBookmarks={this.props.listOfBookmarks}
-            deleteBookmarkById={this.props.deleteBookmarkById}
-            contextMenuIsVisible={this.props.contextMenuIsVisible}
-            onDuplicated={this.onDuplicated}
-            arrayImages={this.props.arrayImages}
-            browseOnly={false}
-        />
+    _renderItem = (props: {item: Product, index: number}) => {
+        if(props.index > -1 && props.index < 4) return null;
+        else {
+            return(
+                <BrowseItem 
+                    key={props.item.id}
+                    item={props.item} 
+                    index={props.index}
+                    likedItemIndex={this.state.likedItemIndex}
+                    likeItem={this._likeItem}
+                    navigateToProductSingle={this.props.navigateToProductSingle}
+                    setNewImgUrl={this.props.setNewImgUrl}
+                    hideContextMenu={this.props.hideContextMenu}
+                    isSlotMachine={this.props.isSlotMachine}
+                    createBookmark={this.props.createBookmark}
+                    listOfBookmarks={this.props.listOfBookmarks}
+                    deleteBookmarkById={this.props.deleteBookmarkById}
+                    contextMenuIsVisible={this.props.contextMenuIsVisible}
+                    onDuplicated={this.onDuplicated}
+                    arrayImages={this.props.arrayImages}
+                    browseOnly={false}
+                />
+            )
+        }
+    }
+        
 
     _likeItem = (index: number) =>
         this.setState({likedItemIndex: index});

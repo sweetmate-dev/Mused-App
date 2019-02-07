@@ -34,10 +34,10 @@ function BrowseHOC(Browse: any) {
             const { root: { slots, products, ui }, navigation } = this.props;
             const { contextMenuIsVisible } = ui;
             const { setNewImgUrl, isSlotMachine } = slots;
-            const { listOfProducts, getAlternatives, getNewProducts, createBookmark, listOfBookmarks, deleteBookmarkById, arrayImages, noResult } = products;
-            if(JSON.stringify(listOfProducts) !== this.prevProducts) {
+            const { alternatives, getAlternatives, getNewProducts, createBookmark, listOfBookmarks, deleteBookmarkById, arrayImages, noResult } = products;
+            if(JSON.stringify(alternatives) !== this.prevProducts) {
                 this.setState({numberOfLoad: 10})
-                this.prevProducts = JSON.stringify(listOfProducts)
+                this.prevProducts = JSON.stringify(alternatives)
             }
             return <Browse
                         navigation={navigation}
@@ -45,8 +45,8 @@ function BrowseHOC(Browse: any) {
                         navigateToProductSingle={this._navigateToProductSingle}
                         hideContextMenu={this._hideContextMenu}
                         isSlotMachine={isSlotMachine}
-                        listOfProducts={listOfProducts.slice(0, this.state.numberOfLoad)}
-                        AllList={listOfProducts}
+                        listOfProducts={alternatives.slice(0, this.state.numberOfLoad)}
+                        AllList={alternatives}
                         getAlternatives={getAlternatives}
                         createBookmark={createBookmark}
                         listOfBookmarks={listOfBookmarks}

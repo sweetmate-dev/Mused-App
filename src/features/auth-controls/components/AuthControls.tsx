@@ -236,11 +236,6 @@ export default class AuthControls extends Component<Props, State> {
                             </View>                
                         </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={() => this.onSkipSignUp()}>
-                        <View style={styles.skipButton}>
-                            <Text style={styles.bottomText}>...or signup using <Text style={{textDecorationLine: 'underline'}}>your email</Text></Text>   
-                        </View>
-                    </TouchableWithoutFeedback>
                 </Animated.View>
             </View>
         )

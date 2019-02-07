@@ -215,7 +215,7 @@ function NewsfeedHOC(Newsfeed: any) {
         const { root: { posts: {getRetailerPosts}, products: {getNewProducts} } } = this.props;
 
         const { contentOffset, layoutMeasurement, contentSize } = nativeEvent;    
-        console.log(layoutMeasurement.height + contentOffset.y + ', ' + contentSize.height)
+        // console.log(layoutMeasurement.height + contentOffset.y + ', ' + contentSize.height)
         if(!this.state.scrolledToEnd && (layoutMeasurement.height + contentOffset.y === contentSize.height)) {
           getRetailerPosts();
           getNewProducts('all');

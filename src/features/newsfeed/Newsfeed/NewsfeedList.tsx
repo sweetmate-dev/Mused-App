@@ -13,7 +13,7 @@ import _ from 'lodash';
 import  NewsfeedItem from './NewsfeedItem';
 import theme from '../theme';
 import RetailerPosts from './RetailerPost';
-import NewProductList from './NewProductList';
+// import NewProductList from './NewProductList';
 import DotIndicator from '../../shared/components/Indicators/dot-indicator'
 
 type State = {
@@ -60,7 +60,7 @@ export default class NewsfeedList extends Component<Props, State> {
         this.props.getBookmarksByUserId();
         setTimeout(() => {
             this.setState({loading: false})
-        }, 1500)   
+        }, 500)   
     }    
 
     componentWillReceiveProps(props: any) {
@@ -153,7 +153,7 @@ export default class NewsfeedList extends Component<Props, State> {
     }        
 
     _renderFooter = () => {
-        const {listOfRetailerPosts, listOfRecentNewProducts} = this.props;
+        const {listOfRetailerPosts} = this.props;
         if(listOfRetailerPosts){
             return(
                 <View>
@@ -162,11 +162,11 @@ export default class NewsfeedList extends Component<Props, State> {
                         onClickPost={this.props.onClickRetailerPost}
                     />
                     <View style={theme.separator}></View>
-                    <NewProductList
+                    {/* <NewProductList
                         products={listOfRecentNewProducts}
                         onClickProduct={this.props.onClickNewProduct}
                         onClickViewAll={this.props.onViewAllNewProduct}
-                    />
+                    /> */}
                 </View>
             )
         } else {

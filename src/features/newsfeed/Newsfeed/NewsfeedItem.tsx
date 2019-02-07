@@ -101,7 +101,7 @@ export default class NewsfeedItem extends Component<Props> {
         {
             productIds: slots,
             authorItem: {
-                timeAgo,
+                timeAgo: moment(timeAgo).fromNow(),
                 authorProfilePhoto,
                 authorName
             }

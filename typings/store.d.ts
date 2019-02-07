@@ -12,7 +12,6 @@ interface IProductStore {
     recentNewProducts: Product[];
     arrayImages: ProductImage[];
     listOfAlternatives: Product[];
-    listOfProducts: Product[];
     listOfRecentNewProducts: Product[];
     toggleViewCategory: boolean;
     allProducts: any;

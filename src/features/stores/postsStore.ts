@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx';
 import { getPosts, getRetailerPosts, getPostById } from '../../services';
-import moment from 'moment';
 
 
 
@@ -24,7 +23,6 @@ export default class ObservableStore implements IPostsStore {
             this.posts = posts.map((post: Post) => {
               return {
                   ...post,
-                  timeAgo: moment(post.timeAgo).fromNow()
               }  
             })
         )         

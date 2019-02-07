@@ -49,10 +49,6 @@ export default class ObservableStore implements IProductStore {
         return this.alternatives;
     }
 
-    get listOfProducts() {
-        return this.browseOnlyProducts;
-    }
-
     get listOfRecentNewProducts() {
         return this.recentNewProducts;
     }
@@ -320,19 +316,9 @@ export default class ObservableStore implements IProductStore {
         if(this.fromMenu) this.browseOnlyProducts = [];
         else this.alternatives = [];
         this.noResult = false;
-        await getNewProducts(category).then((products: Product[]) => {
-            if(this.fromMenu) {
-                this.browseOnlyProducts = [...this.shuffle(this.mergeArray(products))];
-                this.recentNewProducts = this.browseOnlyProducts.slice(0, 10);
-                this.browseOnlyProducts.map((product: Product) => {
-                    console.log(product.category + ',' + product.subCategories);
-                })
-            } else {
-                this.alternatives = [...this.shuffle(this.mergeArray(products))];
-                this.recentNewProducts = this.alternatives.slice(0, 10);
-            }            
-            console.log(this.alternatives.length);
-            if(products.length === 0) this.noResult = true;
+        await getNewProducts(category).then((data: any) => {
+            this.getAlternatives(data[0].productIds);      
+            if(data[0].productIds.length === 0) this.noResult = true;
         });
     }
 
