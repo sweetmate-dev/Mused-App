@@ -254,7 +254,7 @@ export default class Step2 extends Component<Props, State> {
     renderStep1View = () => {
       return (
         <Animated.View style={[styles.content, {opacity: this.state.fadeIn}]}>
-          <TypeWriterText text={['Next you pick something', 'to switch']} />
+          <TypeWriterText text={['See alternative ideas', 'for one of the pieces']} />
           <ScrollView style={styles.scrollView} scrollEnabled={false}>
             <View style={styles.containerItem}>
               <TouchableWithoutFeedback onPress={() => this.onPressClick()}>

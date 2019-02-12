@@ -85,10 +85,14 @@ import {
         height: width / 5 - 18,
         borderRadius: width / 10 - 9,        
     },
+    instagramImageWrapper: {
+        height: 100,
+    },
     instagramImage: {
         marginLeft: 15,
         width: width - 30,
         height: 100,
+        minHeight: 100,
         resizeMode: 'contain'
     },
     titleView: {

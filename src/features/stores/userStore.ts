@@ -32,6 +32,10 @@ export default class ObservableStore implements IUserStore {
         return this.id;
     }
 
+    public get getHighlightButtonText() {
+        return this.highlightButtonText;
+    }
+
     @action
     public autoLogOut = () => {
         this.autoLoggedOut = true;

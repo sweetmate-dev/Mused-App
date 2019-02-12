@@ -13,6 +13,28 @@ import ReSignIn from './ResignIn';
 
 const DAY_TIME = 24 * 3600 * 1000;
 const iconURL = 'http://www.mused-app.com/assets/notification-icon.png';
+const PushMessages = [
+    {
+        day: 1,
+        message: 'New street style lokksready to edit'
+    },
+    {
+        day: 3,
+        message: 'New street style looksready to edit'
+    },
+    {
+        day: 6,
+        message: 'New street style lokksready to edit'
+    },
+    {
+        day: 9,
+        message: 'New street style looksready to edit'
+    },
+    {
+        day: 12,
+        message: 'New street style lokksready to edit'
+    },
+]
 
 type Props = {
     root?: RootStore;
@@ -65,22 +87,15 @@ function AuthControlsHOC(Onboarding: any) {
             this.setState({
                 token,
             });
-            // this.sendPushNotification(token)
-            Notifications.scheduleLocalNotificationAsync({
-                title: 'Mused',
-                body: 'New street style looks ready to edit',
-                icon: iconURL
-            }, {
-                time: (new Date().getTime()) + DAY_TIME * 1,
-                repeat: 'week'
-            })
-            Notifications.scheduleLocalNotificationAsync({
-                title: 'Mused',
-                body: 'New products now in = create new looks',
-                icon: iconURL
-            }, {
-                time: (new Date().getTime()) + DAY_TIME * 3,
-                repeat: 'week'
+            
+            PushMessages.map((push) => {
+                Notifications.scheduleLocalNotificationAsync({
+                    title: 'Mused',
+                    body: push.message,
+                    icon: iconURL
+                }, {
+                    time: (new Date().getTime()) + DAY_TIME * push.day,
+                })
             })
         }
 

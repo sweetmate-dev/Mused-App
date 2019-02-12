@@ -67,7 +67,8 @@ export default class NewsfeedList extends Component<Props, State> {
         const { listOfPosts } = props;
         if(listOfPosts === undefined || this.state.instagram_inspirationalImage.length > 0 || listOfPosts.length === 0) return null;
         let imageUrl: string = '';      
-        _.reverse(_.sortBy(listOfPosts, "date")).map((post: Post) => {            
+        _.reverse(_.sortBy(listOfPosts, "date")).map((post: Post) => { 
+            console.log(post.pin);         
           if(post.postType === 'instagram') {  
             imageUrl = post.inspirationalImage;                 
           }
@@ -83,19 +84,15 @@ export default class NewsfeedList extends Component<Props, State> {
         if 2 please place 2nd on newsfeed
         if 3 please place 3rd on newsfeed
     */
-    sortData = (data: any) => {
-        if(data === undefined) return [];
-        for(let i = 0; i < data.length; i++){
-            for(let j = i + 1; j < data.length; j++){
-                if(data[j].pin === 0) continue;
-                if(data[i].pin > data[j].pin || (data[i].pin === 0)) {
-                    const temp = data[i];
-                    data[i] = data[j];
-                    data[j] = temp;
-                }
-            }
-        }
-        return data;
+    filterAndSortData = (data: any) => {
+        let pinPosts: any = [];
+        let unPinPosts: any = [];
+        _.reverse(_.sortBy(data, "date")).map((post: Post) => {
+            if(post.pin === 0) unPinPosts.push(post);
+            else if(post.pin > 0) pinPosts.push(post);
+        })
+        const res = pinPosts.concat(unPinPosts);
+        return res
     }
     
     render() {
@@ -106,12 +103,12 @@ export default class NewsfeedList extends Component<Props, State> {
                     barStyle="dark-content"
                 />
                 {(this.props.listOfPosts && this.props.listOfPosts.length) && <FlatList
-                    data={this.sortData(this.props.listOfPosts)}
-                    renderItem={this._renderItem}
+                    data={this.filterAndSortData(this.props.listOfPosts)}                    
                     keyExtractor={ (item) => `${item._id}`}
                     scrollEventThrottle={1000}
                     ListHeaderComponent={this._renderHeader}
                     ListFooterComponent={this._renderFooter.bind(this)}
+                    renderItem={this._renderItem}
                     onScroll={({ nativeEvent }) => this.props.onScroll(nativeEvent)}
                 />}
                 {this.state.loading && 
@@ -134,7 +131,7 @@ export default class NewsfeedList extends Component<Props, State> {
 
     _renderHeader = () => {
         const { instagram_inspirationalImage } = this.state;
-        if(instagram_inspirationalImage.length === 0) return null;
+        // if(instagram_inspirationalImage.length === 0) return null;
         return (
             <View>
                 <View style={theme.titleView}>
@@ -142,11 +139,16 @@ export default class NewsfeedList extends Component<Props, State> {
                     <Text style={theme.titleText}>Today's Instagram Looks</Text>
                     <View style={theme.lineView}></View>
                 </View>
-                <TouchableOpacity 
-                    onPress={this.props.goToInstagramSlide}
-                >
-                    <Image source={{uri: instagram_inspirationalImage}} style={theme.instagramImage} />
-                </TouchableOpacity>                
+                {
+                    instagram_inspirationalImage.length === 0 ? 
+                    <View style={theme.instagramImage} />
+                    :
+                    <TouchableOpacity 
+                        onPress={this.props.goToInstagramSlide}
+                    >
+                        <Image source={{uri: instagram_inspirationalImage}} style={theme.instagramImage} />
+                    </TouchableOpacity> 
+                }                               
                 <View style={theme.separator}></View>
             </View>
         )

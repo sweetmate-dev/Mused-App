@@ -123,6 +123,7 @@ export default class Footer extends Component<Props> {
                     navigate={actions[button.text]}
                     key={button.text}
                     newImgUrl={this.props.newImgUrl}
+                    user={this.props.user}
                 />
             )
         })

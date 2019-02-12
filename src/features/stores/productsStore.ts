@@ -49,6 +49,10 @@ export default class ObservableStore implements IProductStore {
         return this.alternatives;
     }
 
+    get listOfbrowseOnlyProducts() {
+        return this.browseOnlyProducts;
+    }
+
     get listOfRecentNewProducts() {
         return this.recentNewProducts;
     }
@@ -94,7 +98,8 @@ export default class ObservableStore implements IProductStore {
     public getAlternatives = async (ids: number[]) => {
         this.noResult = false;
         await getProductsByIds(ids).then((products: Product[]) => {
-            this.alternatives = [...products]
+            if(this.fromMenu) this.browseOnlyProducts = [...products];        
+            else this.alternatives = [...products];
             if(this.alternatives.length === 0) this.noResult = true;
         });
     }
@@ -112,6 +117,7 @@ export default class ObservableStore implements IProductStore {
         else this.alternatives = [];
         this.noResult = false;
         await getProductsByCatsSubs(this.root.filters.listOfCategory).then((products: Product[]) => {  
+            console.log(products.length);
             if(this.fromMenu) this.browseOnlyProducts = [...products];        
             else this.alternatives = [...products];
             if(products.length === 0) this.noResult = true;
@@ -278,13 +284,11 @@ export default class ObservableStore implements IProductStore {
             this.productsByCategories = this.allProducts[category];
         }
         await getProductsByCategoryInitial(category).then( (products: Product[]) => {
-            console.log('initial products', products);
             if(this.allProducts[category] === undefined) this.productsByCategories = products;
             this.categoryInDrag = category;
             if(this.productsByCategories.length === 0) this.noResult = true;
         })
         await getProductsByCategory(category).then( (products: Product[]) => {
-            console.log('all products', products);
             this.productsByCategories = products;
             this.allProducts[category] = products;
             this.categoryInDrag = category;         

@@ -26,7 +26,6 @@ export default class NewsfeedItem extends Component<Props> {
 
     render() {
         const { date, authorProfilePhoto, authorName, inspirationalImage, title, postType, hidden } = this.props.item;
-        console.log(this.props.item.postId);
         if(hidden || postType === 'instagram') return null;
         return (
             <View style={theme.container}>
@@ -75,7 +74,7 @@ export default class NewsfeedItem extends Component<Props> {
 
     getTimeSincePost = (date: string) => {
         // return timeSince(date) + ' ago'
-        return moment(new Date(date)).fromNow(false)
+        return ' ' + moment(new Date(date)).fromNow(false)
     }
 
     _navigateToCollection = () => {
@@ -84,7 +83,7 @@ export default class NewsfeedItem extends Component<Props> {
             goToCollection, 
             goToZoomDirectly,
             goToInstagramSlide,
-            item: {timeAgo, authorProfilePhoto, authorName, slots, postType, productIds, productId } 
+            item: {date, authorProfilePhoto, authorName, slots, postType, productIds, productId } 
         } = this.props;
         if(postType === 'list') {
             goToBrowseDirectly(productIds)
@@ -101,7 +100,7 @@ export default class NewsfeedItem extends Component<Props> {
         {
             productIds: slots,
             authorItem: {
-                timeAgo: moment(timeAgo).fromNow(),
+                timeAgo: this.getTimeSincePost(date),
                 authorProfilePhoto,
                 authorName
             }

@@ -33,12 +33,12 @@ export default class CollectionFooter extends Component<Props> {
                     <Text style={theme.footerTitle}>{title.toUpperCase()}</Text>
                 </View>
                 <AuthorItem 
-                        author={authorName} 
-                        time={timeAgo} 
-                        imgAuthorUrl={{uri: authorProfilePhoto}} 
-                        authorContainer={theme.authorContainer} 
-                        onCollection={onCollection}
-                    />
+                    author={authorName} 
+                    time={timeAgo} 
+                    imgAuthorUrl={{uri: authorProfilePhoto}} 
+                    authorContainer={theme.authorContainer} 
+                    onCollection={onCollection}
+                />
             </View>
         )
     }

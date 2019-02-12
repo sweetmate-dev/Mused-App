@@ -12,6 +12,7 @@ interface IProductStore {
     recentNewProducts: Product[];
     arrayImages: ProductImage[];
     listOfAlternatives: Product[];
+    listOfbrowseOnlyProducts: Product[];
     listOfRecentNewProducts: Product[];
     toggleViewCategory: boolean;
     allProducts: any;
@@ -65,7 +66,7 @@ interface IUserStore {
     userProfile: UserProfile;
     loading: boolean;
     autoLoggedOut: boolean;
-    highlightButtonText: string;
+    getHighlightButtonText: string;
     newUser: boolean;
     setNewUser: (value: boolean) => void;
     logout: () => void;    

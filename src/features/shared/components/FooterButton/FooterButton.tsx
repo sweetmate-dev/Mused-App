@@ -23,7 +23,7 @@ const icons: HashMap<HashMap<string>> = {
     back: require('../../../../../assets/images/back_icon.png'),
     view: require('../../../../../assets/images/view_icon.png'),
     category: require('../../../../../assets/images/category_icon.png'),
-    apply: require('../../../../../assets/images/switch.png'),
+    apply: require('../../../../../assets/images/apply.png'),
     cancel: require('../../../../../assets/images/cancel.png'),
 };
 
@@ -52,6 +52,7 @@ export default class FooterButton extends Component<Props, State> {
         opacity: new Animated.Value(0.4)
     }
     componentWillReceiveProps(newProps: Props) {
+        console.log(newProps.user.getHighlightButtonText);
         if (this.props.text === LOVE && newProps.newImgUrl !== this.props.newImgUrl) {
             this.setState({isSavedOutfit: false})
         }
@@ -73,7 +74,7 @@ export default class FooterButton extends Component<Props, State> {
     }
 
     render() {
-        const {text, icon, whiteTheme, greyTheme, styleForContainer }  = this.props;
+        const {text, icon, whiteTheme, greyTheme, styleForContainer, user: {userProfile, getHighlightButtonText} }  = this.props;
         let iconSource = 
         text === LOVE && this.state.isSavedOutfit
          ? icons['loveSelected']
@@ -89,8 +90,13 @@ export default class FooterButton extends Component<Props, State> {
         // const underlayColor: string = whiteTheme ? '#fff' : '#000';
         let isHighlighted = false;
         if(this.props.user !== undefined){
-            const { user: {userProfile, highlightButtonText} } = this.props;
-            if(userProfile && userProfile.email === 'anonymous' && text === highlightButtonText) isHighlighted = true;
+            if(
+                userProfile && 
+                userProfile.email === 'anonymous' &&
+                getHighlightButtonText.indexOf(text) > -1
+            ) {
+                isHighlighted = true;
+            }
         }
         
         return (
@@ -130,8 +136,9 @@ export default class FooterButton extends Component<Props, State> {
 
         // toggle Highlight button text
         if(user !== undefined) {
-            const { user: { highlightButtonText, setHighlightButtonText} } = this.props;
-            if(highlightButtonText === 'View' && text === 'View') setHighlightButtonText('none');
+            const { user: { getHighlightButtonText, setHighlightButtonText} } = this.props;
+            console.log(getHighlightButtonText);
+            if(getHighlightButtonText === 'View' && text === 'View') setHighlightButtonText('none');
         }        
 
         if (!navigate) {
